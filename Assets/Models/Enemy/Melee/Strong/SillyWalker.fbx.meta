@@ -1,0 +1,551 @@
+fileFormatVersion: 2
+guid: 02e5088e5df6f154697f0097bba5547b
+timeCreated: 1432645353
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: foot_L
+    100002: foot_lower_L
+    100004: foot_lower_L_end
+    100006: foot_lower_R
+    100008: foot_lower_R_end
+    100010: foot_R
+    100012: head
+    100014: hip
+    100016: leg_IK_L
+    100018: leg_IK_L_end
+    100020: leg_IK_R
+    100022: leg_IK_R_end
+    100024: leg_lower_L
+    100026: leg_lower_R
+    100028: leg_pole_L
+    100030: leg_pole_L_end
+    100032: leg_pole_R
+    100034: leg_pole_R_end
+    100036: leg_upper_L
+    100038: leg_upper_R
+    100040: mouth
+    100042: mouth_end
+    100044: rig
+    100046: root
+    100048: //RootNode
+    100050: sillyWalker_mesh
+    100052: spine1
+    100054: spine2
+    100056: spine3
+    100058: spine4
+    100060: spine5
+    100062: spine6
+    100064: spine6_end
+    100066: spineHandle_high
+    100068: spineHandle_low
+    100070: spineHandle_mid
+    100072: spineHandle_mid_end
+    400000: foot_L
+    400002: foot_lower_L
+    400004: foot_lower_L_end
+    400006: foot_lower_R
+    400008: foot_lower_R_end
+    400010: foot_R
+    400012: head
+    400014: hip
+    400016: leg_IK_L
+    400018: leg_IK_L_end
+    400020: leg_IK_R
+    400022: leg_IK_R_end
+    400024: leg_lower_L
+    400026: leg_lower_R
+    400028: leg_pole_L
+    400030: leg_pole_L_end
+    400032: leg_pole_R
+    400034: leg_pole_R_end
+    400036: leg_upper_L
+    400038: leg_upper_R
+    400040: mouth
+    400042: mouth_end
+    400044: rig
+    400046: root
+    400048: //RootNode
+    400050: sillyWalker_mesh
+    400052: spine1
+    400054: spine2
+    400056: spine3
+    400058: spine4
+    400060: spine5
+    400062: spine6
+    400064: spine6_end
+    400066: spineHandle_high
+    400068: spineHandle_low
+    400070: spineHandle_mid
+    400072: spineHandle_mid_end
+    4300000: sillyWalker_mesh
+    7400000: rig|attack
+    7400002: SillyWalker|attack_new
+    7400004: rig|death
+    7400006: SillyWalker|death_new
+    7400008: rig|idle
+    7400010: SillyWalker|idle_new
+    7400012: rig|walk
+    7400014: SillyWalker|walk_new
+    7400016: sillyWalker_mesh|walk
+    9500000: //RootNode
+    13700000: sillyWalker_mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: SillyWalker|attack_new
+      takeName: rig|attack_new
+      firstFrame: 0
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: rig
+        weight: 1
+      - path: rig/root
+        weight: 1
+      - path: rig/root/leg_IK_L
+        weight: 1
+      - path: rig/root/leg_IK_L/leg_IK_L_end
+        weight: 1
+      - path: rig/root/leg_IK_R
+        weight: 1
+      - path: rig/root/leg_IK_R/leg_IK_R_end
+        weight: 1
+      - path: rig/root/leg_pole_L
+        weight: 1
+      - path: rig/root/leg_pole_L/leg_pole_L_end
+        weight: 1
+      - path: rig/root/leg_pole_R
+        weight: 1
+      - path: rig/root/leg_pole_R/leg_pole_R_end
+        weight: 1
+      - path: rig/root/spineHandle_high
+        weight: 1
+      - path: rig/root/spineHandle_high/head
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth/mouth_end
+        weight: 1
+      - path: rig/root/spineHandle_low
+        weight: 1
+      - path: rig/root/spineHandle_low/hip
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6/spine6_end
+        weight: 1
+      - path: rig/root/spineHandle_mid
+        weight: 1
+      - path: rig/root/spineHandle_mid/spineHandle_mid_end
+        weight: 1
+      - path: sillyWalker_mesh
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: SillyWalker|death_new
+      takeName: rig|death_new
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: rig
+        weight: 1
+      - path: rig/root
+        weight: 1
+      - path: rig/root/leg_IK_L
+        weight: 1
+      - path: rig/root/leg_IK_L/leg_IK_L_end
+        weight: 1
+      - path: rig/root/leg_IK_R
+        weight: 1
+      - path: rig/root/leg_IK_R/leg_IK_R_end
+        weight: 1
+      - path: rig/root/leg_pole_L
+        weight: 1
+      - path: rig/root/leg_pole_L/leg_pole_L_end
+        weight: 1
+      - path: rig/root/leg_pole_R
+        weight: 1
+      - path: rig/root/leg_pole_R/leg_pole_R_end
+        weight: 1
+      - path: rig/root/spineHandle_high
+        weight: 1
+      - path: rig/root/spineHandle_high/head
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth/mouth_end
+        weight: 1
+      - path: rig/root/spineHandle_low
+        weight: 1
+      - path: rig/root/spineHandle_low/hip
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6/spine6_end
+        weight: 1
+      - path: rig/root/spineHandle_mid
+        weight: 1
+      - path: rig/root/spineHandle_mid/spineHandle_mid_end
+        weight: 1
+      - path: sillyWalker_mesh
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: SillyWalker|idle_new
+      takeName: rig|idle_new
+      firstFrame: 0
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: rig
+        weight: 1
+      - path: rig/root
+        weight: 1
+      - path: rig/root/leg_IK_L
+        weight: 1
+      - path: rig/root/leg_IK_L/leg_IK_L_end
+        weight: 1
+      - path: rig/root/leg_IK_R
+        weight: 1
+      - path: rig/root/leg_IK_R/leg_IK_R_end
+        weight: 1
+      - path: rig/root/leg_pole_L
+        weight: 1
+      - path: rig/root/leg_pole_L/leg_pole_L_end
+        weight: 1
+      - path: rig/root/leg_pole_R
+        weight: 1
+      - path: rig/root/leg_pole_R/leg_pole_R_end
+        weight: 1
+      - path: rig/root/spineHandle_high
+        weight: 1
+      - path: rig/root/spineHandle_high/head
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth/mouth_end
+        weight: 1
+      - path: rig/root/spineHandle_low
+        weight: 1
+      - path: rig/root/spineHandle_low/hip
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6/spine6_end
+        weight: 1
+      - path: rig/root/spineHandle_mid
+        weight: 1
+      - path: rig/root/spineHandle_mid/spineHandle_mid_end
+        weight: 1
+      - path: sillyWalker_mesh
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: SillyWalker|walk_new
+      takeName: rig|walk_new
+      firstFrame: 0
+      lastFrame: 36
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: rig
+        weight: 1
+      - path: rig/root
+        weight: 1
+      - path: rig/root/leg_IK_L
+        weight: 1
+      - path: rig/root/leg_IK_L/leg_IK_L_end
+        weight: 1
+      - path: rig/root/leg_IK_R
+        weight: 1
+      - path: rig/root/leg_IK_R/leg_IK_R_end
+        weight: 1
+      - path: rig/root/leg_pole_L
+        weight: 1
+      - path: rig/root/leg_pole_L/leg_pole_L_end
+        weight: 1
+      - path: rig/root/leg_pole_R
+        weight: 1
+      - path: rig/root/leg_pole_R/leg_pole_R_end
+        weight: 1
+      - path: rig/root/spineHandle_high
+        weight: 1
+      - path: rig/root/spineHandle_high/head
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth
+        weight: 1
+      - path: rig/root/spineHandle_high/head/mouth/mouth_end
+        weight: 1
+      - path: rig/root/spineHandle_low
+        weight: 1
+      - path: rig/root/spineHandle_low/hip
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_L/leg_lower_L/foot_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R
+        weight: 1
+      - path: rig/root/spineHandle_low/hip/leg_upper_R/leg_lower_R/foot_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6
+        weight: 1
+      - path: rig/root/spineHandle_low/spine1/spine2/spine3/spine4/spine5/spine6/spine6_end
+        weight: 1
+      - path: rig/root/spineHandle_mid
+        weight: 1
+      - path: rig/root/spineHandle_mid/spineHandle_mid_end
+        weight: 1
+      - path: sillyWalker_mesh
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

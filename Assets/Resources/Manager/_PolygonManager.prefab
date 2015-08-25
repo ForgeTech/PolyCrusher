@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &159212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 402574}
+  - 114: {fileID: 11488142}
+  m_Layer: 5
+  m_Name: _PolygonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402574
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .420733571, y: -7.14889669, z: -5.2062664}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11488142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab60844790a3a5c4190f793d81b7a3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
+  explosionParticle: {fileID: 187532, guid: 8ff3dcd9ee30463419a54395ba08d2c5, type: 2}
+  mats:
+  - {fileID: 2100000, guid: febbee396b3337e41b19466d684030ad, type: 2}
+  - {fileID: 2100000, guid: cb69ead05f14b8d4788a992b76336432, type: 2}
+  - {fileID: 2100000, guid: 0ee14f93ecf113f40b18747cf2454d95, type: 2}
+  - {fileID: 2100000, guid: f1a3ae89d8da07346a231a70f89da272, type: 2}
+  heightOffset: 1.04999995
+  playerAlignment: 
+  detonate: 0
+  specialIsUsable: 0
+  oldDonkey: 0
+  donkey: 0
+  changedToTri: 0
+  changedToQuad: 0
+  sphere: {fileID: 0}
+  charging: 0
+  dummy: {fileID: 0}
+  startAnimTime: 2
+  middlePoint: {x: 0, y: 0, z: 0}
+  angles: []
+  intersectPosition: {x: 0, y: 0, z: 0}
+  explosionCooldown: .200000003
+  polyIsStarting: 0
+  polyIsEnding: 0
+  polyIsFailing: 0
+  polyIsLoading: 0
+  screenFlash: 0
+  fadeOut: 0
+  poly: {fileID: 0}
+  triPoly: {fileID: 0}
+  screenFade: {fileID: 0}
+  bigExplosionParticle: {fileID: 109618, guid: 3702b9ac7ed1b9f46903ead9a2edf487, type: 2}
+  whiteScreen: {fileID: 0}
+  polyParts: []
+  polys: []
+  filters: []
+  renderers: []
+  playerScripts: []
+  polyOffsets: []
+  polyStartAnimLerpTimes: []
+  polyEndAnimLerpTime: 0
+  polyFailAnimLerpTime: 0
+  polyLoadingAnimLerpTime: 0
+  screenFlashAnimTime: 0
+  polyFailTween: 0
+  polyFailTween2: 0
+  transitionCooldown: 2
+  currentCooldown: 0
+  polyTweens: 
+  polyStart: 0
+  polyEnd: 0
+  colliderFrameTime: 2
+  currentStandStill: 0
+  standStillRequiredTime: 1
+  polyStartHeight: -5
+  polyStartSpeed: 6
+  intersectedLines: 
+  enemies: []
+  affectedEnemies: []
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 159212}
+  m_IsPrefabParent: 1

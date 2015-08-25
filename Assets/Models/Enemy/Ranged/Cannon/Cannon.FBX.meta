@@ -1,0 +1,364 @@
+fileFormatVersion: 2
+guid: 368adfb05e734464baaa14cb0e8f14c3
+timeCreated: 1430310487
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Base Human
+    100002: Base HumanLCalf
+    100004: Base HumanLDigit11
+    100006: Base HumanLFoot
+    100008: Base HumanLPlatform
+    100010: Base HumanLThigh
+    100012: Base HumanPelvis
+    100014: Base HumanRLegCalf
+    100016: Base HumanRLegDigit11
+    100018: Base HumanRLegFoot
+    100020: Base HumanRLegPlatform
+    100022: Base HumanRLegThigh
+    100024: //RootNode
+    100026: cannon
+    100028: fuse
+    100030: fuse01
+    100032: fuse02
+    100034: fuse0201
+    400000: Base Human
+    400002: Base HumanLCalf
+    400004: Base HumanLDigit11
+    400006: Base HumanLFoot
+    400008: Base HumanLPlatform
+    400010: Base HumanLThigh
+    400012: Base HumanPelvis
+    400014: Base HumanRLegCalf
+    400016: Base HumanRLegDigit11
+    400018: Base HumanRLegFoot
+    400020: Base HumanRLegPlatform
+    400022: Base HumanRLegThigh
+    400024: //RootNode
+    400026: cannon
+    400028: fuse
+    400030: fuse01
+    400032: fuse02
+    400034: fuse0201
+    4300000: cannon
+    7400000: Cannon|Run
+    7400002: Cannon|Idle
+    7400004: Cannon|Attack
+    7400006: Cannon|Death
+    9500000: //RootNode
+    13700000: cannon
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Cannon|Run
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Base Human
+        weight: 1
+      - path: Base HumanLPlatform
+        weight: 1
+      - path: Base HumanPelvis
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot/Base
+          HumanLDigit11
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot/Base
+          HumanRLegDigit11
+        weight: 1
+      - path: Base HumanPelvis/fuse
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02/fuse0201
+        weight: 1
+      - path: Base HumanRLegPlatform
+        weight: 1
+      - path: cannon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Cannon|Idle
+      takeName: Take 001
+      firstFrame: 21
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Base Human
+        weight: 1
+      - path: Base HumanLPlatform
+        weight: 1
+      - path: Base HumanPelvis
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot/Base
+          HumanLDigit11
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot/Base
+          HumanRLegDigit11
+        weight: 1
+      - path: Base HumanPelvis/fuse
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02/fuse0201
+        weight: 1
+      - path: Base HumanRLegPlatform
+        weight: 1
+      - path: cannon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Cannon|Attack
+      takeName: Take 001
+      firstFrame: 81
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Base Human
+        weight: 1
+      - path: Base HumanLPlatform
+        weight: 1
+      - path: Base HumanPelvis
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot/Base
+          HumanLDigit11
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot/Base
+          HumanRLegDigit11
+        weight: 1
+      - path: Base HumanPelvis/fuse
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02/fuse0201
+        weight: 1
+      - path: Base HumanRLegPlatform
+        weight: 1
+      - path: cannon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Cannon|Death
+      takeName: Take 001
+      firstFrame: 101
+      lastFrame: 146
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Base Human
+        weight: 1
+      - path: Base HumanLPlatform
+        weight: 1
+      - path: Base HumanPelvis
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanLThigh/Base HumanLCalf/Base HumanLFoot/Base
+          HumanLDigit11
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot
+        weight: 1
+      - path: Base HumanPelvis/Base HumanRLegThigh/Base HumanRLegCalf/Base HumanRLegFoot/Base
+          HumanRLegDigit11
+        weight: 1
+      - path: Base HumanPelvis/fuse
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02
+        weight: 1
+      - path: Base HumanPelvis/fuse/fuse01/fuse02/fuse0201
+        weight: 1
+      - path: Base HumanRLegPlatform
+        weight: 1
+      - path: cannon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
