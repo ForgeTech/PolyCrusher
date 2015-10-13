@@ -2,15 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: NormalLine
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
+  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: 3000
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -77,11 +78,14 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats:
       data:
         first:
-          name: _Cutoff
-        second: .5
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
       data:
         first:
           name: _SrcBlend
@@ -89,7 +93,11 @@ Material:
       data:
         first:
           name: _DstBlend
-        second: 10
+        second: 0
+      data:
+        first:
+          name: _Cutoff
+        second: .5
       data:
         first:
           name: _Parallax
@@ -97,7 +105,7 @@ Material:
       data:
         first:
           name: _ZWrite
-        second: 0
+        second: 1
       data:
         first:
           name: _Glossiness
@@ -125,7 +133,7 @@ Material:
       data:
         first:
           name: _Mode
-        second: 3
+        second: 0
       data:
         first:
           name: _Metallic
@@ -133,16 +141,20 @@ Material:
       data:
         first:
           name: _InvFade
-        second: .74000001
+        second: .219999999
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 1.30999994, g: 1.30999994, b: 1.30999994, a: 1.30999994}
+        second: {r: 1.801, g: 1.801, b: 1.801, a: 1}
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: .333333343}
+        second: {r: 1, g: .963235319, b: .963235319, a: .152999997}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
       data:
         first:
           name: _EmissionColorUI
@@ -150,7 +162,7 @@ Material:
       data:
         first:
           name: _TintColor
-        second: {r: 1, g: 1, b: 1, a: .984313726}
+        second: {r: .845588207, g: .845588207, b: .845588207, a: .984313726}
       data:
         first:
           name: _EmisColor
