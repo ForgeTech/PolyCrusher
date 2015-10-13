@@ -175,6 +175,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &172932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 438972}
+  - 114: {fileID: 11417300}
+  m_Layer: 0
+  m_Name: _PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &185388
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +268,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.05941617, y: 6.30673504, z: 5.92782307}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 415452}
@@ -267,6 +283,7 @@ Transform:
   - {fileID: 446172}
   - {fileID: 461922}
   - {fileID: 467442}
+  - {fileID: 438972}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &415452
@@ -293,6 +310,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 415424}
   m_RootOrder: 5
+--- !u!4 &438972
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172932}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 415424}
+  m_RootOrder: 12
 --- !u!4 &446172
 Transform:
   m_ObjectHideFlags: 1
@@ -606,6 +635,19 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11417300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe669ba3978ae743bf73f8e600d39e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPool: {fileID: 129080, guid: 95224e08c37b5e144bdd2c362487696c, type: 2}
+  amount: 1500
 --- !u!114 &11423028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -654,7 +696,7 @@ MonoBehaviour:
   angles: []
   distances: []
   intersectPosition: {x: 0, y: 0, z: 0}
-  explosionCooldown: 0
+  explosionCooldown: .200000003
   polyIsStarting: 0
   polyIsEnding: 0
   polyIsFailing: 0
@@ -768,7 +810,7 @@ MonoBehaviour:
   currentEnemyRessourceValue: 0
   maxEnemyActiveCount: 20
   currentEnemyCount: 0
-  timeBetweenWave: 6
+  timeBetweenWave: 2
   enemyRessourceIncreaseFactor: .200000003
   enemyCountIncreaseFactor: .200000003
   timeBetweeenWaveDecreaseFactor: 0

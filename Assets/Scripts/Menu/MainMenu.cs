@@ -104,11 +104,7 @@ public class MainMenu : MonoBehaviour
             DontDestroyOnLoad(music[0]);
         }
     }
-
-
-
-
-
+	
     void Start()
     {
 		buttons [0].GetComponent<Button> ().Select ();
@@ -151,7 +147,6 @@ public class MainMenu : MonoBehaviour
 		once = false;
 
 		StartCoroutine ("ScalePlayerImages");
-
 		StartCoroutine ("TransformBetabanner");
 
 	}
