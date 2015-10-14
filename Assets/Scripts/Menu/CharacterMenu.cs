@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Menu script for the character selection menu.
 /// </summary>
-public class CharacterMenu : MonoBehaviour 
+public class CharacterMenu : MonoBehaviour
 {
     //Reference tho the level information
     public LevelStartInformation levelInfo;
@@ -33,9 +33,15 @@ public class CharacterMenu : MonoBehaviour
     public Image[] backButton = new Image[2];
 
     private string[] playerClassNames;
-  
-    public float width = 660;
-    public float height = 660;
+
+    public float width = Screen.width;
+    public float height = Screen.height;
+
+    public float widthStart;
+    public float heightStart;
+
+    public float widthStep;
+    public float heightStep;
 
     public float xMargin = 12.0f;
     public float yMargin = 30.0f;
@@ -54,13 +60,17 @@ public class CharacterMenu : MonoBehaviour
 
     private int playerCount;
 
+    private bool startChecking = false;
+
+    public GameObject[] playerImages = new GameObject[4];
+
 
     public Color[] cursorColors;
 
     public Image[] playerText;
 
     public int[] playerSelection;
-	
+
     bool newPhone = false;
 
     [Space(5)]
@@ -109,22 +119,22 @@ public class CharacterMenu : MonoBehaviour
     private bool three = false;
 
     private bool once = true;
-	bool onceLevel = false;
+    bool onceLevel = false;
 
-	int playerHasChosen = 0;
+    int playerHasChosen = 0;
 
-	GameObject infoBar;
-	GameObject gamerCountdown;
+    GameObject infoBar;
+    GameObject gamerCountdown;
 
-	Vector3 originalVecCountdown;
-	Vector3 originalVecInfo;
+    Vector3 originalVecCountdown;
+    Vector3 originalVecInfo;
 
-	float gamerCountdownTime;
-	float timeBeginning;
-	bool first;
+    float gamerCountdownTime;
+    float timeBeginning;
+    bool first;
 
-	Vector3 originalScaleGameStartsText;
-	
+    Vector3 originalScaleGameStartsText;
+
     void Awake()
     {
         spawnBirdman = GameObject.Find("SpawnAudioBirdman").GetComponent<MultipleAudioclips>();
@@ -139,46 +149,55 @@ public class CharacterMenu : MonoBehaviour
 
         //find slides and disable it
         GameObject.Find("slide_1").GetComponent<Image>().enabled = false;
-		GameObject.Find("slide_2").GetComponent<Image>().enabled = false;
-		GameObject.Find("slide_3").GetComponent<Image>().enabled = false;
-		GameObject.Find("slide_text").GetComponent<Image>().enabled = false;
+        GameObject.Find("slide_2").GetComponent<Image>().enabled = false;
+        GameObject.Find("slide_3").GetComponent<Image>().enabled = false;
+        GameObject.Find("slide_text").GetComponent<Image>().enabled = false;
 
-		infoBar = GameObject.Find ("InfoBar");
-		gamerCountdown = GameObject.Find ("GameStartsImage");
+        infoBar = GameObject.Find("InfoBar");
+        gamerCountdown = GameObject.Find("GameStartsImage");
 
-		originalVecCountdown = gamerCountdown.transform.localPosition;
-		originalVecInfo = infoBar.transform.localPosition;
+        originalVecCountdown = gamerCountdown.transform.localPosition;
+        originalVecInfo = infoBar.transform.localPosition;
 
-		gamerCountdown.SetActive(false);
-		gamerCountdownTime = 10.0f;
+        gamerCountdown.SetActive(false);
+        gamerCountdownTime = 20.0f;
 
-		onceLevel = false;
-		timeBeginning = 0.0f;
-		first = true;
-			
+        onceLevel = false;
+        timeBeginning = 0.0f;
+        first = true;
+
+        Debug.Log(Screen.width + " " + Screen.height);
+
+        widthStep = Screen.width / 5.0f * 1.1f;
+        heightStep = Screen.height / 3.0f;
+
+        widthStart = Screen.width / 7.0f * 1.20f;
+        heightStart = Screen.height / 4.0f * 1.8f;
+        Debug.Log(widthStep + " " + heightStep);
     }
 
     // Use this for initialization
-    public void Start () 
+    public void Start()
     {
 
-        playerCursorSlot = new int[4]{-1,-1,-1,-1};
+        playerCursorSlot = new int[4] { -1, -1, -1, -1 };
+
         for (int i = 0; i < charImages.Length; i++)
         {
-            charImages[i] = playerTypes[i].GetComponent<Image>();                  
+            charImages[i] = playerTypes[i].GetComponent<Image>();
         }
-		       
-        network = GameObject.FindObjectOfType<PlayerNetCommunicate>();
-		GameObject.Find ("GameNameCharacterSelection").GetComponent<Text>().text = network.gameName + " GAME";
 
-        playerSelection = new int[4]{-1,-1,-1,-1};
+        network = GameObject.FindObjectOfType<PlayerNetCommunicate>();
+        GameObject.Find("GameNameCharacterSelection").GetComponent<Text>().text = network.gameName + " GAME";
+
+        playerSelection = new int[4] { -1, -1, -1, -1 };
         currentHoveredChar = new int[4] { -1, -1, -1, -1 };
-        cursorColors = new Color[4] {Color.red, Color.cyan, Color.yellow, Color.white };
-        playerClassNames = new string[4] { "Timeshifter", "Charger", "Fatman", "Birdman" };
+        cursorColors = new Color[4] { Color.red, Color.cyan, Color.yellow, Color.white };
+        playerClassNames = new string[4] { "Birdman", "Charger", "Fatman", "Timeshifter" };
 
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
         levelInfo.ClearPlayerArrays();
-       
+
         playerSlotPhone = new bool[4];
 
         playerCount = Input.GetJoystickNames().Length;
@@ -201,158 +220,174 @@ public class CharacterMenu : MonoBehaviour
             }
         }
 
-		StartCoroutine (ScalePlayerImages());
+        StartCoroutine(ScalePlayerImages());
 
-		for (int i = 0; i < playerCursorSlot.Length; i++) {
-			if (playerCursorSlot[i] != -1) {
-				playerCursor[i].GetComponent<Image>().enabled = false;
-				playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
-			}
-		}
+        for (int i = 0; i < playerCursorSlot.Length; i++)
+        {
+            if (playerCursorSlot[i] != -1)
+            {
+                playerCursor[i].GetComponent<Image>().enabled = false;
+                playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
+            }
+        }
 
-		originalScaleGameStartsText = gamerCountdown.transform.localScale;
+        originalScaleGameStartsText = gamerCountdown.transform.localScale;
 
-		
-	}
 
-	IEnumerator ScalePlayerImages() {
+    }
 
-		GameObject[] playerImages = new GameObject[4];
+    IEnumerator ScalePlayerImages()
+    {
 
-		playerImages[0] = GameObject.Find("Birdman");
-		playerImages[1] = GameObject.Find("Charger");
-		playerImages[2] = GameObject.Find("Fatman");
-		playerImages[3] = GameObject.Find("TimeShifter");
 
-		for (int i = 0; i < playerImages.Length; i++) {
-			playerImages[i].GetComponent<Image>().enabled = false;
-		}
 
-		yield return new WaitForSeconds (0.3f);
+        //playerImages[0] = GameObject.Find("Birdman");
+        //playerImages[1] = GameObject.Find("Charger");
+        //playerImages[2] = GameObject.Find("Fatman");
+        //playerImages[3] = GameObject.Find("TimeShifter");
 
-		for (int i = 0; i < playerImages.Length; i++) {
-			Vector3 originalScale = playerImages[i].transform.localScale;
-			playerImages[i].transform.localScale = Vector3.zero;
-			playerImages[i].GetComponent<Image>().enabled = true;
-			StartCoroutine(playerImages[i].transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
+        //for (int i = 0; i < playerImages.Length; i++) {
+        //	playerImages[i].GetComponent<Image>().enabled = false;
+        //}
 
-			yield return new WaitForSeconds (0.3f);
-		}
+        yield return new WaitForSeconds(0.3f);
 
-	}
+        for (int i = 0; i < playerImages.Length; i++)
+        {
+            Vector3 originalScale = playerImages[i].transform.localScale;
+            playerImages[i].transform.localScale = Vector3.zero;
+            playerImages[i].GetComponent<Image>().enabled = true;
+            StartCoroutine(playerImages[i].transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
+
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        startChecking = true;
+    }
 
     void Update()
     {
 
-		UpdatePlayerStatus();
-		PlayCountdownSounds ();
+        UpdatePlayerStatus();
+        PlayCountdownSounds();
 
         if (currentPlayerCount != 0)
         {
-			if (!CheckPlayerReady())
+            if (!CheckPlayerReady())
             {
                 HandleMovement();
                 HandleSelection();
                 CheckHover();
                 HandleBackButton();
-				RefreshImages();
+                RefreshImages();
 
-            } else {
-				Slides();
-			}
-           
+            }
+            else
+            {
+                Slides();
+            }
+
         }
 
     }
 
-	void PlayCountdownSounds () {
-		if (((int)gamerCountdownTime) == 3 && !three)
-		{
-			SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
+    void PlayCountdownSounds()
+    {
+        if (((int)gamerCountdownTime) == 3 && !three)
+        {
+            SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
 
-			gamerCountdown.transform.localScale = originalScaleGameStartsText;
-			gamerCountdown.transform.localScale *= 1.2f;
-			StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
-			
-			three = true;
-		}
-		if (((int)gamerCountdownTime) == 2 && !two)
-		{
-			SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
+            gamerCountdown.transform.localScale = originalScaleGameStartsText;
+            gamerCountdown.transform.localScale *= 1.2f;
+            StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
 
-			gamerCountdown.transform.localScale = originalScaleGameStartsText;
-			gamerCountdown.transform.localScale *= 1.2f;
-			StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+            three = true;
+        }
+        if (((int)gamerCountdownTime) == 2 && !two)
+        {
+            SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
 
-			two = true;
-		}
-		if (((int)gamerCountdownTime) == 1 && !one)
-		{
-			SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
+            gamerCountdown.transform.localScale = originalScaleGameStartsText;
+            gamerCountdown.transform.localScale *= 1.2f;
+            StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
 
-			gamerCountdown.transform.localScale = originalScaleGameStartsText;
-			gamerCountdown.transform.localScale *= 1.2f;
-			StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+            two = true;
+        }
+        if (((int)gamerCountdownTime) == 1 && !one)
+        {
+            SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
 
-			one = true;
-		}
-		if (((int)gamerCountdownTime) == 0 && !zero)
-		{
-			SoundManager.SoundManagerInstance.Play(zeroSound, Vector3.zero);
+            gamerCountdown.transform.localScale = originalScaleGameStartsText;
+            gamerCountdown.transform.localScale *= 1.2f;
+            StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
 
-			gamerCountdown.transform.localScale = originalScaleGameStartsText;
-			gamerCountdown.transform.localScale *= 1.2f;
-			StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
-		
-			zero = true;
-		}
-	}
+            one = true;
+        }
+        if (((int)gamerCountdownTime) == 0 && !zero)
+        {
+            SoundManager.SoundManagerInstance.Play(zeroSound, Vector3.zero);
+
+            gamerCountdown.transform.localScale = originalScaleGameStartsText;
+            gamerCountdown.transform.localScale *= 1.2f;
+            StartCoroutine(gamerCountdown.transform.ScaleTo(originalScaleGameStartsText, 0.2f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+
+            zero = true;
+        }
+    }
 
 
 
-	private void Slides() {
+    private void Slides()
+    {
 
-		StorePlayerInformation();
+        StorePlayerInformation();
 
-		if (GameObject.Find ("slide_1").GetComponent<Image> ().enabled == false) {
-			GameObject.Find("slide_1").GetComponent<Image>().enabled = true;
-			StartCoroutine(asyncLoadLevel());
-		}
+        if (GameObject.Find("slide_1").GetComponent<Image>().enabled == false)
+        {
+            GameObject.Find("slide_1").GetComponent<Image>().enabled = true;
+            StartCoroutine(asyncLoadLevel());
+        }
 
-		if (levelLoaded) {
+        if (levelLoaded)
+        {
 
-			for (int i = 0; i < playerSlot.Length; i++)
-			{
-				int runningNumber = i + 1;
-				string submit = "P" + runningNumber + "_Ability";
-				if (playerSlot[i] == true && Input.GetButtonDown(submit)) {
+            for (int i = 0; i < playerSlot.Length; i++)
+            {
+                int runningNumber = i + 1;
+                string submit = "P" + runningNumber + "_Ability";
+                if (playerSlot[i] == true && Input.GetButtonDown(submit))
+                {
 
-					StartCoroutine(WaitForAcceptSound());
-					break;
+                    StartCoroutine(WaitForAcceptSound());
+                    break;
 
-				} else if (playerSlotPhone[i] == true && network.actionButton[i] == 1) {
+                }
+                else if (playerSlotPhone[i] == true && network.actionButton[i] == 1)
+                {
 
-					for (int j = 0; j < 4; j++) {
-						network.actionButton[j] = 0;
-					}
+                    for (int j = 0; j < 4; j++)
+                    {
+                        network.actionButton[j] = 0;
+                    }
 
-					StartCoroutine(WaitForAcceptSound());
-					break;
-				}
-			}
-		}
+                    StartCoroutine(WaitForAcceptSound());
+                    break;
+                }
+            }
+        }
 
-	}
+    }
 
-    private void HandleBackButton() {
+    private void HandleBackButton()
+    {
 
-		int counter = 0;
+        int counter = 0;
 
-        for(int i = 0; i < playerCursor.Length; i++)
+        for (int i = 0; i < playerCursor.Length; i++)
         {
             if (CheckBackButtonHover(i))
             {
-			
+
                 //backChanged = true;
                 backButton[1].gameObject.SetActive(true);
                 backButton[0].gameObject.SetActive(false);
@@ -360,18 +395,20 @@ public class CharacterMenu : MonoBehaviour
                 int runningNumber = i + 1;
                 string curSubmit = "P" + runningNumber + "_Ability";
 
-                if (playerCursorSlot[i] > -1 && playerCursorSlot[i] < 5 && Input.GetButtonDown(curSubmit) )
+                if (playerCursorSlot[i] > -1 && playerCursorSlot[i] < 5 && Input.GetButtonDown(curSubmit))
                 {
-					if (!onceLevel) {
-						if(GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().transitionFinished) {
-							onceLevel = true;
-							OnButtonDeclined();
-							GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().ChangeScenes ("CharacterSelectionObject(Clone)", "Scenes/Menu/LevelSelectionObject", true);
-						}
-					}
+                    if (!onceLevel)
+                    {
+                        if (GameObject.Find("_StartMenu").GetComponent<StartMenu>().transitionFinished)
+                        {
+                            onceLevel = true;
+                            OnButtonDeclined();
+                            GameObject.Find("_StartMenu").GetComponent<StartMenu>().ChangeScenes("CharacterSelectionObject(Clone)", "Scenes/Menu/LevelSelectionObject", true);
+                        }
+                    }
 
                 }
-                else if (playerCursorSlot[i] > 4 && network.actionButton[playerCursorSlot[i] % 5] == 1 )
+                else if (playerCursorSlot[i] > 4 && network.actionButton[playerCursorSlot[i] % 5] == 1)
                 {
                     if (network.actionButton[playerCursorSlot[i] % 5] == 1)
                     {
@@ -379,42 +416,47 @@ public class CharacterMenu : MonoBehaviour
                         network.sendData("1004", playerCursorSlot[i] % 5);
                     }
 
-					if (!onceLevel) {
-						if(GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().transitionFinished) {
-							onceLevel = true;
-							OnButtonDeclined();
-							GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().ChangeScenes ("CharacterSelectionObject(Clone)", "Scenes/Menu/LevelSelectionObject", true);
-						}
-					}
+                    if (!onceLevel)
+                    {
+                        if (GameObject.Find("_StartMenu").GetComponent<StartMenu>().transitionFinished)
+                        {
+                            onceLevel = true;
+                            OnButtonDeclined();
+                            GameObject.Find("_StartMenu").GetComponent<StartMenu>().ChangeScenes("CharacterSelectionObject(Clone)", "Scenes/Menu/LevelSelectionObject", true);
+                        }
+                    }
                 }
 
 
-            } else {
-				counter++;
-			}
+            }
+            else
+            {
+                counter++;
+            }
         }
 
-		if (counter == playerCursor.Length) {
-			backButton[1].gameObject.SetActive(false);
-			backButton[0].gameObject.SetActive(true);
-		}
+        if (counter == playerCursor.Length)
+        {
+            backButton[1].gameObject.SetActive(false);
+            backButton[0].gameObject.SetActive(true);
+        }
     }
-	
+
     /// <summary>
     /// Adds a new phone player to the game.
     /// </summary>
     public void HandlePhonePlayerJoin(int slot)
     {
-       
+
         bool joined = false;
 
         if (currentPlayerCount < 4)
         {
             if (!playerSlotPhone[slot])
             {
-               
+
                 playerSlotPhone[slot] = true;
-				levelInfo.phonePlayerSlotTaken[slot] = true;
+                levelInfo.phonePlayerSlotTaken[slot] = true;
                 joined = true;
 
             }
@@ -440,79 +482,80 @@ public class CharacterMenu : MonoBehaviour
                 //playerCursorSlot[i] = -1;
                 //playerText[i].gameObject.SetActive(false);
                 //playerText[i].transform.position = new Vector2(-1200, playerText[i].transform.position.y);
-				playerCursor[i].GetComponent<Image>().enabled = false;
-				playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
+                playerCursor[i].GetComponent<Image>().enabled = false;
+                playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
 
 
             }
         }
     }
-	
-	void ScalePlayerCursorImage(int i) {
 
-		Vector3 originalScale = playerCursor[i].transform.localScale;
-		playerCursor[i].transform.localScale = Vector3.zero;
-		playerCursor[i].GetComponent<Image>().enabled = true;
-		playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = true;
-		StartCoroutine(playerCursor[i].transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
+    void ScalePlayerCursorImage(int i)
+    {
 
-	}
-	
+        Vector3 originalScale = playerCursor[i].transform.localScale;
+        playerCursor[i].transform.localScale = Vector3.zero;
+        playerCursor[i].GetComponent<Image>().enabled = true;
+        playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = true;
+        StartCoroutine(playerCursor[i].transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
+
+    }
+
     private void UpdatePlayerStatus()
     {
 
-		int newPhoneCount = 0;
-		int newControlCount = 0;
-		currentPlayerCount = 0;
-		
-		for (int i = 0; i < playerCursor.Length; i++)
-		{
-			if (playerSlot[i])
-			{
-				newControlCount++;
-				currentPlayerCount++;
-			}
-			
-			if (playerSlotPhone[i])
-			{
-				newPhoneCount++;
-				currentPlayerCount++;
-			}
-		}
-		
-		
-		bool phoneAdded = false; 
-		if (newPhone)
-		{
-			for (int i = 0; i < playerCursorSlot.Length; i++)
-			{
-				if (!phoneAdded && playerCursorSlot[i] == -1)
-				{
-					
-					playerCursorSlot[i] = newPhoneCount + 4;
-					playerCursor[i].SetActive(true);
-					playerCursor[i].GetComponent<Image>().enabled = false;
-					playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
-					phoneAdded = true;
-					newPhone = false;
-				}
-			}
-		}
-		
-		bool controllerAdded = false;
-		if (newControlCount < Input.GetJoystickNames().Length && currentPlayerCount<4)
-		{
-			playerSlot[Input.GetJoystickNames().Length - 1] = true;
-			for (int i = 0; i < playerCursorSlot.Length; i++)
-			{
-				if (!controllerAdded && playerCursorSlot[i] == -1)
+        int newPhoneCount = 0;
+        int newControlCount = 0;
+        currentPlayerCount = 0;
+
+        for (int i = 0; i < playerCursor.Length; i++)
+        {
+            if (playerSlot[i])
+            {
+                newControlCount++;
+                currentPlayerCount++;
+            }
+
+            if (playerSlotPhone[i])
+            {
+                newPhoneCount++;
+                currentPlayerCount++;
+            }
+        }
+
+
+        bool phoneAdded = false;
+        if (newPhone)
+        {
+            for (int i = 0; i < playerCursorSlot.Length; i++)
+            {
+                if (!phoneAdded && playerCursorSlot[i] == -1)
                 {
-                  
+
+                    playerCursorSlot[i] = newPhoneCount + 4;
+                    playerCursor[i].SetActive(true);
+                    playerCursor[i].GetComponent<Image>().enabled = false;
+                    playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
+                    phoneAdded = true;
+                    newPhone = false;
+                }
+            }
+        }
+
+        bool controllerAdded = false;
+        if (newControlCount < Input.GetJoystickNames().Length && currentPlayerCount < 4)
+        {
+            playerSlot[Input.GetJoystickNames().Length - 1] = true;
+            for (int i = 0; i < playerCursorSlot.Length; i++)
+            {
+                if (!controllerAdded && playerCursorSlot[i] == -1)
+                {
+
 
                     playerCursorSlot[i] = Input.GetJoystickNames().Length - 1; ;
                     playerCursor[i].SetActive(true);
-					playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
-					controllerAdded = true;
+                    playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().enabled = false;
+                    controllerAdded = true;
                 }
             }
         }
@@ -525,70 +568,93 @@ public class CharacterMenu : MonoBehaviour
             }
         }
 
-		bool change = false;
+        bool change = false;
 
-		for (int i = 0; i < playerCursor.Length; i++) {
-			if (playerCursorSlot[i]<5 && playerCursorSlot[i] >-1) {
-				
-				int runningNumber = playerCursorSlot[i] + 1;
-				
-				string curHorizontal = "P" + runningNumber + "_Horizontal";
-				string curVertical = "P" + runningNumber + "_Vertical";
-				
-				if (Input.GetAxis(curHorizontal) <= -0.2f || Input.GetAxis(curHorizontal) >= 0.2f) {
-					if (playerCursor[i].GetComponent<Image>().enabled == false) {
-						ScalePlayerCursorImage (i);
-						change = true;
-					}
-				} else if (Input.GetAxis(curVertical) <= -0.2f || Input.GetAxis(curVertical) >= 0.2f) {
-					if (playerCursor[i].GetComponent<Image>().enabled == false) {
-						ScalePlayerCursorImage (i);
-						change = true;
-					}
-				}
-			}
-			
-			else if(playerCursorSlot[i]>4) {
-				
-				if (network.horizontal[playerCursorSlot[i] % 5] <= -0.2f || network.horizontal[playerCursorSlot[i] % 5] >= 0.2f) {
-					if (playerCursor[i].GetComponent<Image>().enabled == false) {
-						ScalePlayerCursorImage (i);
-						change = true;
-					}
-				} else if (network.vertical[playerCursorSlot[i]%5] <= -0.2f || network.vertical[playerCursorSlot[i]%5] >= 0.2f) {
-					if (playerCursor[i].GetComponent<Image>().enabled == false) {
-						ScalePlayerCursorImage (i);
-						change = true;
-					}
-				}
-			}
-		}
+        for (int i = 0; i < playerCursor.Length; i++)
+        {
+            if (playerCursorSlot[i] < 5 && playerCursorSlot[i] > -1)
+            {
 
-		int playerNumberString= 0;
-		
-		if (change) {
-			for (int i = 0; i < playerCursor.Length; i++) {
-				if (playerCursor[i].GetComponent<Image>().enabled == true) {
-					playerNumberString++;
-					playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().text = playerNumberString.ToString();
-					
-					if (playerNumberString == 1) {
-						playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite> ("Menu/CharacterSelectionMenu/1");
-					} else if (playerNumberString == 2) {
-						playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite> ("Menu/CharacterSelectionMenu/2");
-					} else if (playerNumberString == 3) {
-						playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite> ("Menu/CharacterSelectionMenu/3");
-					} else if (playerNumberString == 4) {
-						playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite> ("Menu/CharacterSelectionMenu/4");
-					}
-				}
-			}
-		}
-		
-	}
-	
-	
-	/*private void Countdown()
+                int runningNumber = playerCursorSlot[i] + 1;
+
+                string curHorizontal = "P" + runningNumber + "_Horizontal";
+                string curVertical = "P" + runningNumber + "_Vertical";
+
+                if (Input.GetAxis(curHorizontal) <= -0.2f || Input.GetAxis(curHorizontal) >= 0.2f)
+                {
+                    if (playerCursor[i].GetComponent<Image>().enabled == false)
+                    {
+                        ScalePlayerCursorImage(i);
+                        change = true;
+                    }
+                }
+                else if (Input.GetAxis(curVertical) <= -0.2f || Input.GetAxis(curVertical) >= 0.2f)
+                {
+                    if (playerCursor[i].GetComponent<Image>().enabled == false)
+                    {
+                        ScalePlayerCursorImage(i);
+                        change = true;
+                    }
+                }
+            }
+
+            else if (playerCursorSlot[i] > 4)
+            {
+
+                if (network.horizontal[playerCursorSlot[i] % 5] <= -0.2f || network.horizontal[playerCursorSlot[i] % 5] >= 0.2f)
+                {
+                    if (playerCursor[i].GetComponent<Image>().enabled == false)
+                    {
+                        ScalePlayerCursorImage(i);
+                        change = true;
+                    }
+                }
+                else if (network.vertical[playerCursorSlot[i] % 5] <= -0.2f || network.vertical[playerCursorSlot[i] % 5] >= 0.2f)
+                {
+                    if (playerCursor[i].GetComponent<Image>().enabled == false)
+                    {
+                        ScalePlayerCursorImage(i);
+                        change = true;
+                    }
+                }
+            }
+        }
+
+        int playerNumberString = 0;
+
+        if (change)
+        {
+            for (int i = 0; i < playerCursor.Length; i++)
+            {
+                if (playerCursor[i].GetComponent<Image>().enabled == true)
+                {
+                    playerNumberString++;
+                    playerCursor[i].transform.Find("PlayerNumberText").GetComponent<Text>().text = playerNumberString.ToString();
+
+                    if (playerNumberString == 1)
+                    {
+                        playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Menu/CharacterSelectionMenu/1");
+                    }
+                    else if (playerNumberString == 2)
+                    {
+                        playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Menu/CharacterSelectionMenu/2");
+                    }
+                    else if (playerNumberString == 3)
+                    {
+                        playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Menu/CharacterSelectionMenu/3");
+                    }
+                    else if (playerNumberString == 4)
+                    {
+                        playerText[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Menu/CharacterSelectionMenu/4");
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    /*private void Countdown()
     {
 
         if (timeRemaining > 0.0f)
@@ -656,55 +722,58 @@ public class CharacterMenu : MonoBehaviour
             {
                 if (playerCursorSlot[i] > -1 && playerCursorSlot[i] < 5)
                 {
-					if (playerSelection[i] > -1) {
-						levelInfo.playerSlot[playerCursorSlot[i]] = playerClassNames[playerSelection[i]];
-					}
+                    if (playerSelection[i] > -1)
+                    {
+                        levelInfo.playerSlot[playerCursorSlot[i]] = playerClassNames[playerSelection[i]];
+                    }
                 }
                 else if (playerCursorSlot[i] > 4)
                 {
-					if (playerSelection[i] > -1) {
-						levelInfo.phonePlayerSlot[playerCursorSlot[i] % 5] = playerClassNames[playerSelection[i]];
-					}
+                    if (playerSelection[i] > -1)
+                    {
+                        levelInfo.phonePlayerSlot[playerCursorSlot[i] % 5] = playerClassNames[playerSelection[i]];
+                    }
                 }
             }
-        }   
+        }
 
     }
 
     private void HandleSelection()
     {
         bool[] changed = new bool[4];
-       
-        for (int i = 0; i < playerCursor.Length; i++)        {
+
+        for (int i = 0; i < playerCursor.Length; i++)
+        {
 
             int runningNumber = i + 1;
             string curSubmit = "P" + runningNumber + "_Ability";
             for (int j = 0; j < playerSelection.Length; j++)
             {
-                
 
-                if (playerCursorSlot[i]>-1 && playerCursorSlot[i]<5 && Input.GetButtonDown(curSubmit) && playerSelection[i] == -1 && currentHoveredChar[i] == j && charSelectionStatus[j] == 1 )
+
+                if (playerCursorSlot[i] > -1 && playerCursorSlot[i] < 5 && Input.GetButtonDown(curSubmit) && playerSelection[i] == -1 && currentHoveredChar[i] == j && charSelectionStatus[j] == 1)
                 {
                     PlaySpawnSound(j);
                     SetCoundownFalse();
                     playerSelection[i] = j;
                     charSelectionStatus[j] = 2;
-                    
-                    playerText[i].transform.position = new Vector2( playerTypes[j].transform.position.x,playerText[j].transform.position.y);
+
+                    playerText[i].transform.position = new Vector2(playerTypes[j].transform.position.x, playerText[j].transform.position.y);
                     playerText[i].gameObject.SetActive(true);
 
                     playerCursor[i].SetActive(false);
                     changed[i] = true;
 
                 }
-                else if (playerCursorSlot[i] > 4 && network.actionButton[playerCursorSlot[i]%5] == 1 && playerSelection[i] == -1 && currentHoveredChar[i] == j && charSelectionStatus[j] == 1)
+                else if (playerCursorSlot[i] > 4 && network.actionButton[playerCursorSlot[i] % 5] == 1 && playerSelection[i] == -1 && currentHoveredChar[i] == j && charSelectionStatus[j] == 1)
                 {
                     PlaySpawnSound(j);
                     SetCoundownFalse();
-                    if (network.actionButton[playerCursorSlot[i]%5] == 1)
+                    if (network.actionButton[playerCursorSlot[i] % 5] == 1)
                     {
                         network.actionButton[playerCursorSlot[i] % 5] = 0;
-                        network.sendData("1004", playerCursorSlot[i]%5);
+                        network.sendData("1004", playerCursorSlot[i] % 5);
                     }
                     playerSelection[i] = j;
                     charSelectionStatus[j] = 2;
@@ -714,16 +783,16 @@ public class CharacterMenu : MonoBehaviour
                     changed[i] = true;
 
                 }
-               
+
             }
 
             if (changed[i] == false)
             {
 
-                if (playerCursorSlot[i]<5 && Input.GetButtonDown(curSubmit)  && playerSelection[i] >= 0)
-                {                                       
+                if (playerCursorSlot[i] < 5 && Input.GetButtonDown(curSubmit) && playerSelection[i] >= 0)
+                {
                     playerCursor[i].SetActive(true);
-                    playerCursor[i].transform.position = new Vector3(charMargins[playerSelection[i]].transform.position.x,charMargins[playerSelection[i]].transform.position.y-height/2,0) ;
+                    playerCursor[i].transform.position = new Vector3(charMargins[playerSelection[i]].transform.position.x, charMargins[playerSelection[i]].transform.position.y - height / 2, 0);
 
                     playerText[i].gameObject.SetActive(false);
                     playerText[i].transform.position = new Vector2(-1200, playerText[i].transform.position.y);
@@ -731,7 +800,9 @@ public class CharacterMenu : MonoBehaviour
                     charSelectionStatus[playerSelection[i]] = 0;
                     playerSelection[i] = -1;
 
-                }else if(playerCursorSlot[i]>4 && network.actionButton[playerCursorSlot[i]%5] == 1 && playerSelection[i]>=0){
+                }
+                else if (playerCursorSlot[i] > 4 && network.actionButton[playerCursorSlot[i] % 5] == 1 && playerSelection[i] >= 0)
+                {
 
                     if (network.actionButton[playerCursorSlot[i] % 5] == 1)
                     {
@@ -740,7 +811,7 @@ public class CharacterMenu : MonoBehaviour
                     }
 
                     playerCursor[i].SetActive(true);
-                    playerCursor[i].transform.position = new Vector3(charMargins[playerSelection[i]].transform.position.x,charMargins[playerSelection[i]].transform.position.y-height/2,0) ;
+                    playerCursor[i].transform.position = new Vector3(charMargins[playerSelection[i]].transform.position.x, charMargins[playerSelection[i]].transform.position.y - height / 2, 0);
 
                     playerText[i].gameObject.SetActive(false);
                     playerText[i].transform.position = new Vector2(-1200, playerText[i].transform.position.y);
@@ -755,7 +826,7 @@ public class CharacterMenu : MonoBehaviour
 
     private bool CheckBackButtonHover(int index)
     {
-        if(Vector3.Distance(playerCursor[index].transform.position, backButton[0].transform.position) < backDistance)
+        if (Vector3.Distance(playerCursor[index].transform.position, backButton[0].transform.position) < backDistance)
         {
             return true;
         }
@@ -767,7 +838,7 @@ public class CharacterMenu : MonoBehaviour
     {
         for (int i = 0; i < playerCursor.Length; i++)
         {
-            if (playerCursorSlot[i]<5 && playerCursorSlot[i] >-1)
+            if (playerCursorSlot[i] < 5 && playerCursorSlot[i] > -1)
             {
                 float x = 0.0f;
                 float y = 0.0f;
@@ -778,15 +849,15 @@ public class CharacterMenu : MonoBehaviour
 
                 if (Input.GetAxis(curHorizontal) <= -0.2f || Input.GetAxis(curHorizontal) >= 0.2f)
                 {
-                    x = Input.GetAxisRaw(curHorizontal) * speed* Time.deltaTime;
+                    x = Input.GetAxisRaw(curHorizontal) * speed * Time.deltaTime;
 
                 }
                 if (Input.GetAxis(curVertical) <= -0.2f || Input.GetAxis(curVertical) >= 0.2f)
                 {
-                    y = Input.GetAxisRaw(curVertical) * -speed *Time.deltaTime;
+                    y = Input.GetAxisRaw(curVertical) * -speed * Time.deltaTime;
                 }
 
-               
+
                 if (playerCursor[i].transform.position.x >= 0.0f && playerCursor[i].transform.position.x <= Screen.width && playerCursor[i].transform.position.y >= 0.0f && playerCursor[i].transform.position.y <= Screen.height)
                 {
                     playerCursor[i].transform.Translate(new Vector3(x, y, 0.0f));
@@ -806,12 +877,12 @@ public class CharacterMenu : MonoBehaviour
 
                     if (playerCursor[i].transform.position.y < 0.0f)
                     {
-                        playerCursor[i].transform.position = new Vector2(playerCursor[i].transform.position.x, Screen.height);
+                        playerCursor[i].transform.position = new Vector2(playerCursor[i].transform.position.x, playerCursor[i].transform.position.y + Screen.height);
                     }
 
                     if (playerCursor[i].transform.position.y > Screen.height)
                     {
-                        playerCursor[i].transform.position = new Vector2(playerCursor[i].transform.position.x,0.0f);
+                        playerCursor[i].transform.position = new Vector2(playerCursor[i].transform.position.x, playerCursor[i].transform.position.y - Screen.height);
                     }
 
                 }
@@ -819,17 +890,17 @@ public class CharacterMenu : MonoBehaviour
 
             }
 
-            else if(playerCursorSlot[i]>4)
+            else if (playerCursorSlot[i] > 4)
             {
                 float x = 0.0f;
                 float y = 0.0f;
 
 
-                    x = network.horizontal[playerCursorSlot[i] % 5] * speed* Time.deltaTime;
+                x = network.horizontal[playerCursorSlot[i] % 5] * speed * Time.deltaTime;
 
                 //if (network.vertical[playerCursorSlot[i]%5] <= -0.2f || network.vertical[playerCursorSlot[i]%5] >= 0.2f)
                 //{
-                    y = network.vertical[playerCursorSlot[i]%5]*-speed * Time.deltaTime;
+                y = network.vertical[playerCursorSlot[i] % 5] * -speed * Time.deltaTime;
                 //}
 
                 if (playerCursor[i].transform.position.x >= 0.0f && playerCursor[i].transform.position.x <= Screen.width && playerCursor[i].transform.position.y >= 0.0f && playerCursor[i].transform.position.y <= Screen.height)
@@ -862,7 +933,7 @@ public class CharacterMenu : MonoBehaviour
                 }
 
             }
-            
+
         }
 
 
@@ -899,22 +970,76 @@ public class CharacterMenu : MonoBehaviour
                 // playerText[i].text = "";
             }
 
-            if (playerCursorSlot[i] !=-1)
+            if (playerCursorSlot[i] != -1)
             {
                 playerStatus[i].gameObject.SetActive(true);
 
-            }else
+            }
+            else
             {
 
                 playerStatus[i].gameObject.SetActive(false);
             }
-		
+
         }
 
     }
-	
+
+    //private void CheckHover()
+    //{
+    //    bool[] changed = new bool[4];
+    //    bool[] currentChange = new bool[4];
+    //    for (int i = 0; i < playerCursor.Length; i++)
+    //    {
+    //        if (playerCursor[i].activeInHierarchy)
+    //        {
+    //            for (int j = 0; j < playerTypes.Length; j++)
+    //            {
+    //                if ((playerTypes[j].transform.position.x - (width / 2)) <= playerCursor[i].transform.position.x && (playerTypes[j].transform.position.x + (width / 2)) >= playerCursor[i].transform.position.x
+    //                   && (playerTypes[j].transform.position.y - (height / 2)) <= playerCursor[i].transform.position.y && (playerTypes[j].transform.position.y + (height / 2)) >= playerCursor[i].transform.position.y)
+    //                {
+
+    //                    if (charSelectionStatus[j] != 2)
+    //                    {
+    //                        currentHoveredChar[i] = j;
+    //                        currentChange[i] = true;
+
+    //                        charSelectionStatus[j] = 1;
+    //                        changed[j] = true;
+
+    //                    }
+
+    //                }
+    //                if (currentChange[i] == false)
+    //                {
+    //                    currentHoveredChar[i] = -1;
+    //                }
+
+    //                if (changed[j] == false)
+    //                {
+
+
+    //                    if (charSelectionStatus[j] == 1)
+    //                    {
+
+    //                        charSelectionStatus[j] = 0;
+    //                    }
+
+
+    //                } 
+    //}   
+    //        }
+    //    }
+    //}
+
+
+
     private void CheckHover()
     {
+        if (!startChecking)
+        {
+            return;
+        }
         bool[] changed = new bool[4];
         bool[] currentChange = new bool[4];
         for (int i = 0; i < playerCursor.Length; i++)
@@ -923,8 +1048,8 @@ public class CharacterMenu : MonoBehaviour
             {
                 for (int j = 0; j < playerTypes.Length; j++)
                 {
-                    if ((playerTypes[j].transform.position.x - (width / 2)) <= playerCursor[i].transform.position.x && (playerTypes[j].transform.position.x + (width / 2)) >= playerCursor[i].transform.position.x
-                       && (playerTypes[j].transform.position.y - (height / 2)) <= playerCursor[i].transform.position.y && (playerTypes[j].transform.position.y + (height / 2)) >= playerCursor[i].transform.position.y)
+                    if ((widthStart + widthStep * (j) - widthStep / 2) <= playerCursor[i].transform.position.x && ((widthStart + widthStep * (j) + widthStep / 2)) >= playerCursor[i].transform.position.x
+                       && (heightStart - (heightStep / 2)) <= playerCursor[i].transform.position.y && (heightStart + (heightStep / 2)) >= playerCursor[i].transform.position.y)
                     {
 
                         if (charSelectionStatus[j] != 2)
@@ -954,12 +1079,12 @@ public class CharacterMenu : MonoBehaviour
                         }
 
 
-                    } 
-				}   
+                    }
+                }
             }
         }
     }
-   
+
     /// <summary>
     /// Calls the CrushPolys function is every player has selected a char. Gets called every time if a player confirms his/her selection
     /// </summary>
@@ -969,49 +1094,56 @@ public class CharacterMenu : MonoBehaviour
 
         for (int i = 0; i < charSelectionStatus.Length; i++)
         {
-            if (playerSelection[i] >= 0 ||playerSelection[i] == -2)
+            if (playerSelection[i] >= 0 || playerSelection[i] == -2)
             {
-				playerHasChosen++;
+                playerHasChosen++;
             }
 
         }
 
-		if (playerHasChosen == 0) {
-			gamerCountdown.SetActive(false);
-			infoBar.transform.localPosition = originalVecInfo;
-			first = true;
-		}
+        if (playerHasChosen == 0)
+        {
+            gamerCountdown.SetActive(false);
+            infoBar.transform.localPosition = originalVecInfo;
+            first = true;
+        }
 
-		if (gamerCountdownTime <= 0f) {
+        if (gamerCountdownTime <= 0f)
+        {
 
-			gamerCountdown.SetActive(false);
-			infoBar.transform.localPosition = originalVecInfo;
-			first = true;
+            gamerCountdown.SetActive(false);
+            infoBar.transform.localPosition = originalVecInfo;
+            first = true;
 
-			return true;
+            return true;
 
-		}
+        }
 
-		if (playerHasChosen > 0) {
+        if (playerHasChosen > 0)
+        {
 
-			if (first) {
-				timeBeginning = Time.time;
-				gamerCountdownTime = 10.0f;
-				gamerCountdown.SetActive(true);
-				infoBar.transform.localPosition = new Vector3 (infoBar.transform.localPosition.x, -200, 0);
-				first = false;
-			} else {
-				gamerCountdownTime = 10 - (Time.time - timeBeginning);
-				GameObject.Find("GameStartsText").GetComponent<Text> ().text = ((int)(gamerCountdownTime)).ToString();
-			}
+            if (first)
+            {
+                timeBeginning = Time.time;
+                gamerCountdownTime = 20.0f;
+                gamerCountdown.SetActive(true);
+                infoBar.transform.localPosition = new Vector3(infoBar.transform.localPosition.x, -200, 0);
+                first = false;
+            }
+            else
+            {
+                gamerCountdownTime = 20 - (Time.time - timeBeginning);
+                GameObject.Find("GameStartsText").GetComponent<Text>().text = ((int)(gamerCountdownTime)).ToString();
+            }
 
-		}
+        }
 
-		if (currentPlayerCount == playerHasChosen && gamerCountdownTime > 4f) {
-			timeBeginning -= gamerCountdownTime - 4f;
-		}
-		
-		return false;
+        if (currentPlayerCount == playerHasChosen && gamerCountdownTime > 4f)
+        {
+            timeBeginning -= gamerCountdownTime - 4f;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -1094,7 +1226,7 @@ public class CharacterMenu : MonoBehaviour
             //Debug.Log(async.progress);
         }
         Debug.Log("level loaded 90%");
-		GameObject.Find("slide_text").GetComponent<Image>().enabled = true;
+        GameObject.Find("slide_text").GetComponent<Image>().enabled = true;
         levelLoaded = true;
         yield return async;
     }
@@ -1113,7 +1245,7 @@ public class CharacterMenu : MonoBehaviour
         }
         else
         {
-			yield return new WaitForSeconds(acceptSound.length);
+            yield return new WaitForSeconds(acceptSound.length);
             CrushPolys();
         }
     }
@@ -1131,8 +1263,8 @@ public class CharacterMenu : MonoBehaviour
         switch (character)
         {
             case 0:
-                if(spawnTimeshifter != null)
-                    spawnTimeshifter.PlayRandomClip();
+                if (spawnTimeshifter != null)
+                    spawnBirdman.PlayRandomClip();
                 break;
             case 1:
                 if (spawnCharger != null)
@@ -1144,7 +1276,7 @@ public class CharacterMenu : MonoBehaviour
                 break;
             case 3:
                 if (spawnBirdman != null)
-                    spawnBirdman.PlayRandomClip();
+                    spawnTimeshifter.PlayRandomClip();
                 break;
         }
     }
