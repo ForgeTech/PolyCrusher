@@ -107,18 +107,16 @@ public class CharacterMenu : MonoBehaviour
     //async loading
     private AsyncOperation async;
     private bool levelLoaded = false;
-    private bool isLoading = false;
+    
 
-    //slides
-    private bool show_once = false;
-
+   
     //countdown bools
     private bool zero = false;
     private bool one = false;
     private bool two = false;
     private bool three = false;
 
-    private bool once = true;
+
     bool onceLevel = false;
 
     int playerHasChosen = 0;
@@ -126,7 +124,7 @@ public class CharacterMenu : MonoBehaviour
     GameObject infoBar;
     GameObject gamerCountdown;
 
-    Vector3 originalVecCountdown;
+
     Vector3 originalVecInfo;
 
     float gamerCountdownTime;
@@ -156,7 +154,7 @@ public class CharacterMenu : MonoBehaviour
         infoBar = GameObject.Find("InfoBar");
         gamerCountdown = GameObject.Find("GameStartsImage");
 
-        originalVecCountdown = gamerCountdown.transform.localPosition;
+        //originalVecCountdown = gamerCountdown.transform.localPosition;
         originalVecInfo = infoBar.transform.localPosition;
 
         gamerCountdown.SetActive(false);

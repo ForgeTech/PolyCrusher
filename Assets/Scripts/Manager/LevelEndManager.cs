@@ -11,7 +11,7 @@ public delegate void LevelExitDelegate();
 
 public class LevelEndManager : MonoBehaviour {
 
-	Camera cam;
+	//Camera cam;
 	GameObject camObject;
 	GameManager gameManager;
 
@@ -58,7 +58,7 @@ public class LevelEndManager : MonoBehaviour {
 
 		if (camObject != null) {
 
-			cam = camObject.GetComponent<Camera>();
+			//cam = camObject.GetComponent<Camera>();
 
 			UnityStandardAssets.ImageEffects.ColorCorrectionCurves ccc = camObject.GetComponent<UnityStandardAssets.ImageEffects.ColorCorrectionCurves> ();
 

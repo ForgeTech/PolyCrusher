@@ -131,6 +131,14 @@ public class PolygonSystem : MonoBehaviour
 
     private Vector3[] cornerPoints;
 
+
+    //stuff for 
+
+
+
+
+
+
     void Awake()
     {
         BasePlayer.PlayerDied += UpdatePlayerStatus;
@@ -141,9 +149,9 @@ public class PolygonSystem : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         whiteScreen = screenFade.AddComponent<Image>();
         whiteScreen.color = Color.clear;
-        screenFade.transform.parent = transform;
-        
+        screenFade.transform.SetParent(this.transform, false);
 
+   
 
 
     }
@@ -283,7 +291,27 @@ public class PolygonSystem : MonoBehaviour
 
         enemies = new List<GameObject>();
         affectedEnemies = new List<GameObject>();
+        RestoreStuff();
         
+
+    }
+
+
+
+
+    void RestoreStuff()
+    {
+
+        for(int i = 0; i < players.Length; i++)
+        {
+            players[i].GetComponent<BasePlayer>().Health = 100;
+            players[i].GetComponent<BasePlayer>().Energy = 50;
+
+
+        }
+
+        StartCoroutine("PlayerInvincibility");
+
 
     }
 
@@ -320,7 +348,7 @@ public class PolygonSystem : MonoBehaviour
                 {
                     if (playerScripts[i] != null)
                     {
-                        playerScripts[i].Energy = 0;
+                        //playerScripts[i].Energy = 0;
                         //playerScripts[i].Invincible = true;
                     }
 
@@ -332,11 +360,34 @@ public class PolygonSystem : MonoBehaviour
                 
                
               
-                //StartCoroutine("InvicibleShutOff");
+                
 
 
             }
         }
+    }
+
+
+    IEnumerator PlayerInvincibility()
+    {
+
+        for(int i = 0; i < players.Length; i++)
+        {
+
+            playerScripts[i].Invincible = true;
+        }
+
+
+        yield return new WaitForSeconds(2.0f);
+
+
+        for (int i = 0; i < players.Length; i++)
+        {
+
+            playerScripts[i].Invincible = false;
+        }
+
+
     }
 
 
@@ -455,16 +506,10 @@ public class PolygonSystem : MonoBehaviour
                 }
 
                 else if (playerEnergyCheck != 0 && polyStart && !polyIsEnding)
-                {
-                    //Debug.Log("ends");
+                {                    
                     polyIsEnding = true;
                 }
             }
-
-
-
-
-
 
 
 
@@ -479,11 +524,7 @@ public class PolygonSystem : MonoBehaviour
             if (polyIsFailing && !polyIsEnding && !polyIsStarting)
             {
                 PolyFailAnimation();
-            }
-
-
-
-            
+            }           
 
 
 
@@ -514,15 +555,8 @@ public class PolygonSystem : MonoBehaviour
                     }
                 }
             }
-
-
            
             HandleSpecialPolygon();
-
-            //if( !polyIsLoading && !polyIsFailing && !polyIsEnding)
-            //{
-                
-            //}
             
         }
         else
@@ -530,13 +564,8 @@ public class PolygonSystem : MonoBehaviour
             for (int i = 0; i < renderers.Length; i++)
             {
                 renderers[i].material = mats[1];
-
             }
-
-        }
-
-
-        
+        }    
 
 
 
@@ -558,16 +587,6 @@ public class PolygonSystem : MonoBehaviour
 
     private void UpdatePolyLerpDistance()
     {
-
-        Vector3 middle = new Vector3();
-
-        for (int i = 0; i < players.Length; i++)
-        {
-            middle += players[i].transform.position;
-        }
-        middle /= players.Length;
-
-
         float distance = 0.0f;
         bool firstSet = false;
 
@@ -586,29 +605,12 @@ public class PolygonSystem : MonoBehaviour
                 {
                     distance = distanceNew;
                 }
-
-
             }
-
-
         }
-
-
-
-
-
-
-        //for (int i = 0; i < players.Length; i++)
-        //{
-        //    float distanceNew = Vector3.Distance(players[i].transform.position, middle);
-
-            
-            
-        //}
 
         distance /= requiredPolyDistance ;
         polyLerpDistance = distance;
-        //Debug.Log(polyLerpDistance);
+        
     }
 
     private void UpdatePolyMaterial()
@@ -644,57 +646,19 @@ public class PolygonSystem : MonoBehaviour
         if (polyFailAnimLerpTime <= 1.0f)
         {
             polyFailAnimLerpTime += Time.deltaTime;
-
         }
-
+       
+        Debug.Log("fail");     
 
         for (int i = 0; i < renderers.Length; i++)
-        {
-            renderers[i].material.Lerp(mats[2], mats[1], polyFailAnimLerpTime * 2);
-        }
+        {           
+            renderers[i].material.Lerp(mats[4], mats[0], polyLerpDistance);
+            renderers[i].material.Lerp(mats[3], renderers[i].material , polyFailAnimLerpTime * 2);
+        }       
 
-
-        if (polyFailAnimLerpTime >= 0.0f)
-        {
-            if (!polyFailTween)
-            {
-                polyFailTween = true;
-
-                Vector3 newScale = new Vector3(1.0f, 2.0f, 1.0f);
-                for (int i = 0; i < polyParts.Length; i++)
-                {
-                    StartCoroutine(polyParts[i].transform.ScaleTo(newScale, 0.4f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
-                }
-            }
-        }
-
-        if (polyFailAnimLerpTime >= 0.4f)
-        {
-            if (!polyFailTween2)
-            {
-                polyFailTween2 = true;
-
-                Vector3 newScale = new Vector3(1.0f, 1.0f, 1.0f);
-                for (int i = 0; i < polyParts.Length; i++)
-                {
-                    StartCoroutine(polyParts[i].transform.ScaleTo(newScale, 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
-                }
-            }
-        }
-
-
-        if (polyFailAnimLerpTime > 1.0f && polyFailTween)
-        {
-            for (int i = 0; i < polyParts.Length; i++)
-            {
-                polyOffsets[i] = polyStartHeight;
-                renderers[i].material = mats[1];
-            }
-
-            polyStart = false;
-            polyIsFailing = false;
-            polyFailTween = false;
-            polyFailTween2 = false;
+        if (polyFailAnimLerpTime > 1.0f)
+        {           
+            polyIsFailing = false;          
             polyFailAnimLerpTime = 0.0f;
             currentCooldown = transitionCooldown;
         }

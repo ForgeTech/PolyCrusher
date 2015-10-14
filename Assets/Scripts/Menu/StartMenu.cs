@@ -78,7 +78,7 @@ public class StartMenu : MonoBehaviour {
 			Sprite sprite = new Sprite ();
 			sprite = Sprite.Create (tex, new Rect (0, 0, Screen.width, Screen.height), new Vector2 (0, 0), 100.0f);
 			
-			GameObject picture = Instantiate (Resources.Load ("Scenes/Menu/MenuPicture")) as GameObject;
+			Instantiate (Resources.Load ("Scenes/Menu/MenuPicture"));
 			
 			GameObject.Find ("MenuPictureImage").GetComponent<Image> ().sprite = sprite;
 			

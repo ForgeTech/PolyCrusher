@@ -408,7 +408,7 @@ public class PlayerNetCommunicate : MonoBehaviour
 			try {
 				byte[] answerByte = socket.Receive (ref ipSender);
 				data = Encoding.ASCII.GetString (answerByte, 0, answerByte.Length);
-			} catch (Exception e) {}
+			} catch (Exception e) { Debug.Log(e); }
 					
 			if (debugLogs) {
 				Debug.Log(data);

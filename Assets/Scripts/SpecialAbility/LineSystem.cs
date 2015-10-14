@@ -40,7 +40,7 @@ public class LineSystem : MonoBehaviour {
     private Vector3[] oldPlayerPosition;
 
     private float[] incremenetTimers;
-    private float[] incrementEnergyTimers;
+   // private float[] incrementEnergyTimers;
 
     private bool[] playerMoved;
     private bool[] playerHealing;
@@ -81,7 +81,7 @@ public class LineSystem : MonoBehaviour {
         lerpTimes = new float[4];
 
         energyFillUp = new bool[4];
-        incrementEnergyTimers = new float[4];
+        //incrementEnergyTimers = new float[4];
 
         healingparticles = new GameObject[4];
         energyParticles = new ParticleSystem[4];

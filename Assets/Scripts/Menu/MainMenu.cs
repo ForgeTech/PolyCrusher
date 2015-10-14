@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
     private bool[] playerSlotPhone = new bool[4];
 
     public int currentPlayerCount;
-    bool newPhone = false;
+    //bool newPhone = false;
 
 
     private bool selectedChange = false;
@@ -250,7 +250,7 @@ public class MainMenu : MonoBehaviour
 
             if (joined)
             {
-                newPhone = true;
+                //newPhone = true;
             }
 
         }

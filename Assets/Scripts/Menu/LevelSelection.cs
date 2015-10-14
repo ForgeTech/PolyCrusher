@@ -21,7 +21,7 @@ public class LevelSelection : MonoBehaviour
 
     private Vector2 middlePos;
     private float distance;
-    private float buttonSize;
+
 
 
     private int playerCount;
@@ -35,10 +35,10 @@ public class LevelSelection : MonoBehaviour
     private bool[] playerSlotPhone = new bool[4];
 
     public int currentPlayerCount;
-    bool newPhone = false;
+    //bool newPhone = false;
 
 
-    private float animationTime = 0.0f;
+    //private float animationTime = 0.0f;
     private float inputCooldown = 0.2f;
 
     private bool inputReceived = false;
@@ -116,7 +116,7 @@ public class LevelSelection : MonoBehaviour
 
         Debug.Log(distance);
 
-        buttonSize = Screen.height / 2.7f;
+        //buttonSize = Screen.height / 2.7f;
 
         maxPlayers = 4;
 
@@ -149,7 +149,6 @@ public class LevelSelection : MonoBehaviour
             if (levelInfo.phonePlayerSlotTaken[i] && playerCount < 4)
             {
                 playerSlotPhone[i] = true;
-                //levelInfo.phonePlayerSlotTaken[i] = true;
                 currentPlayerCount++;
 
             }
@@ -235,7 +234,7 @@ public class LevelSelection : MonoBehaviour
 
             if (joined)
             {
-                newPhone = true;
+                //newPhone = true;
             }
 
         }
@@ -351,7 +350,7 @@ public class LevelSelection : MonoBehaviour
 	private IEnumerator TranslateRight() {
 
 		float x = 0;
-		float seconds = 0.01f;
+		
 		
 		StartCoroutine(buttons[selected].transform.ScaleTo(new Vector3(1, 1, 1) * 0.6f, 0.35f));
 
@@ -392,7 +391,7 @@ public class LevelSelection : MonoBehaviour
 	private IEnumerator TranslateLeft() {
 
 		float x = 0;
-		float seconds = 0.01f;
+
 
 		levelTransformBack--;
 		
