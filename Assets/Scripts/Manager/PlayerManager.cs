@@ -272,7 +272,7 @@ public class PlayerManager : MonoBehaviour
 		GameObject prefab;
 		string[] characterArray = new string[4] {"Timeshifter", "Charger", "Fatman", "Birdman"};
 		bool[] characterTaken = new bool[4] {false, false, false, false};
-		string playerPref = "";
+		//string playerPref = "";
 		bool join = false;
 		
 		if (playerCount < 4) {

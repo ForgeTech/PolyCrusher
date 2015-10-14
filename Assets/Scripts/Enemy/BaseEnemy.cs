@@ -71,6 +71,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [SerializeField]
     protected float attackRange = 2f;
 
+
+
     // The player target.
     protected Transform targetPlayer;
 

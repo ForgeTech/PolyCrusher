@@ -118,7 +118,7 @@ public class PowerUpItem :   BaseItem {
 			//pendingObject.GetComponent<RotateObject>();
 			SphereCollider pendingSphereCollider = pendingObject.GetComponent<SphereCollider>();
 			pendingSphereCollider.enabled = false;
-			Vector3 pendingObjectOriginScale = pendingObject.transform.localScale;
+			//Vector3 pendingObjectOriginScale = pendingObject.transform.localScale;
 			pendingObject.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
 			//StartCoroutine(pendingObject.transform.ScaleTo(new Vector3(1f,1f,1f), 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
 			StartCoroutine(Tween(pendingObject.transform, new Vector3(1f,1f,1f), 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));

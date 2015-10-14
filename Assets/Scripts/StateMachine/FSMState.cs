@@ -7,12 +7,21 @@ using System.Collections.Generic;
 /// </summary>
 public enum Transition
 {
+    // Enemy Transitions
     NullTransition = 0,
     SawPlayer = 1,
     InPlayerAttackRange = 2,
     LostPlayerAttackRange = 3,
     Walking = 4,
     ReachedDestination = 5,
+
+    //Boss Transition
+    DecisionMelee = 6,
+    DecisionRanged = 7,
+    DecisionSpecial = 8,
+    DecisionMobSpawn = 9,
+    DecisionSprint = 10,
+    AttackFinished = 11,
 }
 
 /// <summary>
@@ -20,12 +29,22 @@ public enum Transition
 /// </summary>
 public enum StateID
 {
+    //Enemy Transitions
     NullStateID = 0,
     Idle = 1,
     FollowPlayer = 2,
     AttackPlayer = 3,
     WalkTowardsTarget = 4,
     ShootPlayer = 5,
+
+    //Boss Transitions
+    BossIdle = 6,
+    BossAttackMelee = 7,
+    BossWalk = 8,
+    BossSprint = 9,
+    BossAttackRanged = 10,
+    BossAttackSpecial = 11,
+    BossMobSpawn = 12,
 }
 
 /// <summary>

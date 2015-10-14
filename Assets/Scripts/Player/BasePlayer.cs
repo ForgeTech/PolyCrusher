@@ -854,6 +854,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         
         // Start disabling routine
         StartCoroutine(WaitForDisable(deathTime));
+
+        // Set invincible to false
+        if (Invincible)
+            Invincible = false;
     }
 
     /// <summary>
