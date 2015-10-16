@@ -243,7 +243,7 @@ public class ChickenBehaviour : MonoBehaviour
     /// <returns></returns>
     protected Transform[] GetAllEnemiesInRange(float range)
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, range);
+        Collider[] hits = Physics.OverlapSphere(transform.position, range, 1 << 9); // Only Enemies
         Transform[] enemies = new Transform[hits.Length];
 
         for (int i = 0; i < hits.Length; i++)

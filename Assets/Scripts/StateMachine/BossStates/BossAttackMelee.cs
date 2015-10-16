@@ -124,6 +124,7 @@ public class BossAttackMelee : FSMState
 
         stateChanged = false;
         attackStarted = false;
+        //currentAttackTimer = 0f;
     }
 
     /// <summary>
@@ -144,6 +145,19 @@ public class BossAttackMelee : FSMState
 
             // Raycast hit check
             bool hit = Physics.Raycast(ray, out hitInfo, e.AttackRange, 1 << playerLayer);
+
+            // Check if the payer target equals the collided target.
+            if (hit)
+            {
+                MonoBehaviour m = hitInfo.transform.GetComponent<MonoBehaviour>();
+
+                if (m != null && m is BasePlayer)
+                {
+                    // If the names aren't equal there is no hit.
+                    if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
+                        hit = false;
+                }
+            }
 
             // Debug draw Ray
             Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * e.AttackRange, Color.yellow);
@@ -175,13 +189,6 @@ public class BossAttackMelee : FSMState
     /// <param name="e">Boss reference</param>
     private void AttackPlayer(BossEnemy e)
     {
-        //// Attack started new again.
-        //if (!attackStarted && CheckAttackRange(e))
-        //{
-        //    // Instantiate attack visualizer
-        //    areaOfDamageReference = GameObject.Instantiate(e.MeleeAreaOfDamage, e.TargetPlayer.position, e.MeleeAreaOfDamage.transform.rotation) as GameObject;
-        //}
-
         // Attack only if allowed.
         if (attackAllowed)
         {

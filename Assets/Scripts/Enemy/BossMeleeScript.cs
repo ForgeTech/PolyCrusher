@@ -28,6 +28,9 @@ public class BossMeleeScript : MonoBehaviour
     // Owner
     BossEnemy owner;
 
+    // The height of the tween animation.
+    public float easeInHeight = 4f;
+
     // Use this for initialization
     void Start ()
     {
@@ -43,12 +46,12 @@ public class BossMeleeScript : MonoBehaviour
             // TODO: attack started cant be set to true
             if (currentTime >= activationTime)
             {
-                
                 DealDamage();
                 currentTime = 0;
-                //StartCoroutine(transform.ScaleTo(Vector3.zero, 0.2f, AnimCurveContainer.AnimCurve.downscale.Evaluate));
-                //Destroy(this, 0.28f);
-                Destroy(this.gameObject);
+                StartCoroutine(transform.MoveTo(transform.position + new Vector3(0, easeInHeight, 0), 0.2f, Ease.CubeIn));
+                StartCoroutine(transform.ScaleTo(Vector3.zero, 0.2f, Ease.CubeIn));
+                Destroy(this.gameObject, 0.28f);
+                //Destroy(this.gameObject);
             }
 
             currentTime += Time.deltaTime;
@@ -67,6 +70,10 @@ public class BossMeleeScript : MonoBehaviour
         this.owner = owener;
         this.damage = damage;
 
+        Vector3 originalPos = transform.position;
+        transform.position += new Vector3(0, easeInHeight, 0);
+
+        StartCoroutine(transform.MoveTo(originalPos, activationTime * 0.5f, Ease.CubeOut));
         StartCoroutine(transform.ScaleTo(new Vector3(damageRadius, damageRadius, 0.3f), activationTime, Ease.CubeOut));
     }
 

@@ -99,6 +99,19 @@ public class BossWalk : FSMState
             // Raycast hit check
             bool hit = Physics.Raycast(ray, out hitInfo, e.AttackRange, 1 << playerLayer);
 
+            // Check if the payer target equals the collided target.
+            if (hit)
+            {
+                MonoBehaviour m = hitInfo.transform.GetComponent<MonoBehaviour>();
+
+                if (m != null && m is BasePlayer)
+                {
+                    // If the names aren't equal there is no hit.
+                    if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
+                        hit = false;
+                }
+            }
+
             // Debug draw Ray
             Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * e.AttackRange, Color.green);
 
