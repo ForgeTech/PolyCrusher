@@ -36,6 +36,7 @@ GameObject:
   - 114: {fileID: 11405072}
   - 114: {fileID: 11410944}
   - 114: {fileID: 11485904}
+  - 114: {fileID: 11437974}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -50,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179944}
   m_LocalRotation: {x: .50000006, y: 0, z: 0, w: -.866025388}
-  m_LocalPosition: {x: -6.13000011, y: 0, z: 10.71}
+  m_LocalPosition: {x: -11.6300001, y: 0, z: -74.0999985}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children:
   - {fileID: 441694}
@@ -96,10 +97,12 @@ Camera:
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!23 &2380300
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -226,6 +229,34 @@ MonoBehaviour:
   blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
   brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
     type: 3}
+--- !u!114 &11437974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a970acddb8696a4792ca6e022840a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoiseTexture: {fileID: 2800000, guid: 45ca7cd7d934d6245bb4539f780e4892, type: 3}
+  UseHighPrecisionDepthMap: 0
+  Samples: 2
+  Downsampling: 2
+  Radius: .219999999
+  Intensity: 2
+  Distance: .959999979
+  Bias: .215000004
+  LumContribution: .116999999
+  OcclusionColor: {r: 0, g: 0, b: 0, a: 1}
+  CutoffDistance: 101.400002
+  CutoffFalloff: 50
+  Blur: 2
+  BlurDownsampling: 1
+  BlurPasses: 1
+  BlurBilateralThreshold: .100000001
+  DebugAO: 0
 --- !u!114 &11472022
 MonoBehaviour:
   m_ObjectHideFlags: 1

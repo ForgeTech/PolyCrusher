@@ -6,14 +6,20 @@ using System;
 public class BossIdle : FSMState
 {
     #region Private Members
+    // Specifies if the change of a phase is allowed.
+    protected bool phaseChangeAllowed;
 
-
+    // Current phase change timer.
+    protected float phaseChangeTimer;
     #endregion
 
     
     public BossIdle()
     {
         this.stateID = StateID.BossIdle;
+
+        phaseChangeAllowed = false;
+        phaseChangeTimer = 0f;
     }
 
     /// <summary>
@@ -42,6 +48,8 @@ public class BossIdle : FSMState
     public override void DoBeforeEntering()
     {
         base.DoBeforeEntering();
+
+        Debug.Log("Boss: Idle State");
     }
 
     /// <summary>
@@ -50,6 +58,10 @@ public class BossIdle : FSMState
     public override void DoBeforeLeaving()
     {
         base.DoBeforeLeaving();
+
+        phaseChangeAllowed = false;
+        phaseChangeTimer = 0f;
+        
     }
 
     /// <summary>
@@ -66,8 +78,15 @@ public class BossIdle : FSMState
             // Only make a transition if the npc has an target player.
             if (e.TargetPlayer != null)
             {
-                ChooseState(e);
-            }            
+                if (phaseChangeAllowed)
+                {
+                    ChooseState(e);
+                    phaseChangeAllowed = false;
+                }
+            }
+
+            // Handle phase change timer logic.
+            IncreasePhaseChangeTimer(e);       
         }
     }
 
@@ -131,7 +150,7 @@ public class BossIdle : FSMState
         // Switch state based on the calculatet probability.
         if (indexFoundElement == 0)
         {
-            // Switch to attack state.
+            e.SetTransition(Transition.DecisionMelee);
         }
         else if (indexFoundElement == 1)
         {
@@ -140,6 +159,21 @@ public class BossIdle : FSMState
         else if (indexFoundElement == 2)
         {
             // Switch to special state.
+        }
+    }
+
+    /// <summary>
+    /// Increases the phase change timer and allows the phase change if interval is reached.
+    /// </summary>
+    /// <param name="e"></param>
+    private void IncreasePhaseChangeTimer(BossEnemy e)
+    {
+        phaseChangeTimer += Time.deltaTime;
+
+        if (phaseChangeTimer >= e.IdleTime)
+        {
+            phaseChangeAllowed = true;
+            phaseChangeTimer = 0f;
         }
     }
 }

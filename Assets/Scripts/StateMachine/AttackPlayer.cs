@@ -58,7 +58,7 @@ public class AttackPlayer : FSMState
 
             Debug.DrawRay(nPos, (pPos - nPos).normalized * playerAttackRange, Color.yellow);
 
-            // If the player is in attack range, make a transition to attack.
+            // If the player is in attack range, make a transition to walk.
             if (!(hit && hitInfo.transform.gameObject.tag == "Player"))
                 npc.GetComponent<BaseEnemy>().SetTransition(Transition.LostPlayerAttackRange);
         }

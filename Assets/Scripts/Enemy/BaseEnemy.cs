@@ -47,6 +47,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [Space(5)]
     [Header("Movement")]
     // Speed of the enemy.
+    [Tooltip("The movement speed overwrites the NavAgent speed!")]
     [SerializeField]
     protected float movementSpeed = 5f;
 
@@ -163,6 +164,30 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     {
         get { return this.meleeAttackDamage; }
         set { this.meleeAttackDamage = value; }
+    }
+
+    /// <summary>
+    /// Gets the melee attack range.
+    /// </summary>
+    public float AttackRange
+    {
+        get { return this.attackRange; }
+    }
+
+    /// <summary>
+    /// Gets the attack interval.
+    /// </summary>
+    public float AttackInterval
+    {
+        get { return this.attackInterval; }
+    }
+
+    /// <summary>
+    /// Gets the push away force.
+    /// </summary>
+    public float PushAwayForce
+    {
+        get { return this.pushAwayForce; }
     }
 
     /// <summary>
