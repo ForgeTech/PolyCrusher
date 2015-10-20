@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class BossAttackMelee : FSMState
+public class BossAttackRanged : FSMState
 {
     // Layer of the players
     protected int playerLayer = 8;
@@ -19,15 +19,12 @@ public class BossAttackMelee : FSMState
     // Attack interval timer.
     protected float currentAttackTimer;
 
-    // Reference to the instantiated area of damage prefab.
-    protected GameObject areaOfDamageReference;
-
     // Signals if the attack has been started.
     protected bool attackStarted;
 
-    public BossAttackMelee(float phaseTime)
+    public BossAttackRanged(float phaseTime)
     {
-        this.stateID = StateID.BossAttackMelee;
+        this.stateID = StateID.BossAttackRanged;
         this.phaseTime = phaseTime;
         this.currentPhaseTime = this.phaseTime;
 
@@ -43,20 +40,25 @@ public class BossAttackMelee : FSMState
     /// <param name="npc">NPC reference</param>
     public override void Act(GameObject player, GameObject npc)
     {
-        NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
-        MonoBehaviour m = npc.GetComponent<MonoBehaviour>();
-
-        // Stop the nav agent while attacking.
-        if (agent != null && agent.enabled)
-            agent.Stop();
-
-        // Attack logic.
-        if (player != null && m is BossEnemy)
+        if (currentPhaseTime > 0)
         {
-            BossEnemy e = (BossEnemy) m;
-            AttackPlayer(e);
+            NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
+            MonoBehaviour m = npc.GetComponent<MonoBehaviour>();
+
+            // Stop the nav agent while attacking.
+            if (agent != null && agent.enabled)
+            {
+                agent.Stop();
+            }
+
+
+            // Attack logic.
+            if (player != null && m is BossEnemy)
+            {
+                BossEnemy e = (BossEnemy)m;
+                AttackPlayer(e);
+            }
         }
-        
     }
 
     /// <summary>
@@ -89,10 +91,9 @@ public class BossAttackMelee : FSMState
             {
                 // Back to idle if all players are dead.
                 e.SetTransition(Transition.AttackFinished);
+                attackStarted = false;
                 return;
             }
-
-            Debug.Log("PhaseTime: " + currentPhaseTime);
         }
     }
 
@@ -103,7 +104,7 @@ public class BossAttackMelee : FSMState
     {
         base.DoBeforeEntering();
 
-        Debug.Log("Boss: Melee Attack State");
+        Debug.Log("Boss: Ranged Attack State");
 
         if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;
@@ -116,11 +117,11 @@ public class BossAttackMelee : FSMState
     {
         base.DoBeforeLeaving();
 
-        if(currentPhaseTime <= 0f)
+        if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;
 
-        attackStarted = false;
-        //currentAttackTimer = 0f;
+
+        //attackStarted = false;
     }
 
     /// <summary>
@@ -140,7 +141,7 @@ public class BossAttackMelee : FSMState
             Ray ray = new Ray(enemyPos, (playerPos - enemyPos).normalized);
 
             // Raycast hit check
-            bool hit = Physics.Raycast(ray, out hitInfo, e.AttackRange, 1 << playerLayer);
+            bool hit = Physics.Raycast(ray, out hitInfo, e.RangedAttackRange, 1 << playerLayer);
 
             // Check if the payer target equals the collided target.
             if (hit)
@@ -156,7 +157,7 @@ public class BossAttackMelee : FSMState
             }
 
             // Debug draw Ray
-            Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * e.AttackRange, Color.yellow);
+            Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * e.RangedAttackRange, Color.yellow);
 
             return hit;
         }
@@ -176,9 +177,9 @@ public class BossAttackMelee : FSMState
         if (currentPhaseTime <= 0f)
         {
             e.SetTransition(Transition.AttackFinished);
+            attackStarted = false;
             return true;
         }
-
         return false;
     }
 
@@ -189,15 +190,16 @@ public class BossAttackMelee : FSMState
     private void AttackPlayer(BossEnemy e)
     {
         // Attack only if allowed.
-        if (attackAllowed)
+        if (attackAllowed && !attackStarted)
         {
-            //Debug.Log("Attack!!! Pew Pew Pew!");
+            //Debug.Log("RangedBoss: Attack!");
 
-            areaOfDamageReference = GameObject.Instantiate(e.MeleeAreaOfDamage, e.TargetPlayer.position, e.MeleeAreaOfDamage.transform.rotation) as GameObject;
-            areaOfDamageReference.GetComponent<BossMeleeScript>().InitMeleeScript(e.AreoOfDamageRadius, e.AreaOfDamageTime, e, e.MeleeAttackDamage);
-
+            attackStarted = true;
+            // Spawn bullet
+            CreateBullet(e);
             attackAllowed = false;
         }
+
 
         // Timer logic.
         if (currentAttackTimer >= e.AttackInterval)
@@ -208,5 +210,48 @@ public class BossAttackMelee : FSMState
 
         // Increase attack timer.
         currentAttackTimer += Time.deltaTime;
+    }
+
+    /// <summary>
+    /// Creates a bullet and spawns it.
+    /// </summary>
+    /// <param name="e">Reference to the boss enemy.</param>
+    private void CreateBullet(BossEnemy e)
+    {
+        // Angle between two bullets
+        float angleBetween = e.SpreadAngle / e.NumberOfBullets;
+
+        // Start angle of the calculation
+        float currentAngle = -(e.SpreadAngle / 2f);
+
+        for (int i = 0; i < e.NumberOfBullets; i++)
+        {
+            GameObject g = GameObject.Instantiate(e.RangedBullet);
+            BossBullet bullet;
+
+            if (g != null && g.GetComponent<MonoBehaviour>() is BossBullet)
+            {
+                bullet = g.GetComponent<BossBullet>();
+                bullet.OwnerScript = e;
+                bullet.name = "BossBullet";
+                bullet.Damage = bullet.Damage;
+
+                bullet.transform.position = e.transform.position + new Vector3(0, 1, 0);
+                float speed = bullet.BulletSpeed;
+                Vector3 playerDirection = (e.TargetPlayer.transform.position - bullet.transform.position).normalized;
+                bullet.transform.rotation = Quaternion.LookRotation(playerDirection);
+                bullet.transform.Rotate(90, 0, 0);
+
+                // Bullet rotation
+                Quaternion rotation = Quaternion.Euler(0, currentAngle, 0);
+                Vector3 v = playerDirection;
+                Vector3 rotationVector = rotation * v;
+
+                // Shoot
+                bullet.Shoot(rotationVector, bullet.BulletSpeed);
+
+                currentAngle += angleBetween;
+            }
+        }
     }
 }

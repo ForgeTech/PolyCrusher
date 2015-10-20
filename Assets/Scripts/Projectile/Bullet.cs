@@ -140,7 +140,9 @@ public class Bullet : Projectile
     {
         GameObject particle = Instantiate(deathParticlePrefab) as GameObject;
         particle.transform.position = position;
-        particle.GetComponent<ParticleSystem>().Play();
+
+        if(particle.GetComponent<ParticleSystem>() != null)
+            particle.GetComponent<ParticleSystem>().Play();
     }
 
     /// <summary>

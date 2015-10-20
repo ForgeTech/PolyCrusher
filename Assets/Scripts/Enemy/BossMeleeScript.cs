@@ -20,6 +20,7 @@ public class BossMeleeScript : MonoBehaviour
     private float currentTime;
 
     // Specifies if the script has been initialized.
+    [HideInInspector]
     public bool attackStarted;
 
     // Layer of the players
@@ -51,7 +52,6 @@ public class BossMeleeScript : MonoBehaviour
                 StartCoroutine(transform.MoveTo(transform.position + new Vector3(0, easeInHeight, 0), 0.2f, Ease.CubeIn));
                 StartCoroutine(transform.ScaleTo(Vector3.zero, 0.2f, Ease.CubeIn));
                 Destroy(this.gameObject, 0.28f);
-                //Destroy(this.gameObject);
             }
 
             currentTime += Time.deltaTime;
@@ -61,13 +61,12 @@ public class BossMeleeScript : MonoBehaviour
     /// <summary>
     /// Initializes the behaviour.
     /// </summary>
-    public void InitMeleeScript(float damageRadius, float activationTime, BossEnemy owener, int damage)
+    public void InitMeleeScript(float damageRadius, float activationTime, BossEnemy owner, int damage)
     {
         this.attackStarted = true;
-        Debug.Log("Attack started: " + attackStarted);
         this.damageRadius = damageRadius;
         this.activationTime = activationTime;
-        this.owner = owener;
+        this.owner = owner;
         this.damage = damage;
 
         Vector3 originalPos = transform.position;
@@ -75,6 +74,14 @@ public class BossMeleeScript : MonoBehaviour
 
         StartCoroutine(transform.MoveTo(originalPos, activationTime * 0.5f, Ease.CubeOut));
         StartCoroutine(transform.ScaleTo(new Vector3(damageRadius, damageRadius, 0.3f), activationTime, Ease.CubeOut));
+    }
+
+    /// <summary>
+    /// Initializes the behaviour with the standard values defined in the prefab.
+    /// </summary>
+    public void InitMeleeScript(BossEnemy owner)
+    {
+        InitMeleeScript(this.damageRadius, this.activationTime, owner, this.damage);
     }
 
     /// <summary>

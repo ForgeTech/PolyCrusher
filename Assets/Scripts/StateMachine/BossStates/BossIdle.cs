@@ -11,15 +11,18 @@ public class BossIdle : FSMState
 
     // Current phase change timer.
     protected float phaseChangeTimer;
+
+    protected BossEnemy bossEnemy;
     #endregion
 
     
-    public BossIdle()
+    public BossIdle(BossEnemy e)
     {
         this.stateID = StateID.BossIdle;
 
         phaseChangeAllowed = false;
         phaseChangeTimer = 0f;
+        this.bossEnemy = e;
     }
 
     /// <summary>
@@ -48,6 +51,9 @@ public class BossIdle : FSMState
     public override void DoBeforeEntering()
     {
         base.DoBeforeEntering();
+
+        // Calculate new target player.
+        bossEnemy.CalculateTargetPlayer();
 
         Debug.Log("Boss: Idle State");
     }
@@ -137,7 +143,8 @@ public class BossIdle : FSMState
         {
             if (randomValue < indexProbability[i].Value)    // Element found.
             {
-                Debug.Log("Index: " + indexProbability[i].Key + ", Value: " + indexProbability[i].Value);
+                //Debug.Log("Index: " + indexProbability[i].Key + ", Value: " + indexProbability[i].Value);
+
                 //Save the found index.
                 indexFoundElement = indexProbability[i].Key;
             }
@@ -154,7 +161,7 @@ public class BossIdle : FSMState
         }
         else if (indexFoundElement == 1)
         {
-            // Switch to ranged state.
+            e.SetTransition(Transition.DecisionRanged);
         }
         else if (indexFoundElement == 2)
         {
