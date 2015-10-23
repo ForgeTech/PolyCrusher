@@ -32,10 +32,20 @@ public class BossMeleeScript : MonoBehaviour
     // The height of the tween animation.
     public float easeInHeight = 4f;
 
+    // Start material color.
+    public Material startColor;
+
+    // End material color.
+    public Material endColor;
+
+    // Renderer reference.
+    private Renderer rend;
+
     // Use this for initialization
     void Start ()
     {
         transform.localScale = Vector3.zero;
+        rend = GetComponent<Renderer>();
         //this.attackStarted = false;
 	}
 	
@@ -53,6 +63,9 @@ public class BossMeleeScript : MonoBehaviour
                 StartCoroutine(transform.ScaleTo(Vector3.zero, 0.2f, Ease.CubeIn));
                 Destroy(this.gameObject, 0.28f);
             }
+
+            // Material Lerp
+            rend.material.Lerp(startColor, endColor, currentTime / activationTime);
 
             currentTime += Time.deltaTime;
         }

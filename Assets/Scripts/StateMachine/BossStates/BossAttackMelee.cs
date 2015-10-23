@@ -19,15 +19,12 @@ public class BossAttackMelee : FSMState
     // Attack interval timer.
     protected float currentAttackTimer;
 
-    // Reference to the instantiated area of damage prefab.
-    protected GameObject areaOfDamageReference;
-
     // Signals if the attack has been started.
     protected bool attackStarted;
 
-    public BossAttackMelee(float phaseTime)
+    public BossAttackMelee(float phaseTime, StateID id)
     {
-        this.stateID = StateID.BossAttackMelee;
+        this.stateID = id;
         this.phaseTime = phaseTime;
         this.currentPhaseTime = this.phaseTime;
 
@@ -43,20 +40,22 @@ public class BossAttackMelee : FSMState
     /// <param name="npc">NPC reference</param>
     public override void Act(GameObject player, GameObject npc)
     {
-        NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
-        MonoBehaviour m = npc.GetComponent<MonoBehaviour>();
-
-        // Stop the nav agent while attacking.
-        if (agent != null && agent.enabled)
-            agent.Stop();
-
-        // Attack logic.
-        if (player != null && m is BossEnemy)
+        if (currentPhaseTime > 0)
         {
-            BossEnemy e = (BossEnemy) m;
-            AttackPlayer(e);
+            NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
+            MonoBehaviour m = npc.GetComponent<MonoBehaviour>();
+
+            // Stop the nav agent while attacking.
+            if (agent != null && agent.enabled)
+                agent.Stop();
+
+            // Attack logic.
+            if (player != null && m is BossEnemy)
+            {
+                BossEnemy e = (BossEnemy)m;
+                AttackPlayer(e);
+            }
         }
-        
     }
 
     /// <summary>
@@ -89,6 +88,9 @@ public class BossAttackMelee : FSMState
             {
                 // Back to idle if all players are dead.
                 e.SetTransition(Transition.AttackFinished);
+                attackStarted = false;
+                attackAllowed = false;
+                this.currentAttackTimer = 0f;
                 return;
             }
 
@@ -118,9 +120,6 @@ public class BossAttackMelee : FSMState
 
         if(currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;
-
-        attackStarted = false;
-        //currentAttackTimer = 0f;
     }
 
     /// <summary>
@@ -129,7 +128,7 @@ public class BossAttackMelee : FSMState
     /// </summary>
     /// <param name="e">Reference to the boss enemy.</param>
     /// <returns>True: Player is in range, False: Player is not in range.</returns>
-    private bool CheckAttackRange(BossEnemy e)
+    protected virtual bool CheckAttackRange(BossEnemy e)
     {
         if (e != null && e.TargetPlayer != null)
         {
@@ -167,7 +166,7 @@ public class BossAttackMelee : FSMState
     /// Timer logic for the phase time.
     /// Decreases the timer and makes the transition if it reaches its endpoint.
     /// </summary>
-    private bool CheckCurrentPhaseTime(BossEnemy e)
+    protected virtual bool CheckCurrentPhaseTime(BossEnemy e)
     {
         // Increase current time.
         currentPhaseTime -= Time.deltaTime;
@@ -176,6 +175,9 @@ public class BossAttackMelee : FSMState
         if (currentPhaseTime <= 0f)
         {
             e.SetTransition(Transition.AttackFinished);
+            attackStarted = false;
+            attackAllowed = false;
+            this.currentAttackTimer = 0f;
             return true;
         }
 
@@ -186,14 +188,15 @@ public class BossAttackMelee : FSMState
     /// Attack logic of the boss.
     /// </summary>
     /// <param name="e">Boss reference</param>
-    private void AttackPlayer(BossEnemy e)
+    protected virtual void AttackPlayer(BossEnemy e)
     {
         // Attack only if allowed.
-        if (attackAllowed)
+        if (attackAllowed && !attackStarted)
         {
             //Debug.Log("Attack!!! Pew Pew Pew!");
+            attackStarted = true;
 
-            areaOfDamageReference = GameObject.Instantiate(e.MeleeAreaOfDamage, e.TargetPlayer.position, e.MeleeAreaOfDamage.transform.rotation) as GameObject;
+            GameObject areaOfDamageReference = GameObject.Instantiate(e.MeleeAreaOfDamage, e.TargetPlayer.position, e.MeleeAreaOfDamage.transform.rotation) as GameObject;
             areaOfDamageReference.GetComponent<BossMeleeScript>().InitMeleeScript(e.AreoOfDamageRadius, e.AreaOfDamageTime, e, e.MeleeAttackDamage);
 
             attackAllowed = false;

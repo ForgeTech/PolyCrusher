@@ -165,7 +165,7 @@ public class BossIdle : FSMState
         }
         else if (indexFoundElement == 2)
         {
-            // Switch to special state.
+            e.SetTransition(Transition.DecisionSpecial);
         }
     }
 

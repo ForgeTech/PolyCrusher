@@ -94,6 +94,7 @@ public class BossEnemy : BaseEnemy
     [Tooltip("The damage radius of the attack.")]
     protected float areoOfDamageRadius = 5f;
 
+    [Space(4)]
     [SerializeField]
     [Tooltip("The prefab reference to the boss bullet.")]
     protected GameObject rangedBullet;
@@ -106,6 +107,14 @@ public class BossEnemy : BaseEnemy
     [Tooltip("Angle of the bullet spread.")]
     protected float spreadAngle = 70f;
 
+    [Space(4)]
+    [SerializeField]
+    [Tooltip("Prefab of the meteor attack.")]
+    protected GameObject meteorAttackPrefab;
+
+    [SerializeField]
+    [Tooltip("The spawn height of the meteorits.")]
+    protected float meteorSpawnHeight = 10f;
     #endregion
 
     #region Properties
@@ -190,6 +199,14 @@ public class BossEnemy : BaseEnemy
     }
 
     /// <summary>
+    /// Gets the ranged attack interval.
+    /// </summary>
+    public float RangedAttackInterval
+    {
+        get { return this.rangedAttackInterval; }
+    }
+
+    /// <summary>
     /// Gets the ranged bullet.
     /// </summary>
     public GameObject RangedBullet
@@ -212,6 +229,22 @@ public class BossEnemy : BaseEnemy
     {
         get { return this.spreadAngle; }
     }
+
+    /// <summary>
+    /// Gets the meteor attack prefab.
+    /// </summary>
+    public GameObject MeteorAttackPrefab
+    {
+        get { return this.meteorAttackPrefab; }
+    }
+
+    /// <summary>
+    /// Gets the meteor spawn height.
+    /// </summary>
+    public float MeteorSpawnHeight
+    {
+        get { return this.meteorSpawnHeight; }
+    }
     #endregion
 
     // Event for a killed boss.
@@ -226,8 +259,9 @@ public class BossEnemy : BaseEnemy
         BossIdle idle = new BossIdle(this);
         idle.AddTransition(Transition.DecisionMelee, StateID.BossAttackMelee);
         idle.AddTransition(Transition.DecisionRanged, StateID.BossAttackRanged);
+        idle.AddTransition(Transition.DecisionSpecial, StateID.BossAttackSpecial);
 
-        BossAttackMelee attackMelee = new BossAttackMelee(MeleePhase.phaseTime);
+        BossAttackMelee attackMelee = new BossAttackMelee(MeleePhase.phaseTime, StateID.BossAttackMelee);
         attackMelee.AddTransition(Transition.AttackFinished, StateID.BossIdle);
         attackMelee.AddTransition(Transition.LostPlayerAttackRange, StateID.BossWalk);
         
@@ -235,13 +269,20 @@ public class BossEnemy : BaseEnemy
         attackPhaseWalk.AddTransition(Transition.ReachedDestination, StateID.BossAttackMelee);
 
 
-        BossAttackRanged attackRanged = new BossAttackRanged(RangedPhase.phaseTime);
+        BossAttackRanged attackRanged = new BossAttackRanged(RangedPhase.phaseTime, StateID.BossAttackRanged);
         attackRanged.AddTransition(Transition.AttackFinished, StateID.BossIdle);
         attackRanged.AddTransition(Transition.LostPlayerAttackRange, StateID.BossWalkRanged);
 
-        BossWalk attackRangedWalk = new BossWalk(rangedAttackRange, StateID.BossWalkRanged);
+        BossWalk attackRangedWalk = new BossWalk(RangedAttackRange, StateID.BossWalkRanged);
         attackRangedWalk.AddTransition(Transition.ReachedDestination, StateID.BossAttackRanged);
 
+
+        BossAttackSpecial attackSpecial = new BossAttackSpecial(SpecialPhase.phaseTime, StateID.BossAttackSpecial);
+        attackSpecial.AddTransition(Transition.AttackFinished, StateID.BossIdle);
+        attackSpecial.AddTransition(Transition.LostPlayerAttackRange, StateID.BossWalkSpecial);
+
+        BossWalk walkSpecial = new BossWalk(RangedAttackRange, StateID.BossWalkSpecial);
+        walkSpecial.AddTransition(Transition.ReachedDestination, StateID.BossAttackSpecial);
 
         fsm = new FSMSystem();
         fsm.AddState(idle);
@@ -249,6 +290,8 @@ public class BossEnemy : BaseEnemy
         fsm.AddState(attackPhaseWalk);
         fsm.AddState(attackRanged);
         fsm.AddState(attackRangedWalk);
+        fsm.AddState(attackSpecial);
+        fsm.AddState(walkSpecial);
     }
 
     /// <summary>

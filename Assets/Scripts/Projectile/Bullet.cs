@@ -127,9 +127,8 @@ public class Bullet : Projectile
 
         if (other.tag == "Terrain" || other.gameObject.layer == LayerMask.NameToLayer("Props"))
         {
-			Destroy(this.gameObject);
             SpawnDeathParticle(transform.position);
-            
+            Destroy(this.gameObject);
         }
     }
 

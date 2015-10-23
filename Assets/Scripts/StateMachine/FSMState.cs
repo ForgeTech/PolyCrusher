@@ -46,7 +46,7 @@ public enum StateID
     BossAttackSpecial = 11,
     BossMobSpawn = 12,
     BossWalkRanged = 13,
-    BosWalkSpecial = 14
+    BossWalkSpecial = 14
 }
 
 /// <summary>

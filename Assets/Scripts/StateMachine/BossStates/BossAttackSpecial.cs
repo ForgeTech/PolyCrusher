@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
-public class BossAttackRanged : BossAttackMelee
+public class BossAttackSpecial : BossAttackMelee
 {
-    public BossAttackRanged(float phaseTime, StateID id) : base(phaseTime, id)
-    { }
+    public BossAttackSpecial(float phaseTime, StateID id) : base(phaseTime, id)
+    {
+    }
 
     /// <summary>
     /// Set entering conditions.
     /// </summary>
     public override void DoBeforeEntering()
     {
-        Debug.Log("Boss: Ranged Attack State");
+        Debug.Log("Boss: Special Attack State");
 
         if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;
@@ -58,7 +58,6 @@ public class BossAttackRanged : BossAttackMelee
         return false;
     }
 
-
     /// <summary>
     /// Attack logic of the boss.
     /// </summary>
@@ -68,17 +67,17 @@ public class BossAttackRanged : BossAttackMelee
         // Attack only if allowed.
         if (attackAllowed && !attackStarted)
         {
-            //Debug.Log("RangedBoss: Attack!");
-
             attackStarted = true;
-            // Spawn bullet
-            CreateBullet(e);
+
+            // Spawn meteorits
+            CreateMeteorField(e);
+            
             attackAllowed = false;
         }
 
 
         // Timer logic.
-        if (currentAttackTimer >= e.RangedAttackRange)
+        if (currentAttackTimer >= e.RangedAttackInterval)
         {
             attackAllowed = true;
             currentAttackTimer = 0f;
@@ -89,44 +88,16 @@ public class BossAttackRanged : BossAttackMelee
     }
 
     /// <summary>
-    /// Creates a bullet and spawns it.
+    /// Spawns the meteor field.
     /// </summary>
-    /// <param name="e">Reference to the boss enemy.</param>
-    private void CreateBullet(BossEnemy e)
+    private void CreateMeteorField(BossEnemy e)
     {
-        // Angle between two bullets
-        float angleBetween = e.SpreadAngle / e.NumberOfBullets;
+        GameObject g = GameObject.Instantiate(e.MeteorAttackPrefab);
 
-        // Start angle of the calculation
-        float currentAngle = -(e.SpreadAngle / 2f);
-
-        for (int i = 0; i < e.NumberOfBullets; i++)
+        if (g.GetComponent<BossMeteorScript>())
         {
-            GameObject g = GameObject.Instantiate(e.RangedBullet);
-            BossBullet bullet;
-
-            if (g != null && g.GetComponent<MonoBehaviour>() is BossBullet)
-            {
-                bullet = g.GetComponent<BossBullet>();
-                bullet.OwnerScript = e;
-                bullet.name = "BossBullet";
-                bullet.Damage = bullet.Damage;
-
-                bullet.transform.position = e.transform.position + new Vector3(0, 1, 0);
-                Vector3 playerDirection = (e.TargetPlayer.transform.position - bullet.transform.position).normalized;
-                bullet.transform.rotation = Quaternion.LookRotation(playerDirection);
-                bullet.transform.Rotate(90, 0, 0);
-
-                // Bullet rotation
-                Quaternion rotation = Quaternion.Euler(0, currentAngle, 0);
-                Vector3 v = playerDirection;
-                Vector3 rotationVector = rotation * v;
-
-                // Shoot
-                bullet.Shoot(rotationVector, bullet.BulletSpeed);
-
-                currentAngle += angleBetween;
-            }
+            g.transform.position = e.TargetPlayer.position + new Vector3(0, e.MeteorSpawnHeight, 0);
+            g.GetComponent<BossMeteorScript>().InitializeScript(e);
         }
     }
 }

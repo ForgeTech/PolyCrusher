@@ -51,14 +51,19 @@ public class BossBullet : Bullet
     /// </summary>
     private void CreateAreaOfDamage()
     {
-        GameObject g = Instantiate(deathArea) as GameObject;
-
         //Spawn directly on the NavMesh
         NavMeshHit hit;
 
         // Sample bullet position on NavMesh.
-        NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas);
-        g.transform.position = hit.position;
-        g.GetComponent<BossMeleeScript>().InitMeleeScript(this.OwnerScript.GetComponent<BossEnemy>());
+        bool posFound = NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas);
+
+        // Only instantiate if position was found
+        if (posFound)
+        {
+            GameObject g = Instantiate(deathArea) as GameObject;
+
+            g.transform.position = hit.position;
+            g.GetComponent<BossMeleeScript>().InitMeleeScript(this.OwnerScript.GetComponent<BossEnemy>());
+        }
     }
 }
