@@ -68,7 +68,7 @@ public class BossAttackRanged : BossAttackMelee
         // Attack only if allowed.
         if (attackAllowed && !attackStarted)
         {
-            //Debug.Log("RangedBoss: Attack!");
+            Debug.Log("RangedBoss: Attack!");
 
             attackStarted = true;
             // Spawn bullet
@@ -78,7 +78,7 @@ public class BossAttackRanged : BossAttackMelee
 
 
         // Timer logic.
-        if (currentAttackTimer >= e.RangedAttackRange)
+        if (currentAttackTimer >= e.RangedAttackInterval)
         {
             attackAllowed = true;
             currentAttackTimer = 0f;

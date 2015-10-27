@@ -94,7 +94,7 @@ public class BossAttackMelee : FSMState
                 return;
             }
 
-            Debug.Log("PhaseTime: " + currentPhaseTime);
+            //Debug.Log("PhaseTime: " + currentPhaseTime);
         }
     }
 

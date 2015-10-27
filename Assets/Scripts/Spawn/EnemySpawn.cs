@@ -41,6 +41,14 @@ public class EnemySpawn : MonoBehaviour
     // Event handler for the enemy spawn.
     public static event EnemySpawnedEventHandler EnemySpawned;
 
+    /// <summary>
+    /// Gets the middlepoint of the players.
+    /// </summary>
+    protected Vector3 PlayerMiddlePoint
+    {
+        get { return CameraSystem.playerBounds.center; }
+    }
+
     void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
@@ -54,7 +62,49 @@ public class EnemySpawn : MonoBehaviour
 
     void Update()
     {
-        SpawnEnemy();
+        if(!GameManager.GameManagerInstance.IsBossWave)
+            SpawnEnemy();
+        else
+            SpawnBoss();
+    }
+
+    /// <summary>
+    /// Spawns the boss.
+    /// </summary>
+    protected void SpawnBoss()
+    {
+        // Check if checkpoint is allowed to spawn.
+        if (GameManager.GameManagerInstance.WaveActive && spawnAllowed && GameManager.GameManagerInstance.CurrentEnemyCount < 1)
+        {
+            // Check the deactivation distance and the minimum distance.
+            if (curentDistanceToPlayer > deactivationDistance && curentDistanceToPlayer < minDistanceToPlayer)
+            {
+                // Instantiate enemy.
+                GameObject boss = Instantiate(GameManager.GameManagerInstance.BossSpawnInfo.boss, 
+                    PlayerMiddlePoint, GameManager.GameManagerInstance.BossSpawnInfo.boss.transform.rotation) as GameObject;
+
+                boss.SetActive(false);
+                boss.name = GameManager.GameManagerInstance.BossSpawnInfo.enemyName;
+
+                boss.transform.position = transform.position;
+                boss.SetActive(true);
+
+                // Set increased health and attack
+                BaseEnemy e = boss.GetComponent<MonoBehaviour>() as BaseEnemy;
+
+                e.MaxHealth = GameManager.GameManagerInstance.BossSpawnInfo.ActualHealth;
+                e.Health = GameManager.GameManagerInstance.BossSpawnInfo.ActualHealth;
+
+                // Trigger event.
+                OnEnemySpawn();
+
+                //Decrease ressource pool
+                GameManager.GameManagerInstance.CurrentEnemyRessourceValue -= GameManager.GameManagerInstance.BossSpawnInfo.enemyRessourceValue;
+
+                spawnAllowed = false;
+                StartCoroutine(WaitForNextSpawn());
+            }
+        }
     }
 
     /// <summary>
@@ -193,7 +243,7 @@ public class EnemySpawn : MonoBehaviour
     /// <summary>
     /// Resets all neccessary values.
     /// </summary>
-    protected void ResetValues()
+    protected virtual void ResetValues()
     {
         EnemySpawned = null;
     }

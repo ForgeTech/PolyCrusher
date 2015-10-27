@@ -546,7 +546,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <summary>
     /// Resets all neccessary values.
     /// </summary>
-    protected void ResetValues()
+    protected virtual void ResetValues()
     {
         EnemyKilled = null;
     }

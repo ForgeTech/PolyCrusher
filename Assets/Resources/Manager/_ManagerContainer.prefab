@@ -635,51 +635,6 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  bounce:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    - time: .79978925
-      value: .996038437
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .850005925
-      value: .949151695
-      inSlope: .019967556
-      outSlope: .019967556
-      tangentMode: 0
-    - time: .900116444
-      value: .995148718
-      inSlope: .0926037505
-      outSlope: .0926037505
-      tangentMode: 0
-    - time: .942243099
-      value: .975204527
-      inSlope: .0590085983
-      outSlope: .0590085983
-      tangentMode: 0
-    - time: .970034182
-      value: .997234106
-      inSlope: .181403443
-      outSlope: .181403443
-      tangentMode: 0
-    - time: .985774934
-      value: .988488555
-      inSlope: .0852757767
-      outSlope: .0852757767
-      tangentMode: 0
-    - time: .999988019
-      value: .999328434
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
 --- !u!114 &11417300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -852,6 +807,12 @@ MonoBehaviour:
     enemyRessourceValue: 3
     minWave: 4
     enemyName: StrongEnemy
+  bossSpawnInfo:
+    boss: {fileID: 128610, guid: 6ce43f0558d8de441ab1bbe7e18b7c1c, type: 2}
+    enemyRessourceValue: 1
+    enemyName: BossEnemy
+    spawnEveryXWave: 7
+    waveSpawnVariation: 2
   enemyRessourcePool: 30
   currentEnemyRessourceValue: 0
   maxEnemyActiveCount: 20
@@ -1069,6 +1030,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: bounce.m_Curve.Array.data[6].outSlope
       value: .0852757767
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bossSpawnInfo.boss
+      value: 
+      objectReference: {fileID: 128610, guid: 6ce43f0558d8de441ab1bbe7e18b7c1c, type: 2}
+    - target: {fileID: 0}
+      propertyPath: bossSpawnInfo.spawnEveryXWave
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bossSpawnInfo.waveSpawnVariation
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

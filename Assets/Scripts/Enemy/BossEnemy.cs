@@ -343,4 +343,13 @@ public class BossEnemy : BaseEnemy
         if (BossKilled != null)
             BossKilled(this);
     }
+
+    /// <summary>
+    /// Resets the boss event handler.
+    /// </summary>
+    protected override void ResetValues()
+    {
+        base.ResetValues();
+        BossKilled = null;
+    }
 }

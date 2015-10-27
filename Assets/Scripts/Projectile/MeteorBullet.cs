@@ -28,7 +28,7 @@ public class MeteorBullet : Bullet
             // Only instantiate if position was found
             if (posFound)
             {
-                if (this.OwnerScript.GetComponent<BossEnemy>() != null)
+                if (this.OwnerScript != null && this.OwnerScript.GetComponent<BossEnemy>() != null)
                 {
                     // Instantiate
                     GameObject o = Instantiate(areaOfDamage) as GameObject;
