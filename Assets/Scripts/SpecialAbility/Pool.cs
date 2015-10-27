@@ -35,7 +35,8 @@ public class Pool : MonoBehaviour {
 
         for(int i = 0; i < amount; i++)
         {
-            GameObject go = (GameObject) Instantiate(objectToPool);            
+            GameObject go = (GameObject) Instantiate(objectToPool);
+            go.transform.SetParent(this.transform);           
             go.SetActive(false);
             pool.Add(go);
             
