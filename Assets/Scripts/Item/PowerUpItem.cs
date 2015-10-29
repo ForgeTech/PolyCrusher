@@ -1,17 +1,24 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Event handler for collecting of a powerup.
+/// </summary>
 public delegate void PowerUpCollectedHandler();
 
-public class PowerUpItem :   BaseItem {
+/// <summary>
+/// PowerUp Item class for the powerups and their selection technique.
+/// </summary>
+public class PowerUpItem : BaseItem {
 
 	#region Class Members
-	// enum of the Power Ups to show it as a dropdown menu
+
+	// Enum of the Power Ups to show it as a dropdown menu
 	public enum PowerUpEnum{
 		addHealth,addEnergy,weaponDamage,weaponFireRate,addMaxHealth,addMaxEnergy
 	}
 
-	// if true, the value of the power up will be added permanently to the player
+	// If true, the value of the power up will be added permanently to the player
 	[SerializeField]
 	protected bool addPermanently = true;
 
@@ -27,12 +34,16 @@ public class PowerUpItem :   BaseItem {
 	[SerializeField]
 	private int powerUpValue = 5;
 
+    // PowerUpEnum variable
 	[SerializeField]
 	private PowerUpEnum type;
 
+    // Add some spacing in the Unity Inspector
     [Space(5)]
+    // Add a header above some fields in the Unity Inspector
     [Header("Particles")]
     [SerializeField]
+    // Particles which are staying in the air after picking up
     protected GameObject pickUpParticles;
 
 	// Event handler for the collectible collected.
@@ -40,40 +51,62 @@ public class PowerUpItem :   BaseItem {
     #endregion
 
     #region Class Methods
+    // Reset values before calling Start()
     void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
     }
 
-	// Handles the pick up mechanism
+    /// <summary>
+    /// Handles the collecting mechanism.
+    /// </summary>
+    /// <param name="collider">Colliding object parameter.</param>
+    /// <returns></returns>
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "Player"){
-			// get the BasePlayer of the Game Object
+			// Get the BasePlayer of the Game Object
 			BasePlayer player = collider.GetComponent<BasePlayer>();
 
+            //==========================SETTING_PLAYERVALUES_TO_MAX_POWERUPS_START=======================
+            // Check if the colliding object is a PowerUpEnam.addHealth
 			if (type == PowerUpEnum.addHealth){
+                
+                // Create new PowerUpAddHealth variable and add component of the PowerUpAddHealth
 				PowerUpAddHealth AddHealth = player.gameObject.AddComponent<PowerUpAddHealth>();
+                
+                // Call Use on the player which has collected the powerup
 				AddHealth.Use (player);
 				//Destroy (AddHealth);
 			}
-			if (type == PowerUpEnum.addEnergy){
+
+            if (type == PowerUpEnum.addEnergy){
 				PowerUpAddEnergy AddEnergy = player.gameObject.AddComponent<PowerUpAddEnergy>();
 				AddEnergy.Use (player);
 				//Destroy (AddEnergy);
 			}
+            //==========================SETTING_PLAYERVALUES_TO_MAX_POWERUPS_END=========================
 
-			if (type == PowerUpEnum.weaponDamage){
+            //==================TEMPORARY_OR_PERMANENTLY_ADD_POWERUPS_START==============================
+            if (type == PowerUpEnum.weaponDamage){
+                // If the gamedesigner want to add permanently the weapon damage OR there is no PowerUpWeaponDamage component on the player...
 				if (addPermanently || player.gameObject.GetComponent<PowerUpWeaponDamage>() == null){
+                    // Then create a PowerUpWeaponDamage variable and...
 					PowerUpWeaponDamage AddDamage = player.gameObject.AddComponent<PowerUpWeaponDamage>();
-					AddDamage.Use (player,outlastTime, powerUpValue, addPermanently);
+
+                    // And call use of the vaiable
+                    AddDamage.Use (player,outlastTime, powerUpValue, addPermanently);
 					//Destroy (AddDamage);
 
 				} else if (!addPermanently){
+                    // Else get the component of the player...
 					PowerUpWeaponDamage AddDamage = player.gameObject.GetComponent<PowerUpWeaponDamage>();
+
+                    // And call break and restart of the component
 					AddDamage.breakAndRestart();
 				}
 			}
-			if (type == PowerUpEnum.weaponFireRate){
+
+            if (type == PowerUpEnum.weaponFireRate){
 				if (addPermanently || player.gameObject.GetComponent<PowerUpWeaponFireRate>() == null){
 					PowerUpWeaponFireRate AddFireRate = player.gameObject.AddComponent<PowerUpWeaponFireRate>();
 					AddFireRate.Use (player,outlastTime, powerUpValue, addPermanently);
@@ -83,22 +116,26 @@ public class PowerUpItem :   BaseItem {
 					AddFireRate.breakAndRestart();
 				}
 			}
+            //==================TEMPORARY_OR_PERMANENTLY_ADD_POWERUPS_end================================
 
-			if (type == PowerUpEnum.addMaxHealth){
+            //=============PROTOTYPE_POWERUPS_START==================
+            if (type == PowerUpEnum.addMaxHealth){
 				PowerUpAddMaxHealth AddHealth = player.gameObject.AddComponent<PowerUpAddMaxHealth>();
 				AddHealth.Use (player, powerUpValue);
 				//Destroy (AddHealth);
 			}
+
 			if (type == PowerUpEnum.addMaxEnergy){
 				PowerUpAddMaxEnergy AddEnergy = player.gameObject.AddComponent<PowerUpAddMaxEnergy>();
 				AddEnergy.Use (player, powerUpValue);
 				//Destroy (AddEnergy);
 			}
+            //=============PROTOTYPE_POWERUPS_END====================
 
-			// Trigger Event.
-			CollectingPowerUp();
+            // Trigger Event.
+            CollectingPowerUp();
 
-			// set the player as parent gameobject
+			// Set the player as parent gameobject for the colliding object
 			GameObject playerParent = collider.gameObject;
 			int i = 0;
 			while (i < playerParent.transform.childCount){
@@ -115,14 +152,23 @@ public class PowerUpItem :   BaseItem {
 			}
 			// Let the object pend over the player
 			GameObject pendingObject = Instantiate(gameObject,new Vector3(playerParent.transform.position.x , playerParent.transform.position.y + 2.25f, playerParent.transform.position.z), transform.rotation) as GameObject;
-			//pendingObject.GetComponent<RotateObject>();
+			
+            // Get the sphere collider of the pending object
 			SphereCollider pendingSphereCollider = pendingObject.GetComponent<SphereCollider>();
+
+            // Deactivate the collider to avoid colliding
 			pendingSphereCollider.enabled = false;
-			//Vector3 pendingObjectOriginScale = pendingObject.transform.localScale;
+
+			// Scale it down to prepare it for tweening
 			pendingObject.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
-			//StartCoroutine(pendingObject.transform.ScaleTo(new Vector3(1f,1f,1f), 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+			
+            // Start tweening coroutine with an animation curve
 			StartCoroutine(Tween(pendingObject.transform, new Vector3(1f,1f,1f), 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+
+            // Start bck tweening coroutine
 			StartCoroutine(TweenBack(pendingObject.transform, pendingTime));
+
+            // Set the player to 
 			pendingObject.transform.SetParent(playerParent.transform, true);
 			//Debug.Log (pendingObject.transform.localScale);
 			Destroy(pendingObject, pendingTime);
@@ -170,7 +216,9 @@ public class PowerUpItem :   BaseItem {
 	protected void CollectingPowerUp()
 	{
 		if (PowerUpCollected != null)
-			PowerUpCollected();
+        {
+            PowerUpCollected();
+        }
 	}
 
     /// <summary>
@@ -181,8 +229,15 @@ public class PowerUpItem :   BaseItem {
         PowerUpCollected = null;
     }
 
-	// self implemented tweening method is needed to make it able to stop via StopAllCoroutines();
-	public IEnumerator Tween(Transform transform, Vector3 target, float duration, Easer ease)
+    /// <summary>
+    /// Self implemented tweening method is needed to make it able to stop via StopAllCoroutines();
+    /// </summary>
+    /// <param name="transform">The actual game object as Transform.</param>
+    /// <param name="target">Target scale.</param>
+    /// <param name="duration">Duration of the tweening.</param>
+    /// <param name="ease">Ease parameter.</param>
+    /// <returns></returns>
+    public IEnumerator Tween(Transform transform, Vector3 target, float duration, Easer ease)
 	{
 		float elapsed = 0;
 		var start = transform.localScale;
@@ -200,6 +255,12 @@ public class PowerUpItem :   BaseItem {
 		}
 	}
 
+    /// <summary>
+    /// Self implemented back tweening method
+    /// </summary>
+    /// <param name="pendingObject">The pending object as transform.</param>
+    /// <param name="time">Time which should be awaited until the backtweening.</param>
+    /// <returns></returns>
 	public IEnumerator TweenBack(Transform pendingObject, float time)
 	{
 		float TWEENBACK_TIME = 0.3f;
