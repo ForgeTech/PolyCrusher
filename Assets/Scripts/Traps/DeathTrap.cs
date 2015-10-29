@@ -17,6 +17,7 @@ public class DeathTrap : Trap,ITriggerable {
                 // get the BasePlayer of the Game Object
                 BasePlayer player = other.GetComponent<BasePlayer>();
                 player.InstantKill();
+                //player.gameObject.AddComponent<PolyExplosion>();
             }
 
             if (other.tag == "Enemy")
@@ -24,8 +25,16 @@ public class DeathTrap : Trap,ITriggerable {
                 // get the BaseEnemy of the Game Object
                 BaseEnemy enemy = other.GetComponent<BaseEnemy>();
                 enemy.InstantKill();
+                //enemy.gameObject.AddComponent<PolyExplosion>();
             }
         }
+        StartCoroutine(WaitForReset());
+    }
+
+    protected IEnumerator WaitForReset()
+    {
+        yield return new WaitForSeconds(trapActiveTime);
+        triggers[0].resetTrigger();
     }
 
     #endregion
