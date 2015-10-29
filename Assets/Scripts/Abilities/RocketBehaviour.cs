@@ -82,13 +82,20 @@ public class RocketBehaviour : MonoBehaviour {
 		//this.height = height;
 		launched = true;
 
+        //getting the sphere collider of the game object
 		sphereCollider = transform.GetComponent<SphereCollider>();
+
+        //setting it to radius = 1f
 		sphereCollider.radius = 1f;
 
+        //distance between the position of the transform and the target
 		xDiff = Mathf.Abs (transform.position.x - target.x);
 		zDiff = Mathf.Abs (transform.position.z - target.z);
 
+        //rotate it to the current targets position (let it head towards it)
 		transform.LookAt(new Vector3(target.x,height + 1f,target.z));
+
+        //destroy it after lifetime
 		Destroy(this.gameObject, lifeTime);
 
 	}
@@ -143,19 +150,32 @@ public class RocketBehaviour : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collider){
-		if(collider.tag == "Terrain"){
-			SpawnExplosionParticle(new Vector3(transform.position.x,  transform.position.y - 0.9f, transform.position.z));
-			SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
-			sphereCollider.radius = damageRadius;
 
+        //if it collides with the terrain -> let it explode
+		if(collider.tag == "Terrain"){
+
+            //spawns the explosion particles
+			SpawnExplosionParticle(new Vector3(transform.position.x,  transform.position.y - 0.9f, transform.position.z));
+
+            //getting the component of the transform (sphere collider)
+			SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
+
+            //set the radius to the damage radius
+            sphereCollider.radius = damageRadius;
+
+            //get the mesh renderer of the transform
 			MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
-			meshRenderer.enabled = false;
+            //and disable it
+            meshRenderer.enabled = false;
+            //play the explosion sound only once
 			if (playExplode){
 				if (explosionSound != null){
 					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
 					playExplode = false;
 				}
 			}
+
+            //destroy it after the lifetime to prevent the sound from an interuption
 			Destroy(this.gameObject, 2f);
 		}
 	
