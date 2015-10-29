@@ -448,6 +448,17 @@ public class MainMenu : MonoBehaviour
     {
         //TODO - Load right level:
         //StartCoroutine(WaitUntilSoundFinished(index));
+
+        if (!once)
+        {
+            if (GameObject.Find("_StartMenu").GetComponent<StartMenu>().transitionFinished)
+            {
+                once = true;
+
+                OnButtonAccepted();
+                GameObject.Find("_StartMenu").GetComponent<StartMenu>().ChangeScenes("MainMenuObject(Clone)", "Scenes/Menu/OptionMenuObject", false);
+            }
+        }
     }
 
 

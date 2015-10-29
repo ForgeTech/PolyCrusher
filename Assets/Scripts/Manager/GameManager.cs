@@ -64,6 +64,44 @@ public class GameManager : MonoBehaviour
             set { this.actualDamage = value; }
         }
     }
+
+    /// <summary>
+    /// Spawn information for the boss enemies.
+    /// </summary>
+    [System.Serializable]
+    public class BossSpawnInformation
+    {
+        /// <summary>
+        /// Reference to the boss.
+        /// </summary>
+        public GameObject boss;
+
+        // Ressource value for the enemy.
+        public int enemyRessourceValue = 1;
+
+        // The name of the boss.
+        public string enemyName = "BossEnemy";
+
+        // Every x wave, the boss enemy will be spawned.
+        [Tooltip("Every x wave the boss enemy will be spawned.")]
+        public int spawnEveryXWave = 5;
+
+        // Variation of the boss spawn.
+        public int waveSpawnVariation = 3;
+
+        // The actual health. This value will be used to increase the health per wave.
+        protected int actualHealth;
+
+
+        /// <summary>
+        /// Gets or sets the actual health.
+        /// </summary>
+        public int ActualHealth
+        {
+            get { return this.actualHealth; }
+            set { this.actualHealth = value; }
+        }
+    }
     #endregion
 
     #region Class Members
@@ -72,6 +110,10 @@ public class GameManager : MonoBehaviour
     // Spawn information.
     [SerializeField]
     protected SpawnInformation[] spawnInfo;
+
+    // Boss spawn information.
+    [SerializeField]
+    protected BossSpawnInformation bossSpawnInfo;
 
     // Represenation of the game manager
     public static GameManager gameManagerInstance;
@@ -119,6 +161,12 @@ public class GameManager : MonoBehaviour
     // Determines if the wave is active or if there is a pause.
     protected bool waveActive = false;
 
+    // Determines if the wav is a boss wave or not.
+    protected bool isBossWave = false;
+
+    // Every x wave the boss will be spawned.
+    protected int bossSpawnWaves = 0;
+
     #region Increase per wave variables
 
     [Header("=========Wave Increase Settings=========")]
@@ -145,6 +193,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("The increase factor of the enemy damage for every wave. Value should be between 0 and 1!")]
     [SerializeField]
     protected float enemyDamageIncreaseFactor = 0.1f;
+
+    
     #endregion
 
     #endregion
@@ -249,11 +299,31 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets the boss active state.
+    /// </summary>
+    public bool IsBossWave
+    {
+        get { return this.isBossWave; }
+        protected set
+        {
+            this.isBossWave = value;
+        }
+    }
+
+    /// <summary>
     /// Gets the spawn information.
     /// </summary>
     public SpawnInformation[] SpawnInfo
     {
         get { return this.spawnInfo; }
+    }
+
+    /// <summary>
+    /// Gets the boss spawn information.
+    /// </summary>
+    public BossSpawnInformation BossSpawnInfo
+    {
+        get { return this.bossSpawnInfo; }
     }
 
     /// <summary>
@@ -284,6 +354,7 @@ public class GameManager : MonoBehaviour
         // Register event methods.
         EnemySpawn.EnemySpawned += EnemySpawned;
         BaseEnemy.EnemyKilled += EnemyDied;
+        BossEnemy.BossKilled += BossDied;
 
         //Proces Enemy information.
         ProcessEnemyData();
@@ -300,8 +371,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     protected void StartNextWave()
     {
-        WaveActive = true;
         this.wave++;
+
+        // Calculate the boss wave spawns at the start of the game.
+        if (wave <= 1)
+        {
+            bossSpawnWaves = Random.Range(BossSpawnInfo.spawnEveryXWave, BossSpawnInfo.spawnEveryXWave + BossSpawnInfo.waveSpawnVariation + 1);
+        }
 
         //Debug.
         Debug.Log("GameManager: Wave " + wave + " start!");
@@ -313,6 +389,15 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentEnemyRessourceValue = EnemyRessourcePool;
+
+        // Check if it is a boss wave.
+        if (this.wave % bossSpawnWaves == 0)
+        {
+            isBossWave = true;
+            bossSpawnInfo.enemyRessourceValue = EnemyRessourcePool;
+        }
+
+        WaveActive = true;
 
         OnWaveStarted();
     }
@@ -338,6 +423,9 @@ public class GameManager : MonoBehaviour
             spawnInfo[i].ActualDamage += (int) (spawnInfo[i].ActualDamage * enemyDamageIncreaseFactor);
         }
 
+        // Increase boss and health.
+        bossSpawnInfo.ActualHealth += (int) (bossSpawnInfo.ActualHealth * enemyHealthIncreaseFactor);
+
         // Set the accumulated ressource value back to 0.
         accumulatedRessourceValue = 0;
     }
@@ -353,6 +441,8 @@ public class GameManager : MonoBehaviour
             spawnInfo[i].ActualDamage = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MeleeAttackDamage;
             //Debug.Log(spawnInfo[i].ActualDamage);
         }
+
+        BossSpawnInfo.ActualHealth = BossSpawnInfo.boss.GetComponent<BaseEnemy>().MaxHealth;
     }
 
     /// <summary>
@@ -361,6 +451,7 @@ public class GameManager : MonoBehaviour
     protected void EndWave()
     {
         WaveActive = false;
+        isBossWave = false;
         StartCoroutine(WaitForNextWave());
 
         OnWaveEnded();
@@ -414,6 +505,36 @@ public class GameManager : MonoBehaviour
                     this.accumulatedRessourceValue += spawnInfo[i].enemyRessourceValue;
             }
         }
+    }
+
+    /// <summary>
+    /// Decreases the enemy count.
+    /// </summary>
+    /// <param name="e"></param>
+    protected void BossDied(BossEnemy e)
+    {
+        this.CurrentEnemyCount--;
+
+        MonoBehaviour m = bossSpawnInfo.boss.GetComponent<MonoBehaviour>();
+
+        if (m != null && m is BossEnemy)
+        {
+            BossEnemy b = m as BossEnemy;
+
+            // Add the ressource value if the name is equal.
+            if (b.EnemyName == e.EnemyName)
+            {
+                this.accumulatedRessourceValue += BossSpawnInfo.enemyRessourceValue;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Increases the current enemy count when the boss spawns.
+    /// </summary>
+    protected void BossSpawned()
+    {
+        this.CurrentEnemyCount++;
     }
 
     /// <summary>

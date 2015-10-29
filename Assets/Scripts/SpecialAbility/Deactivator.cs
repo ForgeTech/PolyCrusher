@@ -25,7 +25,7 @@ public class Deactivator : MonoBehaviour {
         if (box != null)
         {
             Destroy(box);
-        }
+        }        
         this.gameObject.SetActive(false);
     }
 

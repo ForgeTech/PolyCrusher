@@ -405,11 +405,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         {
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
-            /*Debug.Log("Playercount: " + players.Length);
-
-            for (int i = 0; i < players.Length; i++)
-                Debug.Log("Playername: " + players[i].name);*/
-
             if (players.Length == 1)
                 targetPlayer = players[0].transform;
             else if (players.Length > 1)
@@ -551,7 +546,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <summary>
     /// Resets all neccessary values.
     /// </summary>
-    protected void ResetValues()
+    protected virtual void ResetValues()
     {
         EnemyKilled = null;
     }

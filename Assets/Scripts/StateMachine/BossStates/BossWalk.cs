@@ -7,9 +7,13 @@ public class BossWalk : FSMState
     // Layer of the players
     protected int playerLayer = 8;
 
-    public BossWalk()
+    // Decection range
+    protected float detectionRange;
+
+    public BossWalk(float detectionRange, StateID stateID)
     {
-        this.stateID = StateID.BossWalk;
+        this.stateID = stateID;
+        this.detectionRange = detectionRange;
     }
 
     /// <summary>
@@ -97,7 +101,7 @@ public class BossWalk : FSMState
             Ray ray = new Ray(enemyPos, (playerPos - enemyPos).normalized);
 
             // Raycast hit check
-            bool hit = Physics.Raycast(ray, out hitInfo, e.AttackRange, 1 << playerLayer);
+            bool hit = Physics.Raycast(ray, out hitInfo, detectionRange, 1 << playerLayer);
 
             // Check if the payer target equals the collided target.
             if (hit)
@@ -113,7 +117,7 @@ public class BossWalk : FSMState
             }
 
             // Debug draw Ray
-            Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * e.AttackRange, Color.green);
+            Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * detectionRange, Color.green);
 
             return hit;
         }

@@ -127,9 +127,8 @@ public class Bullet : Projectile
 
         if (other.tag == "Terrain" || other.gameObject.layer == LayerMask.NameToLayer("Props"))
         {
-			Destroy(this.gameObject);
             SpawnDeathParticle(transform.position);
-            
+            Destroy(this.gameObject);
         }
     }
 
@@ -140,7 +139,9 @@ public class Bullet : Projectile
     {
         GameObject particle = Instantiate(deathParticlePrefab) as GameObject;
         particle.transform.position = position;
-        particle.GetComponent<ParticleSystem>().Play();
+
+        if(particle.GetComponent<ParticleSystem>() != null)
+            particle.GetComponent<ParticleSystem>().Play();
     }
 
     /// <summary>
