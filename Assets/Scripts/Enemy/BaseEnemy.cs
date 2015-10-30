@@ -110,7 +110,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [Space(5)]
     [Header("Hit light")]
     [SerializeField]
-    float hitLightTime = 0.2f;
+    protected float hitLightTime = 0.2f;
 
     // Max lifetime of the enemy in seconds.
     [Space(5)]
@@ -425,9 +425,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         GetComponent<NavMeshAgent>().Stop();
         GetComponent<NavMeshAgent>().updateRotation = false;
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-        
+
+        GetComponent<NavMeshAgent>().enabled = false;
+
         GetComponent<Collider>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
+        //GetComponent<Rigidbody>().isKinematic = true;
 
         //Animation
         if(anim != null)

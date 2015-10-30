@@ -912,7 +912,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.42999983, y: -5.44976183e-06, z: -75.2200012}
+  m_LocalPosition: {x: 2.49853134, y: -6.76918398e-06, z: -70.0952835}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 443776}
@@ -1096,9 +1096,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ad6b5b83d57d24aac84822d04af6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 100
   minHealth: 0
-  maxHealth: 500
+  maxHealth: 100
   enemyName: BossEnemy
   movementSpeed: 13
   meleeAttackDamage: 15
@@ -1115,17 +1115,25 @@ MonoBehaviour:
   meleePhase:
     phaseEnabled: 1
     phaseProbability: .805000007
-    phaseTime: 2
+    phaseTime: 1
   rangedPhase:
     phaseEnabled: 1
-    phaseProbability: .421000004
-    phaseTime: 2
+    phaseProbability: .493000001
+    phaseTime: .600000024
   specialPhase:
     phaseEnabled: 1
-    phaseProbability: .165000007
+    phaseProbability: .0930000022
     phaseTime: 5
   sprintEnabled: 0
-  mobSpawnEnabled: 0
+  mobSpawnPhase:
+    phaseEnabled: 1
+    spawnRadius: 8
+    spawnInterval: .300000012
+    phaseTime: 5
+    mobPrefab: {fileID: 121386, guid: 867ce017909b2e245bd30076d4f81b5b, type: 2}
+    spawnPercentage:
+    - .5
+    - .200000003
   idleTime: 2
   meleeAreaOfDamage: {fileID: 125082, guid: c9120d03c174ff445a6c3a12b9a0c122, type: 2}
   areaOfDamageTime: 1.5
@@ -1244,11 +1252,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialPhase.phaseProbability
-      value: .165000007
+      value: .0930000022
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: rangedPhase.phaseProbability
-      value: .421000004
+      value: .493000001
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Mass
@@ -1265,6 +1273,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: pushAwayForce
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: mobSpawnPhase.mobPrefab
+      value: 
+      objectReference: {fileID: 121386, guid: 867ce017909b2e245bd30076d4f81b5b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: mobSpawnPhase.phaseEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: meleePhase.phaseTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialPhase.phaseTime
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

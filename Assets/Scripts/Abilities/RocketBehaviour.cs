@@ -22,8 +22,11 @@ public class RocketBehaviour : MonoBehaviour {
 	[SerializeField]
 	private AudioClip explosionSound;
 
-	// only play once
-	private bool playExplode = true;
+    [SerializeField]
+    private int layerMask = 12;
+
+    // only play once
+    private bool playExplode = true;
 
 	// Particle prefab
 	[SerializeField]
@@ -158,13 +161,38 @@ public class RocketBehaviour : MonoBehaviour {
 			SpawnExplosionParticle(new Vector3(transform.position.x,  transform.position.y - 0.9f, transform.position.z));
 
             //getting the component of the transform (sphere collider)
-			SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
+            //SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
 
             //set the radius to the damage radius
-            sphereCollider.radius = damageRadius;
+            //sphereCollider.radius = damageRadius;
+
+            Collider[] collidingEnemy = Physics.OverlapSphere(transform.position, damageRadius);
+
+            foreach (Collider objects in collidingEnemy)
+            {
+                if (objects.tag == "Enemy")
+                {
+                    MonoBehaviour enemyScripts = objects.gameObject.GetComponent<MonoBehaviour>();
+                    if (enemyScripts != null && enemyScripts is BaseEnemy)
+                    {
+                        ((BaseEnemy)enemyScripts).TakeDamage(damage, this.OwnerScript, true);
+                    }
+                }
+            }
+
+            Collider[] collidingRigidbodies = Physics.OverlapSphere(transform.position, damageRadius, 1<<layerMask);
+
+            foreach (Collider objects in collidingRigidbodies)
+            {
+                if (objects != null)
+                {
+                    Rigidbody colliderRigidbody = objects.gameObject.GetComponent<Rigidbody>();
+                    colliderRigidbody.AddExplosionForce(13f, transform.position, damageRadius, 1.75f, ForceMode.Impulse);
+                }
+            }
 
             //get the mesh renderer of the transform
-			MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
+            MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
             //and disable it
             meshRenderer.enabled = false;
             //play the explosion sound only once
@@ -179,6 +207,7 @@ public class RocketBehaviour : MonoBehaviour {
 			Destroy(this.gameObject, 2f);
 		}
 	
+        /*
 		if (collider.tag == "Enemy")
 		{
 			MonoBehaviour collidingEnemyScript = collider.gameObject.GetComponent<MonoBehaviour>();
@@ -188,6 +217,7 @@ public class RocketBehaviour : MonoBehaviour {
 				((BaseEnemy)collidingEnemyScript).TakeDamage(damage, this.ownerScript, true);
 			}
 		}
+        */
 	}
 	
 	protected void SpawnExplosionParticle(Vector3 position)
