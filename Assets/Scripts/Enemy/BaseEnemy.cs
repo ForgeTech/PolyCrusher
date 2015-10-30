@@ -110,7 +110,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [Space(5)]
     [Header("Hit light")]
     [SerializeField]
-    float hitLightTime = 0.2f;
+    protected float hitLightTime = 0.2f;
 
     // Max lifetime of the enemy in seconds.
     [Space(5)]

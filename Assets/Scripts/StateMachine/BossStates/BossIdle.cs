@@ -12,7 +12,11 @@ public class BossIdle : FSMState
     // Current phase change timer.
     protected float phaseChangeTimer;
 
+    // Reference to boss enemy
     protected BossEnemy bossEnemy;
+
+    // Index of the actual mob spawn percentage array.
+    protected int mobSpawnIndex;
     #endregion
 
     
@@ -20,9 +24,10 @@ public class BossIdle : FSMState
     {
         this.stateID = StateID.BossIdle;
 
-        phaseChangeAllowed = false;
-        phaseChangeTimer = 0f;
+        this.phaseChangeAllowed = false;
+        this.phaseChangeTimer = 0f;
         this.bossEnemy = e;
+        this.mobSpawnIndex = 0;
     }
 
     /// <summary>
@@ -154,18 +159,32 @@ public class BossIdle : FSMState
             }
         }
 
-        // Switch state based on the calculatet probability.
-        if (indexFoundElement == 0)
-        {
-            e.SetTransition(Transition.DecisionMelee);
+        // Current healht percentage.
+        float healthPercentage = (float) e.Health / e.MaxHealth;
+
+        if (e.MobSpawnPhase.spawnPercentage.Length > 0 
+            && mobSpawnIndex < e.MobSpawnPhase.spawnPercentage.Length
+            && healthPercentage <= e.MobSpawnPhase.spawnPercentage[mobSpawnIndex])
+        { 
+            mobSpawnIndex++;
+
+            e.SetTransition(Transition.DecisionMobSpawn);
         }
-        else if (indexFoundElement == 1)
+        else
         {
-            e.SetTransition(Transition.DecisionRanged);
-        }
-        else if (indexFoundElement == 2)
-        {
-            e.SetTransition(Transition.DecisionSpecial);
+            // Switch state based on the calculatet probability.
+            if (indexFoundElement == 0)
+            {
+                e.SetTransition(Transition.DecisionMelee);
+            }
+            else if (indexFoundElement == 1)
+            {
+                e.SetTransition(Transition.DecisionRanged);
+            }
+            else if (indexFoundElement == 2)
+            {
+                e.SetTransition(Transition.DecisionSpecial);
+            }
         }
     }
 

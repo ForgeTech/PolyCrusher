@@ -9,7 +9,7 @@ public delegate void BossKilledEventHandler(BossEnemy boss);
 
 public class BossEnemy : BaseEnemy
 {
-    #region Inner Class
+    #region Inner Classes
     /// <summary>
     /// Information class for the AI Phases.
     /// </summary>
@@ -30,6 +30,47 @@ public class BossEnemy : BaseEnemy
         [Tooltip("The time after the phase should be exited. (in seconds)")]
         [Range(0f, 30f)]
         public float phaseTime = 5f;
+    }
+
+    /// <summary>
+    /// Information class for the mob spawn phase.
+    /// </summary>
+    [System.Serializable]
+    public class MobSpawnPhaseInformation
+    {
+        /// <summary>
+        /// Specifies if the phase is enabled.
+        /// </summary>
+        public bool phaseEnabled;
+
+        /// <summary>
+        /// Spawnradius of the mobs. They spawn around the boss.
+        /// </summary>
+        public float spawnRadius = 8f;
+
+        /// <summary>
+        /// Spawn interval of the mobs in seconds.
+        /// </summary>
+        public float spawnInterval = 0.3f;
+
+        /// <summary>
+        /// Duration of the phase.
+        /// </summary>
+        [Tooltip("The time after the phase should be exited. (in seconds)")]
+        [Range(0f, 30f)]
+        public float phaseTime = 5f;
+
+        /// <summary>
+        /// Reference to the mob prefab.
+        /// </summary>
+        public GameObject mobPrefab;
+
+        /// <summary>
+        /// Spawns when the percentage of the health is reached.
+        /// </summary>
+        [Tooltip("Spawns when the percentage of the health is reached.")]
+        [Range(0f, 1f)]
+        public float[] spawnPercentage;
     }
     #endregion
 
@@ -71,10 +112,10 @@ public class BossEnemy : BaseEnemy
     [SerializeField]
     protected bool sprintEnabled = false;
 
-    [Space(4)]
-    [Tooltip("Specifies if mobs can be spawned by the boss or not.")]
+    [Space(5)]
+    [Header("Mob Spawn settings")]
     [SerializeField]
-    protected bool mobSpawnEnabled = false;
+    MobSpawnPhaseInformation mobSpawnPhase;
 
     [Space(4)]
     [Tooltip("Time which the boss stays in idle after he chooses another state.")]
@@ -151,11 +192,11 @@ public class BossEnemy : BaseEnemy
     }
 
     /// <summary>
-    /// Gets mob spawn enabled.
+    /// Gets mob spawn phase information.
     /// </summary>
-    public bool MobSpawnEnabled
+    public MobSpawnPhaseInformation MobSpawnPhase
     {
-        get { return this.mobSpawnEnabled; }
+        get { return this.mobSpawnPhase; }
     }
 
     /// <summary>
@@ -260,6 +301,7 @@ public class BossEnemy : BaseEnemy
         idle.AddTransition(Transition.DecisionMelee, StateID.BossAttackMelee);
         idle.AddTransition(Transition.DecisionRanged, StateID.BossAttackRanged);
         idle.AddTransition(Transition.DecisionSpecial, StateID.BossAttackSpecial);
+        idle.AddTransition(Transition.DecisionMobSpawn, StateID.BossMobSpawn);
 
         BossAttackMelee attackMelee = new BossAttackMelee(MeleePhase.phaseTime, StateID.BossAttackMelee);
         attackMelee.AddTransition(Transition.AttackFinished, StateID.BossIdle);
@@ -284,6 +326,9 @@ public class BossEnemy : BaseEnemy
         BossWalk walkSpecial = new BossWalk(RangedAttackRange, StateID.BossWalkSpecial);
         walkSpecial.AddTransition(Transition.ReachedDestination, StateID.BossAttackSpecial);
 
+        BossMobSpawn mobSpawn = new BossMobSpawn(MobSpawnPhase.phaseTime, StateID.BossMobSpawn);
+        mobSpawn.AddTransition(Transition.AttackFinished, StateID.BossIdle);
+
         fsm = new FSMSystem();
         fsm.AddState(idle);
         fsm.AddState(attackMelee);
@@ -292,6 +337,7 @@ public class BossEnemy : BaseEnemy
         fsm.AddState(attackRangedWalk);
         fsm.AddState(attackSpecial);
         fsm.AddState(walkSpecial);
+        fsm.AddState(mobSpawn);
     }
 
     /// <summary>
