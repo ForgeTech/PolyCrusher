@@ -3,14 +3,30 @@ using System.Collections;
 
 public class DeathTrap : Trap,ITriggerable {
 
+    // Enum of the Death Traps to show it as a dropdown menu
+    public enum DeathTrapEnum
+    {
+        bearTrap, floorTrap, hlTrap
+    }
+
+    [SerializeField]
+    private DeathTrapEnum type;
+
     #region Class Methods
-    
+
     public override void Trigger(Collider other) {
         if (isActive == false)
         {
             isActive = true;
             StartCoroutine(WaitForActive());
-            GetComponent<Animation>().Play("strike");
+
+            if(type == DeathTrapEnum.bearTrap)
+            {
+                GetComponent<Animation>().Play("strike");
+            } else if (type == DeathTrapEnum.floorTrap)
+            {
+                GetComponent<Animation>().Play("spike");
+            }
 
             if (other.tag == "Player")
             {
