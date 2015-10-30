@@ -342,6 +342,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         if (bloodParticle != null && damageDealer != null)
             Instantiate(bloodParticle, transform.position, bloodParticle.transform.rotation);
 
+        // Substract health
         if(Health >= 0){
             Health -= damage;
         }
@@ -349,6 +350,52 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         // Light blink
         SetLightColor(damageDealer);
         StartCoroutine(ColorBlink(hitLightTime));
+    }
+
+    /// <summary>
+    /// Draws the object some damage and lowers the health.
+    /// </summary>
+    /// <param name="damage">Damage</param>
+    /// <param name="damageDealer">The damage dealer</param>
+    /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
+    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation)
+    {
+        if (noDeathAnimation)
+        {
+            // send event if enemy will be dead
+            if (Health - damage < 0 && !enemyIsDead)
+            {
+                string character = "undefined";
+
+                if (damageDealer != null && damageDealer is BasePlayer)
+                {
+                    character = ((BasePlayer)damageDealer).PlayerName;
+                }
+                new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
+            }
+
+            // Blood particle
+            if (bloodParticle != null && damageDealer != null)
+                Instantiate(bloodParticle, transform.position, bloodParticle.transform.rotation);
+
+            if (Health >= 0)
+            {
+                // Enemy will be dead, so set the Animator to null;
+                if (Health - damage <= minHealth)
+                    anim = null;
+
+                // Substract health
+                Health -= damage;
+            }
+
+            // Light blink
+            SetLightColor(damageDealer);
+            StartCoroutine(ColorBlink(hitLightTime));
+        }
+        else
+        {
+            TakeDamage(damage, damageDealer);
+        }
     }
 
     /// <summary>

@@ -111,7 +111,8 @@ public class BossMeleeScript : MonoBehaviour
             if (m is BasePlayer)
             {
                 m.GetComponent<BasePlayer>().TakeDamage(damage, owner);
-                m.GetComponent<Rigidbody>().AddExplosionForce(owner.PushAwayForce, transform.position, damageRadius);
+                //m.GetComponent<Rigidbody>().AddExplosionForce(owner.PushAwayForce, transform.position, damageRadius, 0f, ForceMode.Impulse);
+                m.GetComponent<Rigidbody>().AddForce((players[i].position - (transform.position + new Vector3(0.05f, 0, 0))).normalized * owner.PushAwayForce, ForceMode.Impulse);
             }
         }
 

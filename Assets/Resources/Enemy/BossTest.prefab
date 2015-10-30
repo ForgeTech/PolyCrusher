@@ -1102,7 +1102,7 @@ MonoBehaviour:
   enemyName: BossEnemy
   movementSpeed: 13
   meleeAttackDamage: 15
-  pushAwayForce: 700
+  pushAwayForce: 17
   attackInterval: .699999988
   attackRange: 2
   lifeTimeAfterDeath: 3
@@ -1261,6 +1261,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: health
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pushAwayForce
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
