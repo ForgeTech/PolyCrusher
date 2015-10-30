@@ -425,9 +425,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         GetComponent<NavMeshAgent>().Stop();
         GetComponent<NavMeshAgent>().updateRotation = false;
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-        
+
+        GetComponent<NavMeshAgent>().enabled = false;
+
         GetComponent<Collider>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
+        //GetComponent<Rigidbody>().isKinematic = true;
 
         //Animation
         if(anim != null)

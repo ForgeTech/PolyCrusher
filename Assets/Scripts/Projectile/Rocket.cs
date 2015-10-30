@@ -142,8 +142,8 @@ public class Rocket : Projectile {
 	
 	void OnTriggerEnter(Collider collider){
 		if(collider.tag == "Terrain" || collider.tag == "Player"){
-			SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
-			sphereCollider.radius = damageRadius;
+			//SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
+			//sphereCollider.radius = damageRadius;
 
 			// Deactivate mesh renderer.
 			MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
