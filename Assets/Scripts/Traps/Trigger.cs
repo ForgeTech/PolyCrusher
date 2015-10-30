@@ -22,7 +22,10 @@ public class Trigger : MonoBehaviour {
     protected void OnTriggerEnter(Collider other)
     {
         collided = other;
-        GetComponentsInChildren<Animation>()[0].Play("onenter");
+        if (GetComponentsInChildren<Animation>()[0])
+        {
+            GetComponentsInChildren<Animation>()[0].Play("onenter");
+        }
         GetComponentsInChildren<Renderer>()[0].material.color = Color.green;
     }
     
@@ -36,7 +39,10 @@ public class Trigger : MonoBehaviour {
     public void resetTrigger()
     {
         collided = null;
-        GetComponentsInChildren<Animation>()[0].Play("onexit");
+        if (GetComponentsInChildren<Animation>()[0])
+        {
+            GetComponentsInChildren<Animation>()[0].Play("onexit");
+        }
         GetComponentsInChildren<Renderer>()[0].material.color = Color.red;
     }
 
