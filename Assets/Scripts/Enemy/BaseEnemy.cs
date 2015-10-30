@@ -382,8 +382,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 // Enemy will be dead, so set the Animator to null;
                 if (Health - damage <= minHealth)
-                    anim = null;
-
+                    Destroy(anim);
+                    
                 // Substract health
                 Health -= damage;
             }

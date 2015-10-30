@@ -181,10 +181,11 @@ public class RocketBehaviour : MonoBehaviour {
 	
 		if (collider.tag == "Enemy")
 		{
-			MonoBehaviour m = collider.gameObject.GetComponent<MonoBehaviour>();
-			if (m != null && m is IDamageable)
+			MonoBehaviour collidingEnemyScript = collider.gameObject.GetComponent<MonoBehaviour>();
+
+			if (collidingEnemyScript != null && collidingEnemyScript is BaseEnemy)
 			{
-				((IDamageable)m).TakeDamage(damage, this.ownerScript);
+				((BaseEnemy)collidingEnemyScript).TakeDamage(damage, this.ownerScript, true);
 			}
 		}
 	}
