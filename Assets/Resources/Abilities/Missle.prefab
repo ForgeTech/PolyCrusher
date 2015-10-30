@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 4
   explosionSound: {fileID: 8300000, guid: ed623b43a10b165438ae8e9265e9620d, type: 3}
+  layerMask: 15
   explosionParticle: {fileID: 158560, guid: 061d74eca5b781d449fcf7ec08244ba2, type: 2}
   damageRadius: 4
   sensitivity: 30
@@ -1257,7 +1258,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: layerMask
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 122094}
