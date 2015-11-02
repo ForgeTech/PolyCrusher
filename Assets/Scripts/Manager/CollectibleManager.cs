@@ -119,18 +119,18 @@ public class CollectibleManager : MonoBehaviour {
 
                 if(PowerUpSigns != null)
                 {
-                    for(int i = 0; i<PowerUpSigns.Length; i++)
+                    for(int i = 0; i < PowerUpSigns.Length; i++)
                     {
                         Instantiate(Resources.Load("Particles/Wrapper/ParticleWrapperSignsBurst"), PowerUpSigns[i].transform.position, PowerUpSigns[i].transform.rotation);
 
                         Vector3 targetPosition = PowerUpSpawnPoints[actualSpawnpoint].transform.position;
-                        PowerUpSigns[i].transform.LookAt(targetPosition, new Vector3(1.0f, 0.0f, 0.0f));
-                        PowerUpSigns[i].transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
+                        PowerUpSigns[i].transform.LookAt(targetPosition, new Vector3(0.0f, 1.0f, 0.0f));
+                        //PowerUpSigns[i].transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
 
-                        if (PowerUpSigns[i].transform.position.z > PowerUpSpawnPoints[actualSpawnpoint].transform.position.z)
+                        /*if (PowerUpSigns[i].transform.position.z > PowerUpSpawnPoints[actualSpawnpoint].transform.position.z)
                         {
                             PowerUpSigns[i].transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
-                        }
+                        }*/
                     }
                 }
 			}
