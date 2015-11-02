@@ -83,9 +83,13 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected string playerPrefix = "P1_";
 
+    // Initial death time.
     [Tooltip("The time the player stays on screen after he dies.")]
     [SerializeField]
     protected float deathTime = 3.3f;
+
+    // The actual death time which will be used.
+    protected float currentDeathTime;
 
 	//Phone player slot for the mobile controller input.
 	[SerializeField]
@@ -300,6 +304,14 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
+    /// <summary>
+    /// Gets or sets the current death time.
+    /// </summary>
+    public float CurrentDeathTime
+    {
+        get { return this.currentDeathTime; }
+        set { this.currentDeathTime = value; }
+    }
 
     /// <summary>
     /// Gets or sets the player prefix.
@@ -433,6 +445,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Set dead to default (false).
         this.isDead = false;
 
+        // Set death time
+        this.currentDeathTime = deathTime;
+
         // Init character sounds.
         InitializeCharacterSounds();
 
@@ -460,9 +475,14 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Fire spawn event.
         OnPlayerSpawn();
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+    void OnEnable()
+    {
+        this.CurrentDeathTime = deathTime;
+    }
+
+        // Update is called once per frame
+        void Update () 
     {
         if (!IsDead)
         {
@@ -853,7 +873,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             deathCharacterSound.PlayRandomClip();
         
         // Start disabling routine
-        StartCoroutine(WaitForDisable(deathTime));
+        StartCoroutine(WaitForDisable(CurrentDeathTime));
 
         // Set invincible to false
         if (Invincible)

@@ -14,8 +14,12 @@ public class Trap : MonoBehaviour,ITriggerable {
     [SerializeField]
     protected Trigger[] triggers;
 
+    //the player meshes that are used for the poly explosion
+    [SerializeField]
+    protected GameObject[] playerMeshes;
+
     //trap can only be triggered if this is false
-    protected bool isActive = false;
+    protected bool isActive = true;
 
     #endregion
 
@@ -38,6 +42,12 @@ public class Trap : MonoBehaviour,ITriggerable {
         isActive = false;
     }
 
+    //sets trap active on awake
+    public void Awake()
+    {
+        ResetTrap();
+    }
+
     //calls the trigger method if all triggers are active with reference on the collider that entered the very FIRST trigger
     public void Update()
     {
@@ -45,11 +55,12 @@ public class Trap : MonoBehaviour,ITriggerable {
         int counter = 0;
         for(int i = 0; i<triggers.Length; i++)
         {
-            if (triggers[i].collided)
+            if (triggers[i].collided != null)
             {
                 counter++;
             }
         }
+
         if(counter == triggers.Length)
         {
             Trigger(triggers[0].collided);

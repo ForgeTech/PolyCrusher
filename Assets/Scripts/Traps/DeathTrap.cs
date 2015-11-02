@@ -17,6 +17,7 @@ public class DeathTrap : Trap,ITriggerable {
     public override void Trigger(Collider other) {
         if (isActive == false)
         {
+            Debug.Log("Triggered trap!");
             isActive = true;
             StartCoroutine(WaitForActive());
 
@@ -32,8 +33,32 @@ public class DeathTrap : Trap,ITriggerable {
             {
                 // get the BasePlayer of the Game Object
                 BasePlayer player = other.GetComponent<BasePlayer>();
+                Vector3 tmpPosition = other.GetComponent<Transform>().position;
+                Quaternion tmpRotation = other.GetComponent<Transform>().rotation;
+                player.CurrentDeathTime = 0;
                 player.InstantKill();
-                //player.gameObject.AddComponent<PolyExplosion>();
+                
+                //create playerMesh to destroy it without destroying the real player
+                GameObject destroyMesh = null;
+                switch(player.name){
+                    case "Birdman":
+                        destroyMesh = this.playerMeshes[0];
+                        break;
+                    case "Charger":
+                        destroyMesh = this.playerMeshes[1];
+                        break;
+                    case "Fatman":
+                        destroyMesh = this.playerMeshes[2];
+                        break;
+                    case "Timeshifter":
+                        destroyMesh = this.playerMeshes[3];
+                        break;
+                }
+                if (destroyMesh != null)
+                {
+                    GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
+                    toDestroy.gameObject.AddComponent<PolyExplosion>();
+                }
             }
 
             if (other.tag == "Enemy")
@@ -41,7 +66,7 @@ public class DeathTrap : Trap,ITriggerable {
                 // get the BaseEnemy of the Game Object
                 BaseEnemy enemy = other.GetComponent<BaseEnemy>();
                 enemy.InstantKill();
-                //enemy.gameObject.AddComponent<PolyExplosion>();
+                enemy.gameObject.AddComponent<PolyExplosion>();
             }
         }
         StartCoroutine(WaitForReset());
