@@ -29,8 +29,11 @@ public class MaterialOffset : MonoBehaviour
         offset = Time.time * offsetFactor;
         scaleOffset = new Vector2(Mathf.Cos(Time.time) * offsetFactor + 1, Mathf.Sin(Time.time) * offsetFactor + 1);
 
-        r.material.SetTextureOffset("_MainTex", new Vector2(offset, Mathf.Sin(offset)));
-        r.material.SetTextureOffset("_EmissionMap", new Vector2(offset, Mathf.Sin(offset)));
+        float sinus = Mathf.Sin(offset);
+
+        r.material.SetTextureOffset("_MainTex", new Vector2(offset, sinus));
+        r.material.SetTextureOffset("_EmissionMap", new Vector2(offset, sinus));
+        r.material.SetTextureOffset("_BumpMap", new Vector2(offset / 200f, sinus));
 
         r.material.SetTextureScale("_MainTex", scaleOffset);
         r.material.SetTextureScale("_EmissionMap", scaleOffset);
