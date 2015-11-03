@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using XInputDotNetPure;
 
 public class PolygonSystem : MonoBehaviour
 {
@@ -133,7 +134,7 @@ public class PolygonSystem : MonoBehaviour
 
 
     //stuff for 
-
+    public bool activateViration = false;
 
 
 
@@ -196,7 +197,7 @@ public class PolygonSystem : MonoBehaviour
             renderers[i] = polyParts[i].AddComponent<MeshRenderer>();
             renderers[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderers[i].receiveShadows = false;
-            renderers[i].material = mats[0];
+            renderers[i].material = mats[1];
             polyParts[i].layer = LayerMask.NameToLayer("ExplosionTriangle");
             polyOffsets[i] = polyStartHeight;
             colliders[i] = polyParts[i].AddComponent<MeshCollider>();
@@ -530,7 +531,6 @@ public class PolygonSystem : MonoBehaviour
 
             if (screenFlash)
             {
-
                 if (!fadeOut && screenFlashAnimTime < 1.0f)
                 {
                     screenFlashAnimTime += Time.deltaTime * 5.0f;
@@ -552,8 +552,34 @@ public class PolygonSystem : MonoBehaviour
                         screenFlash = false;
                         fadeOut = false;
                         whiteScreen.color = Color.clear;
+                        screenFlashAnimTime = 0.0f;
+                        GamePad.SetVibration(0, 0, 0);
                     }
                 }
+
+
+
+                if(players.Length == 1)
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
+                }else if(players.Length == 2)
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
+                    GamePad.SetVibration(PlayerIndex.Two, 0, screenFlashAnimTime);
+
+                }else if(players.Length == 3)
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
+                    GamePad.SetVibration(PlayerIndex.Two, 0, screenFlashAnimTime);
+                    GamePad.SetVibration(PlayerIndex.Three, 0, screenFlashAnimTime);
+                    
+                }else
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
+                    GamePad.SetVibration(PlayerIndex.Two, 0, screenFlashAnimTime);
+                    GamePad.SetVibration(PlayerIndex.Three, 0, screenFlashAnimTime);
+                    GamePad.SetVibration(PlayerIndex.Four, 0, screenFlashAnimTime);
+                }                
             }
            
             HandleSpecialPolygon();
@@ -582,7 +608,75 @@ public class PolygonSystem : MonoBehaviour
             oldDonkey = donkey;
         }
 
+
+
+
+        if (activateViration)
+        {
+            activateViration = false;
+            StartCoroutine(SetVibration(0.01f));
+        }
+
     }
+
+
+    private IEnumerator SetVibration(float time)
+    {
+
+        if (players.Length == 1)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 1);
+        }
+        else if (players.Length == 2)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 1);
+            GamePad.SetVibration(PlayerIndex.Two, 0, 1);
+
+        }
+        else if (players.Length == 3)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 1);
+            GamePad.SetVibration(PlayerIndex.Two, 0, 1);
+            GamePad.SetVibration(PlayerIndex.Three, 0, 1);
+
+        }
+        else
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 1);
+            GamePad.SetVibration(PlayerIndex.Two, 0, 1);
+            GamePad.SetVibration(PlayerIndex.Three, 0, 1);
+            GamePad.SetVibration(PlayerIndex.Four, 0, 1);
+        }
+    
+    yield return new WaitForSeconds(time);
+
+        if (players.Length == 1)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 0);
+        }
+        else if (players.Length == 2)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 0);
+            GamePad.SetVibration(PlayerIndex.Two, 0, 0);
+
+        }
+        else if (players.Length == 3)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 0);
+            GamePad.SetVibration(PlayerIndex.Two, 0, 0);
+            GamePad.SetVibration(PlayerIndex.Three, 0, 0);
+
+        }
+        else
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 0);
+            GamePad.SetVibration(PlayerIndex.Two, 0, 0);
+            GamePad.SetVibration(PlayerIndex.Three, 0, 0);
+            GamePad.SetVibration(PlayerIndex.Four, 0, 0);
+        }
+    
+
+}
 
 
     private void UpdatePolyLerpDistance()
@@ -694,7 +788,7 @@ public class PolygonSystem : MonoBehaviour
     {
         for (int i = 0; i < polyOffsets.Length; i++)
         {
-            renderers[i].material.Lerp(mats[4], mats[0], polyLerpDistance);
+            renderers[i].material.Lerp(mats[1], mats[0], polyLerpDistance);
             
             if (i == 0)
             {
@@ -767,7 +861,8 @@ public class PolygonSystem : MonoBehaviour
     {
 
 
-        if (polyEndAnimLerpTime <= 1.0f)
+        if (polyEndAnimLerpTime <= 
+            1.0f)
         {
             polyEndAnimLerpTime += Time.deltaTime;
         }
@@ -792,10 +887,6 @@ public class PolygonSystem : MonoBehaviour
 
             currentCooldown = transitionCooldown;
         }
-
-
-
-
     }
 
 
@@ -991,7 +1082,7 @@ public class PolygonSystem : MonoBehaviour
 
             }
 
-            float newAngle =Mathf.Round( Mathf.Rad2Deg*(Mathf.Atan2(tmp.x * tmp2.x, tmp.z * tmp2.z)));
+            float newAngle =Mathf.Rad2Deg*(Mathf.Atan2(tmp.x * tmp2.x, tmp.z * tmp2.z));
         
 
             

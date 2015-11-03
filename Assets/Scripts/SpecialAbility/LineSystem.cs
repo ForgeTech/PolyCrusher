@@ -468,6 +468,7 @@ void UpdatePlayerStatus(BasePlayer basePlayer)
                 lineRenderer[i].SetVertexCount(2);
                 lineRenderer[i].sharedMaterial = mats[0];
                 lineRenderer[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                lineRenderer[i].receiveShadows = false;
 
                 go.transform.parent = this.gameObject.transform;
             }  
