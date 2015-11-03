@@ -36,6 +36,13 @@ public class Trap : MonoBehaviour,ITriggerable {
         ResetTrap();
     }
 
+    //resets the trigger manually after trap was triggered - deathTraps can't be exited so onTriggerExit won't be called
+    protected IEnumerator WaitForReset()
+    {
+        yield return new WaitForSeconds(trapActiveTime);
+        triggers[0].resetTrigger();
+    }
+
     //resets trap
     protected virtual void ResetTrap()
     {
@@ -63,7 +70,12 @@ public class Trap : MonoBehaviour,ITriggerable {
 
         if(counter == triggers.Length)
         {
-            Trigger(triggers[0].collided);
+            if (isActive == false)
+            {
+                isActive = true;
+                StartCoroutine(WaitForActive());
+                Trigger(triggers[0].collided);
+            }
         }
     }
 

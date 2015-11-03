@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DeathTrap : Trap,ITriggerable {
+public class DeathTrap : Trap, ITriggerable
+{
 
     // Enum of the Death Traps to show it as a dropdown menu
     public enum DeathTrapEnum
@@ -14,68 +15,61 @@ public class DeathTrap : Trap,ITriggerable {
 
     #region Class Methods
 
-    public override void Trigger(Collider other) {
-        if (isActive == false)
+    public override void Trigger(Collider other)
+    {
+        //play the animation asscociated with the trap type
+        if (type == DeathTrapEnum.bearTrap)
         {
-            Debug.Log("Triggered trap!");
-            isActive = true;
-            StartCoroutine(WaitForActive());
+            GetComponent<Animation>().Play("strike");
+        }
+        else if (type == DeathTrapEnum.floorTrap)
+        {
+            GetComponent<Animation>().Play("spike");
+        }
 
-            if(type == DeathTrapEnum.bearTrap)
+        if (other.tag == "Player")
+        {
+            // get the BasePlayer of the Game Object
+            BasePlayer player = other.GetComponent<BasePlayer>();
+            Vector3 tmpPosition = other.GetComponent<Transform>().position;
+            Quaternion tmpRotation = other.GetComponent<Transform>().rotation;
+            player.CurrentDeathTime = 0;
+            player.InstantKill();
+
+            //create playerMesh to destroy it without destroying the real player
+            GameObject destroyMesh = null;
+            switch (player.name)
             {
-                GetComponent<Animation>().Play("strike");
-            } else if (type == DeathTrapEnum.floorTrap)
-            {
-                GetComponent<Animation>().Play("spike");
+                case "Birdman":
+                    destroyMesh = this.playerMeshes[0];
+                    break;
+                case "Charger":
+                    destroyMesh = this.playerMeshes[1];
+                    break;
+                case "Fatman":
+                    destroyMesh = this.playerMeshes[2];
+                    break;
+                case "Timeshifter":
+                    destroyMesh = this.playerMeshes[3];
+                    break;
             }
-
-            if (other.tag == "Player")
+            if (destroyMesh != null)
             {
-                // get the BasePlayer of the Game Object
-                BasePlayer player = other.GetComponent<BasePlayer>();
-                Vector3 tmpPosition = other.GetComponent<Transform>().position;
-                Quaternion tmpRotation = other.GetComponent<Transform>().rotation;
-                player.CurrentDeathTime = 0;
-                player.InstantKill();
-                
-                //create playerMesh to destroy it without destroying the real player
-                GameObject destroyMesh = null;
-                switch(player.name){
-                    case "Birdman":
-                        destroyMesh = this.playerMeshes[0];
-                        break;
-                    case "Charger":
-                        destroyMesh = this.playerMeshes[1];
-                        break;
-                    case "Fatman":
-                        destroyMesh = this.playerMeshes[2];
-                        break;
-                    case "Timeshifter":
-                        destroyMesh = this.playerMeshes[3];
-                        break;
-                }
-                if (destroyMesh != null)
-                {
-                    GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
-                    toDestroy.gameObject.AddComponent<PolyExplosion>();
-                }
-            }
-
-            if (other.tag == "Enemy")
-            {
-                // get the BaseEnemy of the Game Object
-                BaseEnemy enemy = other.GetComponent<BaseEnemy>();
-                enemy.InstantKill();
-                enemy.gameObject.AddComponent<PolyExplosion>();
+                GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
+                toDestroy.gameObject.AddComponent<PolyExplosion>();
             }
         }
-        StartCoroutine(WaitForReset());
-    }
 
-    protected IEnumerator WaitForReset()
-    {
-        yield return new WaitForSeconds(trapActiveTime);
-        triggers[0].resetTrigger();
+        if (other.tag == "Enemy")
+        {
+            // get the BaseEnemy of the Game Object
+            BaseEnemy enemy = other.GetComponent<BaseEnemy>();
+            enemy.InstantKill();
+            enemy.gameObject.AddComponent<PolyExplosion>();
+        }
+
+        //trigger.onTriggerExit is never called, so trap is reset manually
+        StartCoroutine(WaitForReset());
     }
 
     #endregion

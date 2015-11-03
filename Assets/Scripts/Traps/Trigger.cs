@@ -13,6 +13,7 @@ public class Trigger : MonoBehaviour {
 
     #region Class Methods
 
+    //sets material color on awake
     public void Awake()
     {
         GetComponentsInChildren<Renderer>()[0].material.color = Color.red;
