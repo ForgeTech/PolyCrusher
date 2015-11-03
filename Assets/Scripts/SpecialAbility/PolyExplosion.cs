@@ -57,7 +57,8 @@ public class PolyExplosion : MonoBehaviour {
 
         grandStep = step * 20;
 
-        scaleFactor = 0.03f * step * 6;
+        scaleFactor = 4+((step/3)* 0.28f);
+        Debug.Log(scaleFactor);
 
     }
 	
@@ -65,8 +66,7 @@ public class PolyExplosion : MonoBehaviour {
 	void FixedUpdate () {
 
         if (explode)
-        {
-            
+        { 
 
             explode = false;
             ExplodePartial(0);
@@ -100,7 +100,6 @@ public class PolyExplosion : MonoBehaviour {
                             part5 = false;
                             ExplodePartial(step*4);
                             part6 = true;
-                            
 
                         }else
                         {
@@ -219,7 +218,7 @@ public class PolyExplosion : MonoBehaviour {
 
                     GO.transform.position = transform.position;
                     GO.transform.rotation = transform.rotation;
-                    GO.transform.localScale = new Vector3(scaleFactor, 0.5f, scaleFactor);
+                    GO.transform.localScale = new Vector3(MR.transform.localScale.x*scaleFactor, MR.transform.localScale.y, MR.transform.localScale.z*scaleFactor);
 
                     
                     deactivator.attachedRenderer.material = MR.materials[submesh];                   
@@ -229,7 +228,7 @@ public class PolyExplosion : MonoBehaviour {
 
                     GO.AddComponent<BoxCollider>();
 
-                    deactivator.attachedRigid.AddExplosionForce(70, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, 1.0f);
+                    deactivator.attachedRigid.AddExplosionForce(50, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, 0.0f);
 
                     
                    

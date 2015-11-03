@@ -77,7 +77,8 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
             explode = false;
             ExplodePartial(0);
-            part2 = true;
+            Destroy(gameObject);
+            //part2 = true;
         }
         else
         {
@@ -200,31 +201,50 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         {
             int[] indices = M.GetTriangles(submesh);
 
-            for (int i = start; i < indices.Length; i += grandStep)
+            for (int i = start; i < indices.Length; i += 6) //grandStep)
             {
-                newVerts = new Vector3[4];
-                newNormals = new Vector3[4];
-                newUvs = new Vector2[4];
+                newVerts = new Vector3[8];
+                newNormals = new Vector3[8];
+                newUvs = new Vector2[8];
 
 
-                newVerts[0] = new Vector3(0, 0, 0);
-                newNormals[0] = normals[indices[i]];
-                newUvs[0] = uvs[indices[i]];
+                //newVerts[0] = new Vector3(0, 0, 0);
+                //newNormals[0] = normals[indices[i]];
+                //newUvs[0] = uvs[indices[i]];
+
+              
+                Vector3 direction1 = Vector3.Normalize(new Vector3(0,0,0) - verts[indices[i]]);
+                Vector3 direction2 = Vector3.Normalize(new Vector3(0, 0, 0) - verts[indices[i + 3]]);
+               
 
                 for (int n = 0; n < 3; n++)
                 {
 
                     int index = indices[i + n];
-                    newVerts[n+1] = verts[index];
-                    newUvs[n+1] = uvs[index];
-                    newNormals[n+1] = normals[index];
+                    newVerts[n] = verts[index];
+                    newUvs[n] = uvs[index];
+                    newNormals[n] = normals[index];
+
+                    newVerts[n + 3] = newVerts[n] + direction1;
+                    newUvs[n + 3] = uvs[index];
+                    newNormals[n + 3] = normals[index];                   
                 }
+
+                newVerts[6] = verts[indices[i+3]];
+                newNormals[6] = normals[indices[i + 3]];
+                newUvs[6] = uvs[indices[i + 3]];
+
+                newVerts[7] = verts[indices[i + 3]] + direction2;
+                newNormals[7] = normals[indices[i + 3]];
+                newUvs[7] = uvs[indices[i + 3]];
+                
+
                 mesh = new Mesh();
                 mesh.vertices = newVerts;
                 mesh.normals = newNormals;
                 mesh.uv = newUvs;
-                Debug.Log(newVerts[0] + "  " + newVerts[1]);
-                mesh.triangles = new int[] { 0, 1, 2, 2, 1, 0,  0,1,3,3,1,0,  0,2,3,3,2,0, 1,2,3,3,2,1,  1,3,2,2,3,1,  0,2,1,1,2,0,  0,3,1,1,3,0};
+                //Debug.Log(newVerts[0] + "  " + newVerts[1]);
+                mesh.triangles = new int[] { 0, 1, 2, 2, 1, 0,     1,0,6,6,0,1,  1,6,7,7,6,1,  0,6,7,7,6,0,     0, 1, 4, 4, 1, 0,    0, 3, 4, 4, 3, 0,      0, 2, 5, 5, 2, 0,       1, 4, 5, 5, 4, 1,       3, 4, 5, 5, 4, 3,        0, 3, 5, 5, 3, 0,          1, 2, 5, 5, 2, 1 };
 
                 GO = pool.getPooledObject();
 
@@ -251,7 +271,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     GO.AddComponent<MeshCollider>();
                     GO.GetComponent<MeshCollider>().convex = true;
 
-                    deactivator.attachedRigid.AddExplosionForce(0.1f, new Vector3(transform.position.x, transform.position.y, transform.position.z), 1, 0.0f,ForceMode.Impulse);
+                    //deactivator.attachedRigid.AddExplosionForce(0, new Vector3(transform.position.x, transform.position.y, transform.position.z), 1, 0.0f,ForceMode.Force);
                     deactivator.enabled = false;
 
 

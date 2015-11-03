@@ -956,18 +956,14 @@ public class OptionsMenu : MonoBehaviour
     }
 
     public void BackToMain()
-    {
-        //if (!once)
+    {      
         {
             if (GameObject.Find("_StartMenu").GetComponent<StartMenu>().transitionFinished)
             {
-                //once = true;
-
                 OnButtonAccepted();
                 GameObject.Find("_StartMenu").GetComponent<StartMenu>().ChangeScenes("OptionMenuObject(Clone)", "Scenes/Menu/MainMenuObject", true);
             }
         }
-
     }
 
 
@@ -995,12 +991,6 @@ public class OptionsMenu : MonoBehaviour
                 }
             }
         }
-
-
-
-
-
-
     }
 
 
