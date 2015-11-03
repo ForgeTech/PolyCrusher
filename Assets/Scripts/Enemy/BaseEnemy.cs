@@ -277,6 +277,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         Invoke("InstantKill", maxEnemyLifeTime);
 	}
 
+    protected virtual void Update()
+    { }
+
     protected virtual void FixedUpdate()
     {
 

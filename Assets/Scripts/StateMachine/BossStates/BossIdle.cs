@@ -159,32 +159,46 @@ public class BossIdle : FSMState
             }
         }
 
-        // Current healht percentage.
-        float healthPercentage = (float) e.Health / e.MaxHealth;
+        // Check if the boss should make a sprint attack
+        if (e.SprintPhase.enabled && e.SprintPhase.currentDamage >= e.SprintPhase.sprintTriggerDamage)
+        {
+            // Sprint attack
+            e.SetTransition(Transition.DecisionSprint);
 
-        if (e.MobSpawnPhase.spawnPercentage.Length > 0 
-            && mobSpawnIndex < e.MobSpawnPhase.spawnPercentage.Length
-            && healthPercentage <= e.MobSpawnPhase.spawnPercentage[mobSpawnIndex])
-        { 
-            mobSpawnIndex++;
-
-            e.SetTransition(Transition.DecisionMobSpawn);
+            // Reset the damage counter
+            e.SprintPhase.currentDamage = 0;
         }
         else
         {
-            // Switch state based on the calculatet probability.
-            if (indexFoundElement == 0)
+            #region MobSpawn and Phase selection block
+            // Current health percentage.
+            float healthPercentage = (float)e.Health / e.MaxHealth;
+
+            if (e.MobSpawnPhase.spawnPercentage.Length > 0
+                && mobSpawnIndex < e.MobSpawnPhase.spawnPercentage.Length
+                && healthPercentage <= e.MobSpawnPhase.spawnPercentage[mobSpawnIndex])
             {
-                e.SetTransition(Transition.DecisionMelee);
+                mobSpawnIndex++;
+
+                e.SetTransition(Transition.DecisionMobSpawn);
             }
-            else if (indexFoundElement == 1)
+            else
             {
-                e.SetTransition(Transition.DecisionRanged);
+                // Switch state based on the calculatet probability.
+                if (indexFoundElement == 0)
+                {
+                    e.SetTransition(Transition.DecisionMelee);
+                }
+                else if (indexFoundElement == 1)
+                {
+                    e.SetTransition(Transition.DecisionRanged);
+                }
+                else if (indexFoundElement == 2)
+                {
+                    e.SetTransition(Transition.DecisionSpecial);
+                }
             }
-            else if (indexFoundElement == 2)
-            {
-                e.SetTransition(Transition.DecisionSpecial);
-            }
+            #endregion
         }
     }
 
