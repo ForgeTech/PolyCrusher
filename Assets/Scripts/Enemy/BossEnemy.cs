@@ -72,6 +72,32 @@ public class BossEnemy : BaseEnemy
         [Range(0f, 1f)]
         public float[] spawnPercentage;
     }
+
+    [System.Serializable]
+    public class SprintPhaseInformation
+    {
+        /// <summary>
+        /// Specifies if the phase is enabled or not.
+        /// </summary>
+        public bool enabled;
+
+        /// <summary>
+        /// The speed of the sprint attack.
+        /// </summary>
+        [Range(10f, 30f)]
+        public float sprintSpeed = 17f;
+
+        /// <summary>
+        /// After damage value has been reached, the boss will sprint to a player.
+        /// </summary>
+        public int sprintTriggerDamage = 100;
+
+        /// <summary>
+        /// The current damage value.
+        /// </summary>
+        [HideInInspector]
+        public int currentDamage = 0;
+    }
     #endregion
 
     #region Member variables
@@ -107,10 +133,11 @@ public class BossEnemy : BaseEnemy
     [Tooltip("Special ability phase")]
     protected PhaseInformation specialPhase;
 
-    [Space(4)]
-    [Tooltip("Specifies if the boss is able to sprint or not.")]
+    [Space(5)]
+    [Header("Sprint settings")]
     [SerializeField]
-    protected bool sprintEnabled = false;
+    [Tooltip("Settings for the sprint phase.")]
+    protected SprintPhaseInformation sprintPhase;
 
     [Space(5)]
     [Header("Mob Spawn settings")]
@@ -118,6 +145,7 @@ public class BossEnemy : BaseEnemy
     MobSpawnPhaseInformation mobSpawnPhase;
 
     [Space(4)]
+    [Header("Idle settings")]
     [Tooltip("Time which the boss stays in idle after he chooses another state.")]
     [SerializeField]
     protected float idleTime = 2f;
@@ -156,6 +184,12 @@ public class BossEnemy : BaseEnemy
     [SerializeField]
     [Tooltip("The spawn height of the meteorits.")]
     protected float meteorSpawnHeight = 10f;
+
+    [Space(5)]
+    [SerializeField]
+    [Header("Boss UI")]
+    [Tooltip("Health bar")]
+    protected UnityEngine.UI.Image healthLevel;
     #endregion
 
     #region Properties
@@ -184,11 +218,11 @@ public class BossEnemy : BaseEnemy
     }
 
     /// <summary>
-    /// Gets sprint enabled.
+    /// Gets sprint phase information.
     /// </summary>
-    public bool SprintEnabled
+    public SprintPhaseInformation SprintPhase
     {
-        get { return this.sprintEnabled; }
+        get { return this.sprintPhase; }
     }
 
     /// <summary>
@@ -302,6 +336,7 @@ public class BossEnemy : BaseEnemy
         idle.AddTransition(Transition.DecisionRanged, StateID.BossAttackRanged);
         idle.AddTransition(Transition.DecisionSpecial, StateID.BossAttackSpecial);
         idle.AddTransition(Transition.DecisionMobSpawn, StateID.BossMobSpawn);
+        idle.AddTransition(Transition.DecisionSprint, StateID.BossSprint);
 
         BossAttackMelee attackMelee = new BossAttackMelee(MeleePhase.phaseTime, StateID.BossAttackMelee);
         attackMelee.AddTransition(Transition.AttackFinished, StateID.BossIdle);
@@ -329,6 +364,9 @@ public class BossEnemy : BaseEnemy
         BossMobSpawn mobSpawn = new BossMobSpawn(MobSpawnPhase.phaseTime, StateID.BossMobSpawn);
         mobSpawn.AddTransition(Transition.AttackFinished, StateID.BossIdle);
 
+        BossSprint bossSprint = new BossSprint(StateID.BossSprint);
+        bossSprint.AddTransition(Transition.ReachedDestination, StateID.BossIdle);
+
         fsm = new FSMSystem();
         fsm.AddState(idle);
         fsm.AddState(attackMelee);
@@ -338,22 +376,15 @@ public class BossEnemy : BaseEnemy
         fsm.AddState(attackSpecial);
         fsm.AddState(walkSpecial);
         fsm.AddState(mobSpawn);
+        fsm.AddState(bossSprint);
     }
 
-    /// <summary>
-    /// Melee Attack behaviour.
-    /// </summary>
-    public override void Attack()
+    protected override void Update()
     {
-        
-    }
+        base.Update();
 
-    /// <summary>
-    /// Ranged Attack behaviour.
-    /// </summary>
-    public override void Shoot()
-    {
-        
+        // HUD Elements
+        UpdateHUDElements();
     }
 
     protected override void DestroyEnemy()
@@ -388,6 +419,45 @@ public class BossEnemy : BaseEnemy
     {
         if (BossKilled != null)
             BossKilled(this);
+    }
+
+
+    /// <summary>
+    /// Draws the object some damage and lowers the health.
+    /// </summary>
+    /// <param name="damage">The damage dealt.</param>
+    /// /// <param name="damageDealer">The damage dealer.</param>
+    public override void TakeDamage(int damage, MonoBehaviour damageDealer)
+    {
+        base.TakeDamage(damage, damageDealer);
+
+        sprintPhase.currentDamage += damage;        
+    }
+
+    /// <summary>
+    /// Draws the object some damage and lowers the health.
+    /// </summary>
+    /// <param name="damage">Damage</param>
+    /// <param name="damageDealer">The damage dealer</param>
+    /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
+    public override void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation)
+    {
+        base.TakeDamage(damage, damageDealer, noDeathAnimation);
+
+        if (noDeathAnimation)
+            sprintPhase.currentDamage += damage;
+    }
+
+    /// <summary>
+    /// Updates the values of the HUD elements.
+    /// </summary>
+    private void UpdateHUDElements()
+    {
+        // Update Health
+        if (healthLevel != null)
+        {
+            healthLevel.fillAmount = (float)Health / (float)maxHealth;
+        }
     }
 
     /// <summary>

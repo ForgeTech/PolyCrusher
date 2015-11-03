@@ -113,7 +113,7 @@ public class BossAttackRanged : BossAttackMelee
                 bullet.Damage = bullet.Damage;
 
                 bullet.transform.position = e.transform.position + new Vector3(0, 1, 0);
-                Vector3 playerDirection = (e.TargetPlayer.transform.position - bullet.transform.position).normalized;
+                Vector3 playerDirection = (e.TargetPlayer.position - bullet.transform.position).normalized;
                 bullet.transform.rotation = Quaternion.LookRotation(playerDirection);
                 bullet.transform.Rotate(90, 0, 0);
 
