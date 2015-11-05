@@ -141,7 +141,7 @@ public class Rocket : Projectile {
 	}
 	
 	void OnTriggerEnter(Collider collider){
-		if(collider.tag == "Terrain" || collider.tag == "Player"){
+		if(collider.tag == "Terrain"){
 			//SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
 			//sphereCollider.radius = damageRadius;
 
@@ -149,7 +149,7 @@ public class Rocket : Projectile {
 			MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
 			meshRenderer.enabled = false;
 
-			// only calling the explosionsound AND the TakeDamage() method once
+			// only calling the explosionsound method once
 			if (playExplode){
 				if (explosionSound != null){
 					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
@@ -167,13 +167,18 @@ public class Rocket : Projectile {
 						}
 					}
 				}
+
 				// if the projectile hits a player, then play the explosion particle without the stain
 				if(collider.tag == "Terrain"){
 					SpawnDeathParticle(new Vector3(transform.position.x, transform.position.y + 0.075f, transform.position.z));
 				} else {
 					SpawnAirDeathParticle(transform.position);
 				}
-			}
+
+                // Camera Shake
+                CameraManager.CameraReference.ShakeOnce();
+
+            }
 			Destroy(this.gameObject, 0.1f);
 		}
 	}
