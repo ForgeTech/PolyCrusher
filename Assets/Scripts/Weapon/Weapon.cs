@@ -28,6 +28,10 @@ public abstract class Weapon : MonoBehaviour, IUsable
     [SerializeField]
     protected string weaponName;
 
+    [SerializeField]
+    [Tooltip("Prefab reference to the bullet")]
+    protected GameObject bulletPrefab;
+
     [Space(10)]
     [Header("Light properties")]
     [Tooltip("Muzzle flash light")]

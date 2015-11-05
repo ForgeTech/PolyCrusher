@@ -6,10 +6,6 @@ using System.Collections;
 /// </summary>
 public class WeaponShotgun : Weapon 
 {
-    //Prefab name of the bullet of the weapon.
-    [SerializeField]
-    protected string bulletPrefabName = "Bullet/BulletTest";
-
     // The number of bullets which should be shot by the shotgun.
     [SerializeField]
     protected int numberOfBullets = 5;
@@ -35,7 +31,7 @@ public class WeaponShotgun : Weapon
             // Instantiate the bullets
             for (int i = 0; i < numberOfBullets; i++)
             {
-                GameObject g = Instantiate(Resources.Load(bulletPrefabName)) as GameObject;
+                GameObject g = Instantiate(bulletPrefab) as GameObject;
                 Bullet bullet;
 
                 if (g != null && g.GetComponent<MonoBehaviour>() is Bullet)

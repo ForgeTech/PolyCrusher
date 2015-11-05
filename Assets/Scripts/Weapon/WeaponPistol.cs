@@ -7,10 +7,6 @@ using System.Collections;
 /// </summary>
 public class WeaponPistol : Weapon 
 {
-    //Prefab name of the bullet of the weapon.
-    [SerializeField]
-    protected string bulletPrefabName = "Bullet/BulletTest";
-
     // Spawn points of the bullets.
     protected Transform[] bulletSpawns;
 
@@ -33,7 +29,7 @@ public class WeaponPistol : Weapon
         {
             base.Use();
 
-            GameObject g = Instantiate(Resources.Load(bulletPrefabName)) as GameObject;
+            GameObject g = Instantiate(bulletPrefab) as GameObject;
             Bullet bullet;
             Transform spawn;
 

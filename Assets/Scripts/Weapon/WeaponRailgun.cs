@@ -6,10 +6,6 @@ using System.Collections;
 /// </summary>
 public class WeaponRailgun : Weapon 
 {
-    //Prefab name of the bullet of the weapon.
-    [SerializeField]
-    protected string bulletPrefabName = "Bullet/BulletRay";
-
     // The number of rays for the auto aim check.
     [Header("Auto-Aim")]
     [Tooltip("The number of rays for the auto aim check.")]
@@ -32,7 +28,7 @@ public class WeaponRailgun : Weapon
         {
             base.Use();
 
-            GameObject g = Instantiate(Resources.Load(bulletPrefabName)) as GameObject;
+            GameObject g = Instantiate(bulletPrefab) as GameObject;
             RayProjectile ray;
             
             if (g != null && g.GetComponent<MonoBehaviour>() is RayProjectile)

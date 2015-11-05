@@ -6,10 +6,6 @@ using System.Collections;
 /// </summary>
 public class WeaponMachinegun : Weapon 
 {
-    //Prefab name of the bullet of the weapon.
-    [SerializeField]
-    protected string bulletPrefabName = "Bullet/BulletTest";
-
     /// <summary>
     /// The Shoot mechanic of the machine gun.
     /// </summary>
@@ -19,7 +15,7 @@ public class WeaponMachinegun : Weapon
         {
             base.Use();
 
-            GameObject g = Instantiate(Resources.Load(bulletPrefabName)) as GameObject;
+            GameObject g = Instantiate(bulletPrefab) as GameObject;
             Bullet bullet;
 
             if (g != null && g.GetComponent<MonoBehaviour>() is Bullet)

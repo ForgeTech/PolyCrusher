@@ -1707,6 +1707,7 @@ AudioSource:
   m_Pitch: .769999981
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -1776,6 +1777,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -1845,6 +1847,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -1961,6 +1964,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: d6131bf720481a54cb1715022fe4ff35, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 8e2d2387245c63d46b817f117332b9ee, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -2098,6 +2107,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 8fd91ddfcd906ee45aaeef29a872bc78, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 8e2d2387245c63d46b817f117332b9ee, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -2122,9 +2137,9 @@ MonoBehaviour:
   bulletLifeTime: 1
   weaponAccuracy: 6
   weaponName: Thompson
+  bulletPrefab: {fileID: 142840, guid: 0b0bd6b08479fea4abbb08a452c1d85e, type: 2}
   muzzleFlashLight: {fileID: 154782}
   muzzleFlashTime: .0399999991
-  bulletPrefabName: Bullet/BulletBirdman
 --- !u!114 &11490830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2352,7 +2367,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 142840, guid: 0b0bd6b08479fea4abbb08a452c1d85e, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134618}
