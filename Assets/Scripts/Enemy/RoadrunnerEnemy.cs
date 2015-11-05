@@ -49,6 +49,9 @@ public class RoadrunnerEnemy : BaseEnemy
         if (explosionSound != null)
             SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
 
+        // Camera shake
+        CameraManager.CameraReference.ShakeOnce();
+
         OnEnemyDeath();
         Destroy(this.gameObject);
     }
