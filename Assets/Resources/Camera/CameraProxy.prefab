@@ -452,6 +452,9 @@ MonoBehaviour:
   maxSquareSize: 120
   cameraAdaptSpeed: 10
   cameraAdaptDampingTime: 1
+  shakeTime: .300000012
+  shakeStrength: 6
+  shakeDamping: .300000012
 --- !u!124 &12402604
 Behaviour:
   m_ObjectHideFlags: 1
@@ -465,7 +468,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: shakeTime
+      value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shakeStrength
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shakeDamping
+      value: .300000012
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 179944}

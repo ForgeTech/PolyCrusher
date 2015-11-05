@@ -79,11 +79,6 @@ public class AbilityCharge : Ability {
     {
         BasePlayer.PlayerDied += UpdatePlayerStatus;
         BasePlayer.PlayerSpawned += UpdatePlayerStatus;
-
-
-
-
-
     }
 
 
@@ -266,6 +261,9 @@ public class AbilityCharge : Ability {
         //Particle
         if (explosionParticle != null)
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+
+        // Camera shake
+        CameraManager.CameraReference.ShakeOnce();
        
         StartCoroutine(CleanUp());
     }
