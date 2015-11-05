@@ -217,6 +217,9 @@ public class ChickenBehaviour : MonoBehaviour
             SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
         }
 
+        // Camera shake
+        CameraManager.CameraReference.ShakeOnce();
+
         Destroy(this.gameObject);
     }
 

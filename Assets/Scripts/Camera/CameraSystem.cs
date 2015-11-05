@@ -13,6 +13,7 @@ using System.Collections;
 //[ExecuteInEditMode]
 public class CameraSystem : MonoBehaviour 
 {
+    [Header("Camera movement settings")]
     //Player array for the bounding box calculation.
     protected GameObject[] players;
 
@@ -84,6 +85,20 @@ public class CameraSystem : MonoBehaviour
     // Reference of the child camera object
     Camera cam;
 
+    [Space(5)]
+    [Header("Camera Shake settings")]
+    [Tooltip("Time of the shake.")]
+    public float shakeTime = 0.6f;
+
+    [Tooltip("Specifies how much the camera should shake.")]
+    public float shakeStrength = 6f;
+
+    [Tooltip("Shake damping of the camera shake.")]
+    public float shakeDamping = 0.3f;
+
+    private float shakeX = 0;
+    private float shakeZ = 0;
+
     void Awake()
     {
         // Register "FindAllPlayers" to the player join delegate.
@@ -131,6 +146,54 @@ public class CameraSystem : MonoBehaviour
         SetCameraValues();
     }
 
+    /*/// <summary>
+    /// Testing
+    /// </summary>
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(20, 40, 80, 20), "Shake"))
+            ShakeOnce();
+    }*/
+
+    /// <summary>
+    /// Shakes the camera once based on the shake values.
+    /// </summary>
+    public void ShakeOnce()
+    {
+        StartCoroutine(Shake());
+    }
+
+    /// <summary>
+    /// The actual Shake as IEnumerator.
+    /// </summary>
+    /// <returns></returns>
+    protected IEnumerator Shake()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < shakeTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // Current position of the shake in percent.
+            float completed = elapsedTime / shakeTime;
+            float shakeDamper = 1f - Mathf.Clamp(shakeDamping * completed - (shakeDamping - 1f), 0f, 1f);
+
+            // Map the random value between -1 and +1
+            shakeX = Random.value * 2f - 1f;
+            shakeZ = Random.value * 2f - 1f;
+
+            // Apply strength and damping.
+            shakeX *= shakeStrength * shakeDamper;
+            shakeZ *= shakeStrength * shakeDamper;
+
+            yield return null;
+        }
+
+        shakeX = 0f;
+        shakeZ = 0f;
+    }
+
     /// <summary>
     /// Follow the center of the bounding box.
     /// </summary>
@@ -157,7 +220,7 @@ public class CameraSystem : MonoBehaviour
         //cam.transform.localPosition = new Vector3(0f, cameraHeight, 0f);
         newHeight = Mathf.Lerp(minCameraHeight, maxCameraHeight, clampValue);
         float calcValue = Mathf.SmoothDamp(cam.transform.localPosition.y, newHeight, ref cameraAdaptVelocityHeight, cameraAdaptDampingTime, cameraAdaptSpeed, avg);
-        cam.transform.localPosition = new Vector3(0f, calcValue, 0f);
+        cam.transform.localPosition = new Vector3(shakeX, calcValue, shakeZ);
         //======================================================================================
 
         //========Calculate rotation based on player position===================================
