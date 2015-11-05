@@ -203,6 +203,9 @@ public class RocketBehaviour : MonoBehaviour {
 				}
 			}
 
+            // Camera Shake
+            CameraManager.CameraReference.ShakeOnce();
+
             //destroy it after the lifetime to prevent the sound from an interuption
 			Destroy(this.gameObject, 2f);
 		}
