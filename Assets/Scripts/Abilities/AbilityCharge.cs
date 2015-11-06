@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-[RequireComponent(typeof(SphereCollider))]
+
 [RequireComponent(typeof(BoxCollider))]
 public class AbilityCharge : Ability {
 
@@ -26,6 +26,12 @@ public class AbilityCharge : Ability {
 
     // The damage of the explosion.
     public int explosionDamage = 50;
+
+    // friend detection radius
+    public float friendRadius = 20.0f;
+
+
+
     //---private
 
     //array that holds the rigidbodies of every player that is near the charger while charging
@@ -94,9 +100,17 @@ public class AbilityCharge : Ability {
         player = GetComponentInParent<Rigidbody>();        
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, friendRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
 
     void FixedUpdate()
-    {      
+    {
+
+        
         if (charging)
         {
             base.Use();
@@ -154,8 +168,7 @@ public class AbilityCharge : Ability {
             currentFriend = 0;
 
             //set the radius back to normal and deactivate colliders
-            GetComponent<SphereCollider>().radius = 20.0f;
-            GetComponent<SphereCollider>().enabled = false;
+          
             GetComponent<BoxCollider>().enabled = false;        
             
         }
@@ -177,10 +190,19 @@ public class AbilityCharge : Ability {
 
             //enable the box collider for pushing away enemies
             GetComponent<BoxCollider>().enabled = true;
-            //enable the sphere collider for detecting allies and enemies
-            GetComponent<SphereCollider>().enabled = true;
-            detectFriends = true;
-            //animator.SetBool("BeginCharge", true);
+           
+            Collider[] colls = Physics.OverlapSphere(transform.position, friendRadius);
+
+            foreach(Collider coll in colls)
+            {
+                if (coll.tag == "Player" && coll.transform!=transform.parent)
+                {
+                    friends[currentFriend] = coll.GetComponent<Rigidbody>();
+                    currentFriend++;
+                    Debug.Log("friend found");
+                }
+            }
+          
 
             // Particles
             if (chargeParticle != null)
@@ -224,9 +246,9 @@ public class AbilityCharge : Ability {
     //limits the charging duration
     private IEnumerator ChargerTimer()
     {
-        yield return new WaitForSeconds(0.1f);
-        detectFriends = false;
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
+        //detectFriends = false;
+        yield return new WaitForSeconds(0.2f);
 
         for(int i = 0; i < players.Length; i++)
         {
@@ -246,11 +268,24 @@ public class AbilityCharge : Ability {
     {
         yield return new WaitForSeconds(0.2f);         
         
-        GetComponent<SphereCollider>().radius = 50.0f;        
+        //GetComponent<SphereCollider>().radius = 50.0f;        
         
         chargeSpeed = 0.0f;
      
         explosion = true;
+
+        Collider[] colls = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach(Collider coll in colls)
+        {
+            if (coll.tag == "Enemy")
+            {
+                coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
+                Debug.Log("enemy damaged");
+            }
+        }
+       
+
 
         // Deal damage.
         DealDamage();      
@@ -280,12 +315,15 @@ public class AbilityCharge : Ability {
     void OnTriggerStay(Collider coll)
     {
         //detects nearby allies and adds them to the friends array
+
+        Debug.Log("trigger activated");
         if (detectFriends)
         {
             if (coll.tag == "Player")
             {
                 friends[currentFriend] = coll.GetComponent<Rigidbody>();
-                currentFriend++;               
+                currentFriend++;
+                Debug.Log("friend found");
             }
         }
 
@@ -296,9 +334,12 @@ public class AbilityCharge : Ability {
             {                
                 coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
                 coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
+                Debug.Log("enemy damaged");
             }
         }
     }
+
+
 
     private void UpdatePlayerStatus()
     {
