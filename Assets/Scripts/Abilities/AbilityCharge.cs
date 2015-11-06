@@ -114,6 +114,9 @@ public class AbilityCharge : Ability {
         if (charging)
         {
             base.Use();
+
+            
+
             //if the charged distance is smaller than the max allowed distance, continue to apply force 
             if (Vector3.Distance(transform.position, oldPosition) < chargeDistance)
             {
@@ -122,10 +125,10 @@ public class AbilityCharge : Ability {
 
                 //add force to charger and all allies stored in the friends array
 
-                //readjust the constraints for the charging process (so the player wont fall or act weirdly while colliding with other rigidbodies)
-                player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+               
                 //while charging the mass is increased, for a better overal experience^^
                 player.mass = 10.0f;
+
 
                 player.AddForce(chargeDirection * chargeSpeed);
 
@@ -142,36 +145,7 @@ public class AbilityCharge : Ability {
                     }
                 }
             }           
-        }
-
-        if (detectFriends)
-        {
-            currentFriend = 0;
-        }
-
-
-        if (cleanUp && !charging)
-        {
-            cleanUp = false;
-            player.mass = 0.2f;
-           
-            for (int i = 0; i < friends.Length; i++)
-            {
-                if (friends[i] != null)
-                {
-                    friends[i].mass = 0.2f;                   
-                }
-            }
-
-            //clear the friends array
-            friends = new Rigidbody[3];
-            currentFriend = 0;
-
-            //set the radius back to normal and deactivate colliders
-          
-            GetComponent<BoxCollider>().enabled = false;        
-            
-        }
+        }       
     }
 
 
@@ -182,6 +156,7 @@ public class AbilityCharge : Ability {
             useIsAllowed = false;
             charging = true;
             StartCoroutine(WaitForNextAbility());
+            player.GetComponent<BasePlayer>().Invincible = true;
 
             //save the current position of the charger for distance calculations later on
             oldPosition = transform.position;
@@ -202,6 +177,7 @@ public class AbilityCharge : Ability {
                     Debug.Log("friend found");
                 }
             }
+            
           
 
             // Particles
@@ -246,11 +222,11 @@ public class AbilityCharge : Ability {
     //limits the charging duration
     private IEnumerator ChargerTimer()
     {
-        //yield return new WaitForSeconds(0.1f);
-        //detectFriends = false;
+       
         yield return new WaitForSeconds(0.2f);
+        player.GetComponent<BasePlayer>().Invincible = false;
 
-        for(int i = 0; i < players.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             if(players[i]!= null && players[i].mass!=0.2f)
             {
@@ -258,7 +234,12 @@ public class AbilityCharge : Ability {
 
             }
         }
-        
+
+        GetComponent<BoxCollider>().enabled = false;
+
+        friends = new Rigidbody[3];
+        currentFriend = 0;
+
         charging = false;
         StartCoroutine(ExplosionTimer());        
     }
@@ -266,9 +247,7 @@ public class AbilityCharge : Ability {
     //executes the explosion
     private IEnumerator ExplosionTimer()
     {
-        yield return new WaitForSeconds(0.2f);         
-        
-        //GetComponent<SphereCollider>().radius = 50.0f;        
+        yield return new WaitForSeconds(0.2f);               
         
         chargeSpeed = 0.0f;
      
@@ -312,34 +291,6 @@ public class AbilityCharge : Ability {
     }
 
 
-    void OnTriggerStay(Collider coll)
-    {
-        //detects nearby allies and adds them to the friends array
-
-        Debug.Log("trigger activated");
-        if (detectFriends)
-        {
-            if (coll.tag == "Player")
-            {
-                friends[currentFriend] = coll.GetComponent<Rigidbody>();
-                currentFriend++;
-                Debug.Log("friend found");
-            }
-        }
-
-        //detects nearby enemies and pushs them away from the charger
-        if (explosion)
-        {
-            if (coll.tag == "Enemy")
-            {                
-                coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
-                coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
-                Debug.Log("enemy damaged");
-            }
-        }
-    }
-
-
 
     private void UpdatePlayerStatus()
     {
@@ -348,8 +299,6 @@ public class AbilityCharge : Ability {
         for(int i = 0; i < go.Length; i++)
         {
             players[i] = go[i].GetComponent<Rigidbody>();
-
-
         }
 
     }
