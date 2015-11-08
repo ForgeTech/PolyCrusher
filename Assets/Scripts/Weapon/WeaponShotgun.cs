@@ -31,7 +31,8 @@ public class WeaponShotgun : Weapon
             // Instantiate the bullets
             for (int i = 0; i < numberOfBullets; i++)
             {
-                GameObject g = Instantiate(bulletPrefab) as GameObject;
+                GameObject g = ObjectsPool.Spawn(bulletPrefab, Vector3.zero, bulletPrefab.transform.rotation);
+                //GameObject g = Instantiate(bulletPrefab) as GameObject;
                 Bullet bullet;
 
                 if (g != null && g.GetComponent<MonoBehaviour>() is Bullet)

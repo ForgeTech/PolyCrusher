@@ -87,8 +87,9 @@ public class Rocket : Projectile {
 		this.target = new Vector3(target.x, target.y - 0.1f, target.z);
 		launched = true;
 		SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
-		sphereCollider.radius = 0.1f;
-		Destroy (gameObject,lifeTime);
+		//sphereCollider.radius = 0.1f;
+        //Destroy (gameObject, lifeTime);
+        StartCoroutine(DestroyProjectileAfterTime(lifeTime));
 		Shoot();
 	}
 	
@@ -156,7 +157,7 @@ public class Rocket : Projectile {
 					playExplode = false;
 				}
 
-				Collider[] collidingObjects = Physics.OverlapSphere(transform.position, damageRadius);
+				Collider[] collidingObjects = Physics.OverlapSphere(transform.position, damageRadius, 1 << 8);
 				
 				foreach (Collider objects in collidingObjects){
 					if (objects.tag == "Player"){
@@ -179,8 +180,9 @@ public class Rocket : Projectile {
                 CameraManager.CameraReference.ShakeOnce();
 
             }
-			Destroy(this.gameObject, 0.1f);
-		}
+            //Destroy(this.gameObject, 0.1f);
+            StartCoroutine(DestroyProjectileAfterTime(0.1f));
+        }
 	}
 	
 	protected override void SpawnDeathParticle(Vector3 position)

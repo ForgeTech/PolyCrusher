@@ -102,7 +102,8 @@ public class BossAttackRanged : BossAttackMelee
 
         for (int i = 0; i < e.NumberOfBullets; i++)
         {
-            GameObject g = GameObject.Instantiate(e.RangedBullet);
+            //GameObject g = GameObject.Instantiate(e.RangedBullet);
+            GameObject g = ObjectsPool.Spawn(e.RangedBullet, Vector3.zero, e.RangedBullet.transform.rotation);
             BossBullet bullet;
 
             if (g != null && g.GetComponent<MonoBehaviour>() is BossBullet)

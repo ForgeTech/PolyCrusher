@@ -40,7 +40,8 @@ public class RangedEnemy : BaseEnemy
     {
         if (targetPlayer.GetComponent<MonoBehaviour>() is IDamageable)
         {
-            GameObject g = (GameObject) Instantiate(bulletPrefab);
+            //GameObject g = (GameObject) Instantiate(bulletPrefab);
+            GameObject g = ObjectsPool.Spawn(bulletPrefab, Vector3.zero, bulletPrefab.transform.rotation);
             Bullet b = g.GetComponent<MonoBehaviour>() as Bullet;
 
             b.OwnerScript = this;

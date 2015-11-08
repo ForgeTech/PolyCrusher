@@ -32,7 +32,7 @@ public class BossBullet : Bullet
                 SpawnDeathParticle(transform.position);
                 ApplyExplosionForce(other.gameObject, transform.position);
 
-                Destroy(this.gameObject);
+                DestroyProjectile();
             }
         }
 
@@ -41,7 +41,7 @@ public class BossBullet : Bullet
             // Area of damage
             CreateAreaOfDamage();
 
-            Destroy(this.gameObject);
+            DestroyProjectile();
             SpawnDeathParticle(transform.position);
         }
     }

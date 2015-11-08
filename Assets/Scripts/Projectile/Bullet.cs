@@ -17,6 +17,9 @@ public class Bullet : Projectile
     [SerializeField]
     protected float bulletSpeed;
 
+    // The original bullet speed.
+    protected float originalBulletSpeed;
+
     // The variation of the bullet speed.
     [SerializeField]
     protected float bulletSpeedVariation = 0;
@@ -59,10 +62,24 @@ public class Bullet : Projectile
     }
     #endregion
 
+    protected override void Awake()
+    {
+        base.Awake();
+        originalBulletSpeed = bulletSpeed;
+    }
+
     /// <summary>
     /// Start method of Mono Behaviour.
     /// </summary>
     void Start()
+    {
+        
+    }
+
+    /// <summary>
+    /// Enabling routines
+    /// </summary>
+    protected virtual void OnEnable()
     {
         //If there is no circle collider, generate one.
         if (GetComponent<SphereCollider>() == null)
@@ -75,7 +92,8 @@ public class Bullet : Projectile
 
         StartCoroutine(transform.ScaleTo(originalScale, 0.1f, AnimCurveContainer.AnimCurve.upscale.Evaluate));
 
-        Destroy(this.gameObject, BulletLifeTime);
+        //Destroy(this.gameObject, BulletLifeTime);
+        StartCoroutine(DestroyProjectileAfterTime(BulletLifeTime));
     }
 
     /// <summary>
@@ -119,16 +137,16 @@ public class Bullet : Projectile
                 //Debug.Log("Bullet: " + other.name + " was hit!");
 
                 SpawnDeathParticle(transform.position);
-                ApplyExplosionForce(other.gameObject, transform.position);                
+                ApplyExplosionForce(other.gameObject, transform.position);
 
-                Destroy(this.gameObject);
+                DestroyProjectile();
             }
         }
 
         if (other.tag == "Terrain" || other.gameObject.layer == LayerMask.NameToLayer("Props"))
         {
             SpawnDeathParticle(transform.position);
-            Destroy(this.gameObject);
+            DestroyProjectile();
         }
     }
 
@@ -152,5 +170,14 @@ public class Bullet : Projectile
     protected void ApplyExplosionForce(GameObject obj, Vector3 hitPosition)
     {
         obj.GetComponent<Rigidbody>().AddExplosionForce(pushAwayForce, hitPosition, 5f, 0f, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// Destroys the bullet immediatly.
+    /// </summary>
+    protected override void DestroyProjectile()
+    {
+        bulletSpeed = originalBulletSpeed;
+        base.DestroyProjectile();
     }
 }

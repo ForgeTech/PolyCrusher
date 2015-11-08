@@ -61,9 +61,7 @@ public class MeteorBullet : Bullet
                 SpawnDeathParticle(transform.position);
                 ApplyExplosionForce(other.gameObject, transform.position);
 
-
-
-                Destroy(this.gameObject);
+                DestroyProjectile();
             }
         }
 
@@ -73,7 +71,7 @@ public class MeteorBullet : Bullet
             SpawnAreaOfDamage();
 
             SpawnDeathParticle(transform.position);
-            Destroy(this.gameObject);
+            DestroyProjectile();
         }
     }
 }
