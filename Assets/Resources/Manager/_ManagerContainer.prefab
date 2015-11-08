@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &114942
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 495404}
-  m_Layer: 0
-  m_Name: Missle_Root
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &117816
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +622,6 @@ Transform:
   - {fileID: 408390}
   - {fileID: 418804}
   - {fileID: 464314}
-  - {fileID: 495404}
   m_Father: {fileID: 415424}
   m_RootOrder: 14
 --- !u!4 &486810
@@ -676,18 +660,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 482048}
   m_RootOrder: 1
---- !u!4 &495404
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 114942}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 482048}
-  m_RootOrder: 7
 --- !u!95 &9597450
 Animator:
   serializedVersion: 3
@@ -1207,15 +1179,7 @@ MonoBehaviour:
     m_Root: {fileID: 464314}
     allowMore: 1
     debugMessages: 0
-    size: 15
-    foldout: 0
-  - prefab: {fileID: 122094, guid: 0e7f9421a03eb77489b7158d723d9f17, type: 2}
-    despawned: []
-    spawned: []
-    m_Root: {fileID: 495404}
-    allowMore: 1
-    debugMessages: 0
-    size: 10
+    size: 16
     foldout: 1
   debugMessages: 0
   spawnDespawnMessages: 0

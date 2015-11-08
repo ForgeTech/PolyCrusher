@@ -82,8 +82,21 @@ public class Rocket : Projectile {
 		set { this.sensitivity = value; }
 	}
 
+    /// <summary>
+    /// Enabling routines
+    /// </summary>
+    protected virtual void OnEnable()
+    {
+        launched = false;
+        headingTarget = false;
+        firstTime = true;
+        playExplode = true;
 
-	public void Shoot(Vector3 target) {
+        MeshRenderer meshRenderer = transform.GetComponentInChildren<MeshRenderer>();
+        meshRenderer.enabled = true;
+    }
+
+    public void Shoot(Vector3 target) {
 		this.target = new Vector3(target.x, target.y - 0.1f, target.z);
 		launched = true;
 		SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();

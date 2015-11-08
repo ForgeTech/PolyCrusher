@@ -99,8 +99,8 @@ public class RocketBehaviour : MonoBehaviour {
 		transform.LookAt(new Vector3(target.x,height + 1f,target.z));
 
         //destroy it after lifetime
-        //Destroy(this.gameObject, lifeTime);
-        StartCoroutine(DestroyProjectileAfterTime(lifeTime));
+        Destroy(this.gameObject, lifeTime);
+        //StartCoroutine(DestroyProjectileAfterTime(lifeTime));
 	}
 
 	public void FixedUpdate() {
@@ -207,8 +207,8 @@ public class RocketBehaviour : MonoBehaviour {
             CameraManager.CameraReference.ShakeOnce();
 
             //destroy it after the lifetime to prevent the sound from an interuption
-			//Destroy(this.gameObject, 2f);
-            StartCoroutine(DestroyProjectileAfterTime(2f));
+			Destroy(this.gameObject, 2f);
+            //StartCoroutine(DestroyProjectileAfterTime(2f));
         }
 	
         /*
