@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// A projectile which is represented as ray.
 /// </summary>
-public class RayProjectile : Projectile 
+public class RayProjectile : Projectile
 {
     [Header("Ray parameters")]
     // The maximal length of the Ray.
@@ -39,6 +39,9 @@ public class RayProjectile : Projectile
     // The random offset of the ray.
     [SerializeField]
     protected float lengthOffset = 10f;
+
+    [SerializeField]
+    protected Material rayMaterial;
 
     [Space(5)]
     [Header("Targeting values")]
@@ -92,29 +95,25 @@ public class RayProjectile : Projectile
         if (!rayShot)
         {
             RaycastHit hitInfo;
-            
+
             //Debug.Log("RayProjectile: Shoot()");
 
-            // Check if there was a hit.
-            if (Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << targetLayer))
+            
+            // Boss shield layer
+            if (targetLayer == 9 && Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << 16))
             {
-                //Debug.Log("RayProjectile: Hit!");
+                Debug.Log("Ray on Bossshield");
+                GenerateRay(hitInfo);
 
-                //Define first and last point.
-                
-                float distance = Vector3.Distance(transform.position, hitInfo.transform.position);
-                lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(numberOfVertices - 1, transform.position + (Direction * distance));
-                CalculateLinePoints(distance);
-
-                // Check if the hit-object can take damage
-                if (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() is IDamageable)
+                BossShield shield = hitInfo.transform.GetComponent<BossShield>();
+                if (shield != null)
                 {
-                    (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() as IDamageable).TakeDamage(Damage, this.OwnerScript);
-                    SpawnDeathParticle(hitInfo.transform.position);
+                    shield.CreateEnemyRay(hitInfo.point, Direction);
                 }
-
-                // SpawnDeathParticle(hitInfo.transform.position);
+            }
+            else if (Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << targetLayer))
+            {
+                GenerateRay(hitInfo);
             }
             else
             {
@@ -128,6 +127,25 @@ public class RayProjectile : Projectile
 
             rayShot = true;
             Destroy(gameObject, rayLifeTime);
+        }
+    }
+
+    /// <summary>
+    /// Generates a ray and deals damage.
+    /// </summary>
+    protected void GenerateRay(RaycastHit hitInfo)
+    {
+        //Define first and last point.
+        float distance = Vector3.Distance(transform.position, hitInfo.transform.position);
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(numberOfVertices - 1, transform.position + (Direction * distance));
+        CalculateLinePoints(distance);
+
+        // Check if the hit-object can take damage
+        if (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() is IDamageable)
+        {
+            (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() as IDamageable).TakeDamage(Damage, this.OwnerScript);
+            SpawnDeathParticle(hitInfo.transform.position);
         }
     }
 
@@ -161,7 +179,7 @@ public class RayProjectile : Projectile
         GetComponent<MeshRenderer>().enabled = false;
 
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Resources.Load<Material>("Material/Bullet/RayMaterial"));
+        lineRenderer.material = rayMaterial;
         lineRenderer.SetWidth(lineWidth / 2f, lineWidth / 2f);
         lineRenderer.SetColors(Color.white, Color.white);
         lineRenderer.SetVertexCount(numberOfVertices);

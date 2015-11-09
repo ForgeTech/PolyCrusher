@@ -462,7 +462,7 @@ public class BossEnemy : BaseEnemy
 
     /// <summary>
     /// Resets the boss event handler.
-    /// </summary>
+    /// </summary> 
     protected override void ResetValues()
     {
         base.ResetValues();

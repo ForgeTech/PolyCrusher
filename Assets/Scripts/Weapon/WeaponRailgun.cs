@@ -40,7 +40,6 @@ public class WeaponRailgun : Weapon
                 ray.transform.position = transform.position;
 
                 //Shoot
-                //ray.Shoot(transform.forward);
                 ray.Shoot(CalculateAim(ray));
             }
 
