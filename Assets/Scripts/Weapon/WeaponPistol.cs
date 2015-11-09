@@ -29,7 +29,8 @@ public class WeaponPistol : Weapon
         {
             base.Use();
 
-            GameObject g = Instantiate(bulletPrefab) as GameObject;
+            //GameObject g = Instantiate(bulletPrefab) as GameObject;
+            GameObject g = ObjectsPool.Spawn(bulletPrefab, Vector3.zero, bulletPrefab.transform.rotation);
             Bullet bullet;
             Transform spawn;
 

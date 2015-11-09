@@ -107,7 +107,8 @@ public class BossMeteorScript : MonoBehaviour
     {
         if (meteorBullet != null)
         {
-            GameObject g = GameObject.Instantiate(meteorBullet);
+            //GameObject g = GameObject.Instantiate(meteorBullet);
+            GameObject g = ObjectsPool.Spawn(meteorBullet, Vector3.zero, meteorBullet.transform.rotation);
             MeteorBullet bullet;
 
             if (g.GetComponent<MonoBehaviour>() is MeteorBullet)

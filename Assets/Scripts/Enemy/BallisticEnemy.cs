@@ -1,19 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BallisticEnemy : RangedEnemy {
-
+public class BallisticEnemy : RangedEnemy
+{
 	[SerializeField]
 	private float minimumRange = 3f;
-
-
 
 	public override void Attack ()
 	{
 		if (targetPlayer.GetComponent<MonoBehaviour>() is IDamageable)
 		{
-			GameObject g = (GameObject) Instantiate(bulletPrefab);
-			Rocket r = g.GetComponent<MonoBehaviour>() as Rocket;
+            //GameObject g = (GameObject) Instantiate(bulletPrefab);
+            GameObject g = ObjectsPool.Spawn(bulletPrefab, Vector3.zero, bulletPrefab.transform.rotation);
+            Rocket r = g.GetComponent<MonoBehaviour>() as Rocket;
             r.OwnerScript = this;
 			r.gameObject.transform.localScale = new Vector3(1f, 1f,1f);
 			

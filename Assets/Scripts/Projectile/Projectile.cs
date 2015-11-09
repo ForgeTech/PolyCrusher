@@ -20,6 +20,8 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField]
     protected GameObject deathParticlePrefab;
 
+    private Vector3 originalSize;
+
     // The owner of the projectile.
     protected MonoBehaviour ownerScript;
     #endregion
@@ -53,6 +55,12 @@ public abstract class Projectile : MonoBehaviour
     }
     #endregion
 
+    protected virtual void Awake()
+    {
+        // Save the original size
+        originalSize = transform.localScale;
+    }
+
     /// <summary>
     /// Update method of the projectile.
     /// </summary>
@@ -68,8 +76,34 @@ public abstract class Projectile : MonoBehaviour
     protected virtual void OnBecameInvisible()
     {
         // Destroy projectile.
-        if(gameObject.activeSelf)
-            Destroy(this.gameObject);
+        if (gameObject.activeSelf)
+            DestroyProjectile();
+    }
+
+    /// <summary>
+    /// Destroys the bullet after the given time.
+    /// </summary>
+    /// <param name="time">Time in seconds</param>
+    /// <returns></returns>
+    protected IEnumerator DestroyProjectileAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        DestroyProjectile();
+    }
+
+    /// <summary>
+    /// Destroys the projectile immediatly.
+    /// </summary>
+    protected virtual void DestroyProjectile()
+    {
+        // Stop all active coroutines.
+        StopAllCoroutines();
+
+        // Set back the original size, so there are no scaling problems after respawning
+        this.transform.localScale = originalSize;
+
+        // Object pool despawn
+        ObjectsPool.Despawn(this.gameObject);
     }
 
     /// <summary>

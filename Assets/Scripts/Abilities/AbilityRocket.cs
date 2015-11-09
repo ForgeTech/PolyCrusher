@@ -92,10 +92,11 @@ public class AbilityRocket : Ability {
     /// <returns></returns>
     public void spawnRocket(Transform spawn, float range) {
 		// 0.75f*gameObject.transform.forward because to avoid colliding with the character
-		GameObject spawnedRocket = Instantiate(rocket, spawn.position + 0.75f*gameObject.transform.forward, Quaternion.LookRotation(spawn.forward)) as GameObject;
+        //GameObject spawnedRocket = ObjectsPool.Spawn(rocket, spawn.position + 0.75f * gameObject.transform.forward, Quaternion.LookRotation(spawn.forward));
+        GameObject spawnedRocket = (GameObject) Instantiate(rocket, spawn.position + 0.75f * gameObject.transform.forward, Quaternion.LookRotation(spawn.forward));
 
         // Gets the particle system from the parent game object
-		ParticleSystem particleSystem = spawnedRocket.GetComponentInChildren<ParticleSystem>() as ParticleSystem;
+        ParticleSystem particleSystem = spawnedRocket.GetComponentInChildren<ParticleSystem>() as ParticleSystem;
         // The emission of the particle system is disabled because of the default rotation
         particleSystem.enableEmission = false;
 

@@ -99,8 +99,8 @@ public class RocketBehaviour : MonoBehaviour {
 		transform.LookAt(new Vector3(target.x,height + 1f,target.z));
 
         //destroy it after lifetime
-		Destroy(this.gameObject, lifeTime);
-
+        Destroy(this.gameObject, lifeTime);
+        //StartCoroutine(DestroyProjectileAfterTime(lifeTime));
 	}
 
 	public void FixedUpdate() {
@@ -208,7 +208,8 @@ public class RocketBehaviour : MonoBehaviour {
 
             //destroy it after the lifetime to prevent the sound from an interuption
 			Destroy(this.gameObject, 2f);
-		}
+            //StartCoroutine(DestroyProjectileAfterTime(2f));
+        }
 	
         /*
 		if (collider.tag == "Enemy")
@@ -229,5 +230,28 @@ public class RocketBehaviour : MonoBehaviour {
 		particle.transform.position = position;
 
 	}
+
+    /// <summary>
+    /// Destroys the bullet after the given time.
+    /// </summary>
+    /// <param name="time">Time in seconds</param>
+    /// <returns></returns>
+    protected IEnumerator DestroyProjectileAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        DestroyProjectile();
+    }
+
+    /// <summary>
+    /// Destroys the projectile immediatly.
+    /// </summary>
+    protected virtual void DestroyProjectile()
+    {
+        // Stop all active coroutines.
+        StopAllCoroutines();
+
+        // Object pool despawn
+        ObjectsPool.Despawn(this.gameObject);
+    }
 }
 

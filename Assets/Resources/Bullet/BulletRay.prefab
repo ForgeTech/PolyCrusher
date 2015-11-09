@@ -80,6 +80,7 @@ MonoBehaviour:
   rayLifeTime: .600000024
   lightningOffset: .400000006
   lengthOffset: 10
+  rayMaterial: {fileID: 2100000, guid: 690d2e5129e3a904580def68d51f976a, type: 2}
   targetLayer: 9
 --- !u!1001 &100100000
 Prefab:
@@ -87,7 +88,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: rayMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 690d2e5129e3a904580def68d51f976a, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 162976}
