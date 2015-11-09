@@ -67,6 +67,10 @@ public class AbilityCharge : Ability {
     //rigidbody object of the parent gameobject
     private Rigidbody player;
 
+    //set mass bool
+    private bool setMass = false;
+
+
     [Header("Particle")]
 
     // Particles for the explosion
@@ -109,8 +113,7 @@ public class AbilityCharge : Ability {
 
     void FixedUpdate()
     {
-
-        
+      
         if (charging)
         {
             base.Use();
@@ -135,17 +138,37 @@ public class AbilityCharge : Ability {
                 for (int i = 0; i < friends.Length; i++)
                 {
                     if (friends[i] != null)
-                    {
-                        if (friends[i].mass != 10.0f)
-                        {
-                            friends[i].mass = 10.0f;                            
-                        }
+                    {            
                         
                         friends[i].AddForce(chargeDirection * chargeSpeed);
                     }
                 }
             }           
-        }       
+        }
+
+
+        if (setMass)
+        {
+            setMass = false;
+            //while charging the mass is increased, for a better overal experience^^
+            player.mass = 10.0f;
+
+            for (int i = 0; i < friends.Length; i++)
+            {
+                if (friends[i] != null)
+                {
+                    if (friends[i].mass != 10.0f)
+                    {
+                        friends[i].mass = 10.0f;
+                    }
+                }
+            }
+            charging = true;
+
+        }
+
+
+
     }
 
 
@@ -154,7 +177,7 @@ public class AbilityCharge : Ability {
         if (useIsAllowed)
         {
             useIsAllowed = false;
-            charging = true;
+            setMass = true;
             StartCoroutine(WaitForNextAbility());
             player.GetComponent<BasePlayer>().Invincible = true;
 
@@ -224,11 +247,13 @@ public class AbilityCharge : Ability {
     {
        
         yield return new WaitForSeconds(0.2f);
+        charging = false;
+
         player.GetComponent<BasePlayer>().Invincible = false;
 
         for (int i = 0; i < players.Length; i++)
         {
-            if(players[i]!= null && players[i].mass!=0.2f)
+            if(players[i]!= null)
             {
                 players[i].mass = 0.2f;
 
@@ -240,7 +265,7 @@ public class AbilityCharge : Ability {
         friends = new Rigidbody[3];
         currentFriend = 0;
 
-        charging = false;
+        
         StartCoroutine(ExplosionTimer());        
     }
 
