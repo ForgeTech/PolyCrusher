@@ -86,6 +86,7 @@ public class AbilityCharge : Ability {
 
     [Space(5)]
     [Header("Ragdoll explosion settings:")]
+    [SerializeField]
     // Upwards modifier of the explosion force
     private float upwardsModifier = 1.75f;
 
@@ -290,9 +291,20 @@ public class AbilityCharge : Ability {
             if (coll.tag == "Enemy")
             {
                 // Edited by Dietmar Rammerstorfer: added upwards Modifier and force mode to the explosion force
-                coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
+                coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
                 coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
                 Debug.Log("enemy damaged");
+            }
+        }
+
+        Collider[] collidingRigidbodies = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 15);
+
+        foreach (Collider objects in collidingRigidbodies)
+        {
+            if (objects != null)
+            {
+                Rigidbody colliderRigidbody = objects.gameObject.GetComponent<Rigidbody>();
+                colliderRigidbody.AddExplosionForce(13f, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
             }
         }
 
