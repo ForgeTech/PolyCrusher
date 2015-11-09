@@ -28,10 +28,10 @@ public class BallisticEnemy : RangedEnemy {
 				Vector3 direction = (gameObject.transform.forward * minimumRange);
 				Vector3 targetPos = gameObject.transform.position + direction;
 				//r.Shoot (new Vector3(targetPos.x, -0.1f, targetPos.z));
-				r.Shoot (targetPos);
+				r.Shoot (new Vector3(targetPos.x, targetPos.y - 1f, targetPos.z));
 			} else {
 				//r.Shoot( new Vector3(targetPlayer.position.x, - 0.1f,targetPlayer.position.z));
-				r.Shoot (targetPlayer.position);
+				r.Shoot (new Vector3(targetPlayer.position.x, transform.position.y - 1f, targetPlayer.position.z));
 			}
 
 			if (anim != null)

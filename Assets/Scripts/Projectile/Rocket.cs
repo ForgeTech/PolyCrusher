@@ -84,7 +84,7 @@ public class Rocket : Projectile {
 
 
 	public void Shoot(Vector3 target) {
-		this.target = new Vector3(target.x, target.y - 0.1f, target.z);
+		this.target = new Vector3(target.x, target.y, target.z);
 		launched = true;
 		SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
 		sphereCollider.radius = 0.1f;
@@ -141,7 +141,7 @@ public class Rocket : Projectile {
 	}
 	
 	void OnTriggerEnter(Collider collider){
-		if(collider.tag == "Terrain"){
+		if(collider.tag == "Terrain" || collider.tag == "Player"){
 			//SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
 			//sphereCollider.radius = damageRadius;
 
