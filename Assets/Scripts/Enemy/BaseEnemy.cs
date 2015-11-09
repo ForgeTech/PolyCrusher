@@ -228,7 +228,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         set
         {
             this.movementSpeed = value;
-            navMeshAgent.speed = this.movementSpeed;
+
+            if (navMeshAgent != null)
+                navMeshAgent.speed = this.movementSpeed;
         }
     }
 
@@ -362,8 +364,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         }
 
         // Light blink
-        SetLightColor(damageDealer);
-        StartCoroutine(ColorBlink(hitLightTime));
+        if (lightComponent != null)
+        {
+            SetLightColor(damageDealer);
+            StartCoroutine(ColorBlink(hitLightTime));
+        }
     }
 
     /// <summary>
@@ -403,8 +408,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             }
 
             // Light blink
-            SetLightColor(damageDealer);
-            StartCoroutine(ColorBlink(hitLightTime));
+            if (lightComponent != null)
+            {
+                SetLightColor(damageDealer);
+                StartCoroutine(ColorBlink(hitLightTime));
+            }
         }
         else
         {
@@ -441,11 +449,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
 
-        GetComponent<BoxCollider>().size = new Vector3(0.5f, 0.5f, 0.5f);
-        //GetComponent<Collider>().enabled = false;
+        //GetComponent<BoxCollider>().size = new Vector3(0.5f, 0.5f, 0.5f);
+        GetComponent<Collider>().enabled = false;
 
-        GetComponent<Rigidbody>().drag = ragdollDrag;
-        GetComponent<Rigidbody>().mass = ragdollMass;
+        //GetComponent<Rigidbody>().drag = ragdollDrag;
+        //GetComponent<Rigidbody>().mass = ragdollMass;
 
         //Animation
         if (anim != null)
@@ -556,7 +564,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     protected virtual void SetLightColor(MonoBehaviour damageDealer)
     {
-        if (damageDealer is BasePlayer)
+        if (damageDealer is BasePlayer && lightComponent != null)
         {
             BasePlayer p = damageDealer as BasePlayer;
 

@@ -73,7 +73,7 @@ public class RayProjectile : Projectile
     /// <summary>
     /// MonoBehaviour Awake method.
     /// </summary>
-    void Awake()
+    protected override void Awake()
     {
         InitLineRenderer();
     }

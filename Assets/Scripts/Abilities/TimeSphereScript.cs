@@ -41,8 +41,13 @@ public class TimeSphereScript : MonoBehaviour {
 
 	void OnTriggerExit(Collider collider){
 		if(collider.tag == "Enemy"){
-            BaseEnemy enemy = collider.GetComponent<BaseEnemy>();
-			enemy.MovementSpeed *= slowFactor;
+            if (collider != null)
+            {
+                BaseEnemy enemy = collider.GetComponent<BaseEnemy>();
+
+                if (enemy != null)
+                    enemy.MovementSpeed *= slowFactor;
+            }
 		}
 
 		if(collider.GetComponent<MonoBehaviour>() is Bullet && collider.tag == "EnemyBullet"){

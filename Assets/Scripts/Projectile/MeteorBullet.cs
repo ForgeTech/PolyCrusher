@@ -60,6 +60,9 @@ public class MeteorBullet : Bullet
 
                 SpawnDeathParticle(transform.position);
                 ApplyExplosionForce(other.gameObject, transform.position);
+                
+                // Camera shake
+                CameraManager.CameraReference.ShakeOnce();
 
                 DestroyProjectile();
             }
@@ -69,6 +72,9 @@ public class MeteorBullet : Bullet
         {
             // Death area.
             SpawnAreaOfDamage();
+
+            // Camera shake
+            CameraManager.CameraReference.ShakeOnce();
 
             SpawnDeathParticle(transform.position);
             DestroyProjectile();

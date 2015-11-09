@@ -148,6 +148,15 @@ public class Bullet : Projectile
             SpawnDeathParticle(transform.position);
             DestroyProjectile();
         }
+
+        if (TargetTag == "Enemy")
+        {
+            if (other.tag == "BossShield")
+            {
+                SpawnDeathParticle(transform.position);
+                DestroyProjectile();
+            }
+        }
     }
 
     /// <summary>
