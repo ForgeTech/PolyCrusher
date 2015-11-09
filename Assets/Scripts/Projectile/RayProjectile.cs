@@ -111,9 +111,10 @@ public class RayProjectile : Projectile
                 if (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() is IDamageable)
                 {
                     (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() as IDamageable).TakeDamage(Damage, this.OwnerScript);
+                    SpawnDeathParticle(hitInfo.transform.position);
                 }
 
-                SpawnDeathParticle(hitInfo.transform.position);
+                // SpawnDeathParticle(hitInfo.transform.position);
             }
             else
             {
