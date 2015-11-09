@@ -122,6 +122,17 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     // The Finite state machine.
     protected FSMSystem fsm;
 
+
+    // Mass of the ragdoll enemy after death.
+    [Space(5)]
+    [Header("Ragdoll")]
+    [SerializeField]
+    float ragdollMass = 1f;
+
+    // Drag of the ragdoll enemy after death.
+    [SerializeField]
+    float ragdollDrag = 0.05f;
+
     #endregion
 
     #region Properties
@@ -429,20 +440,29 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         GetComponent<NavMeshAgent>().updateRotation = false;
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
-        GetComponent<NavMeshAgent>().enabled = false;
 
-        GetComponent<Collider>().enabled = false;
-        //GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<BoxCollider>().size = new Vector3(0.5f, 0.5f, 0.5f);
+        //GetComponent<Collider>().enabled = false;
+
+        GetComponent<Rigidbody>().drag = ragdollDrag;
+        GetComponent<Rigidbody>().mass = ragdollMass;
 
         //Animation
-        if(anim != null)
+        if (anim != null)
+        {
             anim.SetBool("Death", true);
+
+            // Scale Fade out 
+            StartCoroutine(transform.ScaleFrom(new Vector3(0.2f, 0.2f, 0.2f), lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+        }
+        else
+        {
+            // Normal Scale Fade out.
+            StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+        }
 
         //Event.
         OnEnemyDeath();
-
-        //Scale Fade out
-        StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
 
         //Destroy
         Destroy(this.gameObject, lifeTimeAfterDeath);
