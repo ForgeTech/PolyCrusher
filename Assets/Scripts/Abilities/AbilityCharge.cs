@@ -83,6 +83,12 @@ public class AbilityCharge : Ability {
 
     // Instantiatet charge particles
     private GameObject instantiatedChargeParticle;
+
+    [Space(5)]
+    [Header("Ragdoll explosion settings:")]
+    // Upwards modifier of the explosion force
+    private float upwardsModifier = 1.75f;
+
     //---VARIABLES END
 
     void Awake()
@@ -236,7 +242,7 @@ public class AbilityCharge : Ability {
             if (c.gameObject.GetComponent<MonoBehaviour>() is BaseEnemy)
             {
                 BaseEnemy e = c.gameObject.GetComponent<MonoBehaviour>() as BaseEnemy;
-                e.TakeDamage(explosionDamage, this.OwnerScript);
+                e.TakeDamage(explosionDamage, this.OwnerScript, true);
             }
         }
 
@@ -283,13 +289,12 @@ public class AbilityCharge : Ability {
         {
             if (coll.tag == "Enemy")
             {
-                coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                // Edited by Dietmar Rammerstorfer: added upwards Modifier and force mode to the explosion force
+                coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
                 coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
                 Debug.Log("enemy damaged");
             }
         }
-       
-
 
         // Deal damage.
         DealDamage();      

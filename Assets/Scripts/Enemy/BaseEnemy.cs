@@ -401,8 +401,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 // Enemy will be dead, so set the Animator to null;
                 if (Health - damage <= minHealth)
-                    Destroy(anim);
-                    
+                    //Destroy(anim);
+                    anim = null;
+
                 // Substract health
                 Health -= damage;
             }
@@ -448,25 +449,40 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         GetComponent<NavMeshAgent>().updateRotation = false;
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
-
         //GetComponent<BoxCollider>().size = new Vector3(0.5f, 0.5f, 0.5f);
         GetComponent<Collider>().enabled = false;
-
-        //GetComponent<Rigidbody>().drag = ragdollDrag;
-        //GetComponent<Rigidbody>().mass = ragdollMass;
 
         //Animation
         if (anim != null)
         {
             anim.SetBool("Death", true);
 
-            // Scale Fade out 
-            StartCoroutine(transform.ScaleFrom(new Vector3(0.2f, 0.2f, 0.2f), lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+            // Normal Scale Fade out.
+            StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
         }
         else
         {
-            // Normal Scale Fade out.
-            StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+            // Disable navmesh agent
+            GetComponent<NavMeshAgent>().enabled = false;
+            // Disable animator, because destroying the anim variable wont work with anim != null.
+            GetComponent<Animator>().enabled = false;
+
+            // Ragdoll Layer = layer 15
+            this.gameObject.layer = 15;
+
+            // Set size of collider to the half and enable it, so the joint of the parent object won't fall through the ground
+            GetComponent<BoxCollider>().size = new Vector3(0.1f, 0.1f, 0.1f);
+            GetComponent<Collider>().enabled = true;
+
+            // Set the drag and the mass to the ragdoll specific and optimized values
+            GetComponent<Rigidbody>().drag = ragdollDrag;
+            GetComponent<Rigidbody>().mass = ragdollMass;
+
+            // Unfreeze Rotation
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+            // Ragdoll optimized Scale Fade out 
+            StartCoroutine(transform.ScaleFrom(new Vector3(0.2f, 0.2f, 0.2f), lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
         }
 
         //Event.
