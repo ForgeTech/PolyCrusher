@@ -133,6 +133,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [SerializeField]
     float ragdollDrag = 0.05f;
 
+    [SerializeField]
+    protected bool ragdollEnabled = false;
+
     #endregion
 
     #region Properties
@@ -379,7 +382,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
     public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation)
     {
-        if (noDeathAnimation)
+        if (noDeathAnimation && ragdollEnabled)
         {
             // send event if enemy will be dead
             if (Health - damage < 0 && !enemyIsDead)
@@ -401,7 +404,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 // Enemy will be dead, so set the Animator to null;
                 if (Health - damage <= minHealth)
-                    //Destroy(anim);
                     anim = null;
 
                 // Substract health
@@ -465,7 +467,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             // Disable navmesh agent
             GetComponent<NavMeshAgent>().enabled = false;
             // Disable animator, because destroying the anim variable wont work with anim != null.
-            GetComponent<Animator>().enabled = false;
+            //GetComponent<Animator>().enabled = false;
+            Destroy(GetComponent<Animator>());
 
             // Ragdoll Layer = layer 15
             this.gameObject.layer = 15;
