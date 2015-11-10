@@ -8,9 +8,11 @@ using System.Collections;
 public class BossShield : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("Prefab of the enemy bullet which should be generated.")]
     protected GameObject enemyBullet;
 
     [SerializeField]
+    [Tooltip("Prefab of the enemy ray.")]
     protected GameObject enemyRay;
 
     /// <summary>
