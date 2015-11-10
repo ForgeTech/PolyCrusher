@@ -164,11 +164,14 @@ public class Bullet : Projectile
     /// </summary>
     protected override void SpawnDeathParticle(Vector3 position)
     {
-        GameObject particle = Instantiate(deathParticlePrefab) as GameObject;
-        particle.transform.position = position;
+        if (deathParticlePrefab != null)
+        {
+            GameObject particle = Instantiate(deathParticlePrefab) as GameObject;
+            particle.transform.position = position;
 
-        if(particle.GetComponent<ParticleSystem>() != null)
-            particle.GetComponent<ParticleSystem>().Play();
+            if (particle.GetComponent<ParticleSystem>() != null)
+                particle.GetComponent<ParticleSystem>().Play();
+        }
     }
 
     /// <summary>
