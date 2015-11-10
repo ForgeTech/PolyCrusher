@@ -100,9 +100,8 @@ public class RayProjectile : Projectile
 
             
             // Boss shield layer
-            if (targetLayer == 9 && Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << 16))
+            if (targetLayer == 9 && Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << 16, QueryTriggerInteraction.Collide))
             {
-                Debug.Log("Ray on Bossshield");
                 GenerateRay(hitInfo);
 
                 BossShield shield = hitInfo.transform.GetComponent<BossShield>();

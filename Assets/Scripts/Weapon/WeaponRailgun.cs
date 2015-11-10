@@ -80,8 +80,8 @@ public class WeaponRailgun : Weapon
 
             RaycastHit hit;
             
-            // Raycast
-            bool enemyHit = Physics.Raycast(transform.position, direction, out hit, ray.MaxLength, 1 << ray.TargetLayer);
+            // Raycast 16: BossShield
+            bool enemyHit = Physics.Raycast(transform.position, direction, out hit, ray.MaxLength, 1 << ray.TargetLayer | 1 << 16);
             
             //Debug
             if (debugMode)

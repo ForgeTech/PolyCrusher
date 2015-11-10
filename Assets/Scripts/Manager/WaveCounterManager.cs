@@ -14,10 +14,6 @@ public class WaveCounterManager : MonoBehaviour
     [SerializeField]
     protected UnityEngine.UI.Text waveNumber;
 
-    // Reference to the wave number.
-    [SerializeField]
-    protected UnityEngine.UI.Image waveText;
-
     // Reference to the wave round font.
     [SerializeField]
     protected UnityEngine.UI.Text waveRoundText;
@@ -25,6 +21,10 @@ public class WaveCounterManager : MonoBehaviour
     // Reference to the permanent wave number.
     [SerializeField]
     protected UnityEngine.UI.Text waveTextPermanent;
+
+    // Reference to the boss text message.
+    [SerializeField]
+    protected UnityEngine.UI.Text bossText;
 
     public WaveCounterManager WaveCounterManagerInstance
     {
@@ -62,7 +62,7 @@ public class WaveCounterManager : MonoBehaviour
         {
             Animator number = waveNumber.GetComponent<Animator>();
             Animator roundText = waveRoundText.GetComponent<Animator>();
-            //Animator text = waveText.GetComponent<Animator>();
+            Animator boss = bossText.GetComponent<Animator>();
 
             waveNumber.text = GameManager.GameManagerInstance.Wave.ToString();
 
@@ -71,9 +71,13 @@ public class WaveCounterManager : MonoBehaviour
                 waveTextPermanent.text = GameManager.GameManagerInstance.Wave.ToString();
             }
 
-            //text.SetTrigger("WaveStarted");
+            if (GameManager.GameManagerInstance.IsBossWave)
+                boss.SetTrigger("WaveStarted");
+            else
+                number.SetTrigger("WaveStarted");
+
             roundText.SetTrigger("WaveStarted");
-            number.SetTrigger("WaveStarted");
+            
         }
     }
 }
