@@ -70,7 +70,7 @@ public class Laser : MonoBehaviour {
                         {
                             if (trap.bossDamage != 0)
                             {
-                                //enemy.TakeDamage(42, null);
+                                enemy.TakeDamage(42, gotHit);
                             }
 
                         }
