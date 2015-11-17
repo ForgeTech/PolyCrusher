@@ -64,8 +64,20 @@ public class DeathTrap : Trap, ITriggerable
         {
             // get the BaseEnemy of the Game Object
             BaseEnemy enemy = other.GetComponent<BaseEnemy>();
-            enemy.InstantKill();
-            enemy.gameObject.AddComponent<PolyExplosion>();
+
+            if (enemy is BossEnemy)
+            {
+                if (bossDamage != 0)
+                {
+                    enemy.TakeDamage(42, other.GetComponent<MonoBehaviour>());
+                }
+
+            }
+            else
+            {
+                enemy.InstantKill();
+                enemy.gameObject.AddComponent<PolyExplosion>();
+            }
         }
 
         //trigger.onTriggerExit is never called, so trap is reset manually

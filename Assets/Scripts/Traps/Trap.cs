@@ -8,7 +8,7 @@ public class Trap : MonoBehaviour,ITriggerable {
 
     //how long the trap is active
     [SerializeField]
-    protected float trapActiveTime = 0.5f;
+    public float trapActiveTime = 0.5f;
 
     //the triggers that are connected to the trap
     [SerializeField]
@@ -16,10 +16,14 @@ public class Trap : MonoBehaviour,ITriggerable {
 
     //the player meshes that are used for the poly explosion
     [SerializeField]
-    protected GameObject[] playerMeshes;
+    public GameObject[] playerMeshes;
+    
+    //specifies if the trap gives boss damage
+    [SerializeField]
+    public int bossDamage = 0;
 
     //trap can only be triggered if this is false
-    protected bool isActive = true;
+    protected bool isActive = false;
 
     #endregion
 
@@ -49,7 +53,7 @@ public class Trap : MonoBehaviour,ITriggerable {
         isActive = false;
     }
 
-    //sets trap active on awake
+    //sets trap active false on awake
     public void Awake()
     {
         ResetTrap();
