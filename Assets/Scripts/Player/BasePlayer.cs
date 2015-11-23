@@ -143,6 +143,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected UnityEngine.UI.Image healthLevel;
 
+    [SerializeField]
+    protected UnityEngine.UI.Image innerEnergyCircle;
+
     // The original health level scale.
     private Vector3 originalHealthLevelScale;
     //======================================
@@ -1026,6 +1029,15 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         if (healthLevel != null)
         {
             healthLevel.fillAmount = (float)Health / (float)maxHealth;
+        }
+
+        // Set the inner energy circle to visible or not.
+        if (innerEnergyCircle != null)
+        {
+            if (Energy == MaxEnergy)
+                innerEnergyCircle.enabled = true;
+            else if (Energy < MaxHealth)
+                innerEnergyCircle.enabled = false;
         }
     }
 

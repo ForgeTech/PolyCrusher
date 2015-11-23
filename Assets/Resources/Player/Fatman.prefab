@@ -749,6 +749,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &167518
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22499468}
+  - 222: {fileID: 22202452}
+  - 114: {fileID: 11423084}
+  m_Layer: 5
+  m_Name: EnergyInnerCircle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &168042
 GameObject:
   m_ObjectHideFlags: 1
@@ -1942,7 +1959,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.3538666, y: .048751913, z: 6.26712608}
+  m_LocalPosition: {x: 26.2384529, y: -4.05015385e-07, z: -50.5789146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400600}
@@ -2558,10 +2575,38 @@ MonoBehaviour:
   ability: {fileID: 11410876}
   energyLevel: {fileID: 11408638}
   healthLevel: {fileID: 11448668}
+  innerEnergyCircle: {fileID: 11423084}
   cameraEdgeDetectionOffset: -.00999999978
   bloodParticles: {fileID: 149012, guid: d2b02fc2717b02f43bf0dde09455c16a, type: 2}
   characterVoice: {fileID: 103810}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
+--- !u!114 &11423084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167518}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 4c70025368d17df40b9e1ba1d4e8423d, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: ee537c85aec143b43a0147430b12a301, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &11433724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2793,6 +2838,12 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!222 &22202452
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167518}
 --- !u!222 &22234476
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -2834,6 +2885,7 @@ RectTransform:
   m_Children:
   - {fileID: 22415858}
   - {fileID: 22481298}
+  - {fileID: 22499468}
   m_Father: {fileID: 474286}
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
@@ -2870,6 +2922,23 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22409826}
   m_RootOrder: 1
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: .5, y: .5}
+--- !u!224 &22499468
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167518}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3.4000001}
+  m_LocalScale: {x: .910000026, y: .910000026, z: .910000026}
+  m_Children: []
+  m_Father: {fileID: 22409826}
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}

@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Ability class for the chicken.
 /// </summary>
-public class AbilityChicken : Ability 
+public class AbilityChicken : Ability
 {
     // The prefab path to the chicken ability prefab.
     [SerializeField]
@@ -15,31 +15,23 @@ public class AbilityChicken : Ability
         base.Start();
     }
 
-	public override void Use() 
+    public override void Use()
     {
-		if (useIsAllowed)
+        if (useIsAllowed)
         {
-            if (GameObject.FindGameObjectWithTag("Pie") == null)
-            {
-                base.Use();
+            base.Use();
 
-                GameObject obj = Instantiate(Resources.Load<GameObject>(prefabString));
+            GameObject obj = Instantiate(Resources.Load<GameObject>(prefabString));
 
-                obj.GetComponent<PieBehaviour>().OwnerScript = this.OwnerScript;
-                obj.transform.position = transform.position;
-                obj.transform.rotation = transform.rotation;
+            obj.GetComponent<ChickenBehaviour>().OwnerScript = this.OwnerScript;
+            obj.SetActive(false);
+            obj.transform.position = transform.position;
+            obj.transform.rotation = transform.rotation;
+            obj.SetActive(true);
 
-                useIsAllowed = false;
+            useIsAllowed = false;
 
-                StartCoroutine(WaitForNextAbility());
-            }
-            else
-            {
-                BasePlayer player = OwnerScript.GetComponent<BasePlayer>();
-
-                if (player != null)
-                    player.Energy += this.EnergyCost;
-            }
-		}
-	}
+            StartCoroutine(WaitForNextAbility());
+        }
+    }
 }
