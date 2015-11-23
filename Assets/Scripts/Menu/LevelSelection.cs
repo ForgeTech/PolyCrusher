@@ -99,13 +99,15 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
 
-		buttons = new GameObject[5];
+		buttons = new GameObject[7];
 
 		buttons[0] = GameObject.Find("Select_Level_01");
-		buttons[1] = GameObject.Find("Select_Level_02");
+		buttons[1] = GameObject.Find("Select_Level_05");
 		buttons[2] = GameObject.Find("Select_Level_03");
 		buttons[3] = GameObject.Find("Select_Level_04");
-		buttons[4] = GameObject.Find("Select_Main_Menu");
+        buttons[4] = GameObject.Find("Select_Level_02");
+		buttons[5] = GameObject.Find("Select_Level_06");
+        buttons[6] = GameObject.Find("Select_Main_Menu");
 
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
 		selected =0;
@@ -154,11 +156,13 @@ public class LevelSelection : MonoBehaviour
             }
         }
 
+        levelIndices = new int[5];
+
 		levelIndices [0] = 1;
 		levelIndices [1] = 2;
 		levelIndices [2] = 3;
 		levelIndices [3] = 4;
-		//levelIndices [4] = 0;
+		levelIndices [4] = 5;
 
 		for (int i = 0; i < buttons.Length; i++) {
 			buttons[i].GetComponent<Image>().enabled = false;
