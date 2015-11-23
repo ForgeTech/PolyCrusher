@@ -252,8 +252,6 @@ public class ChickenBehaviour : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
             enemies[i] = hits[i].transform;
 
-        //Debug.Log("ChickenBehaviour: Enemies in ragne - " + enemies.Length);
-
         return enemies;
     }
 

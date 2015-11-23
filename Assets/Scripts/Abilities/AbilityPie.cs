@@ -1,31 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Ability class for the chicken.
-/// </summary>
-public class AbilityChicken : Ability 
+public class AbilityPie : Ability
 {
-    // The prefab path to the chicken ability prefab.
     [SerializeField]
-    protected string prefabString = "Abilities/ChickenAbility";
+    [Tooltip("The prefab of the pie.")]
+    protected GameObject piePrefab;
 
     protected override void Start()
     {
         base.Start();
     }
 
-	public override void Use() 
+    public override void Use()
     {
-		if (useIsAllowed)
+        if (useIsAllowed)
         {
             if (GameObject.FindGameObjectWithTag("Pie") == null)
             {
                 base.Use();
 
-                GameObject obj = Instantiate(Resources.Load<GameObject>(prefabString));
+                GameObject obj = Instantiate(piePrefab);
 
-                obj.GetComponent<PieBehaviour>().OwnerScript = this.OwnerScript;
+                BasePlayer p = OwnerScript.GetComponent<BasePlayer>();
+                PieBehaviour pie = obj.GetComponent<PieBehaviour>();
+
+                pie.OwnerScript = this.OwnerScript;
+                pie.PlayerPrefix = p.PlayerPrefix;
+
                 obj.transform.position = transform.position;
                 obj.transform.rotation = transform.rotation;
 
@@ -38,8 +40,8 @@ public class AbilityChicken : Ability
                 BasePlayer player = OwnerScript.GetComponent<BasePlayer>();
 
                 if (player != null)
-                    player.Energy += this.EnergyCost;
+                    player.Energy += EnergyCost;
             }
-		}
-	}
+        }
+    }
 }
