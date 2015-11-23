@@ -6,6 +6,12 @@ public class Trigger : MonoBehaviour {
 
     #region Class Members
 
+    [SerializeField]
+    public Material onEnter;
+
+    [SerializeField]
+    public Material onExit;
+
     //the collider that calls the Trigger functions, keep for trap trigger call
     public Collider collided = null;
 
@@ -16,7 +22,7 @@ public class Trigger : MonoBehaviour {
     //sets material color on awake
     public void Awake()
     {
-        GetComponentsInChildren<Renderer>()[0].material.color = Color.red;
+        GetComponentsInChildren<Renderer>()[0].material = onExit;
     }
 
     //called when collider enters trigger
@@ -27,7 +33,8 @@ public class Trigger : MonoBehaviour {
         {
             GetComponentsInChildren<Animation>()[0].Play("onenter");
         }
-        GetComponentsInChildren<Renderer>()[0].material.color = Color.green;
+
+        GetComponentsInChildren<Renderer>()[0].material = onEnter;
     }
     
     //called when collider exits trigger
@@ -44,7 +51,7 @@ public class Trigger : MonoBehaviour {
         {
             GetComponentsInChildren<Animation>()[0].Play("onexit");
         }
-        GetComponentsInChildren<Renderer>()[0].material.color = Color.red;
+        GetComponentsInChildren<Renderer>()[0].material = onExit;
     }
 
     #endregion

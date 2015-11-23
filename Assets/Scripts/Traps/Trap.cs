@@ -22,6 +22,10 @@ public class Trap : MonoBehaviour,ITriggerable {
     [SerializeField]
     public int bossDamage = 0;
 
+    //the trap load bars, visualize when trap is active
+    [SerializeField]
+    public UnityEngine.UI.Image[] loadBars = null;
+
     //trap can only be triggered if this is false
     protected bool isActive = false;
 
@@ -36,8 +40,26 @@ public class Trap : MonoBehaviour,ITriggerable {
     //keeps the trap from triggering too often
     protected virtual IEnumerator WaitForActive()
     {
-        yield return new WaitForSeconds(trapActiveTime);
-        ResetTrap();
+        if (loadBars!=null)
+        {
+            float timer = 0.0f;
+            while (timer <= trapActiveTime)
+            {
+                for(int i = 0; i<loadBars.Length; i++)
+                {
+                    loadBars[i].fillAmount = timer / trapActiveTime;
+                }
+                timer += Time.deltaTime;
+                yield return 0;
+            }
+            ResetTrap();
+
+        }
+        else
+        {
+            yield return new WaitForSeconds(trapActiveTime);
+            ResetTrap();
+        }
     }
 
     //resets the trigger manually after trap was triggered - deathTraps can't be exited so onTriggerExit won't be called

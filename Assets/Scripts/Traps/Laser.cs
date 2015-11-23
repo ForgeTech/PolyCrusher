@@ -3,11 +3,13 @@ using System.Collections;
 
 public class Laser : MonoBehaviour {
 
+    //when instantiated, destroy the laser script after trapActiveTime
     void Awake()
     {
         StartCoroutine(DestroyAfterTime());
     }
     
+    //laser update
     void Update()
     {
         LaserTrap trap = gameObject.GetComponent<LaserTrap>();
@@ -86,6 +88,7 @@ public class Laser : MonoBehaviour {
         }
     }
 
+    //destroy laser
     protected IEnumerator DestroyAfterTime()
     {
         LaserTrap trap = gameObject.GetComponent<LaserTrap>();
