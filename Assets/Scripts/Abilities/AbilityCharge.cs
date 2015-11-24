@@ -70,6 +70,9 @@ public class AbilityCharge : Ability {
     //set mass bool
     private bool setMass = false;
 
+    //true when charging true and set to false
+    private bool chargingEnded = false;
+
 
     [Header("Particle")]
 
@@ -174,6 +177,21 @@ public class AbilityCharge : Ability {
 
         }
 
+        if (chargingEnded)
+        {
+            chargingEnded = false;
+            player.GetComponent<BasePlayer>().Invincible = false;
+
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i] != null)
+                {
+                    players[i].mass = 0.2f;
+
+                }
+            }
+        }
+
 
 
     }
@@ -255,6 +273,7 @@ public class AbilityCharge : Ability {
        
         yield return new WaitForSeconds(0.2f);
         charging = false;
+        chargingEnded = true;
 
         player.GetComponent<BasePlayer>().Invincible = false;
 
