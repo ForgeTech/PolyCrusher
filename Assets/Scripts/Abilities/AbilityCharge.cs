@@ -140,7 +140,7 @@ public class AbilityCharge : Ability {
 
                
                 //while charging the mass is increased, for a better overal experience^^
-                player.mass = 10.0f;
+                //player.mass = 10.0f;
 
 
                 player.AddForce(chargeDirection * chargeSpeed);
@@ -345,6 +345,16 @@ public class AbilityCharge : Ability {
 
     private IEnumerator CleanUp()
     {
+        player.GetComponent<BasePlayer>().Invincible = false;
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i] != null)
+            {
+                players[i].mass = 0.2f;
+
+            }
+        }
         yield return new WaitForSeconds(0.2f);
         explosion = false;
         cleanUp = true;
