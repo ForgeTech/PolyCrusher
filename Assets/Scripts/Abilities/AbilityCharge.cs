@@ -280,12 +280,12 @@ public class AbilityCharge : Ability {
 
         player.GetComponent<BasePlayer>().Invincible = false;
 
-        for (int i = 0; i < players.Length; i++)
+        player.mass = 0.2f;
+        for (int i = 0; i < friends.Length; i++)
         {
-            if(players[i]!= null)
+            if(friends[i] != null)
             {
-                players[i].mass = 0.2f;
-
+                friends[i].mass = 0.2f;
             }
         }
 

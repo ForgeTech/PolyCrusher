@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293991552dda95742bf80a8b622af70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBullet: {fileID: 140958, guid: 55e20ccbf7ad6f0458c2892e46a100a8, type: 2}
+  enemyBullet: {fileID: 140958, guid: d5b39436daa252c478bcdfc39464dcd5, type: 2}
   enemyRay: {fileID: 162976, guid: ad602c28a455263429954ead43030cb4, type: 2}
 --- !u!114 &11471558
 MonoBehaviour:
@@ -1593,6 +1593,10 @@ Prefab:
       propertyPath: attackRange
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: enemyBullet
+      value: 
+      objectReference: {fileID: 140958, guid: d5b39436daa252c478bcdfc39464dcd5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 128610}
