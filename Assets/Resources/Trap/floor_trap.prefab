@@ -215,8 +215,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 414706}
   - 33: {fileID: 3390362}
-  - 23: {fileID: 2364304}
   - 111: {fileID: 11159888}
+  - 23: {fileID: 2364304}
   m_Layer: 0
   m_Name: trigger
   m_TagString: Untagged
@@ -249,7 +249,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 407724}
-  - 135: {fileID: 13592874}
   - 114: {fileID: 11465936}
   m_Layer: 0
   m_Name: triggerObject
@@ -302,7 +301,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.4700003, y: .400000006, z: -7.36000013}
+  m_LocalPosition: {x: 14.4093781, y: .460000008, z: -7.82779408}
   m_LocalScale: {x: 3, y: 2, z: 3}
   m_Children:
   - {fileID: 482000}
@@ -557,7 +556,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 33dd28ac03d88a94093764e44b5aa6e6, type: 2}
+  - {fileID: 2100000, guid: 6179eeed7394c99488ea649e6be90c3f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -847,6 +846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnter: {fileID: 2100000, guid: cae5db32911eefe4eb8d3d2ca961a0c7, type: 2}
   onExit: {fileID: 2100000, guid: fd221f432605ea849aaeaf6903263c5e, type: 2}
+  radius: .699999988
   collided: {fileID: 0}
 --- !u!114 &11471638
 MonoBehaviour:
@@ -912,18 +912,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!135 &13592874
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199204}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .699999988
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!222 &22246502
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -130,7 +130,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 461940}
-  - 135: {fileID: 13566284}
   - 114: {fileID: 11493304}
   m_Layer: 0
   m_Name: triggerObject
@@ -461,6 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnter: {fileID: 2100000, guid: cae5db32911eefe4eb8d3d2ca961a0c7, type: 2}
   onExit: {fileID: 2100000, guid: fd221f432605ea849aaeaf6903263c5e, type: 2}
+  radius: .699999988
   collided: {fileID: 0}
 --- !u!114 &11493388
 MonoBehaviour:
@@ -485,18 +485,6 @@ MonoBehaviour:
   loadBars:
   - {fileID: 11488424}
   type: 0
---- !u!135 &13566284
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197230}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .699999988
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!222 &22258028
 CanvasRenderer:
   m_ObjectHideFlags: 1

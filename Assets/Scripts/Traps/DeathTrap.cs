@@ -79,9 +79,6 @@ public class DeathTrap : Trap, ITriggerable
                 enemy.gameObject.AddComponent<PolyExplosion>();
             }
         }
-
-        //trigger.onTriggerExit is never called, so trap is reset manually
-        StartCoroutine(WaitForReset());
     }
 
     #endregion

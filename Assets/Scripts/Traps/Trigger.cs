@@ -12,6 +12,9 @@ public class Trigger : MonoBehaviour {
     [SerializeField]
     public Material onExit;
 
+    [SerializeField]
+    public float radius = 0.5f;
+
     //the collider that calls the Trigger functions, keep for trap trigger call
     public Collider collided = null;
 
@@ -25,33 +28,34 @@ public class Trigger : MonoBehaviour {
         GetComponentsInChildren<Renderer>()[0].material = onExit;
     }
 
-    //called when collider enters trigger
-    protected void OnTriggerEnter(Collider other)
+    public void Update()
     {
-        collided = other;
-        if (GetComponentsInChildren<Animation>()[0])
+        Collider[] c = Physics.OverlapSphere(gameObject.transform.position, radius, (1 << 8) | (1 << 9));
+        Debug.Log(c.Length);
+        if(c.Length>0)
         {
-            GetComponentsInChildren<Animation>()[0].Play("onenter");
+            if (!collided)
+            {
+                collided = c[0];
+                if (GetComponentsInChildren<Animation>()[0])
+                {
+                    GetComponentsInChildren<Animation>()[0].Play("onenter");
+                }
+                GetComponentsInChildren<Renderer>()[0].material = onEnter;
+            }
+        } else
+        {
+            if (collided)
+            {
+                collided = null;
+                if (GetComponentsInChildren<Animation>()[0])
+                {
+                    GetComponentsInChildren<Animation>()[0].Play("onexit");
+                }
+                GetComponentsInChildren<Renderer>()[0].material = onExit;
+            }
         }
 
-        GetComponentsInChildren<Renderer>()[0].material = onEnter;
-    }
-    
-    //called when collider exits trigger
-    protected void OnTriggerExit(Collider other)
-    {
-        resetTrigger();
-    }
-
-    //resets trigger
-    public void resetTrigger()
-    {
-        collided = null;
-        if (GetComponentsInChildren<Animation>()[0])
-        {
-            GetComponentsInChildren<Animation>()[0].Play("onexit");
-        }
-        GetComponentsInChildren<Renderer>()[0].material = onExit;
     }
 
     #endregion

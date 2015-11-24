@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 436416}
-  - 135: {fileID: 13587382}
   - 114: {fileID: 11433918}
   m_Layer: 0
   m_Name: triggerObject
@@ -57,7 +56,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 495396}
-  - 135: {fileID: 13503306}
   - 114: {fileID: 11483662}
   m_Layer: 0
   m_Name: triggerObject
@@ -650,6 +648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnter: {fileID: 2100000, guid: cae5db32911eefe4eb8d3d2ca961a0c7, type: 2}
   onExit: {fileID: 2100000, guid: fd221f432605ea849aaeaf6903263c5e, type: 2}
+  radius: .5
   collided: {fileID: 0}
 --- !u!114 &11437068
 MonoBehaviour:
@@ -763,6 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnter: {fileID: 2100000, guid: cae5db32911eefe4eb8d3d2ca961a0c7, type: 2}
   onExit: {fileID: 2100000, guid: fd221f432605ea849aaeaf6903263c5e, type: 2}
+  radius: .5
   collided: {fileID: 0}
 --- !u!114 &11485318
 MonoBehaviour:
@@ -865,30 +865,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 4294967295
   m_UseWorldSpace: 0
---- !u!135 &13503306
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115160}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &13587382
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 109772}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!222 &22220736
 CanvasRenderer:
   m_ObjectHideFlags: 1
