@@ -15,6 +15,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &112094
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 477280}
+  m_Layer: 0
+  m_Name: BulletReflected_Root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &117816
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +755,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 482048}
   m_RootOrder: 10
+--- !u!4 &477280
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112094}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 482048}
+  m_RootOrder: 12
 --- !u!4 &482048
 Transform:
   m_ObjectHideFlags: 1
@@ -762,6 +789,7 @@ Transform:
   - {fileID: 431910}
   - {fileID: 473570}
   - {fileID: 457084}
+  - {fileID: 477280}
   m_Father: {fileID: 415424}
   m_RootOrder: 14
 --- !u!4 &486810
@@ -1328,7 +1356,7 @@ MonoBehaviour:
     allowMore: 1
     debugMessages: 0
     size: 15
-    foldout: 1
+    foldout: 0
   - prefab: {fileID: 194664, guid: 1177bd3fe35a22046aa9a93341a4d5c4, type: 2}
     despawned: []
     spawned: []
@@ -1336,7 +1364,7 @@ MonoBehaviour:
     allowMore: 1
     debugMessages: 0
     size: 15
-    foldout: 1
+    foldout: 0
   - prefab: {fileID: 151834, guid: 7c464c668b25d8e4e84ebd4dfaf861ce, type: 2}
     despawned: []
     spawned: []
@@ -1344,7 +1372,7 @@ MonoBehaviour:
     allowMore: 1
     debugMessages: 0
     size: 15
-    foldout: 1
+    foldout: 0
   - prefab: {fileID: 153336, guid: 417f8b60b26871f4d8d33c1589aaaaaa, type: 2}
     despawned: []
     spawned: []
@@ -1352,7 +1380,7 @@ MonoBehaviour:
     allowMore: 1
     debugMessages: 0
     size: 15
-    foldout: 1
+    foldout: 0
   - prefab: {fileID: 157308, guid: 7d8347876c2b2304585e62e54c027dec, type: 2}
     despawned: []
     spawned: []
@@ -1360,6 +1388,14 @@ MonoBehaviour:
     allowMore: 1
     debugMessages: 0
     size: 15
+    foldout: 0
+  - prefab: {fileID: 140958, guid: d5b39436daa252c478bcdfc39464dcd5, type: 2}
+    despawned: []
+    spawned: []
+    m_Root: {fileID: 477280}
+    allowMore: 1
+    debugMessages: 0
+    size: 35
     foldout: 1
   debugMessages: 0
   spawnDespawnMessages: 0

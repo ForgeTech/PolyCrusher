@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d9728d41db4024fa5ff5dd94d2e5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 6
   deathParticlePrefab: {fileID: 158560, guid: 061d74eca5b781d449fcf7ec08244ba2, type: 2}
   bulletLifeTime: 2
   bulletSpeed: 15
@@ -155,6 +155,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: EnemyBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damage
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
