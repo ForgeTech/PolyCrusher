@@ -120,6 +120,8 @@ public class BossMeteorScript : MonoBehaviour
                 bullet.transform.position = spawnPoint;
                 Vector3 direction = Vector3.down + destinationOffset;
 
+                bullet.transform.rotation = Quaternion.LookRotation(direction.normalized);
+
                 bullet.Shoot(direction, bullet.BulletSpeed);
             }
         }
