@@ -130,30 +130,7 @@ public class AbilityCharge : Ability {
 
             
 
-            //if the charged distance is smaller than the max allowed distance, continue to apply force 
-            if (Vector3.Distance(transform.position, oldPosition) < chargeDistance)
-            {
-                //calculate new speed
-                chargeSpeed += chargeAcceleration;
 
-                //add force to charger and all allies stored in the friends array
-
-               
-                //while charging the mass is increased, for a better overal experience^^
-                //player.mass = 10.0f;
-
-
-                player.AddForce(chargeDirection * chargeSpeed);
-
-                for (int i = 0; i < friends.Length; i++)
-                {
-                    if (friends[i] != null)
-                    {            
-                        
-                        friends[i].AddForce(chargeDirection * chargeSpeed);
-                    }
-                }
-            }           
         }
 
 
@@ -161,19 +138,7 @@ public class AbilityCharge : Ability {
         {
             setMass = false;
             //while charging the mass is increased, for a better overal experience^^
-            player.mass = 10.0f;
-
-            for (int i = 0; i < friends.Length; i++)
-            {
-                if (friends[i] != null)
-                {
-                    if (friends[i].mass != 10.0f)
-                    {
-                        friends[i].mass = 10.0f;
-                    }
-                }
-            }
-            charging = true;
+            
 
         }
 
@@ -222,7 +187,7 @@ public class AbilityCharge : Ability {
                 {
                     friends[currentFriend] = coll.GetComponent<Rigidbody>();
                     currentFriend++;
-                    Debug.Log("friend found");
+                    //Debug.Log("friend found");
                 }
             }
             
@@ -270,7 +235,45 @@ public class AbilityCharge : Ability {
     //limits the charging duration
     private IEnumerator ChargerTimer()
     {
-       
+        //if the charged distance is smaller than the max allowed distance, continue to apply force 
+        if (Vector3.Distance(transform.position, oldPosition) < chargeDistance)
+        {
+            //calculate new speed
+            chargeSpeed += chargeAcceleration;
+
+            //add force to charger and all allies stored in the friends array
+
+
+            //while charging the mass is increased, for a better overal experience^^
+            //player.mass = 10.0f;
+
+
+            player.AddForce(chargeDirection * chargeSpeed);
+
+            for (int i = 0; i < friends.Length; i++)
+            {
+                if (friends[i] != null)
+                {
+
+                    friends[i].AddForce(chargeDirection * chargeSpeed);
+                }
+            }
+        }
+
+        player.mass = 10.0f;
+
+        for (int i = 0; i < friends.Length; i++)
+        {
+            if (friends[i] != null)
+            {
+                if (friends[i].mass != 10.0f)
+                {
+                    friends[i].mass = 10.0f;
+                }
+            }
+        }
+        charging = true;
+
         yield return new WaitForSeconds(0.2f);
         charging = false;
         chargingEnded = true;
@@ -312,7 +315,7 @@ public class AbilityCharge : Ability {
                 // Edited by Dietmar Rammerstorfer: added upwards Modifier and force mode to the explosion force
                 coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
                 coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
-                Debug.Log("enemy damaged");
+                //Debug.Log("enemy damaged");
             }
         }
 
