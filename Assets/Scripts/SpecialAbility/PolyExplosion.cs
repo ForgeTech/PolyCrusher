@@ -58,7 +58,7 @@ public class PolyExplosion : MonoBehaviour {
         grandStep = step * 20;
 
         scaleFactor = 4+((step/3)* 0.28f);
-        Debug.Log(scaleFactor);
+       
 
     }
 	

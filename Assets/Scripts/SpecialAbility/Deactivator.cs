@@ -25,7 +25,14 @@ public class Deactivator : MonoBehaviour {
         if (box != null)
         {
             Destroy(box);
-        }        
+        }
+
+        SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
+        if(renderer!= null)
+        {
+            Destroy(renderer);
+        }
+
         this.gameObject.SetActive(false);
     }
 

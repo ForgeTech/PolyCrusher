@@ -103,7 +103,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
             explode = false;
             ExplodePartial(0);
-            Destroy(gameObject);
+            
             //part2 = true;
         }
     

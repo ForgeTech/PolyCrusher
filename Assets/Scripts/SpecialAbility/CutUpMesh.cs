@@ -17,6 +17,9 @@ public class CutUpMesh : MonoBehaviour {
 
     private int matchedIndex;
 
+
+    public Material insideMeshMaterial;
+
     public struct Tri
     {
         public int x;
@@ -95,11 +98,25 @@ public class CutUpMesh : MonoBehaviour {
     private Transform root;
 
 
+
     private int lowerVertices;
+
+    private BasePlayer playerScript;
+    private BaseEnemy enemyScript;
+
+
+    private Vector3 cutPoint;
+
 
     void Start()
     {
 
+        cutPoint = new Vector3(0, cutHeight, 0);
+       
+        playerScript = GetComponent<BasePlayer>();
+        enemyScript = GetComponent<BaseEnemy>();
+
+        insideMeshMaterial = Resources.Load("Material/MeshSplit/MeshInsideMaterial", typeof(Material)) as Material;
         pool = Pool.current;
         //explode = true;
 
@@ -130,17 +147,7 @@ public class CutUpMesh : MonoBehaviour {
 
         }
 
-        //if(MF == null)
-        //{
-        //    M = SMR.me
-        //}
-
-       // if(GetComponent<Mes>)
-
-       
-       
-        //MR = GetComponent<MeshRenderer>();
-        //M = MF.mesh;
+      
         verts = M.vertices;
         normals = M.normals;
         uvs = M.uv;
@@ -148,8 +155,7 @@ public class CutUpMesh : MonoBehaviour {
         vertexCount = M.vertexCount;
         colors = M.colors;
 
-
-        //MR.ma
+        transform.InverseTransformDirection(cutPoint);
 
         step = vertexCount / 90;
         while (step % 3 != 0)
@@ -183,16 +189,36 @@ public class CutUpMesh : MonoBehaviour {
 
 
         lowIndices = new List<int>[M.subMeshCount + 1];
-        upIndices = new List<int>[M.subMeshCount + 1]; 
+        upIndices = new List<int>[M.subMeshCount + 1];
 
-        for(int i = 0; i < lowIndices.Length; i++)
+        upMaterials = new Material[SMR.sharedMaterials.Length + 1];
+        lowMaterials = new Material[SMR.sharedMaterials.Length + 1];
+
+
+        for (int i = 0; i < lowIndices.Length; i++)
         {
             lowIndices[i] = new List<int>();
             upIndices[i] = new List<int>();
+            if(i< lowIndices.Length - 1)
+            {
+                upMaterials[i] = SMR.sharedMaterials[i];
+                lowMaterials[i] = SMR.sharedMaterials[i];
+            }
+            else
+            {
+                upMaterials[i] = insideMeshMaterial;
+                lowMaterials[i] = insideMeshMaterial;
+            }
+            
+
         }
 
-        upMaterials = SMR.sharedMaterials;
-        lowMaterials = SMR.sharedMaterials;
+        
+
+        
+
+        //upMaterials = SMR.sharedMaterials;
+        //lowMaterials = SMR.sharedMaterials;
 
         upNormals = new List<Vector3>();
         lowNormals = new List<Vector3>();
@@ -257,7 +283,22 @@ public class CutUpMesh : MonoBehaviour {
             //ExplodePartial(0);
             //if(MF!=null)
             SplitInTwo();
-            //Destroy(gameObject);           
+            SMR.enabled = false;
+
+            if(playerScript != null)
+            {
+                playerScript.InstantKill();
+            }
+            else if(enemyScript!= null)
+            {
+                enemyScript.InstantKill();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }   
+
+
         }
     }
 
@@ -276,7 +317,8 @@ public class CutUpMesh : MonoBehaviour {
 
     private void SplitInTwo()
     {
-        Debug.Log("split up");
+        float start = Time.realtimeSinceStartup;
+        float end;
 
         //ArrayList indexList = new ArrayList();
        
@@ -384,7 +426,7 @@ public class CutUpMesh : MonoBehaviour {
         DetermineVertexPositions(vertices);
 
 
-        
+       
        
 
 
@@ -428,14 +470,16 @@ public class CutUpMesh : MonoBehaviour {
         
         upSMR.sharedMesh.RecalculateBounds();
         upSMR.rootBone = upper.transform;
-        
-
-        
-        upper.AddComponent<BoxCollider>();
 
 
 
-        
+        BoxCollider box = upper.AddComponent<BoxCollider>();
+        box.center = upSMR.sharedMesh.bounds.center;
+        box.size = upSMR.sharedMesh.bounds.size;
+
+
+
+
 
 
         lower = pool.getPooledObject();
@@ -475,11 +519,15 @@ public class CutUpMesh : MonoBehaviour {
         lowSMR.sharedMesh = meshLow;
         lowSMR.sharedMesh.RecalculateBounds();
         
+        BoxCollider boxLow = lower.AddComponent<BoxCollider>();
+        boxLow.center = lowSMR.sharedMesh.bounds.center;
+        boxLow.size = lowSMR.sharedMesh.bounds.size;
 
-        lower.AddComponent<BoxCollider>();
 
 
-        printUvs();
+        end = Time.realtimeSinceStartup;
+        Debug.Log("Split In Two method took: " + (end - start) + " seconds");
+    
     }
 
   
