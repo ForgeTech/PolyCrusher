@@ -106,106 +106,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
             Destroy(gameObject);
             //part2 = true;
         }
-        else
-        {
-            if (part2)
-            {
-                part2 = false;
-                ExplodePartial(step);
-                part3 = true;
-
-            }
-            else
-            {
-                if (part3)
-                {
-                    part3 = false;
-                    ExplodePartial(step * 2);
-                    part4 = true;
-                }
-                else
-                {
-                    if (part4)
-                    {
-                        part4 = false;
-                        ExplodePartial(step * 3);
-                        part5 = true;
-                    }
-                    else
-                    {
-                        if (part5)
-                        {
-                            part5 = false;
-                            ExplodePartial(step * 4);
-                            part6 = true;
-
-
-                        }
-                        else
-                        {
-                            if (part6)
-                            {
-                                part6 = false;
-                                ExplodePartial(step * 5);
-                                part7 = true;
-
-
-                            }
-                            else
-                            {
-                                if (part7)
-                                {
-                                    part7 = false;
-                                    ExplodePartial(step * 6);
-                                    part8 = true;
-
-                                }
-                                else
-                                {
-
-                                    if (part8)
-                                    {
-                                        part8 = false;
-                                        ExplodePartial(step * 7);
-                                        part9 = true;
-
-                                    }
-                                    else
-                                    {
-                                        if (part9)
-                                        {
-                                            part9 = false;
-                                            ExplodePartial(step * 8);
-                                            part10 = true;
-                                        }
-                                        else
-                                        {
-                                            if (part10)
-                                            {
-                                                part10 = false;
-                                                ExplodePartial(step * 9);
-                                                Destroy(gameObject);
-                                            }
-
-                                        }
-
-
-                                    }
-
-
-                                }
-
-                            }
-                        }
-
-                    }
-
-                }
-
-            }
-
-
-        }
+    
     }
 
 
@@ -306,7 +207,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newNormals[2] = normals[tri.z];
 
                     newVerts[3] = verts[matchedIndex];
-                    newUvs[3] = uvZero;
+                    newUvs[3] = uvs[matchedIndex];
                     newNormals[3] = normals[matchedIndex];
 
                     newVerts[4] = newVerts[0] + direction1;
@@ -326,7 +227,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newUvs[7] = uvZero;
                     newNormals[7] = newNormals[3];
 
-                    triangles = new int[] { 0, 1, 2, 2, 1, 0,  0,1,3,3,1,0, /*up tris*/  2,4,6,6,4,2,   0,2,4,4,2,0,  /*side1 */ 1,2,5,5,2,1,  2,5,6,6,5,2,  /*side2*/ 0,4,7,7,4,0,  0,3,7,7,3,0, /*side3*/ 1,5,7,7,5,1, 3,1,7,7,1,3, /*side4*/ 4,5,6,6,5,4,  4,5,7,7,5,4  /*down*/};
+                    triangles = new int[] { 0, 1, 2,  3,1,0, /*up tris*/  6,4,2,   0,2,4,  /*side1 */ 5,2,1,  2,5,6,  /*side2*/ 0,4,7,  7,3,0, /*side3*/ 7,5,1, 7,1,3, /*side4*/ 6,5,4,  4,5,7  /*down*/};
 
                 }
                 else
@@ -374,7 +275,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newNormals[5] = newNormals[2];
 
 
-                    triangles = new int[] { 0, 1, 2, 2, 1, 0,   0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                    triangles = new int[] { 0, 1, 2, /*up*/   4, 1, 0,  0, 3, 4,  /*side1*/  0, 2, 5,    1, 4, 5, /*side2*/     5, 4, 3,   5, 3, 0,   /*side3*/  5, 2, 1 /*down*/};
 
                 }
 

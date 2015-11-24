@@ -897,7 +897,7 @@ public class PolygonSystem : MonoBehaviour
         return (p1.x - p3.x) * (p2.z - p3.z) - (p2.x - p3.x) * (p1.z - p3.z);
     }
 
-    bool IsPointInTri(Vector3 pt, Vector3 v1, Vector3 v2, Vector3 v3)
+    private bool IsPointInTri(Vector3 pt, Vector3 v1, Vector3 v2, Vector3 v3)
     {
         bool b1, b2, b3;
 
