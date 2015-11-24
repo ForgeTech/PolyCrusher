@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 6
   deathParticlePrefab: {fileID: 158560, guid: 061d74eca5b781d449fcf7ec08244ba2, type: 2}
-  bulletLifeTime: 2
+  bulletLifeTime: .600000024
   bulletSpeed: 15
   bulletSpeedVariation: 1
   pushAwayForce: 2.5
@@ -159,6 +159,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: damage
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bulletLifeTime
+      value: .600000024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

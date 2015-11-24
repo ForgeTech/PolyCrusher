@@ -98,13 +98,33 @@ public class BossEnemy : BaseEnemy
         [HideInInspector]
         public int currentDamage = 0;
     }
+
+    [System.Serializable]
+    public class PlayerLifeSettings
+    {
+        [Range(0, 1f)]
+        [Tooltip("When there is one player, the boss should have X percent of his normal health.")]
+        public float onePlayer = 0.5f;
+
+        [Range(0, 1f)]
+        [Tooltip("When there are two players, the boss should have X percent of his normal health.")]
+        public float twoPlayers = 0.65f;
+
+        [Range(0, 1f)]
+        [Tooltip("When there are three players, the boss should have X percent of his normal health.")]
+        public float threePlayers = 0.85f;
+    }
     #endregion
 
     #region Member variables
-    [Space(5)]
-    [Header("Range attack values")]
+    //[Header("Boss player count life settings")]
+
+    [Header("Boss life settings based on playercount")]
+    [SerializeField]
+    PlayerLifeSettings lifeSetting;
 
     [SerializeField]
+    [Header("Range attack values")]
     [Tooltip("The damage of the ranged attack.")]
     protected int rangedAttackDamage = 10;
 
@@ -324,6 +344,28 @@ public class BossEnemy : BaseEnemy
 
     // Event for a killed boss.
     public static event BossKilledEventHandler BossKilled;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        // Set boss health based on the playercount
+        if (PlayerManager.PlayerCount == 1)
+        {
+            Health = (int)(lifeSetting.onePlayer * Health);
+            MaxHealth = Health;
+        }
+        else if (PlayerManager.PlayerCount == 2)
+        {
+            Health = (int)(lifeSetting.twoPlayers * Health);
+            MaxHealth = Health;
+        }
+        else if (PlayerManager.PlayerCount == 3)
+        {
+            Health = (int)(lifeSetting.threePlayers * Health);
+            MaxHealth = Health;
+        }
+    }
 
     /// <summary>
     /// Initializes the FSM.

@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageRadius: 2
-  damage: 30
+  damage: 10
   activationTime: 1.79999995
   attackStarted: 0
   easeInHeight: 4
@@ -106,6 +106,10 @@ Prefab:
       propertyPath: endColor
       value: 
       objectReference: {fileID: 2100000, guid: b98278c1599d4014192cea13e4b9c437, type: 2}
+    - target: {fileID: 0}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 158148}

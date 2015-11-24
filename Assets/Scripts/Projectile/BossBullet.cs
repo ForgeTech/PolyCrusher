@@ -24,26 +24,14 @@ public class BossBullet : Bullet
             if (m != null && m is IDamageable)
             {
                 ((IDamageable)m).TakeDamage(Damage, this.OwnerScript);
-                //Debug.Log("Bullet: " + other.name + " was hit!");
 
-                // Area of damage
-                CreateAreaOfDamage();
-
-                SpawnDeathParticle(transform.position);
                 ApplyExplosionForce(other.gameObject, transform.position);
-
                 DestroyProjectile();
             }
         }
 
         if (other.tag == "Terrain" || other.gameObject.layer == LayerMask.NameToLayer("Props"))
-        {
-            // Area of damage
-            CreateAreaOfDamage();
-
             DestroyProjectile();
-            SpawnDeathParticle(transform.position);
-        }
     }
 
     /// <summary>
@@ -65,5 +53,15 @@ public class BossBullet : Bullet
             g.transform.position = hit.position;
             g.GetComponent<BossMeleeScript>().InitMeleeScript(this.OwnerScript.GetComponent<BossEnemy>());
         }
+    }
+
+    /// <summary>
+    /// Destroys the projectile.
+    /// </summary>
+    protected override void DestroyProjectile()
+    {
+        SpawnDeathParticle(transform.position);
+        CreateAreaOfDamage();
+        base.DestroyProjectile();
     }
 }
