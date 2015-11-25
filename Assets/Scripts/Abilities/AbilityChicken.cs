@@ -25,7 +25,18 @@ public class AbilityChicken : Ability
 
             obj.GetComponent<ChickenBehaviour>().OwnerScript = this.OwnerScript;
             obj.SetActive(false);
-            obj.transform.position = transform.position;
+
+            NavMeshHit hit;
+            bool found = NavMesh.SamplePosition(transform.position, out hit, 10f, NavMesh.AllAreas);
+
+            if (found)
+                obj.transform.position = hit.position;
+            else
+            {
+                Debug.Log("false");
+                obj.transform.position = transform.position;
+            }
+
             obj.transform.rotation = transform.rotation;
             obj.SetActive(true);
 
