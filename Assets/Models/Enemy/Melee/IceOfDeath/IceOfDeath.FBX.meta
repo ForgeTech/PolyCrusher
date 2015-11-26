@@ -1,15 +1,41 @@
 fileFormatVersion: 2
-guid: 8d81a9baa19b4d24f8fc4bb487514223
-timeCreated: 1448486612
+guid: 77b335764191bd44f904fe555886c2dc
+timeCreated: 1448544380
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
+    100000: CATRigHub001
+    100002: CATRigHub002
+    100004: CATRigLLeg1
+    100006: CATRigLLeg2
+    100008: CATRigLLegPlatform
+    100010: CATRigRLeg1
+    100012: CATRigRLeg2
+    100014: CATRigRLegPlatform
+    100016: CATRigSpine1
+    100018: CATRigSpine2
+    100020: //RootNode
+    100022: IceOfDeathNew
+    400000: CATRigHub001
+    400002: CATRigHub002
+    400004: CATRigLLeg1
+    400006: CATRigLLeg2
+    400008: CATRigLLegPlatform
+    400010: CATRigRLeg1
+    400012: CATRigRLeg2
+    400014: CATRigRLegPlatform
+    400016: CATRigSpine1
+    400018: CATRigSpine2
+    400020: //RootNode
+    400022: IceOfDeathNew
     4300000: IceOfDeathNew
+    7400000: Ice|Walk
+    7400002: Ice|Idle
+    7400004: Ice|Attack
+    7400006: Ice|Death
+    9500000: //RootNode
+    13700000: IceOfDeathNew
   materials:
     importMaterials: 1
     materialName: 0
@@ -29,7 +55,207 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Ice|Walk
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CATRigHub001
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1/CATRigLLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1/CATRigRLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2/CATRigHub002
+        weight: 1
+      - path: CATRigLLegPlatform
+        weight: 1
+      - path: CATRigRLegPlatform
+        weight: 1
+      - path: IceOfDeathNew
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Ice|Idle
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 55
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CATRigHub001
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1/CATRigLLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1/CATRigRLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2/CATRigHub002
+        weight: 1
+      - path: CATRigLLegPlatform
+        weight: 1
+      - path: CATRigRLegPlatform
+        weight: 1
+      - path: IceOfDeathNew
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Ice|Attack
+      takeName: Take 001
+      firstFrame: 60
+      lastFrame: 77
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CATRigHub001
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1/CATRigLLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1/CATRigRLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2/CATRigHub002
+        weight: 1
+      - path: CATRigLLegPlatform
+        weight: 1
+      - path: CATRigRLegPlatform
+        weight: 1
+      - path: IceOfDeathNew
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Ice|Death
+      takeName: Take 001
+      firstFrame: 80
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CATRigHub001
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigLLeg1/CATRigLLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1
+        weight: 1
+      - path: CATRigHub001/CATRigRLeg1/CATRigRLeg2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2
+        weight: 1
+      - path: CATRigHub001/CATRigSpine1/CATRigSpine2/CATRigHub002
+        weight: 1
+      - path: CATRigLLegPlatform
+        weight: 1
+      - path: CATRigRLegPlatform
+        weight: 1
+      - path: IceOfDeathNew
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -68,7 +294,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
