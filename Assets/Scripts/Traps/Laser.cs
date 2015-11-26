@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Laser : MonoBehaviour {
+public class Laser : MonoBehaviour
+{
+
+    private Vector3 AntiRotation = Vector3.zero;
 
     //when instantiated, destroy the laser script after trapActiveTime
     void Awake()
     {
         StartCoroutine(DestroyAfterTime());
     }
-    
+
     //laser update
     void Update()
     {
@@ -16,8 +19,10 @@ public class Laser : MonoBehaviour {
 
         if (trap)
         {
-            trap.line.GetComponent<Transform>().position = trap.startPos.position;
+            trap.line.GetComponent<Transform>().position = trap.startPos.position;         
             trap.line.SetPosition(1, trap.endPos.position - trap.startPos.position);
+            AntiRotation.Set(trap.line.transform.rotation.eulerAngles.x, -transform.rotation.eulerAngles.y, trap.line.transform.rotation.eulerAngles.z);
+            trap.line.transform.localEulerAngles =AntiRotation;
 
             RaycastHit[] hits;
             hits = Physics.RaycastAll(new Ray(trap.startPos.position, Vector3.Normalize(trap.endPos.position - trap.startPos.position)), Vector3.Distance(trap.startPos.position, trap.endPos.position), (1 << 8) | (1 << 9));
@@ -33,11 +38,16 @@ public class Laser : MonoBehaviour {
 
                     if (gotHit is BasePlayer)
                     {
+                        bool addScript = true;
                         // get the BasePlayer of the Game Object
                         BasePlayer player = hit.transform.GetComponent<BasePlayer>();
                         Vector3 tmpPosition = player.GetComponent<Transform>().position;
                         Quaternion tmpRotation = player.GetComponent<Transform>().rotation;
                         player.CurrentDeathTime = 0;
+                        if (player.Health == 0)
+                        {
+                            addScript = false;
+                        }
                         player.InstantKill();
 
                         //create playerMesh to destroy it without destroying the real player
@@ -59,8 +69,18 @@ public class Laser : MonoBehaviour {
                         }
                         if (destroyMesh != null)
                         {
-                            GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
-                            toDestroy.gameObject.AddComponent<PolyExplosion>();
+
+                            //toDestroy.gameObject.AddComponent<PolyExplosion>();
+
+                            if (addScript)
+                            {
+                                GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
+                                toDestroy.gameObject.AddComponent<CutUpMesh>();
+                            }
+
+
+
+
                         }
                     }
 
@@ -79,7 +99,9 @@ public class Laser : MonoBehaviour {
                         else
                         {
                             enemy.InstantKill();
-                            enemy.gameObject.AddComponent<PolyExplosion>();
+                            //enemy.gameObject.AddComponent<PolyExplosion>();
+
+                            enemy.gameObject.AddComponent<CutUpMesh>();
                         }
                     }
 
@@ -97,7 +119,7 @@ public class Laser : MonoBehaviour {
         {
             yield return new WaitForSeconds(trap.trapActiveTime);
             trap.line.GetComponent<Transform>().position = trap.startPos.position;
-            trap.line.SetPosition(1, new Vector3(0,0,0));
+            trap.line.SetPosition(1, new Vector3(0, 0, 0));
             Destroy(this, 0);
         }
     }
