@@ -108,6 +108,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
 		buttons [0].GetComponent<Button> ().Select ();
+       // buttons[0].GetComponentInChildren<Text>().color = Color.yellow;
 
 		// Register switch sound.
 		ButtonSwitchEvent += PlaySwitchSound;
@@ -154,15 +155,24 @@ public class MainMenu : MonoBehaviour
 	IEnumerator ScalePlayerImages() {
 
 		GameObject[] buttonsNew = new GameObject[3];
+        
 		
 		buttonsNew[0] = GameObject.Find("Crush_Poly_Text");
 		buttonsNew[1] = GameObject.Find("Game_Stats_Text");
 		buttonsNew[2] = GameObject.Find("Leave_Game_Text");
 
+        Text[] texts = GameObject.FindObjectsOfType<Text>();
+
 		for (int i = 0; i < buttons.Length; i++) {
 			buttons[i].GetComponent<Image>().enabled = false;
 		}
 		
+        for(int i = 0; i < texts.Length; i++)
+        {
+            texts[i].enabled = false;
+        }
+
+
 		yield return new WaitForSeconds (0.3f);
 		
 		for (int i = 0; i < buttonsNew.Length; i++) {
@@ -171,8 +181,13 @@ public class MainMenu : MonoBehaviour
 			buttonsNew[i].GetComponent<Image>().enabled = true;
 			StartCoroutine(buttonsNew[i].transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
 		}
-		
-	}
+        for (int i = 0; i < texts.Length; i++)
+        {
+            if(texts[i]!=null)
+            texts[i].enabled = true;
+        }
+
+    }
 
 	IEnumerator TransformBetabanner(){
 
@@ -264,6 +279,24 @@ public class MainMenu : MonoBehaviour
         UpdatePlayerStatus();
 
         buttons[selected].GetComponent<Button>().Select();
+        
+
+        for(int i = 0; i < buttons.Length; i++)
+        {
+            Text[] texts = buttons[i].GetComponentsInChildren<Text>();
+            if (i!= selected)
+            {
+                texts[1].color = Color.red;
+            }
+            else
+            {
+                texts[1].color = Color.yellow;
+            }
+           
+           
+
+        }
+       // buttons[selected].GetComponentInChildren<Text>().color = Color.yellow;
 
         if (inputReceived)
         {
