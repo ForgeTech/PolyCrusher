@@ -1241,6 +1241,11 @@ MonoBehaviour:
     enemyRessourceValue: 3
     minWave: 4
     enemyName: StrongEnemy
+  - enemy: {fileID: 199272, guid: a845c8571d7c60645831af9d2055ebbe, type: 2}
+    spawnProbability: .400000006
+    enemyRessourceValue: 1
+    minWave: 2
+    enemyName: IceOfDeath
   bossSpawnInfo:
     boss: {fileID: 128610, guid: 6ce43f0558d8de441ab1bbe7e18b7c1c, type: 2}
     enemyRessourceValue: 1
@@ -1493,6 +1498,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: bounce.m_Curve.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -1607,6 +1616,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: pools.Array.data[3].size
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[6].enemy
+      value: 
+      objectReference: {fileID: 199272, guid: a845c8571d7c60645831af9d2055ebbe, type: 2}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[6].spawnProbability
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[6].enemyName
+      value: IceOfDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[6].minWave
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[6].enemyRessourceValue
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CutUpMesh : MonoBehaviour {
+public class CutUpMesh : MonoBehaviour
+{
 
 
-    public bool explode = false;   
+    public bool explode = false;
 
     private int vertexCount;
     private int step;
@@ -58,7 +59,7 @@ public class CutUpMesh : MonoBehaviour {
 
     GameObject lower;
 
-    public float cutHeight;
+    private float cutHeight = 0.9f;
 
     private int upperVertices;
     private List<Vector3> upperVertexList = new List<Vector3>();
@@ -108,11 +109,13 @@ public class CutUpMesh : MonoBehaviour {
     private Vector3 cutPoint;
 
 
+
+
     void Start()
     {
 
         cutPoint = new Vector3(0, cutHeight, 0);
-       
+
         playerScript = GetComponent<BasePlayer>();
         enemyScript = GetComponent<BaseEnemy>();
 
@@ -125,7 +128,7 @@ public class CutUpMesh : MonoBehaviour {
             MF = GetComponent<MeshFilter>();
             M = MF.mesh;
         }
-        else if(GetComponentInChildren<MeshFilter>() != null)
+        else if (GetComponentInChildren<MeshFilter>() != null)
         {
             MF = GetComponentInChildren<MeshFilter>();
             M = MF.mesh;
@@ -143,11 +146,11 @@ public class CutUpMesh : MonoBehaviour {
             {
                 Debug.Log("smr notfound");
             }
-            
+
 
         }
 
-      
+
         verts = M.vertices;
         normals = M.normals;
         uvs = M.uv;
@@ -155,18 +158,10 @@ public class CutUpMesh : MonoBehaviour {
         vertexCount = M.vertexCount;
         colors = M.colors;
 
-        transform.InverseTransformDirection(cutPoint);
+        SMR.transform.InverseTransformDirection(cutPoint);
 
-        step = vertexCount / 90;
-        while (step % 3 != 0)
-        {
-            step++;
-        }
 
-        grandStep = step * 20;
-        //grandStep = 21;
 
-        //scaleFactor = 0.03f * step * 2;
         scaleFactor = transform.localScale;
         found = false;
 
@@ -199,7 +194,7 @@ public class CutUpMesh : MonoBehaviour {
         {
             lowIndices[i] = new List<int>();
             upIndices[i] = new List<int>();
-            if(i< lowIndices.Length - 1)
+            if (i < lowIndices.Length - 1)
             {
                 upMaterials[i] = SMR.sharedMaterials[i];
                 lowMaterials[i] = SMR.sharedMaterials[i];
@@ -209,50 +204,46 @@ public class CutUpMesh : MonoBehaviour {
                 upMaterials[i] = insideMeshMaterial;
                 lowMaterials[i] = insideMeshMaterial;
             }
-            
+
 
         }
-
-        
-
-        
-
-        //upMaterials = SMR.sharedMaterials;
-        //lowMaterials = SMR.sharedMaterials;
 
         upNormals = new List<Vector3>();
         lowNormals = new List<Vector3>();
 
         root = SMR.rootBone;
-        
+
+        explode = true;
+
 
     }
     // Update is called once per frame
-    void Update () {
-	
-	}
+    void Update()
+    {
+
+    }
 
 
     void DetermineVertexPositions(Vector3[] vertices)
     {
-        for(int i=0; i < vertices.Length; i++)
+        for (int i = 0; i < vertices.Length; i++)
         {
-            if(vertices[i].y <= cutHeight)
+            if (vertices[i].y <= cutHeight)
             {
                 lowerVertices++;
                 lowerVertexList.Add(vertices[i]);
                 lowUVs.Add(uvs[i]);
-                //lowUVs2.Add(uvs2[i]);
+
                 lowNormals.Add(normals[i]);
-                vertexPosChange[i] = lowerVertexList.Count-1;
-               
+                vertexPosChange[i] = lowerVertexList.Count - 1;
+
             }
             else
             {
                 upperVertices++;
                 upperVertexList.Add(vertices[i]);
                 upperUVs.Add(uvs[i]);
-                //upperUVs2.Add(uvs2[i]);
+
                 upNormals.Add(normals[i]);
                 vertexPosChange[i] = upperVertexList.Count - 1;
             }
@@ -262,17 +253,6 @@ public class CutUpMesh : MonoBehaviour {
 
 
 
-    void printUvs()
-    {
-        foreach(Vector2 v in lowUVs)
-        {
-            Debug.Log(v);
-
-
-        }
-
-    }
-
 
     void FixedUpdate()
     {
@@ -280,23 +260,22 @@ public class CutUpMesh : MonoBehaviour {
         {
 
             explode = false;
-            //ExplodePartial(0);
-            //if(MF!=null)
+
             SplitInTwo();
             SMR.enabled = false;
 
-            if(playerScript != null)
+            if (playerScript != null)
             {
                 playerScript.InstantKill();
             }
-            else if(enemyScript!= null)
+            else if (enemyScript != null)
             {
                 enemyScript.InstantKill();
             }
             else
             {
                 Destroy(gameObject);
-            }   
+            }
 
 
         }
@@ -306,7 +285,7 @@ public class CutUpMesh : MonoBehaviour {
     private int[] ApplyIndexChange(List<int> indices, int[] lookUp)
     {
         int[] indexArray = new int[indices.Count];
-        for(int i = 0; i < indices.Count; i++)
+        for (int i = 0; i < indices.Count; i++)
         {
             indexArray[i] = lookUp[indices[i]];
         }
@@ -320,27 +299,25 @@ public class CutUpMesh : MonoBehaviour {
         float start = Time.realtimeSinceStartup;
         float end;
 
-        //ArrayList indexList = new ArrayList();
-       
+
         int above = 0;
         int below = 0;
 
-        
-       // DetermineVertexPositions(M.vertices);
+
         Vector3[] vertices = M.vertices;
-        //int[] indices;
+
 
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
         {
             int[] subMeshIndices = M.GetIndices(submesh);
 
-            for (int i = 0; i < subMeshIndices.Length; i+=3)
+            for (int i = 0; i < subMeshIndices.Length; i += 3)
             {
                 above = 0;
                 below = 0;
-               
-               
-                if(vertices[subMeshIndices[i]].y <= cutHeight)
+
+
+                if (vertices[subMeshIndices[i]].y <= cutHeight)
                 {
                     below++;
                 }
@@ -349,7 +326,7 @@ public class CutUpMesh : MonoBehaviour {
                     above++;
                 }
 
-                if (vertices[subMeshIndices[i+1]].y <= cutHeight)
+                if (vertices[subMeshIndices[i + 1]].y <= cutHeight)
                 {
                     below++;
                 }
@@ -357,7 +334,7 @@ public class CutUpMesh : MonoBehaviour {
                 {
                     above++;
                 }
-                if (vertices[subMeshIndices[i+2]].y <= cutHeight)
+                if (vertices[subMeshIndices[i + 2]].y <= cutHeight)
                 {
                     below++;
                 }
@@ -366,11 +343,9 @@ public class CutUpMesh : MonoBehaviour {
                     above++;
                 }
 
-                if(above != 3 && below != 3)
+                if (above != 3 && below != 3)
                 {
-                    //allAbove++;
-                    //triList.RemoveAt(i);
-                    //trisToRemove++;
+
 
                 }
                 else
@@ -378,10 +353,10 @@ public class CutUpMesh : MonoBehaviour {
                     if (above == 3)
                     {
                         upIndices[submesh].Add(subMeshIndices[i]);
-                        upIndices[submesh].Add(subMeshIndices[i+1]);
-                        upIndices[submesh].Add(subMeshIndices[i+2]);
+                        upIndices[submesh].Add(subMeshIndices[i + 1]);
+                        upIndices[submesh].Add(subMeshIndices[i + 2]);
 
-                        upIndices[upIndices.Length - 1].Add(subMeshIndices[i+2]);
+                        upIndices[upIndices.Length - 1].Add(subMeshIndices[i + 2]);
                         upIndices[upIndices.Length - 1].Add(subMeshIndices[i + 1]);
                         upIndices[upIndices.Length - 1].Add(subMeshIndices[i]);
 
@@ -398,26 +373,11 @@ public class CutUpMesh : MonoBehaviour {
                         lowIndices[lowIndices.Length - 1].Add(subMeshIndices[i]);
 
                     }
-                    //triInverse.x = tri.z;
-                    //triInverse.y = tri.y;
-                    //triInverse.z = tri.x;
-                    //triList.Add(triInverse);
 
 
                 }
             }
 
-            //indices = new int[triList.Count * 3];
-
-            //for (int i = 0; i < triList.Count; i++)
-            //{
-            //    Tri tri = triList[i];
-            //    indices[i*3] = tri.x;
-            //    indices[i*3 + 1] = tri.y;
-            //    indices[i*3 + 2] = tri.z;
-            //}
-
-            //M.SetIndices(indices, MeshTopology.Triangles, submesh);
         }
 
 
@@ -425,146 +385,126 @@ public class CutUpMesh : MonoBehaviour {
 
         DetermineVertexPositions(vertices);
 
-
-       
-       
-
-
-
-        upper = pool.getPooledObject();
-        upper.transform.position = transform.position;
-        upper.transform.rotation = transform.rotation;
-        upper.transform.localScale = transform.localScale;
-
-       
-
-        upper.SetActive(true);
-        upper.name = "upper";
-
-
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(upperVertexList);
-        //mesh.SetIndices(ApplyIndexChange(upperIndices, vertexPosChange), MeshTopology.Triangles, 0);
-        mesh.subMeshCount = upIndices.Length;
-        for(int i =0; i < upIndices.Length; i++)
+        if(upperVertices != 0)
         {
-            mesh.SetIndices(ApplyIndexChange(upIndices[i], vertexPosChange), MeshTopology.Triangles, i);
-        }
-
-        mesh.SetNormals(upNormals);
-        mesh.SetUVs(0,upperUVs);
-        //mesh.SetUVs(1, upperUVs2);
-
-        //mesh.SetColors(upperColors);
+            upper = pool.getPooledObject();
+            //upper = new GameObject("upper Parts");
+            upper.transform.position = transform.position;
 
 
-        Deactivator deactivator = upper.GetComponent<Deactivator>();
-
-        //deactivator.attachedRenderer = null;
-
-        Destroy(upper.GetComponent<MeshFilter>());
-        Destroy(upper.GetComponent<MeshRenderer>());
-        SkinnedMeshRenderer upSMR = upper.AddComponent<SkinnedMeshRenderer>();
-        upSMR.sharedMesh = mesh;
-        upSMR.sharedMaterials = upMaterials;
-        
-        upSMR.sharedMesh.RecalculateBounds();
-        upSMR.rootBone = upper.transform;
+            upper.transform.rotation = SMR.transform.rotation;
+            upper.transform.localScale = transform.localScale;
 
 
 
-        BoxCollider box = upper.AddComponent<BoxCollider>();
-        box.center = upSMR.sharedMesh.bounds.center;
-        box.size = upSMR.sharedMesh.bounds.size;
+            upper.SetActive(true);
+            upper.name = "upper";
 
 
+            Mesh mesh = new Mesh();
+            mesh.SetVertices(upperVertexList);
 
-
-
-
-        lower = pool.getPooledObject();
-        lower.transform.position = transform.position;
-        lower.transform.rotation = transform.rotation;
-        lower.transform.localScale = transform.localScale;
-
-        
-
-        lower.SetActive(true);
-        lower.name = "lower";
-
-
-        Mesh meshLow = new Mesh();
-        meshLow.SetVertices(lowerVertexList);
-        meshLow.subMeshCount = lowIndices.Length;
-        //meshLow.SetIndices(ApplyIndexChange(lowerIndices, vertexPosChange), MeshTopology.Triangles, 0);
-
-        for (int i = 0; i < lowIndices.Length; i++)
-        {
-            meshLow.SetIndices(ApplyIndexChange(lowIndices[i], vertexPosChange), MeshTopology.Triangles, i);
-            Debug.Log("indices at submesh: " + i + " : " + lowIndices[i].Count);
-        }
-
-        meshLow.SetNormals(lowNormals);
-        meshLow.SetUVs(0, lowUVs);
-        //mesh.SetUVs(1, lowUVs2);
-
-        //meshLow.SetColors(lowColors);
-        Deactivator deactivatorLow = lower.GetComponent<Deactivator>();
-
-
-        Destroy(lower.GetComponent<MeshRenderer>());
-        SkinnedMeshRenderer lowSMR = lower.AddComponent<SkinnedMeshRenderer>();
-        lowSMR.sharedMaterials = lowMaterials;
-       
-        lowSMR.sharedMesh = meshLow;
-        lowSMR.sharedMesh.RecalculateBounds();
-        
-        BoxCollider boxLow = lower.AddComponent<BoxCollider>();
-        boxLow.center = lowSMR.sharedMesh.bounds.center;
-        boxLow.size = lowSMR.sharedMesh.bounds.size;
-
-
-
-        end = Time.realtimeSinceStartup;
-        Debug.Log("Split In Two method took: " + (end - start) + " seconds");
-    
-    }
-
-  
-
-
-
-    private bool GetMatchingTri(int x, int y, int z)
-    {
-        foreach (Tri tri in triList)
-        {
-            if (((tri.x == x && tri.y == y) || (tri.x == y && tri.y == x)) && tri.z != z)
+            mesh.subMeshCount = upIndices.Length;
+            for (int i = 0; i < upIndices.Length; i++)
             {
-                matchedIndex = tri.z;
-                triList.Remove(tri);
-                return true;
+                mesh.SetIndices(ApplyIndexChange(upIndices[i], vertexPosChange), MeshTopology.Triangles, i);
             }
 
-            if (((tri.x == x && tri.z == y) || (tri.x == y && tri.z == x)) && tri.y != z)
+            mesh.SetNormals(upNormals);
+            mesh.SetUVs(0, upperUVs);
+
+
+
+            Deactivator deactivator = upper.GetComponent<Deactivator>();
+            //Deactivator deactivator = upper.AddComponent<Deactivator>();
+
+
+            Destroy(upper.GetComponent<MeshFilter>());
+            Destroy(upper.GetComponent<MeshRenderer>());
+            SkinnedMeshRenderer upSMR = upper.AddComponent<SkinnedMeshRenderer>();
+            upSMR.sharedMesh = mesh;
+            upSMR.sharedMaterials = upMaterials;
+
+            upSMR.sharedMesh.RecalculateBounds();
+            upSMR.rootBone = upper.transform;
+
+
+
+            BoxCollider box = upper.AddComponent<BoxCollider>();
+            box.center = upSMR.sharedMesh.bounds.center;
+            box.size = upSMR.sharedMesh.bounds.size;
+
+
+            deactivator.attachedRigid.AddForceAtPosition(upper.transform.forward * 0.5f, upper.transform.position, ForceMode.Impulse);
+         
+        }
+
+
+
+
+        if (lowerVertices != 0)
+        {
+            lower = pool.getPooledObject();
+
+            //lower = new GameObject("lower Parts");
+            lower.transform.position = transform.position;
+
+            lower.transform.rotation = SMR.transform.rotation;
+            lower.transform.localScale = transform.localScale;
+
+
+
+            lower.SetActive(true);
+            lower.name = "lower";
+
+
+            Mesh meshLow = new Mesh();
+            meshLow.SetVertices(lowerVertexList);
+            meshLow.subMeshCount = lowIndices.Length;
+
+
+            for (int i = 0; i < lowIndices.Length; i++)
             {
-                matchedIndex = tri.y;
-                triList.Remove(tri);
-                return true;
+                meshLow.SetIndices(ApplyIndexChange(lowIndices[i], vertexPosChange), MeshTopology.Triangles, i);
             }
 
-            if (((tri.y == x && tri.z == y) || (tri.y == y && tri.z == x)) && tri.x != z)
-            {
-                matchedIndex = tri.x;
-                triList.Remove(tri);
-                return true;
-            }
+            meshLow.SetNormals(lowNormals);
+            meshLow.SetUVs(0, lowUVs);
+
+            Deactivator deactivatorLow = lower.GetComponent<Deactivator>();
+            //Deactivator deactivatorLow = lower.AddComponent<Deactivator>();
+
+
+            Destroy(lower.GetComponent<MeshFilter>());
+            Destroy(lower.GetComponent<MeshRenderer>());
+            SkinnedMeshRenderer lowSMR = lower.AddComponent<SkinnedMeshRenderer>();
+            lowSMR.sharedMaterials = lowMaterials;
+
+            lowSMR.sharedMesh = meshLow;
+            lowSMR.sharedMesh.RecalculateBounds();
+
+            BoxCollider boxLow = lower.AddComponent<BoxCollider>();
+            boxLow.center = lowSMR.sharedMesh.bounds.center;
+            boxLow.size = lowSMR.sharedMesh.bounds.size * 0.95f;
+
+            //deactivator.attachedRigid.AddForceAtPosition(upper.transform.forward * 0.5f, upper.transform.position, ForceMode.Impulse);
+            deactivatorLow.attachedRigid.AddForceAtPosition(lower.transform.forward * 0.5f, lower.transform.position, ForceMode.Impulse);
+
+            //lower.AddComponent<Rigidbody>().AddForceAtPosition(upper.transform.forward * 0.5f, upper.transform.position, ForceMode.Impulse);
+
+
+            
         }
-        return false;
+
+
+
+       
+
     }
 
 
 
-   
+
 
 
 }
