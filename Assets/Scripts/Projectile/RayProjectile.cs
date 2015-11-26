@@ -125,7 +125,8 @@ public class RayProjectile : Projectile
             }
 
             rayShot = true;
-            Destroy(gameObject, rayLifeTime);
+            //Destroy(gameObject, rayLifeTime);
+            DestroyProjectile();
         }
     }
 
@@ -233,5 +234,13 @@ public class RayProjectile : Projectile
         }
 
         timerHelper += Time.deltaTime;
+    }
+
+    /// <summary>
+    /// Destroys the ray bullet after a the ray life time.
+    /// </summary>
+    protected override void DestroyProjectile()
+    {
+        Destroy(this.gameObject, rayLifeTime);
     }
 }

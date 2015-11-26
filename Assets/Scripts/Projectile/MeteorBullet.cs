@@ -11,6 +11,10 @@ public class MeteorBullet : Bullet
     [SerializeField]
     protected GameObject areaOfDamage;
 
+    [Header("Explosion sound")]
+    [SerializeField]
+    protected AudioClip explosionSound;
+
 
     /// <summary>
     /// Spawns the area of damage.
@@ -60,7 +64,11 @@ public class MeteorBullet : Bullet
 
                 SpawnDeathParticle(transform.position);
                 ApplyExplosionForce(other.gameObject, transform.position);
-                
+
+                // Sound
+                if (explosionSound != null)
+                    SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
+
                 // Camera shake
                 CameraManager.CameraReference.ShakeOnce();
 
@@ -72,6 +80,10 @@ public class MeteorBullet : Bullet
         {
             // Death area.
             SpawnAreaOfDamage();
+
+            // Sound
+            if (explosionSound != null)
+                SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
 
             // Camera shake
             CameraManager.CameraReference.ShakeOnce();
