@@ -91,7 +91,7 @@ public class LevelSelection : MonoBehaviour
 		onceScale = false;
 		onceLevel = false;
 
-		levelTransformBack = buttons.Length - 1;
+		
 		levelScaled = false;
 	
 	}
@@ -102,13 +102,14 @@ public class LevelSelection : MonoBehaviour
 		buttons = new GameObject[7];
 
 		buttons[0] = GameObject.Find("Select_Level_01");
-		buttons[1] = GameObject.Find("Select_Level_05");
+		buttons[1] = GameObject.Find("Select_Level_02");
 		buttons[2] = GameObject.Find("Select_Level_03");
 		buttons[3] = GameObject.Find("Select_Level_04");
-        buttons[4] = GameObject.Find("Select_Level_02");
+        buttons[4] = GameObject.Find("Select_Level_05");
 		buttons[5] = GameObject.Find("Select_Level_06");
         buttons[6] = GameObject.Find("Select_Main_Menu");
 
+        levelTransformBack = buttons.Length - 1;
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
 		selected =0;
 
@@ -156,15 +157,16 @@ public class LevelSelection : MonoBehaviour
             }
         }
 
-        levelIndices = new int[5];
+        levelIndices = new int[6];
 
 		levelIndices [0] = 1;
 		levelIndices [1] = 2;
 		levelIndices [2] = 3;
 		levelIndices [3] = 4;
 		levelIndices [4] = 5;
+        levelIndices [5] = 6;
 
-		for (int i = 0; i < buttons.Length; i++) {
+        for (int i = 0; i < buttons.Length; i++) {
 			buttons[i].GetComponent<Image>().enabled = false;
 		}
 
@@ -255,7 +257,9 @@ public class LevelSelection : MonoBehaviour
 
     public void SelectLevel05() { changeMenuLevel (4, false); }
 
-	public void SelectMainMenu() { changeMenuLevel (0, true); }
+    public void SelectLevel06() { changeMenuLevel(5, false); }
+
+    public void SelectMainMenu() { changeMenuLevel (0, true); }
 
 	public void changeMenuLevel(int levelIndex, bool back) {
 		if (!back) {
