@@ -93,11 +93,20 @@ public class LevelEndManager : MonoBehaviour {
 				
 			GameObject.Find ("JoinText").GetComponent<Text> ().enabled = false;
 			GameObject.Find ("GameName").GetComponent<Text> ().enabled = false;
-			GameObject.Find ("WaveRessourceBar").GetComponent<Image> ().enabled = false;
-			GameObject.Find ("WaveRessourceBarGreenBack").GetComponent<Image> ().enabled = false;
-			GameObject.Find ("WaveNumberPermanent").GetComponent<Text> ().enabled = false;
-				
-			t1.enabled = true;
+            GameObject waveRessourceBar = GameObject.Find("WaveRessourceBar");
+            if (waveRessourceBar != null)
+                waveRessourceBar.GetComponent<Image>().enabled = false;
+
+            GameObject waveRessourceGreen = GameObject.Find("WaveRessourceBarGreenBack");
+            if(waveRessourceGreen != null)
+                waveRessourceGreen.GetComponent<Image>().enabled = false;
+
+            GameObject waveNumberPermanent = GameObject.Find("WaveNumberPermanent");
+            if(waveNumberPermanent != null)
+                waveNumberPermanent.GetComponent<Text>().enabled = false;
+
+
+            t1.enabled = true;
 			t2.enabled = true;
 			t3.enabled = true;
 			t4.enabled = true;	

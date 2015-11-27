@@ -25,12 +25,19 @@ public class PlayerManager : MonoBehaviour
     protected string playerPrefix;
 
     //A random radius value, so the players don't spawn at one point.
+    [Header("Spawning option")]
     [SerializeField]
+    [Tooltip("Random player radius (for respawning).")]
     protected float randomSpawnRadius = 10.0f;
 
     //The start spawnPosition of the players
     [SerializeField]
+    [Tooltip("Spawn position for the game start.")]
     private Transform spawnPosition;
+
+    [SerializeField]
+    [Tooltip("Specifies if a dead player will be respawned after a wave or not.")]
+    protected bool respawnPlayersAfterDeath = true;
 
     //The player slots of the four players. False -> Slot free, True -> Slot filled with player
     private bool[] playerSlot;
@@ -43,6 +50,15 @@ public class PlayerManager : MonoBehaviour
 
     //Container that holds the information about the selected characters
     private LevelStartInformation levelInfo;
+
+    // The time of a whole game.
+    private static TimeUtil playTime = null;
+
+    // Start time for time measurement.
+    private int startTime = 0;
+
+    // Signals if the time should be measured or not.
+    private bool measureTime;
 
     //Eventhandler for player joins
     public static event PlayerJoinedEventHandler PlayerJoinedEventHandler;
@@ -72,11 +88,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the play time.
+    /// </summary>
+    public static TimeUtil PlayTime
+    {
+        get { return PlayerManager.playTime; }
+    }
+    
     #endregion
 
     #region Methods
 
-   static PlayerManager()
+    static PlayerManager()
     {
         playerCount = 0;
     }
@@ -98,6 +122,9 @@ public class PlayerManager : MonoBehaviour
         
         //Respawn dead players on wave end
         GameManager.WaveEnded += RespawnDeadPlayers;
+
+        // All players died
+        PlayerManager.AllPlayersDeadEventHandler += DisableTimeMeasurement;
     }
     
     // Use this for initialization
@@ -111,7 +138,11 @@ public class PlayerManager : MonoBehaviour
         playerSlotPhone = new bool[4];
 
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
-        
+
+        playTime = new TimeUtil();
+        startTime = (int)Time.realtimeSinceStartup;
+        measureTime = true;
+
         //Assign the used slots
         if (levelInfo != null)
         {
@@ -157,10 +188,6 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
-       
-
-
-       
 	}
 
     // Update is called once per frame
@@ -168,6 +195,28 @@ public class PlayerManager : MonoBehaviour
     {
         // For testing
         //HandlePlayerJoin();
+
+        UpdatePlayTime();
+    }
+
+    /// <summary>
+    /// Calculates the game time.
+    /// </summary>
+    protected void UpdatePlayTime()
+    {
+        if (measureTime)
+        {
+            int endTime = (int)Time.realtimeSinceStartup;
+            playTime = TimeUtil.SecondsToTime(endTime - startTime);
+        }
+    }
+
+    /// <summary>
+    /// Disables the time measurement.
+    /// </summary>
+    protected void DisableTimeMeasurement()
+    {
+        measureTime = false;
     }
 
     /// <summary>
@@ -355,18 +404,20 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void RespawnDeadPlayers()
     {
-        // Loop throug the playerReferences array to check if there are dead players to respawn.
-        for (int i = 0; i < playerReferences.Length; i++)
+        if (respawnPlayersAfterDeath)
         {
-            // Only respawn the player if he was dead.
-            if (playerReferences[i] != null && !playerReferences[i].gameObject.activeSelf)
+            // Loop throug the playerReferences array to check if there are dead players to respawn.
+            for (int i = 0; i < playerReferences.Length; i++)
             {
-                playerReferences[i].gameObject.SetActive(true);
-                playerReferences[i].GetComponent<NavMeshAgent>().enabled = false;
-                playerReferences[i].gameObject.transform.position = GetPositionOfRandomPlayer(true);
-                playerReferences[i].GetComponent<NavMeshAgent>().enabled = true;
-                playerReferences[i].gameObject.GetComponent<BasePlayer>().RevivePlayer();
-                //IncrementPlayerCount();
+                // Only respawn the player if he was dead.
+                if (playerReferences[i] != null && !playerReferences[i].gameObject.activeSelf)
+                {
+                    playerReferences[i].gameObject.SetActive(true);
+                    playerReferences[i].GetComponent<NavMeshAgent>().enabled = false;
+                    playerReferences[i].gameObject.transform.position = GetPositionOfRandomPlayer(true);
+                    playerReferences[i].GetComponent<NavMeshAgent>().enabled = true;
+                    playerReferences[i].gameObject.GetComponent<BasePlayer>().RevivePlayer();
+                }
             }
         }
     }

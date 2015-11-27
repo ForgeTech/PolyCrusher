@@ -26,6 +26,10 @@ public class WaveCounterManager : MonoBehaviour
     [SerializeField]
     protected UnityEngine.UI.Text bossText;
 
+    // Reference to the play time label.
+    [SerializeField]
+    protected UnityEngine.UI.Text playTime;
+
     public WaveCounterManager WaveCounterManagerInstance
     {
         get 
@@ -50,8 +54,25 @@ public class WaveCounterManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	    
+        
 	}
+
+    void Update()
+    {
+        FillTimeLabel();
+    }
+
+    /// <summary>
+    /// Fills the time label if available.
+    /// </summary>
+    protected void FillTimeLabel()
+    {
+        if (playTime != null)
+        {
+            TimeUtil time = PlayerManager.PlayTime;
+            playTime.text = string.Format("{0:00}:{1:00}:{2:00}", time.Hour, time.Minute, time.Second);
+        }
+    }
 
     /// <summary>
     /// Triggers the wave counter animation.
@@ -71,13 +92,12 @@ public class WaveCounterManager : MonoBehaviour
                 waveTextPermanent.text = GameManager.GameManagerInstance.Wave.ToString();
             }
 
-            if (GameManager.GameManagerInstance.IsBossWave)
+            if (boss != null && GameManager.GameManagerInstance.IsBossWave)
                 boss.SetTrigger("WaveStarted");
             else
                 number.SetTrigger("WaveStarted");
 
             roundText.SetTrigger("WaveStarted");
-            
         }
     }
 }
