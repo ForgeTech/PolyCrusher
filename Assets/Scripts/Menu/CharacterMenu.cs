@@ -133,6 +133,10 @@ public class CharacterMenu : MonoBehaviour
 
     Vector3 originalScaleGameStartsText;
 
+
+    private GameObject[] slides;
+    private Text skipText;
+
     void Awake()
     {
         spawnBirdman = GameObject.Find("SpawnAudioBirdman").GetComponent<MultipleAudioclips>();
@@ -146,13 +150,44 @@ public class CharacterMenu : MonoBehaviour
         ButtonDeclineEvent += PlayDeclineSound;
 
         //find slides and disable it
-        GameObject.Find("slide_1").GetComponent<Image>().enabled = false;
-        GameObject.Find("slide_2").GetComponent<Image>().enabled = false;
-        GameObject.Find("slide_3").GetComponent<Image>().enabled = false;
-        GameObject.Find("slide_text").GetComponent<Image>().enabled = false;
+        // GameObject.Find("slide_1").GetComponent<Image>().enabled = false;
+
+        //GameObject.Find("slide_2").GetComponent<Image>().enabled = false;
+        //GameObject.Find("slide_3").GetComponent<Image>().enabled = false;
+        //GameObject.Find("slide_text").GetComponent<Image>().enabled = false;
+
+       
+        slides = new GameObject[3];
+        slides[0] = GameObject.Find("slide_1");
+        //updateLanguage(slides[0]);
+        skipText = slides[0].GetComponentInChildren<Text>();
+        
+
+
+        
+        slides[1] = GameObject.Find("slide_2");
+        //updateLanguage(slides[1]);
+
+        
+        slides[2] = GameObject.Find("slide_3");
 
         infoBar = GameObject.Find("InfoBar");
+    
         gamerCountdown = GameObject.Find("GameStartsImage");
+       
+
+        //updateLanguage(slides[2]);
+
+        skipText.enabled = false;
+        slides[0].SetActive(false);
+        slides[1].SetActive(false);
+        slides[2].SetActive(false);
+       
+        
+        
+
+
+      
 
         //originalVecCountdown = gamerCountdown.transform.localPosition;
         originalVecInfo = infoBar.transform.localPosition;
@@ -233,6 +268,9 @@ public class CharacterMenu : MonoBehaviour
 
 
     }
+
+   
+
 
     IEnumerator ScalePlayerImages()
     {
@@ -340,9 +378,9 @@ public class CharacterMenu : MonoBehaviour
 
         StorePlayerInformation();
 
-        if (GameObject.Find("slide_1").GetComponent<Image>().enabled == false)
+        if (slides[0].activeInHierarchy != true)
         {
-            GameObject.Find("slide_1").GetComponent<Image>().enabled = true;
+            slides[0].SetActive(true);
             StartCoroutine(asyncLoadLevel());
         }
 
@@ -1224,7 +1262,7 @@ public class CharacterMenu : MonoBehaviour
             //Debug.Log(async.progress);
         }
         Debug.Log("level loaded 90%");
-        GameObject.Find("slide_text").GetComponent<Image>().enabled = true;
+        skipText.enabled = true;
         levelLoaded = true;
         yield return async;
     }
@@ -1233,13 +1271,27 @@ public class CharacterMenu : MonoBehaviour
     {
         OnButtonAccepted();
 
-        if (!GameObject.Find("slide_2").GetComponent<Image>().enabled)
+        //if (!GameObject.Find("slide_2").GetComponent<Image>().enabled)
+        //{
+        //    GameObject.Find("slide_2").GetComponent<Image>().enabled = true;
+        //}
+        //else if (!GameObject.Find("slide_3").GetComponent<Image>().enabled)
+        //{
+        //    GameObject.Find("slide_3").GetComponent<Image>().enabled = true;
+        //}
+        //else
+        //{
+        //    yield return new WaitForSeconds(acceptSound.length);
+        //    CrushPolys();
+        //}
+
+        if (!slides[1].activeInHierarchy)
         {
-            GameObject.Find("slide_2").GetComponent<Image>().enabled = true;
+            slides[1].SetActive(true);
         }
-        else if (!GameObject.Find("slide_3").GetComponent<Image>().enabled)
+        else if (!slides[2].activeInHierarchy)
         {
-            GameObject.Find("slide_3").GetComponent<Image>().enabled = true;
+            slides[2].SetActive(true);
         }
         else
         {
