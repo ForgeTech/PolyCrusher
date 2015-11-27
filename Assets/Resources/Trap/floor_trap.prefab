@@ -809,7 +809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50ebe25daf857741a0f71caab5017be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trapActiveTime: 10
+  trapActiveTime: 6
   triggers:
   - {fileID: 11465936}
   playerMeshes:
@@ -993,6 +993,10 @@ Prefab:
       propertyPath: onExit
       value: 
       objectReference: {fileID: 2100000, guid: fd221f432605ea849aaeaf6903263c5e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: trapActiveTime
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 170536}
