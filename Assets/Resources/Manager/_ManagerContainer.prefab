@@ -124,6 +124,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &134596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 476130}
+  - 114: {fileID: 11479932}
+  - 114: {fileID: 11466478}
+  m_Layer: 0
+  m_Name: LanguageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &140624
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +566,7 @@ Transform:
   - {fileID: 438972}
   - {fileID: 408004}
   - {fileID: 482048}
+  - {fileID: 476130}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &415452
@@ -755,6 +773,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 482048}
   m_RootOrder: 10
+--- !u!4 &476130
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 380.102051, y: 260.035736, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 415424}
+  m_RootOrder: 15
 --- !u!4 &477280
 Transform:
   m_ObjectHideFlags: 1
@@ -1273,6 +1303,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4861fa4d7c8c440f2b6e0a4bfc48796f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11466478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5c20c4534978442a665663636d1902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11470494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1286,6 +1327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomSpawnRadius: 2.5
   spawnPosition: {fileID: 0}
+  respawnPlayersAfterDeath: 1
 --- !u!114 &11470804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1430,6 +1472,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f37b8b572780248a5d4d42bbfe55fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11479932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2266460c8fd5df1468177b7b0db1f007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameAsset: {fileID: 4900000, guid: 8d8343dcd0381ca4c86d07beb900063e, type: 3}
 --- !u!114 &11482812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1464,6 +1518,7 @@ MonoBehaviour:
   waveRoundText: {fileID: 0}
   waveTextPermanent: {fileID: 0}
   bossText: {fileID: 0}
+  playTime: {fileID: 0}
 --- !u!212 &21241464
 SpriteRenderer:
   m_ObjectHideFlags: 1
