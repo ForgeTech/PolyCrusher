@@ -91,7 +91,7 @@ public class LevelEndManager : MonoBehaviour {
 			t3 = GameObject.Find ("CrushedNumber").GetComponent<Text> ();
 			t4 = GameObject.Find ("PlayerNumber").GetComponent<Text> ();
 				
-			GameObject.Find ("JoinText").GetComponent<Text> ().enabled = false;
+			//GameObject.Find ("JoinText").GetComponent<Text> ().enabled = false;
 			GameObject.Find ("GameName").GetComponent<Text> ().enabled = false;
             GameObject waveRessourceBar = GameObject.Find("WaveRessourceBar");
             if (waveRessourceBar != null)
