@@ -66,8 +66,8 @@ public class RagdollManager : MonoBehaviour
                 GameObject spawnedRagdoll = Instantiate(ragdollPrefabs[prefabCounter], enemy.transform.position, enemy.transform.rotation) as GameObject;
                 enemy.LifeTimeAfterDeath = 0f;
 
-                // Scaledown the enemy for smooth disappearance.
-                StartCoroutine(spawnedRagdoll.transform.ScaleFrom(new Vector3(0.4f, 0.4f, 0.4f), lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+                // Scaledown the enemy for smooth disappearance. Doesn/t work! :(
+                //StartCoroutine(spawnedRagdoll.transform.ScaleFrom(new Vector3(0.4f, 0.4f, 0.4f), lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
 
                 // Get the bone array script where the bones are stored.
                 RagdollEnemyScript boneArrayScript = spawnedRagdoll.GetComponent<MonoBehaviour>() as RagdollEnemyScript;
@@ -84,7 +84,7 @@ public class RagdollManager : MonoBehaviour
                 }
 
                 // Destroy the spawned ragdoll after a time.
-                Destroy(spawnedRagdoll, this.lifeTimeAfterDeath);
+                Destroy(spawnedRagdoll, lifeTimeAfterDeath +0.01f);
             }
             else
             {
