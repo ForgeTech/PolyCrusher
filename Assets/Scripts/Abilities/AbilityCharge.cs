@@ -226,7 +226,7 @@ public class AbilityCharge : Ability {
             if (c.gameObject.GetComponent<MonoBehaviour>() is BaseEnemy)
             {
                 BaseEnemy e = c.gameObject.GetComponent<MonoBehaviour>() as BaseEnemy;
-                e.TakeDamage(explosionDamage, this.OwnerScript, true);
+                e.TakeDamage(explosionDamage, this.OwnerScript, true, transform.position);
             }
         }
 
@@ -312,10 +312,11 @@ public class AbilityCharge : Ability {
         {
             if (coll.tag == "Enemy")
             {
-                // Edited by Dietmar Rammerstorfer: added upwards Modifier and force mode to the explosion force
                 coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
-                coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript);
-                //Debug.Log("enemy damaged");
+                if (coll.GetComponent<BaseEnemy>() != null)
+                {
+                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript, true, transform.position);
+                }
             }
         }
 

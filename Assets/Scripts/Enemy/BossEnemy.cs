@@ -482,9 +482,9 @@ public class BossEnemy : BaseEnemy
     /// <param name="damage">Damage</param>
     /// <param name="damageDealer">The damage dealer</param>
     /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
-    public override void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation)
+    public override void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation, Vector3 damageDealerPosition)
     {
-        base.TakeDamage(damage, damageDealer, noDeathAnimation);
+        base.TakeDamage(damage, damageDealer, noDeathAnimation, damageDealerPosition);
 
         if (noDeathAnimation)
             sprintPhase.currentDamage += damage;

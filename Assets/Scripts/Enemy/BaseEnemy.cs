@@ -122,19 +122,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     // The Finite state machine.
     protected FSMSystem fsm;
 
+    // Defines if the enemy was killed with a ragdoll method.
+    private bool killedWithRagdoll = false;
 
-    // Mass of the ragdoll enemy after death.
-    [Space(5)]
-    [Header("Ragdoll")]
-    [SerializeField]
-    float ragdollMass = 1f;
-
-    // Drag of the ragdoll enemy after death.
-    [SerializeField]
-    float ragdollDrag = 0.05f;
-
-    [SerializeField]
-    protected bool ragdollEnabled = false;
+    // Defines the position of the damagedealer (player, rocket, etc.).
+    private Vector3 originRagdollForcePosition;
 
     #endregion
 
@@ -252,6 +244,27 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     {
         get { return this.targetPlayer; }
     }
+
+    public Vector3 OriginRagdollForcePosition
+    {
+        get { return this.originRagdollForcePosition; }
+        set { this.originRagdollForcePosition = value; }
+    }
+
+    public bool KilledWithRagdoll
+    {
+        get { return this.killedWithRagdoll; }
+    }
+
+    /// <summary>
+    /// Gets or Sets the lifetime after death
+    /// </summary>
+    public float LifeTimeAfterDeath
+    {
+        get { return this.lifeTimeAfterDeath; }
+        set { this.lifeTimeAfterDeath = value; }
+    }
+
     #endregion
 
     protected virtual void Awake()
@@ -380,14 +393,17 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <param name="damage">Damage</param>
     /// <param name="damageDealer">The damage dealer</param>
     /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
-    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation)
+    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation, Vector3 damageDealerPosition)
     {
-        if (noDeathAnimation && ragdollEnabled)
+        if (noDeathAnimation)
         {
             // send event if enemy will be dead
             if (Health - damage < 0 && !enemyIsDead)
             {
                 string character = "undefined";
+
+                originRagdollForcePosition = damageDealerPosition;
+                killedWithRagdoll = true;
 
                 if (damageDealer != null && damageDealer is BasePlayer)
                 {
@@ -404,10 +420,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 // Enemy will be dead, so set the Animator to null;
                 if (Health - damage <= minHealth)
-                    anim = null;
 
-                // Substract health
-                Health -= damage;
+                    // Substract health
+                    Health -= damage;
             }
 
             // Light blink
@@ -462,31 +477,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             // Normal Scale Fade out.
             StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
         }
-        else
-        {
-            // Disable navmesh agent
-            GetComponent<NavMeshAgent>().enabled = false;
-            // Disable animator, because destroying the anim variable wont work with anim != null.
-            //GetComponent<Animator>().enabled = false;
-            Destroy(GetComponent<Animator>());
-
-            // Ragdoll Layer = layer 15
-            this.gameObject.layer = 15;
-
-            // Set size of collider to the half and enable it, so the joint of the parent object won't fall through the ground
-            GetComponent<BoxCollider>().size = new Vector3(0.1f, 0.1f, 0.1f);
-            GetComponent<Collider>().enabled = true;
-
-            // Set the drag and the mass to the ragdoll specific and optimized values
-            GetComponent<Rigidbody>().drag = ragdollDrag;
-            GetComponent<Rigidbody>().mass = ragdollMass;
-
-            // Unfreeze Rotation
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
-            // Ragdoll optimized Scale Fade out 
-            StartCoroutine(transform.ScaleFrom(new Vector3(0.2f, 0.2f, 0.2f), lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
-        }
+ 
 
         //Event.
         OnEnemyDeath();
