@@ -109,7 +109,7 @@ public class Rocket : Projectile {
 	protected override void Shoot() {
 		if (launched){
 
-			// This is for the scaling of the rocclet (scaling is needed to avoid boarding with the enemy)
+			// This is for the scaling of the rocket (scaling is needed to avoid boarding with the enemy).
 			if (transform.localScale.x <= 2f){
 				float deltaScaleX = transform.localScale.x;
 				float deltaScaleY = transform.localScale.y;
@@ -121,24 +121,27 @@ public class Rocket : Projectile {
 
 			Vector3 targPos = target;
 			if (firstTime){
-				// Applying midpoint formula
+				// Applying midpoint formula.
 				deltaX = (transform.position.x + targPos.x) / 2f;
 				deltaZ = (transform.position.z + targPos.z) / 2f;
 			}
 
 			if (!headingTarget && transform.position.y <= height){
 
+                // Latching the actual sensitivity.
 				actSensitivity = sensitivity;
-				//actSensitivity = sensitivity  / ((new Vector3(deltaX, 0, deltaZ).magnitude));
-				//actSensitivity = sensitivity * 4 / ((new Vector3(deltaX, 0, deltaZ).magnitude) + 5f);
 				
+                // It isn't heading the first time anymore.
 				firstTime = false;
 
+                // Set the Target Position to the middlepoint of the ballistic curve.
 				targPos.x = deltaX;
 				targPos.z = deltaZ;
 
+                // Set the Target height to the predefined height.
 				targPos.y = height;
 			} else {
+                // Set the Target Position to the actual target.
 				targPos = target;
 				headingTarget = true;
 			}
@@ -148,16 +151,19 @@ public class Rocket : Projectile {
 			Vector3 relativePos  = targPos - transform.position;
 			Quaternion rotation  = Quaternion.LookRotation(relativePos);
 			
+            // Set rotation of the rocket.
 			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, actSensitivity * Time.deltaTime );
 		
 			transform.Translate(0,0,bulletSpeed * Time.deltaTime,Space.Self);
 		}
 	}
 	
+    /// <summary>
+    /// Handles the explosion, damage taking, soundplaying, etc. of the Rocket.
+    /// </summary>
+    /// <param name="collider">Colliding Object.</param>
 	void OnTriggerEnter(Collider collider){
 		if(collider.tag == "Terrain"){
-			//SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
-			//sphereCollider.radius = damageRadius;
 
 			// Deactivate mesh renderer.
 			MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
@@ -172,6 +178,7 @@ public class Rocket : Projectile {
 
 				Collider[] collidingObjects = Physics.OverlapSphere(transform.position, damageRadius, 1 << 8);
 				
+                // Handles the damage taking of the players.
 				foreach (Collider objects in collidingObjects){
 					if (objects.tag == "Player"){
 						MonoBehaviour m = objects.gameObject.GetComponent<MonoBehaviour>();
@@ -198,6 +205,10 @@ public class Rocket : Projectile {
         }
 	}
 	
+    /// <summary>
+    /// Handles the spawn of the particlesystem.
+    /// </summary>
+    /// <param name="position">Position of the Rocket in a 3D vector.</param>
 	protected override void SpawnDeathParticle(Vector3 position)
 	{
 		GameObject particle = Instantiate(deathParticlePrefab) as GameObject;
