@@ -53,6 +53,12 @@ public class PieBehaviour : MonoBehaviour
 
     void Start()
     {
+        // Scale tween
+        Vector3 originalScale = transform.localScale;
+        transform.localScale = Vector3.zero;
+
+        StartCoroutine(transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+
         StartCoroutine(WaitForAllowExplosion());
     }
 
