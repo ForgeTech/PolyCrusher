@@ -31,7 +31,7 @@ public class Trigger : MonoBehaviour {
     public void Update()
     {
         Collider[] c = Physics.OverlapSphere(gameObject.transform.position, radius, (1 << 8) | (1 << 9));
-        Debug.Log(c.Length);
+        //Debug.Log(c.Length);
         if(c.Length>0)
         {
             if (!collided)
