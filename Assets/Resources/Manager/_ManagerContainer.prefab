@@ -1327,6 +1327,16 @@ MonoBehaviour:
     enemyRessourceValue: 1
     minWave: 2
     enemyName: IceOfDeath
+  - enemy: {fileID: 146790, guid: de361068adf8ffe41b52aed9e5e1b90c, type: 2}
+    spawnProbability: .300000012
+    enemyRessourceValue: 2
+    minWave: 7
+    enemyName: Trashcan
+  - enemy: {fileID: 182470, guid: 4bf714200ac807944a00150906568389, type: 2}
+    spawnProbability: .300000012
+    enemyRessourceValue: 5
+    minWave: 14
+    enemyName: Minion
   bossSpawnInfo:
     boss: {fileID: 128610, guid: 6ce43f0558d8de441ab1bbe7e18b7c1c, type: 2}
     enemyRessourceValue: 1
@@ -1605,7 +1615,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: spawnInfo.Array.size
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: bounce.m_Curve.Array.size
@@ -1742,6 +1752,42 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spawnInfo.Array.data[6].enemyRessourceValue
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[7].enemy
+      value: 
+      objectReference: {fileID: 146790, guid: de361068adf8ffe41b52aed9e5e1b90c, type: 2}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[7].enemyName
+      value: Trashcan
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[7].minWave
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[7].enemyRessourceValue
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[7].spawnProbability
+      value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[8].enemy
+      value: 
+      objectReference: {fileID: 182470, guid: 4bf714200ac807944a00150906568389, type: 2}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[8].enemyRessourceValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[8].enemyName
+      value: Minion
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnInfo.Array.data[8].minWave
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

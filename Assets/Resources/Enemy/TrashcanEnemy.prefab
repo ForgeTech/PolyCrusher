@@ -452,15 +452,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74c25b94ccec064590a45e9dec85ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 60
+  health: 90
   minHealth: 0
   maxHealth: 100
   enemyName: Trashcan
   movementSpeed: 7
-  meleeAttackDamage: 10
+  meleeAttackDamage: 7
   pushAwayForce: 3.5
   attackInterval: .529999971
-  attackRange: 7
+  attackRange: 8
   lifeTimeAfterDeath: 3
   bloodParticle: {fileID: 157414, guid: 4927ea95f2ba8c74eaa91f8b3ed5d9b8, type: 2}
   hitLightTime: .200000003
@@ -541,7 +541,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: meleeAttackDamage
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackRange
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146790}
