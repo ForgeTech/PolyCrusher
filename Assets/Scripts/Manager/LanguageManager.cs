@@ -64,7 +64,7 @@ public class LanguageManager : MonoBehaviour {
 
     void UpdateTextList()
     {
-        Debug.Log("new text objects loaded");
+        //Debug.Log("new text objects loaded");
         sceneTextObjects = GameObject.FindObjectsOfType<Text>();
         //UpdateLanguage();
     }
