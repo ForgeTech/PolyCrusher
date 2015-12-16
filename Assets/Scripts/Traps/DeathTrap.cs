@@ -52,6 +52,9 @@ public class DeathTrap : Trap, ITriggerable
                 case "Timeshifter":
                     destroyMesh = this.playerMeshes[3];
                     break;
+                case "Babuschka":
+                    destroyMesh = this.playerMeshes[4];
+                    break;
             }
             if (destroyMesh != null)
             {
@@ -69,7 +72,7 @@ public class DeathTrap : Trap, ITriggerable
             {
                 if (bossDamage != 0)
                 {
-                    enemy.TakeDamage(42, other.GetComponent<MonoBehaviour>());
+                    enemy.TakeDamage(bossDamage, other.GetComponent<MonoBehaviour>());
                 }
 
             }

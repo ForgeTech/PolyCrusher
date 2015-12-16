@@ -66,6 +66,9 @@ public class Laser : MonoBehaviour
                             case "Timeshifter":
                                 destroyMesh = trap.playerMeshes[3];
                                 break;
+                            case "Babuschka":
+                                destroyMesh = trap.playerMeshes[4];
+                                break;
                         }
                         if (destroyMesh != null)
                         {
@@ -92,7 +95,7 @@ public class Laser : MonoBehaviour
                         {
                             if (trap.bossDamage != 0)
                             {
-                                enemy.TakeDamage(42, gotHit);
+                               //enemy.TakeDamage(trap.bossDamage, this);
                             }
 
                         }

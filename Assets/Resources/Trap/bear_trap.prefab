@@ -481,7 +481,8 @@ MonoBehaviour:
   - {fileID: 102280, guid: 4d1aa4a6ba1928646971cfc84dc45f16, type: 2}
   - {fileID: 182604, guid: 26ba4dccf77ebfd44a59195180869816, type: 2}
   - {fileID: 107882, guid: 99f6d82c461e6e44b9499132d297925e, type: 2}
-  bossDamage: 0
+  - {fileID: 186878, guid: 507b232a3f99dac49bda44a289df4b11, type: 2}
+  bossDamage: 250
   loadBars:
   - {fileID: 11488424}
   type: 0
@@ -551,6 +552,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: playerMeshes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -566,6 +571,14 @@ Prefab:
       propertyPath: onExit
       value: 
       objectReference: {fileID: 2100000, guid: fd221f432605ea849aaeaf6903263c5e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: bossDamage
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerMeshes.Array.data[4]
+      value: 
+      objectReference: {fileID: 186878, guid: 507b232a3f99dac49bda44a289df4b11, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 110632}
