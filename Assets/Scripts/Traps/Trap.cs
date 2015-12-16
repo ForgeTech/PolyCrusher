@@ -18,9 +18,9 @@ public class Trap : MonoBehaviour,ITriggerable {
     [SerializeField]
     public GameObject[] playerMeshes;
     
-    //specifies if the trap gives boss damage
+    //specifies the trap gives boss damage
     [SerializeField]
-    public int bossDamage = 0;
+    public int bossDamage = 250;
 
     //the trap load bars, visualize when trap is active
     [SerializeField]

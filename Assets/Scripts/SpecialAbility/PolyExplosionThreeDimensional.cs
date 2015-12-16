@@ -342,7 +342,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
             }
         }
-        //MR.enabled = false;
+        MR.enabled = false;
 
 
 
