@@ -33,9 +33,10 @@ public class MaterialOffset : MonoBehaviour
 
         r.material.SetTextureOffset("_MainTex", new Vector2(offset, sinus));
         r.material.SetTextureOffset("_EmissionMap", new Vector2(offset, sinus));
-        r.material.SetTextureOffset("_BumpMap", new Vector2(offset / 200f, sinus));
+        r.material.SetTextureOffset("_NormalMap", new Vector2(offset / 200f, sinus));
 
         r.material.SetTextureScale("_MainTex", scaleOffset);
         r.material.SetTextureScale("_EmissionMap", scaleOffset);
+        r.material.SetTextureOffset("_DetailNormalMap", scaleOffset);
     }
 }

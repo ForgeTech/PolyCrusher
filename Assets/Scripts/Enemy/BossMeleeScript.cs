@@ -41,6 +41,19 @@ public class BossMeleeScript : MonoBehaviour
     // Renderer reference.
     private Renderer rend;
 
+    // Particles of death.
+    public GameObject explosionParticle;
+
+    // Audioclip
+    public AudioClip sound;
+
+    // Pitch of the sound
+    [Range(0f, 2f)]
+    public float soundPitch = 0.5f;
+
+    [Range(0f, 5f)]
+    public float soundVolume = 0.3f;
+
     // Use this for initialization
     void Start ()
     {
@@ -116,8 +129,11 @@ public class BossMeleeScript : MonoBehaviour
             }
         }
 
-        // TODO: Play sound
-        // TODO: Spawn Particle
+        if (sound != null)
+            SoundManager.SoundManagerInstance.Play(sound, transform.position, soundVolume, soundPitch);
+
+        if (explosionParticle != null)
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
     }
 
     private Transform[] GetAllPlayersInRadius(float radius)

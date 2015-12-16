@@ -28,7 +28,7 @@ public class AbilityPie : Ability
                 pie.OwnerScript = this.OwnerScript;
                 pie.PlayerPrefix = p.PlayerPrefix;
 
-                obj.transform.position = transform.position;
+                obj.transform.position = transform.position - transform.forward * 1.5f;
                 obj.transform.rotation = transform.rotation;
 
                 useIsAllowed = false;

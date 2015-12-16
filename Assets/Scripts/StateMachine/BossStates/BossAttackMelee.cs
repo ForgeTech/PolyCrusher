@@ -49,6 +49,7 @@ public class BossAttackMelee : FSMState
             if (agent != null && agent.enabled)
                 agent.Stop();
 
+
             // Attack logic.
             if (player != null && m is BossEnemy)
             {
