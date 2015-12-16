@@ -36,12 +36,15 @@ public class OptionsMenu : MonoBehaviour
     private GameObject[] allTextObjects;
     private int counter;
 
+
+
     private int[] arrayLengths;
     public int maxItems;
     public int columns;
     public Vector2 selected;
 
-    bool normalMovement;
+    private bool normalMovement;
+    private bool sideWayMovement;
 
     //public int selected;
 
@@ -51,6 +54,8 @@ public class OptionsMenu : MonoBehaviour
     private bool moveDown = false;
 
     public float inputCooldownTime;
+
+   
 
     private int playerCount;
     public LevelStartInformation levelInfo;
@@ -73,6 +78,13 @@ public class OptionsMenu : MonoBehaviour
     private float inputCooldown;
     private float animationTime = 0.0f;
     private bool inputReceived = false;
+
+
+    private int selectedXOld = 0;
+    private int selectedYOld = 0;
+
+    private int optionOld = 0;
+    
 
     [Space(5)]
     [Header("Menu Sounds:")]
@@ -178,6 +190,7 @@ public class OptionsMenu : MonoBehaviour
 
         //buttonArray[0, 0].GetComponent<Button>().Select();
         selected = new Vector2(0, 0);
+       
 
     }
 
@@ -227,7 +240,7 @@ public class OptionsMenu : MonoBehaviour
 
         UpdateButtonTexts();
 
-
+        optionArray = new GameObject[0];
         //StartCoroutine("ScalePlayerImages");
         //StartCoroutine("TransformBetabanner");
 
@@ -236,6 +249,7 @@ public class OptionsMenu : MonoBehaviour
 
     private void ChangeLanguage(string language)
     {
+        buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().interactable = true;
 
         //ConfigScript.LanguageChange(language);
         LanguageFileReader.ChangeLanguage(language);
@@ -331,16 +345,38 @@ public class OptionsMenu : MonoBehaviour
 
     void Update()
     {
-
+        
 
         UpdatePlayerStatus();
-        if (normalMovement)
+
+        if (normalMovement == true && (int)selected.y != 0)
+        {
+            normalMovement = false;
+            sideWayMovement = true;
+        }
+
+        buttonArray[selectedXOld, 0].GetComponentInChildren<Text>().color = Color.white;
+      
+        buttonArray[(int)selected.x, 0].GetComponentInChildren<Text>().color = Color.yellow;
+   
+        
+        
+        if (normalMovement || sideWayMovement)
         {
             buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().Select();
-        }else
+            buttonArray[selectedXOld, selectedYOld].GetComponentInChildren<Text>().color = Color.white;
+            buttonArray[(int)selected.x, (int)selected.y].GetComponentInChildren<Text>().color = Color.yellow;
+            if((int)selected.y == 0)
+            {
+                buttonArray[(int)selected.x, 0].GetComponentInChildren<Text>().color = Color.red;
+            }
+           
+        }
+        else
         {
             optionArray[selectedOption].GetComponent<Button>().Select();
-
+            optionArray[optionOld].GetComponentInChildren<Text>().color = Color.white;
+            optionArray[selectedOption].GetComponentInChildren<Text>().color = Color.red;
         }
         HideButtons();
 
@@ -357,15 +393,22 @@ public class OptionsMenu : MonoBehaviour
             }
         }
 
-        if (normalMovement)
-        {
-            HandleInput();
-            ProcessInput();
 
+        optionOld = selectedOption;
+        selectedXOld = (int)selected.x;
+        selectedYOld = (int)selected.y;
+
+        HandleInput();
+        if (normalMovement)
+        {        
+            ProcessInput();
+            HandleSelection();
+        }else if (sideWayMovement)
+        {
+            ProcessHorizontalInput();
             HandleSelection();
         }else
         {
-            HandleInput();
             ProcessOptionInput();
             HandleOptionSelection();
         }       
@@ -375,9 +418,7 @@ public class OptionsMenu : MonoBehaviour
 
 
     private void HandleOptionSelection()
-    {
-
-        bool selection = false;
+    {   bool selection = false;
         for (int i = 0; i < maxPlayers; i++)
         {
             int runningNumber = i + 1;
@@ -393,29 +434,78 @@ public class OptionsMenu : MonoBehaviour
                 }
                
                 optionArray[selectedOption].GetComponent<Button>().onClick.Invoke();
+                selectedOption = 0;
+                //optionArray[selectedOption].GetComponent<Button>().interactable = false;
+                //optionArray[selectedOption].GetComponentInChildren<Text>().color = Color.white;
+                buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().interactable = true;                
+            }
+        }
+    }
+
+
+    private void ProcessHorizontalInput()
+    {
+        for (int i = 0; i < maxPlayers; i++)
+        {            
+            if (moveUp)
+            {
+                selected.y = 0;
+                OnButtonSwitched();
+                sideWayMovement = false;
+                normalMovement = true;
+                moveUp = false;
+            }
+            if (moveLeft && selected.y != 1)
+            {
+                selected.y -= 1;
+                OnButtonSwitched();
+                moveLeft = false;
             }
 
-
+            if (moveRight && selected.y != arrayLengths[(int)selected.x] - 1)
+            {
+                Debug.Log("Items " + arrayLengths[(int)selected.x]);
+                selected.y += 1;
+                OnButtonSwitched();
+                moveRight = false;
+            }
+            moveLeft = false;
+            moveRight = false;
+            moveUp = false;
+            moveDown = false;
         }
 
     }
 
 
-
     private void ProcessOptionInput()
     {
-        if (moveUp && selectedOption != 0)
+        if (moveUp && selectedOption != 0 && selectedOption-1!=disabledOption)
         {
+            Debug.Log("disabledOption: " + disabledOption);
             selectedOption -= 1;
             OnButtonSwitched();
             moveUp = false;
         }
 
-
-        if (moveDown && selectedOption != optionArray.Length - 1)
+        if (moveUp && selectedOption != 0 && selectedOption - 1 == disabledOption && selectedOption-1 != 0)
         {
-            Debug.Log("Items " + optionArray.Length);
+            selectedOption -= 2;
+            OnButtonSwitched();
+            moveUp = false;
+        }
+
+
+        if (moveDown && selectedOption != optionArray.Length - 1 && selectedOption+1!= disabledOption)
+        {          
             selectedOption += 1;
+            OnButtonSwitched();
+            moveDown = false;
+        }
+
+        if (moveDown && selectedOption != optionArray.Length - 1 && selectedOption +1 == disabledOption && selectedOption+1 != optionArray.Length-1)
+        {            
+            selectedOption += 2;
             OnButtonSwitched();
             moveDown = false;
         }
@@ -430,7 +520,6 @@ public class OptionsMenu : MonoBehaviour
 
     private void HideButtons()
     {
-
         for (int i = 0; i < buttonArray.GetLength(0); i++)
         {
             for (int j = 0; j < buttonArray.GetLength(1); j++)
@@ -439,7 +528,6 @@ public class OptionsMenu : MonoBehaviour
                 if (buttonArray[i, j] != null)
                 {
                     buttonArray[i, j].SetActive(true);
-
                 }
             }
         }
@@ -450,11 +538,9 @@ public class OptionsMenu : MonoBehaviour
         {
             for (int j = 0; j < buttonArray.GetLength(1); j++)
             {
-
                 if (buttonArray[i, j] != null && j >= 1 && i != selected.x)
                 {
                     buttonArray[i, j].SetActive(false);
-
                 }
             }
         }
@@ -463,8 +549,6 @@ public class OptionsMenu : MonoBehaviour
 
     private void UpdatePlayerStatus()
     {
-
-
         int newControlCount = 0;
         currentPlayerCount = 0;
 
@@ -549,22 +633,22 @@ public class OptionsMenu : MonoBehaviour
 
             if (!inputReceived)
             {
-                if (x < -0.5f && selected.x != 0)
+                if (x < -0.5f )
                 {
                     inputReceived = true;
                     moveLeft = true;
                 }
-                else if (x > 0.5f && selected.x != buttonArray.GetLength(0) - 1)
+                else if (x > 0.5f )
                 {
                     inputReceived = true;
                     moveRight = true;
                 }
-                else if (y < -0.5f && selected.y != 0)
+                else if (y < -0.5f )
                 {
                     inputReceived = true;
                     moveUp = true;
                 }
-                else if (y > 0.5f && selected.y != buttonArray.GetLength(1) - 1)
+                else if (y > 0.5f )
                 {
                     inputReceived = true;
                     moveDown = true;
@@ -575,7 +659,7 @@ public class OptionsMenu : MonoBehaviour
 
     private void ProcessInput()
     {
-        if (moveLeft && selected.y == 0)
+        if (moveLeft && selected.y == 0 && selected.x != 0)
         {
             selected.x -= 1;
 
@@ -583,14 +667,14 @@ public class OptionsMenu : MonoBehaviour
             moveLeft = false;
         }
 
-        if (moveRight && selected.y == 0)
+        if (moveRight && selected.y == 0 && selected.x != buttonArray.GetLength(0) - 1)
         {
             selected.x += 1;
             OnButtonSwitched();
             moveRight = false;
         }
 
-        if (moveUp && selected.y != 0)
+        if (moveUp && selected.y != 0 && selected.y != 0)
         {
             selected.y -= 1;
             OnButtonSwitched();
@@ -598,7 +682,7 @@ public class OptionsMenu : MonoBehaviour
         }
 
 
-        if (moveDown && selected.y != arrayLengths[(int)selected.x]-1)
+        if (moveDown && selected.y != arrayLengths[(int)selected.x]-1 && selected.y != buttonArray.GetLength(1) - 1)
         {
             Debug.Log("Items "+arrayLengths[(int)selected.x]);
             selected.y += 1;
@@ -631,9 +715,16 @@ public class OptionsMenu : MonoBehaviour
                 {
                     network.actionButton[i] = 0;
                 }
+                buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().interactable = false;
                 buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().onClick.Invoke();
+                
+                
+                Debug.Log("Button clicked");
             }
         }
+
+
+
     }
 
    
@@ -694,7 +785,6 @@ public class OptionsMenu : MonoBehaviour
 
     void ChangeImages()
     {
-
         int slotCounter = 0;
 
         for (int i = 0; i < playerSlot.Length; i++)
@@ -763,6 +853,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void LanguageEnglish()
     {
+        
         ChangeLanguage("English");
     }
 
@@ -779,7 +870,15 @@ public class OptionsMenu : MonoBehaviour
 
     public void FullscreenChange()
     {
-        string curFullscreen = Screen.fullScreen.ToString();        
+        string curFullscreen = Screen.fullScreen.ToString();   
+        if(curFullscreen == "0")
+        {
+            curFullscreen = "Off";
+        }
+        else
+        {
+            curFullscreen = "On";
+        } 
         PrepareOptions(fullscreen, curFullscreen);
     }
 
@@ -787,12 +886,27 @@ public class OptionsMenu : MonoBehaviour
     public void AntialiasingChange()
     {
         string curAntialiasing = QualitySettings.antiAliasing.ToString();
+
+        if (curAntialiasing == "0")
+        {
+            curAntialiasing = "Off";
+        }
+
         PrepareOptions(antiAliasing, curAntialiasing);
     }
 
     public void VsyncChange()
     {
         string curVsync = QualitySettings.vSyncCount.ToString();
+
+        if (curVsync == "0")
+        {
+            curVsync = "Off";
+        }
+        else
+        {
+            curVsync = "On";
+        }
         PrepareOptions(vsync, curVsync);
     }
 
@@ -801,12 +915,29 @@ public class OptionsMenu : MonoBehaviour
     public void QualityChange()
     {
         string curQuality = QualitySettings.GetQualityLevel().ToString();
+        if (curQuality == "0")
+        {
+            curQuality = "Low";
+        }
+        if (curQuality == "2")
+        {
+            curQuality = "Medium";
+        }
+        if (curQuality == "4")
+        {
+            curQuality = "High";
+        }
+        if (curQuality == "5")
+        {
+            curQuality = "Max";
+        }
         PrepareOptions(quality, curQuality);
     }
 
 
     public void ResolutionChange()
     {
+        Debug.Log("res change");
         string curRes = Screen.width.ToString();
         PrepareOptions(resolutions, curRes);
     }
@@ -815,15 +946,26 @@ public class OptionsMenu : MonoBehaviour
     private void PrepareOptions(GameObject[] options, string toCompare)
     {
         normalMovement = false;
+        sideWayMovement = false;
         optionArray = options;
+        bool found = false;
         for(int i = 0; i <optionArray.Length; i++)
         {
             optionArray[i].SetActive(true);
             if (toCompare == optionArray[i].name)
             {
+                Debug.Log(toCompare + " found!");
+                optionArray[i].GetComponentInChildren<Text>().color = Color.white;
                 optionArray[i].GetComponent<Button>().interactable = false;
+                               
                 disabledOption = i;
-            }
+                found = true;
+            }            
+        }
+
+        if (!found)
+        {
+            disabledOption = 42; 
         }
 
         if (disabledOption != 0)
@@ -836,6 +978,8 @@ public class OptionsMenu : MonoBehaviour
             optionArray[1].GetComponent<Button>().Select();
             selectedOption = 1;
         }
+
+        optionOld = selectedOption;
 
 
     }
@@ -948,11 +1092,12 @@ public class OptionsMenu : MonoBehaviour
     private void DeactivateOptionItems()
     {
         for(int i = 0; i < optionArray.Length; i++)
-        {
-            optionArray[i].SetActive(false);
+        {            
             optionArray[i].GetComponent<Button>().interactable = true;
+            optionArray[i].SetActive(false);
         }
-        normalMovement = true;
+        normalMovement = false;
+        sideWayMovement = true;
     }
 
     public void BackToMain()
