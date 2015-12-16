@@ -3,27 +3,29 @@ using System.Collections.Generic;
 
 public class PolyExplosionThreeDimensional : MonoBehaviour
 {
-
-
-
     public GameObject explosion;
     public bool explode = false;
-    private bool part2 = false;
-    private bool part3 = false;
-    private bool part4 = false;
-    private bool part5 = false;
-    private bool part6 = false;
-    private bool part7 = false;
-    private bool part8 = false;
-    private bool part9 = false;
-    private bool part10 = false;
+    public float extrudeFactor;
+    public int hitsTillExplosion;
+    public int health;
+
+
+    //private bool part2 = false;
+    //private bool part3 = false;
+    //private bool part4 = false;
+    //private bool part5 = false;
+    //private bool part6 = false;
+    //private bool part7 = false;
+    //private bool part8 = false;
+    //private bool part9 = false;
+    //private bool part10 = false;
 
     private int vertexCount;
     private int step;
     private int grandStep;
     private Vector3 scaleFactor;
     private Pool pool;
-    
+
 
     private int matchedIndex;
 
@@ -38,10 +40,10 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
             this.x = x;
             this.y = y;
             this.z = z;
-        }        
+        }
     }
 
-    private List<Tri> triList = new List<Tri>();    
+    private List<Tri> triList = new List<Tri>();
     private bool found;
 
 
@@ -88,8 +90,8 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         scaleFactor = transform.localScale;
         found = false;
 
-        
-        
+        health = hitsTillExplosion;
+
 
     }
 
@@ -103,17 +105,17 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
             explode = false;
             ExplodePartial(0);
-            
+
             //part2 = true;
         }
-    
+
     }
 
 
     private void GetTriangles(int[] indices)
     {
         triList = new List<Tri>();
-        for(int i = 0; i <indices.Length; i+=3)
+        for (int i = 0; i < indices.Length; i += 3)
         {
             triList.Add(new Tri(indices[i], indices[i + 1], indices[i + 2]));
         }
@@ -122,15 +124,15 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     private bool GetMatchingTri(int x, int y, int z)
     {
-        foreach(Tri tri in triList)
+        foreach (Tri tri in triList)
         {
-            if(((tri.x == x && tri.y ==y)|| (tri.x == y && tri.y == x))&& tri.z!=z) {// || (tri.x == x && tri.z == y) || (tri.x == y && tri.z == x)||(tri.y ==x && tri.z == y) || (tri.y ==y && tri.z == x))
-                
+            if (((tri.x == x && tri.y == y) || (tri.x == y && tri.y == x)) && tri.z != z) {// || (tri.x == x && tri.z == y) || (tri.x == y && tri.z == x)||(tri.y ==x && tri.z == y) || (tri.y ==y && tri.z == x))
+
                 matchedIndex = tri.z;
                 triList.Remove(tri);
                 return true;
             }
-            
+
             if (((tri.x == x && tri.z == y) || (tri.x == y && tri.z == x)) && tri.y != z)
             {
                 matchedIndex = tri.y;
@@ -138,14 +140,14 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 return true;
             }
 
-            if(((tri.y == x && tri.z == y) || (tri.y == y && tri.z == x)) && tri.x != z)
+            if (((tri.y == x && tri.z == y) || (tri.y == y && tri.z == x)) && tri.x != z)
             {
                 matchedIndex = tri.x;
                 triList.Remove(tri);
                 return true;
             }
 
-           
+
         }
         return false;
     }
@@ -154,22 +156,18 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     private void ExplodePartial(int start)
     {
-
-
-
-
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
         {
             int[] indices = M.GetTriangles(submesh);
             GetTriangles(indices);
 
-            for (int i = triList.Count-1; i>= 0; i--) //grandStep)
+            for (int i = triList.Count - 1; i >= 0; i -= 3) //grandStep)
             {
                 Tri tri = triList[i];
-                 
-                Vector3 direction1 = Vector3.Normalize(-normals[tri.x]);
+
+                Vector3 direction1 = Vector3.Normalize(-normals[tri.x]) * extrudeFactor;
                 Vector3 direction2;
-                int[] triangles= new int[0];
+                int[] triangles = new int[0];
 
                 mesh = new Mesh();
                 Vector2 uvZero = new Vector2(0, 0);
@@ -179,7 +177,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newVerts = new Vector3[8];
                     newNormals = new Vector3[8];
                     newUvs = new Vector2[8];
-                    direction2 = Vector3.Normalize(-normals[matchedIndex]);
+                    direction2 = Vector3.Normalize(-normals[matchedIndex]) * extrudeFactor;
 
 
                     //for (int n = 0; n < 3; n++)
@@ -211,23 +209,23 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newNormals[3] = normals[matchedIndex];
 
                     newVerts[4] = newVerts[0] + direction1;
-                    newUvs[4] = uvZero;
+                    newUvs[4] = uvs[tri.x];
                     newNormals[4] = newNormals[0];
 
                     newVerts[5] = newVerts[1] + direction1;
-                    newUvs[5] = uvZero;
+                    newUvs[5] = uvs[tri.y];
                     newNormals[5] = newNormals[1];
 
                     newVerts[6] = newVerts[2] + direction1;
-                    newUvs[6] = uvZero;
+                    newUvs[6] = uvs[tri.z];
                     newNormals[6] = newNormals[2];
 
 
                     newVerts[7] = newVerts[3] + direction2;
-                    newUvs[7] = uvZero;
+                    newUvs[7] = uvs[matchedIndex];
                     newNormals[7] = newNormals[3];
 
-                    triangles = new int[] { 0, 1, 2,  3,1,0, /*up tris*/  6,4,2,   0,2,4,  /*side1 */ 5,2,1,  2,5,6,  /*side2*/ 0,4,7,  7,3,0, /*side3*/ 7,5,1, 7,1,3, /*side4*/ 6,5,4,  4,5,7  /*down*/};
+                    triangles = new int[] { 0, 1, 2, 3, 1, 0, /*up tris*/  6, 4, 2, 0, 2, 4,  /*side1 */ 5, 2, 1, 2, 5, 6,  /*side2*/ 0, 4, 7, 7, 3, 0, /*side3*/ 7, 5, 1, 7, 1, 3, /*side4*/ 6, 5, 4, 4, 5, 7  /*down*/};
 
                 }
                 else
@@ -263,42 +261,24 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newNormals[2] = normals[tri.z];
 
                     newVerts[3] = newVerts[0] + direction1;
-                    newUvs[3] = uvZero;
+                    newUvs[3] = uvs[tri.x];
                     newNormals[3] = newNormals[0];
 
                     newVerts[4] = newVerts[1] + direction1;
-                    newUvs[4] = uvZero;
+                    newUvs[4] = uvs[tri.y];
                     newNormals[4] = newNormals[1];
 
                     newVerts[5] = newVerts[2] + direction1;
-                    newUvs[5] = uvZero;
+                    newUvs[5] = uvs[tri.z];
                     newNormals[5] = newNormals[2];
 
 
-                    triangles = new int[] { 0, 1, 2, /*up*/   4, 1, 0,  0, 3, 4,  /*side1*/  0, 2, 5,    1, 4, 5, /*side2*/     5, 4, 3,   5, 3, 0,   /*side3*/  5, 2, 1 /*down*/};
+                    triangles = new int[] { 0, 1, 2, /*up*/   4, 1, 0, 0, 3, 4,  /*side1*/  0, 2, 5, 1, 4, 5, /*side2*/     5, 4, 3, 5, 3, 0,   /*side3*/  5, 2, 1 /*down*/};
 
                 }
 
-                
 
 
-               
-
-
-                //newVerts[0] = new Vector3(0, 0, 0);
-                //newNormals[0] = normals[indices[i]];
-                //newUvs[0] = uvs[indices[i]];
-
-              
-              
-               
-
-               
-
-               
-                
-
-                
                 mesh.vertices = newVerts;
                 mesh.normals = newNormals;
                 mesh.uv = newUvs;
@@ -333,22 +313,28 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     //deactivator.attachedRigid.AddExplosionForce(0, new Vector3(transform.position.x, transform.position.y, transform.position.z), 1, 0.0f,ForceMode.Force);
                     deactivator.enabled = false;
 
-
-
                 }
-
-
-
-
             }
         }
         MR.enabled = false;
+    }
 
 
 
-
-
-
+    void OnTriggerEnter(Collider coll)
+    {
+        Debug.Log("hit cabinet");
+        //foreach (ContactPoint contact in coll.contacts)
+        {
+            if (coll.GetComponent<Collider>().tag == "Bullet" || coll.GetComponent<Collider>().tag == "EnemyBullet")
+            {
+                health--;
+                if (health <= 0)
+                {
+                    explode = true;
+                }
+            }
+        } 
 
     }
 
