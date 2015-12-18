@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: lambert2
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_Name: TrickOrTreatSkybox
+  m_Shader: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _SUNDISK_NONE
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -93,6 +93,22 @@ Material:
         second: .5
       data:
         first:
+          name: _Exposure
+        second: 2.05999994
+      data:
+        first:
+          name: _SunSize
+        second: .208000004
+      data:
+        first:
+          name: _AtmosphereThickness
+        second: 1
+      data:
+        first:
+          name: _SunDisk
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -102,7 +118,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .200000003
+        second: .5
       data:
         first:
           name: _BumpScale
@@ -127,6 +143,10 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _EmissionScaleUI
+        second: 0
     m_Colors:
       data:
         first:
@@ -135,4 +155,16 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .0203000009, g: .0241, b: .0384000018, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SkyTint
+        second: {r: .11602509, g: .136470884, b: .272058845, a: 1}
+      data:
+        first:
+          name: _GroundColor
+        second: {r: .201124534, g: .220588207, b: .216609061, a: 1}
+      data:
+        first:
+          name: _EmissionColorUI
+        second: {r: 1, g: 1, b: 1, a: 1}
