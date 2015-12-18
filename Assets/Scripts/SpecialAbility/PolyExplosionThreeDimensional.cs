@@ -277,7 +277,11 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         MR.enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Collider>().enabled = false;
-        Invoke("TriggerRespawn", timeTillRespawn);
+        if (respawn)
+        {
+            Invoke("TriggerRespawn", timeTillRespawn);
+        }
+        
     }
 
 
