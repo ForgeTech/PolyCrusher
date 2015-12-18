@@ -1403,7 +1403,7 @@ MonoBehaviour:
   healthLevel: {fileID: 11494330}
   innerEnergyCircle: {fileID: 11430096}
   cameraEdgeDetectionOffset: -.00999999978
-  bloodParticles: {fileID: 185320, guid: b28fefcafd796e140b60cebe863eb81b, type: 2}
+  bloodParticles: {fileID: 185320, guid: 250f80915417a5844b25406b875e90e1, type: 2}
   characterVoice: {fileID: 135090}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
 --- !u!114 &11416376
@@ -1876,6 +1876,10 @@ Prefab:
       propertyPath: clips.Array.data[4]
       value: 
       objectReference: {fileID: 8300000, guid: b49dadf191b6a41429693f93e8bd289e, type: 3}
+    - target: {fileID: 0}
+      propertyPath: bloodParticles
+      value: 
+      objectReference: {fileID: 185320, guid: 250f80915417a5844b25406b875e90e1, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152540}
