@@ -1419,8 +1419,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioCategory: Ability
   clips:
-  - {fileID: 8300000, guid: 79c289fb83306d44b92c1654f0cd2fb4, type: 3}
-  - {fileID: 8300000, guid: 7f030b6b16ca82248993cbc555c8192c, type: 3}
+  - {fileID: 8300000, guid: 10a438499c6fee24186b9f7056321993, type: 3}
+  - {fileID: 8300000, guid: cbb08cdaf03a1a245876099b17b06344, type: 3}
+  - {fileID: 8300000, guid: 18735d3cb9f3430499f29074fcd85b8d, type: 3}
+  - {fileID: 8300000, guid: a52d8ec478979eb499472c3950033f81, type: 3}
 --- !u!114 &11427170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1473,9 +1475,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioCategory: Spawn
   clips:
-  - {fileID: 8300000, guid: aeb47c07339d5a1438b39079dd58c4f4, type: 3}
-  - {fileID: 8300000, guid: 9d949474b3cc51845b3fac910d30f120, type: 3}
-  - {fileID: 8300000, guid: e5859dbbdc929a94bbb4e01539104624, type: 3}
+  - {fileID: 8300000, guid: bd7ba9a07bdf9d94fb3fd33ee465d50d, type: 3}
+  - {fileID: 8300000, guid: 39335d93daaa86e4a80eb699457426d0, type: 3}
+  - {fileID: 8300000, guid: 48d912d0a65ba34498519278a42aa4e1, type: 3}
+  - {fileID: 8300000, guid: 7e9e37f7130e1a84b89a1a699c6fb50e, type: 3}
 --- !u!114 &11442186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1503,8 +1506,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioCategory: Death
   clips:
-  - {fileID: 8300000, guid: f712b1f5ee2644241a2df233bf233344, type: 3}
-  - {fileID: 8300000, guid: 47ed333b0f5173246b886e5067f119f1, type: 3}
+  - {fileID: 8300000, guid: 21e4d1198d87d264585118aeb61716aa, type: 3}
+  - {fileID: 8300000, guid: 66d9d17325f1f9041986047fab64c782, type: 3}
+  - {fileID: 8300000, guid: 1b404c18356a4484aa9e8078c4edcdd8, type: 3}
+  - {fileID: 8300000, guid: ee5193a92c09be447901e5fb77e43894, type: 3}
 --- !u!114 &11450990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1543,12 +1548,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioCategory: Hurt
   clips:
-  - {fileID: 8300000, guid: 03cd327b4d5d15346a423d6814cfa4e9, type: 3}
-  - {fileID: 8300000, guid: 0022e0bb652a20d41acf4e3e4b435f36, type: 3}
-  - {fileID: 8300000, guid: a61371252b135de4db6d017f52f2a590, type: 3}
-  - {fileID: 8300000, guid: b3140e0444cbb304db9578ffeea27c6f, type: 3}
-  - {fileID: 8300000, guid: 783cd1d77d7685346b8ec783ae8a3c61, type: 3}
-  - {fileID: 8300000, guid: 4d13f126cd525314ebf7fb14a132d2b4, type: 3}
+  - {fileID: 8300000, guid: a90fd4a57ea29e4418fe7839483c9ab6, type: 3}
+  - {fileID: 8300000, guid: 379cf0572dc54cc498d0ca7ee6252b51, type: 3}
+  - {fileID: 8300000, guid: b2c363614ffc74844ac0ba2534c695ef, type: 3}
+  - {fileID: 8300000, guid: 5c55b0a8cc659db4da844051d79ea845, type: 3}
+  - {fileID: 8300000, guid: b49dadf191b6a41429693f93e8bd289e, type: 3}
 --- !u!114 &11467908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1837,6 +1841,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: clips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: weaponDamage
       value: 40
       objectReference: {fileID: 0}
@@ -1844,6 +1852,30 @@ Prefab:
       propertyPath: energyRefillRate
       value: .170000002
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: bd7ba9a07bdf9d94fb3fd33ee465d50d, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 39335d93daaa86e4a80eb699457426d0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 48d912d0a65ba34498519278a42aa4e1, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7e9e37f7130e1a84b89a1a699c6fb50e, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d13f126cd525314ebf7fb14a132d2b4, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: b49dadf191b6a41429693f93e8bd289e, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152540}
