@@ -8,6 +8,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     public float extrudeFactor;
     public int hitsTillExplosion;
     public int health;
+    public bool explodeable = true;
 
 
     //private bool part2 = false;
@@ -307,12 +308,10 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
 
 
-                    GO.AddComponent<MeshCollider>();
-                    GO.GetComponent<MeshCollider>().convex = true;
+                    GO.AddComponent<BoxCollider>();
+                   
 
-                    //deactivator.attachedRigid.AddExplosionForce(0, new Vector3(transform.position.x, transform.position.y, transform.position.z), 1, 0.0f,ForceMode.Force);
                     deactivator.enabled = false;
-
                 }
             }
         }
@@ -322,21 +321,16 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
 
     void OnTriggerEnter(Collider coll)
-    {
-        Debug.Log("hit cabinet");
-        //foreach (ContactPoint contact in coll.contacts)
+    {        
+        if (coll.GetComponent<Collider>().tag == "Bullet" || coll.GetComponent<Collider>().tag == "EnemyBullet")
         {
-            if (coll.GetComponent<Collider>().tag == "Bullet" || coll.GetComponent<Collider>().tag == "EnemyBullet")
+            health--;
+            if (health <= 0 && explodeable)
             {
-                health--;
-                if (health <= 0)
-                {
-                    explode = true;
-                }
+                explode = true;
+                explodeable = false;
             }
-        } 
-
+        }        
     }
-
 }
 

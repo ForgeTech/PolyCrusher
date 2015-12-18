@@ -22,10 +22,13 @@ public class LineSystem : MonoBehaviour {
     public Material[] mats;
     public GameObject health;
     public GameObject energy;
+    public GameObject laserParticles;
 
 
     private ParticleSystem[] energyParticles;
     private ParticleSystem[] healthParticles;
+    
+
     
    
     
@@ -63,6 +66,11 @@ public class LineSystem : MonoBehaviour {
     private int[] activeMaterial;
     private int lineRendererLength;
 
+    public bool activateCutting;
+
+
+    private Vector3 bufferVectorA;
+    private Vector3 bufferVectorB;
 
     void Awake()
     {
@@ -90,7 +98,10 @@ public class LineSystem : MonoBehaviour {
         healAnimation = new bool[6];
         normalAnimation = new bool[6];
 
+        activateCutting = false;
 
+        bufferVectorA = new Vector3();
+        bufferVectorB = new Vector3();
       
     }
 
@@ -125,11 +136,18 @@ public class LineSystem : MonoBehaviour {
 
             UpdatePlayerPosition();
 
+            if (activateCutting)
+            {
+                CuttingLinesPowerUp();
+            }
+
             HandleHealthRecovery();
 
             HealOverTime();
 
             UpdateLines();
+
+          
         }
 
         if(players.Length == 1)
@@ -149,11 +167,65 @@ public class LineSystem : MonoBehaviour {
             }
            
         }
+
+        
       
   
 	}
 
    
+    private void CuttingLinesPowerUp()
+    {    
+
+        for(int i = 0; i < lineRenderer.Length; i++)
+        {                         
+            RaycastHit[] hits;
+            bufferVectorA = players[firstVertex[i]].transform.position;
+            bufferVectorA.y = heightOffset;
+
+            bufferVectorB = players[secondVertex[i]].transform.position;
+            bufferVectorB.y = heightOffset;
+            lineRenderer[i].material = mats[3];
+            lineRenderer[i].SetWidth(healLineWidth, healLineWidth);
+
+            hits = Physics.RaycastAll(new Ray(bufferVectorB, Vector3.Normalize(bufferVectorA - bufferVectorB)), Vector3.Distance(bufferVectorB, bufferVectorA), (1 << 9));
+           
+           
+            foreach (RaycastHit hit in hits)
+            {
+                   
+               
+                if (hit.transform.GetComponent<MonoBehaviour>())
+                {
+                    MonoBehaviour gotHit = hit.transform.GetComponent<MonoBehaviour>();
+                    if (gotHit is BaseEnemy)
+                    {
+                        BaseEnemy enemy = hit.transform.GetComponent<BaseEnemy>();
+
+                        if (gotHit is BossEnemy)
+                        {
+                            Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
+
+                        }
+                        else
+                        {
+                            enemy.InstantKill();                           
+
+                            enemy.gameObject.AddComponent<CutUpMesh>();
+                            Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation),2);
+
+
+                        }
+                    }
+
+                }
+            }
+        }     
+       
+
+
+    }
+
 
     void UpdateConnectionType()
     {
@@ -201,7 +273,6 @@ public class LineSystem : MonoBehaviour {
             {
                 if (lerpTimes[i] < 1.0f)
                 {
-
                     lerpTimes[i] += lerpSpeed * Time.deltaTime;
                     lineRenderer[i].material.Lerp(mats[1], mats[0], lerpTimes[i]);
                 }
