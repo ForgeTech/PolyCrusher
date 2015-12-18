@@ -228,7 +228,8 @@ public class PolyExplosion : MonoBehaviour {
 
                     GO.AddComponent<BoxCollider>();
 
-                    deactivator.attachedRigid.AddExplosionForce(50, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, 0.0f);
+                    deactivator.attachedRigid.AddExplosionForce(50, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, 0.0f);                   
+                    deactivator.TriggerDeactivation(Random.Range(5.5f, 10.0f));
 
                     
                    

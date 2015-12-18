@@ -8,17 +8,13 @@ public class Deactivator : MonoBehaviour
     public MeshRenderer attachedRenderer;
     public BoxCollider attachedCollider;
     public MeshFilter attachedFilter;
+ 
 
 
-
-    void OnEnable()
-    {
-        Invoke("Deactivate", Random.Range(5.5f, 10.0f));
+    public void TriggerDeactivation(float timeTillDeactivation)
+    {        
+        Invoke("Deactivate", timeTillDeactivation);
     }
-
-
-
-
 
     void Deactivate()
     {
@@ -43,11 +39,9 @@ public class Deactivator : MonoBehaviour
         if (filter == null)
         {
             attachedFilter = gameObject.AddComponent<MeshFilter>();
-
-
         }
 
-        gameObject.name = "Dummy(Clone)";
+        gameObject.name = "Dummy(Clone)";      
         this.gameObject.SetActive(false);
     }
 
@@ -56,7 +50,6 @@ public class Deactivator : MonoBehaviour
     void OnDisable()
     {
         CancelInvoke();
-
     }
 
 

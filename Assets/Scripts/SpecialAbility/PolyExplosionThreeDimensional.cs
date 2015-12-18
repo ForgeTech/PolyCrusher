@@ -4,31 +4,26 @@ using System.Collections.Generic;
 public class PolyExplosionThreeDimensional : MonoBehaviour
 {
     public GameObject explosion;
+
     public bool explode = false;
     public float extrudeFactor;
     public int hitsTillExplosion;
-    public int health;
+    
     public bool explodeable = true;
-
-
-    //private bool part2 = false;
-    //private bool part3 = false;
-    //private bool part4 = false;
-    //private bool part5 = false;
-    //private bool part6 = false;
-    //private bool part7 = false;
-    //private bool part8 = false;
-    //private bool part9 = false;
-    //private bool part10 = false;
+    public bool respawn = false;
+    public int timeTillRespawn = 10;
 
     private int vertexCount;
     private int step;
     private int grandStep;
     private Vector3 scaleFactor;
     private Pool pool;
+    private int health;
 
 
     private int matchedIndex;
+    private DestructibleRespawn respawnScript;
+    public List<Deactivator> deactivators;
 
     public struct Tri
     {
@@ -93,23 +88,21 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
         health = hitsTillExplosion;
 
-
+        if (respawn)
+        {
+            respawnScript = gameObject.AddComponent<DestructibleRespawn>();
+        }
+        deactivators = new List<Deactivator>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (explode)
         {
-
-
             explode = false;
             ExplodePartial(0);
-
-            //part2 = true;
         }
-
     }
 
 
@@ -147,8 +140,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 triList.Remove(tri);
                 return true;
             }
-
-
         }
         return false;
     }
@@ -179,19 +170,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newNormals = new Vector3[8];
                     newUvs = new Vector2[8];
                     direction2 = Vector3.Normalize(-normals[matchedIndex]) * extrudeFactor;
-
-
-                    //for (int n = 0; n < 3; n++)
-                    //{
-                    //    int index = indices[i + n];
-                    //    newVerts[n] = verts[index];
-                    //    newUvs[n] = uvs[index];
-                    //    newNormals[n] = normals[index];
-
-                    //    newVerts[n + 4] = newVerts[n]+ direction1;
-                    //    newUvs[n + 4] = uvZero;
-                    //    newNormals[n + 4] = normals[index];
-                    //}
 
                     newVerts[0] = verts[tri.x];
                     newUvs[0] = uvs[tri.x];
@@ -235,20 +213,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     newNormals = new Vector3[6];
                     newUvs = new Vector2[6];
 
-
-                    //for (int n = 0; n < 3; n++)
-                    //{
-                    //    int index = indices[i + n];
-                    //    newVerts[n] = verts[index];
-                    //    newUvs[n] = uvs[index];
-                    //    newNormals[n] = normals[index];
-
-                    //    newVerts[n + 3] = newVerts[n] + direction1;
-                    //    newUvs[n + 3] = uvs[index];
-                    //    newNormals[n + 3] = normals[index];
-                    //}
-
-
                     newVerts[0] = verts[tri.x];
                     newUvs[0] = uvs[tri.x];
                     newNormals[0] = normals[tri.x];
@@ -283,12 +247,9 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 mesh.vertices = newVerts;
                 mesh.normals = newNormals;
                 mesh.uv = newUvs;
-                //Debug.Log(newVerts[0] + "  " + newVerts[1]);
                 mesh.triangles = triangles;
 
                 GO = pool.getPooledObject();
-
-
 
                 if (GO != null)
                 {
@@ -305,17 +266,18 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
                     deactivator.attachedRenderer.material = MR.materials[submesh];
                     deactivator.attachedFilter.mesh = mesh;
+                    deactivators.Add(deactivator);
 
-
-
+                    
                     GO.AddComponent<BoxCollider>();
-                   
-
-                    deactivator.enabled = false;
+                    
                 }
             }
         }
         MR.enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Collider>().enabled = false;
+        Invoke("TriggerRespawn", timeTillRespawn);
     }
 
 
@@ -331,6 +293,22 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 explodeable = false;
             }
         }        
+    }
+
+
+
+    private void TriggerRespawn()
+    {
+        respawnScript.Respawn();
+        explodeable = true;
+        health = hitsTillExplosion;
+    }
+
+
+
+    void OnDisable()
+    {
+        CancelInvoke();
     }
 }
 
