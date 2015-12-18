@@ -13,9 +13,10 @@ public class DestructibleRespawn : MonoBehaviour {
     private Collider attachedCollider;
     private Rigidbody attachedRigidBody;
     private PolyExplosionThreeDimensional poly3DScript;
-   
+    private NavMeshObstacle attachedObstacle;
 
-	void Awake()
+
+    void Awake()
     {
         originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         originalRotation = transform.rotation;
@@ -24,6 +25,7 @@ public class DestructibleRespawn : MonoBehaviour {
         attachedCollider = GetComponent<Collider>();
         attachedRigidBody = GetComponent<Rigidbody>();
         poly3DScript = GetComponent<PolyExplosionThreeDimensional>();
+        attachedObstacle = GetComponent<NavMeshObstacle>();
     }
 
     public void Respawn()
@@ -48,6 +50,7 @@ public class DestructibleRespawn : MonoBehaviour {
         }
 
         attachedRigidBody.isKinematic = false;
+        attachedObstacle.enabled = true;
      
 
         

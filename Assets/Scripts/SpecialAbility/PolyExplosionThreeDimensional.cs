@@ -280,6 +280,11 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         MR.enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Collider>().enabled = false;
+        if (GetComponent<NavMeshObstacle>() != null)
+        {
+            GetComponent<NavMeshObstacle>().enabled = false;
+        }
+       
         if (respawn)
         {
             Invoke("TriggerRespawn", timeTillRespawn);
