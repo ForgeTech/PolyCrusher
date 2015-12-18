@@ -42,7 +42,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     private List<Tri> triList = new List<Tri>();
     private bool found;
-    private Transform originalTransform;
+    
 
 
     MeshFilter MF;
@@ -95,7 +95,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
             respawnScript = gameObject.AddComponent<DestructibleRespawn>();
         }
         deactivators = new List<Deactivator>();
-        originalTransform = transform;
+        
     }
 
     // Update is called once per frame
@@ -306,10 +306,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     private void TriggerRespawn()
     {
-        transform.position = originalTransform.position;
-        transform.rotation = originalTransform.rotation;
-        transform.localScale = originalTransform.localScale;
-        respawnScript.Respawn();
+        respawnScript.Respawn();       
         explodeable = true;
         health = hitsTillExplosion;
     }

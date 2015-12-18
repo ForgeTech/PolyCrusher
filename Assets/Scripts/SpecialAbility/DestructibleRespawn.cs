@@ -4,7 +4,11 @@ using System.Collections.Generic;
 public class DestructibleRespawn : MonoBehaviour {
 
 
-    private Transform originalTransform;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+    private Vector3 originalScale;
+
+
     private MeshRenderer meshRenderer;
     private Collider attachedCollider;
     private Rigidbody attachedRigidBody;
@@ -13,7 +17,9 @@ public class DestructibleRespawn : MonoBehaviour {
 
 	void Awake()
     {
-        originalTransform = this.transform;
+        originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        originalRotation = transform.rotation;
+        originalScale = transform.localScale;
         meshRenderer = GetComponent<MeshRenderer>();
         attachedCollider = GetComponent<Collider>();
         attachedRigidBody = GetComponent<Rigidbody>();
@@ -27,9 +33,9 @@ public class DestructibleRespawn : MonoBehaviour {
         {
             deactivator.TriggerDeactivation(0.0f);
         }
-        transform.position = originalTransform.position;
-        transform.rotation = originalTransform.rotation;
-        transform.localScale = originalTransform.localScale;
+        transform.position = originalPosition;
+        transform.rotation = originalRotation;
+        transform.localScale = originalScale;
 
         if (attachedCollider != null)
         {
