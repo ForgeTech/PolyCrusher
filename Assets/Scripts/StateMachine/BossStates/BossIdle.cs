@@ -38,6 +38,10 @@ public class BossIdle : FSMState
     public override void Act(GameObject player, GameObject npc)
     {
         //Play animation.
+        Animator anim = bossEnemy.GetComponent<Animator>();
+
+        if (anim != null)
+            anim.SetTrigger("Idle");
     }
 
     /// <summary>
@@ -107,6 +111,8 @@ public class BossIdle : FSMState
     /// <param name="e">Boss enemy</param>
     private void ChooseState(BossEnemy e)
     {
+        Animator anim = bossEnemy.GetComponent<Animator>();
+
         // Total probability of all enabled Phases.
         float totalProb = 0f;
 
@@ -187,14 +193,17 @@ public class BossIdle : FSMState
                 // Switch state based on the calculatet probability.
                 if (indexFoundElement == 0)
                 {
+                    anim.SetTrigger("Announce");
                     e.SetTransition(Transition.DecisionMelee);
                 }
                 else if (indexFoundElement == 1)
                 {
+                    anim.SetTrigger("Announce");
                     e.SetTransition(Transition.DecisionRanged);
                 }
                 else if (indexFoundElement == 2)
                 {
+                    anim.SetTrigger("Announce");
                     e.SetTransition(Transition.DecisionSpecial);
                 }
             }

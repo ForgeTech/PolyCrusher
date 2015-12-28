@@ -41,7 +41,13 @@ public class BossSprint : FSMState
         {
             BossEnemy e = (BossEnemy)m;
 
-            if(CheckAttackRange(e))
+            //Play animation.
+            Animator anim = e.GetComponent<Animator>();
+
+            if (anim != null)
+                anim.SetTrigger("Sprint");
+
+            if (CheckAttackRange(e))
             {
                 AttackPlayer(e);
             }

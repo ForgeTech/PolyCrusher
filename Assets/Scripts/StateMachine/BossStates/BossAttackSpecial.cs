@@ -67,6 +67,12 @@ public class BossAttackSpecial : BossAttackMelee
         // Attack only if allowed.
         if (attackAllowed && !attackStarted)
         {
+            //Play animation.
+            Animator anim = e.GetComponent<Animator>();
+
+            if (anim != null)
+                anim.SetTrigger("Special");
+
             attackStarted = true;
 
             // Spawn meteorits

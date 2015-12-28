@@ -1341,9 +1341,9 @@ MonoBehaviour:
     minWave: 14
     enemyName: Minion
   bossSpawnInfo:
-    boss: {fileID: 128610, guid: 6ce43f0558d8de441ab1bbe7e18b7c1c, type: 2}
+    boss: {fileID: 141898, guid: 5bd4ed5448a5b7f488c8aed92d5cc3a9, type: 2}
     enemyRessourceValue: 1
-    enemyName: BossEnemy
+    enemyName: B055
     spawnEveryXWave: 7
     waveSpawnVariation: 2
   enemyRessourcePool: 30
@@ -1715,7 +1715,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: bossSpawnInfo.boss
       value: 
-      objectReference: {fileID: 128610, guid: 6ce43f0558d8de441ab1bbe7e18b7c1c, type: 2}
+      objectReference: {fileID: 141898, guid: 5bd4ed5448a5b7f488c8aed92d5cc3a9, type: 2}
     - target: {fileID: 0}
       propertyPath: bossSpawnInfo.spawnEveryXWave
       value: 7
@@ -1791,6 +1791,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spawnInfo.Array.data[8].minWave
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bossSpawnInfo.enemyName
+      value: B055
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

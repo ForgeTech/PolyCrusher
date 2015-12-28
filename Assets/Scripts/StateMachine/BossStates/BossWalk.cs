@@ -34,12 +34,11 @@ public class BossWalk : FSMState
         }
         // ===================================================
 
-        // TODO: Animation settings.
         Animator anim = npc.GetComponent<Animator>();
 
         if (anim != null)
-        {
-            // ....
+        { 
+            anim.SetTrigger("Move");
         }
     }
 

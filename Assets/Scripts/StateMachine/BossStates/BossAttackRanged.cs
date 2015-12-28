@@ -70,6 +70,12 @@ public class BossAttackRanged : BossAttackMelee
         {
             Debug.Log("RangedBoss: Attack!");
 
+            //Play animation.
+            Animator anim = e.GetComponent<Animator>();
+
+            if (anim != null)
+                anim.SetTrigger("Shoot");
+
             attackStarted = true;
             // Spawn bullet
             CreateBullet(e);

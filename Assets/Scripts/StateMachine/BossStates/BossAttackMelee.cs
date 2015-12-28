@@ -195,6 +195,13 @@ public class BossAttackMelee : FSMState
         if (attackAllowed && !attackStarted)
         {
             //Debug.Log("Attack!!! Pew Pew Pew!");
+
+            //Play animation.
+            Animator anim = e.GetComponent<Animator>();
+
+            if (anim != null)
+                anim.SetTrigger("Melee");
+
             attackStarted = true;
 
             GameObject areaOfDamageReference = GameObject.Instantiate(e.MeleeAreaOfDamage, e.TargetPlayer.position, e.MeleeAreaOfDamage.transform.rotation) as GameObject;

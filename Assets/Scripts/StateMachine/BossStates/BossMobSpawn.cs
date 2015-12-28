@@ -101,6 +101,12 @@ public class BossMobSpawn : FSMState
     {
         if (currentMobSpawnTimer >= e.MobSpawnPhase.spawnInterval)
         {
+            //Play animation.
+            Animator anim = e.GetComponent<Animator>();
+
+            if (anim != null)
+                anim.SetTrigger("Special");
+
             Vector2 randomCirclePoint = UnityEngine.Random.insideUnitCircle * e.MobSpawnPhase.spawnRadius 
                 + new Vector2(e.transform.position.x, e.transform.position.z);
 
