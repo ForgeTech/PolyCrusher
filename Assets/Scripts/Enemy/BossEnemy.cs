@@ -354,6 +354,10 @@ public class BossEnemy : BaseEnemy
         {
             Health = (int)(lifeSetting.onePlayer * Health);
             MaxHealth = Health;
+
+            BossShield s = GetComponentInChildren<BossShield>();
+            if (s != null)
+                s.gameObject.SetActive(false);
         }
         else if (PlayerManager.PlayerCount == 2)
         {
