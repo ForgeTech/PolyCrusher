@@ -15,6 +15,13 @@ public class BossShield : MonoBehaviour
     [Tooltip("Prefab of the enemy ray.")]
     protected GameObject enemyRay;
 
+    private Vector3 originalScale;
+
+    void Start()
+    {
+        originalScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
     /// <summary>
     /// Detects if a player bullet entered.
     /// </summary>
@@ -25,6 +32,10 @@ public class BossShield : MonoBehaviour
         {
             if (other != null)
             {
+                // Size tween
+                transform.localScale = originalScale * 0.3f;
+                StartCoroutine(transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+
                 Vector3 forward = other.transform.forward;
                 Vector3 position = other.transform.position;
                 

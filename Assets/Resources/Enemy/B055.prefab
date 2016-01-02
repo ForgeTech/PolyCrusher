@@ -73,7 +73,7 @@ GameObject:
   - 114: {fileID: 11440628}
   - 54: {fileID: 5498496}
   - 114: {fileID: 11495486}
-  - 64: {fileID: 6499142}
+  - 64: {fileID: 6449400}
   m_Layer: 16
   m_Name: BossShield
   m_TagString: BossShield
@@ -1085,7 +1085,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.88000011, y: 0, z: -64.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 488048}
@@ -1190,9 +1190,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113332}
-  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
-  m_LocalPosition: {x: .005818367, y: .312999994, z: 1.21099997}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
+  m_LocalPosition: {x: .150000006, y: 1.81099999, z: 1.44200003}
+  m_LocalScale: {x: .800000012, y: .800000012, z: .800000012}
   m_Children: []
   m_Father: {fileID: 486686}
   m_RootOrder: 2
@@ -1226,7 +1226,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113332}
-  m_Mesh: {fileID: 4300000, guid: 9b94ffdf6fff42745adb7df7da3d6b27, type: 3}
+  m_Mesh: {fileID: 4300002, guid: 17a703271d791384f8d48acb64414061, type: 3}
 --- !u!54 &5471296
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -1257,7 +1257,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!64 &6499142
+--- !u!64 &6449400
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1268,7 +1268,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Convex: 1
-  m_Mesh: {fileID: 4300000, guid: 9b94ffdf6fff42745adb7df7da3d6b27, type: 3}
+  m_Mesh: {fileID: 4300002, guid: 17a703271d791384f8d48acb64414061, type: 3}
 --- !u!65 &6581698
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1320,12 +1320,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113332}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01aa40b40ca118548abc39ef52975361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetFactor: .300000012
+  offsetFactor: .0199999996
+  enableScaling: 0
 --- !u!114 &11471678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1395,11 +1396,11 @@ MonoBehaviour:
     phaseProbability: .829999983
     phaseTime: .300000012
   rangedPhase:
-    phaseEnabled: 0
+    phaseEnabled: 1
     phaseProbability: .200000003
     phaseTime: .300000012
   specialPhase:
-    phaseEnabled: 0
+    phaseEnabled: 1
     phaseProbability: .0500000007
     phaseTime: 5
   sprintPhase:

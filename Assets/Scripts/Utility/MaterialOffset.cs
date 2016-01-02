@@ -12,6 +12,9 @@ public class MaterialOffset : MonoBehaviour
     
     [SerializeField]
     protected float offsetFactor = 0.5f;
+    
+    [SerializeField]
+    protected bool enableScaling = true;
 
     Vector2 scaleOffset = new Vector2();
 
@@ -35,8 +38,11 @@ public class MaterialOffset : MonoBehaviour
         r.material.SetTextureOffset("_EmissionMap", new Vector2(offset, sinus));
         r.material.SetTextureOffset("_NormalMap", new Vector2(offset / 200f, sinus));
 
-        r.material.SetTextureScale("_MainTex", scaleOffset);
-        r.material.SetTextureScale("_EmissionMap", scaleOffset);
+        if (enableScaling)
+        {
+            r.material.SetTextureScale("_MainTex", scaleOffset);
+            r.material.SetTextureScale("_EmissionMap", scaleOffset);
+        }
         r.material.SetTextureOffset("_DetailNormalMap", scaleOffset);
     }
 }
