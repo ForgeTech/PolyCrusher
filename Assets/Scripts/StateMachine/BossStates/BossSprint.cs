@@ -10,11 +10,16 @@ public class BossSprint : FSMState
     // Layer of the players
     protected int playerLayer = 8;
 
-    public BossSprint(StateID id)
+    // Reference to boss enemy
+    protected BossEnemy bossEnemy;
+
+    public BossSprint(StateID id, BossEnemy e)
     {
         this.stateID = id;
 
         this.attackFinished = false;
+
+        this.bossEnemy = e;
     }
 
     /// <summary>
@@ -82,6 +87,10 @@ public class BossSprint : FSMState
 
         Debug.Log("Boss: Sprint Attack State");
         attackFinished = false;
+
+        ParticleSystem[] p = bossEnemy.TurbineParticles;
+        for (int i = 0; i < p.Length; i++)
+            p[i].Play();
     }
 
     /// <summary>
@@ -92,6 +101,10 @@ public class BossSprint : FSMState
         base.DoBeforeLeaving();
 
         attackFinished = false;
+
+        ParticleSystem[] p = bossEnemy.TurbineParticles;
+        for (int i = 0; i < p.Length; i++)
+            p[i].Stop();
     }
 
     /// <summary>

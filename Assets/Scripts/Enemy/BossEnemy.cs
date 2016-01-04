@@ -210,6 +210,9 @@ public class BossEnemy : BaseEnemy
     [Header("Boss UI")]
     [Tooltip("Health bar")]
     protected UnityEngine.UI.Image healthLevel;
+
+    // Turbine particles.
+    protected ParticleSystem[] turbineParticles;
     #endregion
 
     #region Properties
@@ -340,6 +343,14 @@ public class BossEnemy : BaseEnemy
     {
         get { return this.meteorSpawnHeight; }
     }
+
+    /// <summary>
+    /// Gets the particle systems.
+    /// </summary>
+    public ParticleSystem[] TurbineParticles
+    {
+        get { return this.turbineParticles; }
+    }
     #endregion
 
     // Event for a killed boss.
@@ -369,6 +380,8 @@ public class BossEnemy : BaseEnemy
             Health = (int)(lifeSetting.threePlayers * Health);
             MaxHealth = Health;
         }
+
+        turbineParticles = GetComponentsInChildren<ParticleSystem>();
     }
 
     /// <summary>
@@ -410,7 +423,7 @@ public class BossEnemy : BaseEnemy
         BossMobSpawn mobSpawn = new BossMobSpawn(MobSpawnPhase.phaseTime, StateID.BossMobSpawn);
         mobSpawn.AddTransition(Transition.AttackFinished, StateID.BossIdle);
 
-        BossSprint bossSprint = new BossSprint(StateID.BossSprint);
+        BossSprint bossSprint = new BossSprint(StateID.BossSprint, this);
         bossSprint.AddTransition(Transition.ReachedDestination, StateID.BossIdle);
 
         fsm = new FSMSystem();
