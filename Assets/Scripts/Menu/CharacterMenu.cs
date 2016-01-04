@@ -137,8 +137,11 @@ public class CharacterMenu : MonoBehaviour
     private GameObject[] slides;
     private Text skipText;
 
+
+    
     void Awake()
     {
+
         spawnBirdman = GameObject.Find("SpawnAudioBirdman").GetComponent<MultipleAudioclips>();
         spawnTimeshifter = GameObject.Find("SpawnAudioTimeshifter").GetComponent<MultipleAudioclips>();
         spawnCharger = GameObject.Find("SpawnAudioCharger").GetComponent<MultipleAudioclips>();
@@ -148,25 +151,14 @@ public class CharacterMenu : MonoBehaviour
         ButtonSwitchEvent += PlaySwitchSound;
         ButtonAcceptEvent += PlayAcceptSound;
         ButtonDeclineEvent += PlayDeclineSound;
-
-        //find slides and disable it
-        // GameObject.Find("slide_1").GetComponent<Image>().enabled = false;
-
-        //GameObject.Find("slide_2").GetComponent<Image>().enabled = false;
-        //GameObject.Find("slide_3").GetComponent<Image>().enabled = false;
-        //GameObject.Find("slide_text").GetComponent<Image>().enabled = false;
-
-       
+                
         slides = new GameObject[3];
         slides[0] = GameObject.Find("slide_1");
-        //updateLanguage(slides[0]);
+     
         skipText = slides[0].GetComponentInChildren<Text>();
-        
-
-
-        
+                
         slides[1] = GameObject.Find("slide_2");
-        //updateLanguage(slides[1]);
+       
 
         
         slides[2] = GameObject.Find("slide_3");
@@ -174,8 +166,6 @@ public class CharacterMenu : MonoBehaviour
         infoBar = GameObject.Find("InfoBar");
     
         gamerCountdown = GameObject.Find("GameStartsImage");
-       
-
         //updateLanguage(slides[2]);
 
         skipText.enabled = false;
@@ -226,7 +216,7 @@ public class CharacterMenu : MonoBehaviour
         playerSelection = new int[4] { -1, -1, -1, -1 };
         currentHoveredChar = new int[4] { -1, -1, -1, -1 };
         cursorColors = new Color[4] { Color.red, Color.cyan, Color.yellow, Color.white };
-        playerClassNames = new string[4] { "Birdman", "Charger", "Fatman", "Timeshifter" };
+        playerClassNames = new string[6] { "Birdman", "Charger", "Fatman", "Timeshifter", "Babuschka", "Random" };
 
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
         levelInfo.ClearPlayerArrays();
@@ -269,22 +259,20 @@ public class CharacterMenu : MonoBehaviour
 
     }
 
+
+
+
+
+
+
    
 
 
+
+
+
     IEnumerator ScalePlayerImages()
-    {
-
-
-
-        //playerImages[0] = GameObject.Find("Birdman");
-        //playerImages[1] = GameObject.Find("Charger");
-        //playerImages[2] = GameObject.Find("Fatman");
-        //playerImages[3] = GameObject.Find("TimeShifter");
-
-        //for (int i = 0; i < playerImages.Length; i++) {
-        //	playerImages[i].GetComponent<Image>().enabled = false;
-        //}
+    {  
 
         yield return new WaitForSeconds(0.3f);
 
@@ -316,6 +304,9 @@ public class CharacterMenu : MonoBehaviour
                 CheckHover();
                 HandleBackButton();
                 RefreshImages();
+
+
+
 
             }
             else

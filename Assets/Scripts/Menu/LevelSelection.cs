@@ -269,7 +269,7 @@ public class LevelSelection : MonoBehaviour
 					levelInfo.levelIndex = levelIndices [levelIndex];
 					
 					OnButtonAccepted ();
-					GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().ChangeScenes ("LevelSelectionObject(Clone)", "Scenes/Menu/CharacterSelectionObject", false);
+					GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().ChangeScenes ("LevelSelectionObject(Clone)", "Scenes/Menu/CharacterSelectionObjectNew", false);
 				}
 			}
 		} else {
