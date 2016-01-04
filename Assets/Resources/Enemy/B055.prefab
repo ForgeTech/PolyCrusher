@@ -104,10 +104,9 @@ GameObject:
   - 4: {fileID: 497606}
   - 33: {fileID: 3370790}
   - 23: {fileID: 2329584}
-  - 114: {fileID: 11440628}
   - 54: {fileID: 5498496}
   - 114: {fileID: 11495486}
-  - 64: {fileID: 6449400}
+  - 64: {fileID: 6455550}
   m_Layer: 16
   m_Name: BossShield
   m_TagString: BossShield
@@ -1142,8 +1141,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141898}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -38.0987816, y: -3.81469727e-06, z: -83.1260452}
+  m_LocalRotation: {x: 0, y: .997325301, z: 0, w: -.0730916411}
+  m_LocalPosition: {x: -2.5999999, y: 0, z: 7.84000015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 488048}
@@ -1251,8 +1250,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113332}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: .150000006, y: 1.81099999, z: 1.44200003}
-  m_LocalScale: {x: .800000012, y: .800000012, z: .800000012}
+  m_LocalPosition: {x: -.00999999978, y: 1.47959995, z: 1.77199996}
+  m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
   m_Father: {fileID: 486686}
   m_RootOrder: 2
@@ -1286,7 +1285,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113332}
-  m_Mesh: {fileID: 4300002, guid: 17a703271d791384f8d48acb64414061, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 80b86250d6717fe42a66697f6487893d, type: 3}
 --- !u!54 &5471296
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -1317,7 +1316,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!64 &6449400
+--- !u!64 &6455550
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1328,7 +1327,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Convex: 1
-  m_Mesh: {fileID: 4300002, guid: 17a703271d791384f8d48acb64414061, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 80b86250d6717fe42a66697f6487893d, type: 3}
 --- !u!65 &6581698
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1374,19 +1373,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &11440628
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113332}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01aa40b40ca118548abc39ef52975361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetFactor: .0199999996
-  enableScaling: 0
 --- !u!114 &11471678
 MonoBehaviour:
   m_ObjectHideFlags: 1
