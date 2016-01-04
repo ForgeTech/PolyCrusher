@@ -320,6 +320,7 @@ public class AbilityCharge : Ability {
             }
         }
 
+        /*
         Collider[] collidingRigidbodies = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 15);
 
         foreach (Collider objects in collidingRigidbodies)
@@ -330,7 +331,7 @@ public class AbilityCharge : Ability {
                 colliderRigidbody.AddExplosionForce(13f, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
             }
         }
-
+        */
         // Deal damage.
         DealDamage();      
 
