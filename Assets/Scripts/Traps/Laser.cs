@@ -43,7 +43,7 @@ public class Laser : MonoBehaviour
                         BasePlayer player = hit.transform.GetComponent<BasePlayer>();
                         Vector3 tmpPosition = player.GetComponent<Transform>().position;
                         Quaternion tmpRotation = player.GetComponent<Transform>().rotation;
-                        player.CurrentDeathTime = 0;
+                        player.CurrentDeathTime = 0.0f;
                         if (player.Health == 0)
                         {
                             addScript = false;

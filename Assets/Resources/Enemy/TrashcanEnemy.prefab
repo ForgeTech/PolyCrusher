@@ -455,7 +455,7 @@ MonoBehaviour:
   health: 90
   minHealth: 0
   maxHealth: 100
-  enemyName: Trashcan
+  enemyName: TrashCan
   movementSpeed: 7
   meleeAttackDamage: 7
   pushAwayForce: 3.5
@@ -553,6 +553,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: health
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: enemyName
+      value: TrashCan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

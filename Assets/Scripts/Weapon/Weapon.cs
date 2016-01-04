@@ -105,7 +105,12 @@ public abstract class Weapon : MonoBehaviour, IUsable
         shootIsAllowed = true;
         gunSound = GetComponent<AudioSource>();
     }
-    
+
+    void OnEnable()
+    {
+        shootIsAllowed = true;
+        Debug.Log("(((((((((((((((())))))))))))))))))))))))))))))))");
+    }
 
     /// <summary>
     /// Implements the shoot behaviour of the weapon.

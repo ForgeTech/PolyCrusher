@@ -482,7 +482,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     void OnEnable()
     {
         this.CurrentDeathTime = deathTime;
-    }
+        this.allowEnergyRefill = true;
+        this.invincible = false;
+}
 
         // Update is called once per frame
         void Update () 

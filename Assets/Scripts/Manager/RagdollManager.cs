@@ -106,10 +106,17 @@ public class RagdollManager : MonoBehaviour
     {    
         // Traverse the bones and apply the force to all of them.
         foreach (GameObject objects in boneArray)
-        {            
-            Rigidbody colliderRigidbody = objects.gameObject.GetComponent<Rigidbody>();
-            colliderRigidbody.AddExplosionForce(explosionForce, originForcePosition, explosionRadius, upwardsModifier, ForceMode.Impulse);
-            CheckAndSplitChild(objects);
+        {
+            if (objects != null)
+            {
+                Rigidbody colliderRigidbody = objects.gameObject.GetComponent<Rigidbody>();
+
+                if (colliderRigidbody != null)
+                {
+                    colliderRigidbody.AddExplosionForce(explosionForce, originForcePosition, explosionRadius, upwardsModifier, ForceMode.Impulse);
+                    CheckAndSplitChild(objects);
+                }
+            }
         }
     }
 
