@@ -25,6 +25,7 @@ GameObject:
   - 4: {fileID: 465980}
   - 114: {fileID: 11494592}
   - 65: {fileID: 6519190}
+  - 54: {fileID: 5468542}
   m_Layer: 15
   m_Name: ArmUpper
   m_TagString: Untagged
@@ -57,6 +58,7 @@ GameObject:
   - 4: {fileID: 440472}
   - 114: {fileID: 11479838}
   - 65: {fileID: 6575336}
+  - 54: {fileID: 5438194}
   m_Layer: 15
   m_Name: Gun
   m_TagString: Untagged
@@ -137,6 +139,7 @@ GameObject:
   - 4: {fileID: 467582}
   - 114: {fileID: 11476618}
   - 65: {fileID: 6535296}
+  - 54: {fileID: 5489304}
   m_Layer: 15
   m_Name: Head
   m_TagString: Untagged
@@ -418,6 +421,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!54 &5438194
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113414}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &5468542
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108002}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &5489304
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147448}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &5497420
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -598,7 +646,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 145676}
