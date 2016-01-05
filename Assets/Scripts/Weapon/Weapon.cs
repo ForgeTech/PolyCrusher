@@ -109,7 +109,6 @@ public abstract class Weapon : MonoBehaviour, IUsable
     void OnEnable()
     {
         shootIsAllowed = true;
-        Debug.Log("(((((((((((((((())))))))))))))))))))))))))))))))");
     }
 
     /// <summary>

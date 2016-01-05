@@ -75,13 +75,18 @@ public abstract class Ability : MonoBehaviour, IUsable
 
         abilityAudioSource = GetComponent<AudioSource>();
 	}
+
+    void OnEnable()
+    {
+        useIsAllowed = true;
+    }
     #endregion
 
 
-    #region Methods
-    /// <summary>
-    /// Implements the use behaviour of the ability.
-    /// </summary>
+        #region Methods
+        /// <summary>
+        /// Implements the use behaviour of the ability.
+        /// </summary>
     public virtual void Use()
     {
         abilityAudioSource.Play();

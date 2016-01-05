@@ -313,6 +313,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &167902
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 420426}
+  m_Layer: 0
+  m_Name: PantomimeBullet_Root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &172654
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +591,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.05941617, y: 6.30673504, z: 5.92782307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 415452}
@@ -622,6 +637,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 482048}
   m_RootOrder: 5
+--- !u!4 &420426
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.05941617, y: -6.30673504, z: -5.92782307}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 482048}
+  m_RootOrder: 13
 --- !u!4 &426558
 Transform:
   m_ObjectHideFlags: 1
@@ -849,6 +876,7 @@ Transform:
   - {fileID: 473570}
   - {fileID: 457084}
   - {fileID: 477280}
+  - {fileID: 420426}
   m_Father: {fileID: 415424}
   m_RootOrder: 14
 --- !u!4 &486810
@@ -1515,11 +1543,11 @@ MonoBehaviour:
   - prefab: {fileID: 186664, guid: 54d7b30f945e7f34396f35cffc3bf03a, type: 2}
     despawned: []
     spawned: []
-    m_Root: {fileID: 0}
+    m_Root: {fileID: 420426}
     allowMore: 1
     debugMessages: 0
     size: 40
-    foldout: 0
+    foldout: 1
   debugMessages: 0
   spawnDespawnMessages: 0
   foldout: 0
@@ -1630,7 +1658,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: pools.Array.size
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnInfo.Array.size
@@ -1850,7 +1878,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: pools.Array.data[13].foldout
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: pools.Array.data[13].debugMessages
@@ -1867,6 +1895,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: pools.Array.data[2].foldout
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[13].prefab
+      value: 
+      objectReference: {fileID: 186664, guid: 54d7b30f945e7f34396f35cffc3bf03a, type: 2}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[13].m_Root
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
