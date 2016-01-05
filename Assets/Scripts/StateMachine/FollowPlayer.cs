@@ -39,7 +39,7 @@ public class FollowPlayer : FSMState
                 // Set animator speed back to 1.
                 Animator anim = npc.GetComponent<Animator>();
                 anim.speed = 1;
-
+                
                 e.SetTransition(Transition.InPlayerAttackRange);
             }
         }
@@ -55,11 +55,12 @@ public class FollowPlayer : FSMState
     public override void Act(GameObject player, GameObject npc)
     {
         NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
-
-        if (agent.enabled)
+        
+        if (agent.enabled && !agent.pathPending)
         {
             agent.updateRotation = true;
             agent.Resume();
+
             agent.SetDestination(player.transform.position);
         }
 
@@ -67,11 +68,19 @@ public class FollowPlayer : FSMState
         Animator anim = npc.GetComponent<Animator>();
         float moveValue = (agent.desiredVelocity).magnitude / npc.GetComponent<BaseEnemy>().InitialMovementSpeed;
 
-        //Debug.Log(moveValue);
+        //Debug.Log("Move Value: " + moveValue);
         if (anim != null)
         {
-            anim.speed = moveValue;
-            anim.SetFloat("MoveValue", moveValue);
+            if (!agent.pathPending)
+            {
+                anim.speed = moveValue;
+                anim.SetFloat("MoveValue", moveValue);
+            }
+            else
+            {
+                anim.speed = 1f;
+                anim.SetFloat("MoveValue", 1.0f);
+            }
         }
     }
 

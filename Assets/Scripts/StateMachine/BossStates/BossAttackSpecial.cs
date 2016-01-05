@@ -44,7 +44,7 @@ public class BossAttackSpecial : BossAttackMelee
 
                 if (m != null && m is BasePlayer)
                 {
-                    if (e.TargetPlayer != null)
+                    if (e.TargetPlayer != null && e.TargetPlayer.GetComponent<BasePlayer>() != null)
                     {
                         // If the names aren't equal there is no hit.
                         if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
