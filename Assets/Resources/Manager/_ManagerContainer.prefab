@@ -1511,7 +1511,15 @@ MonoBehaviour:
     allowMore: 1
     debugMessages: 0
     size: 35
-    foldout: 1
+    foldout: 0
+  - prefab: {fileID: 186664, guid: 54d7b30f945e7f34396f35cffc3bf03a, type: 2}
+    despawned: []
+    spawned: []
+    m_Root: {fileID: 0}
+    allowMore: 1
+    debugMessages: 0
+    size: 40
+    foldout: 0
   debugMessages: 0
   spawnDespawnMessages: 0
   foldout: 0
@@ -1620,6 +1628,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: pools.Array.size
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnInfo.Array.size
       value: 9
@@ -1820,6 +1832,42 @@ Prefab:
       propertyPath: ragdollPrefabs.Array.data[9]
       value: 
       objectReference: {fileID: 165106, guid: 60e4c90d8e3f55e44989a42d23982226, type: 2}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[12].foldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[3].foldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[0].foldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[1].foldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[13].foldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[13].debugMessages
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[13].allowMore
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[13].size
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[2].foldout
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172654}
