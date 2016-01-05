@@ -62,11 +62,11 @@ public class LanguageFileReader : MonoBehaviour {
     {
         foreach(Dictionary<string, string> dict in languages)
         {
-            Debug.Log("dict");
+            //Debug.Log("dict");
             if(dict["name"] == selectedLanguage)
             {
                 currentLanguage = dict;
-                Debug.Log("dict: " + currentLanguage.Count);
+                //Debug.Log("dict: " + currentLanguage.Count);
             }
         }
     }

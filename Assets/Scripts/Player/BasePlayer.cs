@@ -484,6 +484,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         this.CurrentDeathTime = deathTime;
         this.allowEnergyRefill = true;
         this.invincible = false;
+
+        Rigidbody rigid = GetComponent<Rigidbody>();
+        if (rigid != null)
+            rigid.mass = 0.2f;
 }
 
         // Update is called once per frame
