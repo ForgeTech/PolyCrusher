@@ -149,7 +149,7 @@ public class BossAttackMelee : FSMState
 
                 if (m != null && m is BasePlayer)
                 {
-                    if (e.TargetPlayer.GetComponent<BasePlayer>() != null)
+                    if (e.TargetPlayer != null && e.TargetPlayer.GetComponent<BasePlayer>() != null)
                     {
                         // If the names aren't equal there is no hit.
                         if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)

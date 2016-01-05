@@ -133,9 +133,12 @@ public class BossSprint : FSMState
 
                 if (m != null && m is BasePlayer)
                 {
-                    // If the names aren't equal there is no hit.
-                    if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
-                        hit = false;
+                    if (e.TargetPlayer != null && e.TargetPlayer.GetComponent<BasePlayer>() != null)
+                    {
+                        // If the names aren't equal there is no hit.
+                        if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
+                            hit = false;
+                    }
                 }
             }
 
