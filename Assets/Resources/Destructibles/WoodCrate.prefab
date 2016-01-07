@@ -110,6 +110,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 191898, guid: 89c14861e46496a44b12daf67b6a76ec, type: 2}
+  powerUpProbability: .100000001
 --- !u!208 &20810182
 NavMeshObstacle:
   m_ObjectHideFlags: 1
@@ -131,7 +133,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: powerUpPrefab
+      value: 
+      objectReference: {fileID: 191898, guid: 89c14861e46496a44b12daf67b6a76ec, type: 2}
+    - target: {fileID: 0}
+      propertyPath: powerUpProbability
+      value: .100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102728}

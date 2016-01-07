@@ -26,6 +26,15 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     private DestructibleRespawn respawnScript;
     public List<Deactivator> deactivators;
 
+    [Header("Power Up")]
+    [SerializeField]
+    [Tooltip("Power up prefab for line cutting.")]
+    protected GameObject powerUpPrefab;
+
+    [SerializeField]
+    [Tooltip("Probability for a power up spawn.")]
+    protected float powerUpProbability = 0.05f;
+
     public struct Tri
     {
         public int x;
@@ -277,6 +286,10 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 }
             }
         }
+
+        // Spawn PowerUp
+        SpawnPowerUp();
+
         MR.enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Collider>().enabled = false;
@@ -316,7 +329,18 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         health = hitsTillExplosion;
     }
 
-
+    /// <summary>
+    /// Spawns the line cut power up.
+    /// </summary>
+    protected void SpawnPowerUp()
+    {
+        // Spawn based on the probability
+        if (powerUpPrefab != null && Random.value < powerUpProbability)
+        {
+            // Instantiate
+            Instantiate(powerUpPrefab, transform.position, powerUpPrefab.transform.rotation);
+        }
+    }
 
     void OnDisable()
     {
