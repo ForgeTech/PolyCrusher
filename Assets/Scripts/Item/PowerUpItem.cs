@@ -15,7 +15,7 @@ public class PowerUpItem : BaseItem {
 
 	// Enum of the Power Ups to show it as a dropdown menu
 	public enum PowerUpEnum{
-		addHealth,addEnergy,weaponDamage,weaponFireRate,addMaxHealth,addMaxEnergy
+		addHealth,addEnergy,weaponDamage,weaponFireRate,addMaxHealth,addMaxEnergy,lineCut
 	}
 
 	// If true, the value of the power up will be added permanently to the player
@@ -37,6 +37,10 @@ public class PowerUpItem : BaseItem {
     // PowerUpEnum variable
 	[SerializeField]
 	private PowerUpEnum type;
+
+    [SerializeField]
+    [Tooltip("Determines if the power up is part of the Pissing Pete or if it is a single power up.")]
+    private bool singlePowerUp = false;
 
     // Add some spacing in the Unity Inspector
     [Space(5)]
@@ -116,6 +120,24 @@ public class PowerUpItem : BaseItem {
 					AddFireRate.breakAndRestart();
 				}
 			}
+
+            if (type == PowerUpEnum.lineCut)
+            {
+                // Only non permanent
+                PowerUpCut lineCut = player.gameObject.GetComponent<PowerUpCut>();
+
+                if (lineCut == null)
+                {
+                    lineCut = player.gameObject.AddComponent<PowerUpCut>();
+                    lineCut.powerUpActiveTime = outlastTime;
+                    lineCut.Use();
+                }
+                else
+                {
+                    lineCut.powerUpActiveTime = outlastTime;
+                    lineCut.breakAndRestart();
+                }
+            }
             //==================TEMPORARY_OR_PERMANENTLY_ADD_POWERUPS_end================================
 
             //=============PROTOTYPE_POWERUPS_START==================
@@ -133,7 +155,8 @@ public class PowerUpItem : BaseItem {
             //=============PROTOTYPE_POWERUPS_END====================
 
             // Trigger Event.
-            CollectingPowerUp();
+            if(!singlePowerUp)
+                CollectingPowerUp();
 
 			// Set the player as parent gameobject for the colliding object
 			GameObject playerParent = collider.gameObject;
