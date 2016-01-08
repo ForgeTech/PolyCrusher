@@ -1972,7 +1972,7 @@ MonoBehaviour:
   healthLevel: {fileID: 11478264}
   innerEnergyCircle: {fileID: 11404136}
   cameraEdgeDetectionOffset: -.00999999978
-  bloodParticles: {fileID: 149012, guid: d2b02fc2717b02f43bf0dde09455c16a, type: 2}
+  bloodParticles: {fileID: 149012, guid: 7e0d42e889efde4448c4983a3a8a5c60, type: 2}
   characterVoice: {fileID: 170934}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
 --- !u!114 &11415850
@@ -2389,7 +2389,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: bloodParticles
+      value: 
+      objectReference: {fileID: 149012, guid: 7e0d42e889efde4448c4983a3a8a5c60, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193704}

@@ -69,6 +69,9 @@ public class Laser : MonoBehaviour
                             case "Babuschka":
                                 destroyMesh = trap.playerMeshes[4];
                                 break;
+                            case "Pantomime":
+                                destroyMesh = trap.playerMeshes[5];
+                                break;
                         }
                         if (destroyMesh != null)
                         {
