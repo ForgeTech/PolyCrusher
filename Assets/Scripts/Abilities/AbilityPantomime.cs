@@ -21,7 +21,7 @@ public class AbilityPantomime : Ability
             GameObject wall = Instantiate(wallPrefab);
             BasePlayer p = OwnerScript.GetComponent<BasePlayer>();
 
-            wall.transform.position = transform.position + transform.forward * 1.5f;
+            wall.transform.position = transform.position + transform.forward * 2f;
             wall.transform.rotation = transform.rotation;
 
             useIsAllowed = false;
