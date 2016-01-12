@@ -29,6 +29,9 @@ public class DeathTrap : Trap, ITriggerable
 
         if (other.tag == "Player")
         {
+            //sound event
+            OnTrapTriggered();
+
             // get the BasePlayer of the Game Object
             BasePlayer player = other.GetComponent<BasePlayer>();
             Vector3 tmpPosition = other.GetComponent<Transform>().position;

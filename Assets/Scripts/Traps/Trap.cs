@@ -2,6 +2,8 @@
 using System.Collections;
 using System;
 
+public delegate void TrapAction(Trap trap);
+
 public class Trap : MonoBehaviour,ITriggerable {
 
     #region Class Members
@@ -28,6 +30,9 @@ public class Trap : MonoBehaviour,ITriggerable {
 
     //trap can only be triggered if this is false
     protected bool isActive = false;
+
+    //sound event
+    public static event TrapAction TrapTriggered;
 
     #endregion
 
@@ -72,6 +77,7 @@ public class Trap : MonoBehaviour,ITriggerable {
     public void Awake()
     {
         ResetTrap();
+        LevelEndManager.levelExitEvent += ResetEvents;
     }
 
     //calls the trigger method if all triggers are active with reference on the collider that entered the very FIRST trigger
@@ -96,6 +102,21 @@ public class Trap : MonoBehaviour,ITriggerable {
                 Trigger(triggers[0].collided);
             }
         }
+    }
+
+    //method for trigger event
+    public void OnTrapTriggered()
+    {
+        if (TrapTriggered != null)
+        {
+            TrapTriggered(this);
+        }
+    }
+
+    //reset event values 
+    public void ResetEvents()
+    {
+        TrapTriggered = null;
     }
 
     #endregion

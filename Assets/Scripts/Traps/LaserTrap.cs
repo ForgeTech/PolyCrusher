@@ -19,6 +19,12 @@ public class LaserTrap : Trap, ITriggerable
     {
         if (!gameObject.GetComponent<Laser>())
         {
+            if (other.tag == "Player")
+            {
+                //sound event
+                OnTrapTriggered();
+            }
+
             gameObject.AddComponent<Laser>();
         }
     }
