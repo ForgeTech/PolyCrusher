@@ -561,6 +561,7 @@ public class BossEnemy : BaseEnemy
     {
         base.ResetValues();
         BossKilled = null;
+        BossSpawned = null;
         spawnCount = 0;
     }
 }
