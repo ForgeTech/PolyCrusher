@@ -7,6 +7,12 @@ using System.Collections;
 /// <param name="boss">Boss who died.</param>
 public delegate void BossKilledEventHandler(BossEnemy boss);
 
+/// <summary>
+/// Event handler for a spawned boss.
+/// </summary>
+/// <param name="boss"></param>
+public delegate void BossSpawnedEventHandler(BossEnemy boss);
+
 public class BossEnemy : BaseEnemy
 {
     #region Inner Classes
@@ -124,6 +130,10 @@ public class BossEnemy : BaseEnemy
     PlayerLifeSettings lifeSetting;
 
     [SerializeField]
+    [Tooltip("Additional health value which will be added per boss wave.")]
+    protected int additionHealthPerWave = 1000;
+
+    [SerializeField]
     [Header("Range attack values")]
     [Tooltip("The damage of the ranged attack.")]
     protected int rangedAttackDamage = 10;
@@ -213,6 +223,9 @@ public class BossEnemy : BaseEnemy
 
     // Turbine particles.
     protected ParticleSystem[] turbineParticles;
+
+    // The overall spawn count of the boss.
+    private static int spawnCount = 0;
     #endregion
 
     #region Properties
@@ -356,15 +369,19 @@ public class BossEnemy : BaseEnemy
     // Event for a killed boss.
     public static event BossKilledEventHandler BossKilled;
 
+    // Event for a spawned boss.
+    public static event BossSpawnedEventHandler BossSpawned;
+
     protected override void Start()
     {
         base.Start();
+        spawnCount++;
 
         // Set boss health based on the playercount
         if (PlayerManager.PlayerCount == 1)
         {
-            Health = (int)(lifeSetting.onePlayer * Health);
-            MaxHealth = Health;
+            MaxHealth = (int)(lifeSetting.onePlayer * Health);
+            Health = MaxHealth;
 
             BossShield s = GetComponentInChildren<BossShield>();
             if (s != null)
@@ -372,16 +389,26 @@ public class BossEnemy : BaseEnemy
         }
         else if (PlayerManager.PlayerCount == 2)
         {
-            Health = (int)(lifeSetting.twoPlayers * Health);
-            MaxHealth = Health;
+            MaxHealth = (int)(lifeSetting.twoPlayers * Health);
+            Health = MaxHealth;
         }
         else if (PlayerManager.PlayerCount == 3)
         {
-            Health = (int)(lifeSetting.threePlayers * Health);
-            MaxHealth = Health;
+            MaxHealth = (int)(lifeSetting.threePlayers * Health);
+            Health = MaxHealth;
+        }
+
+        // Add health value when the boss is spawned more often.
+        if (spawnCount > 1)
+        {
+            MaxHealth = MaxHealth + ((spawnCount - 1) * additionHealthPerWave);
+            Health = MaxHealth;
         }
 
         turbineParticles = GetComponentsInChildren<ParticleSystem>();
+
+        // Fire spawn event.
+        OnBossSpawned();
     }
 
     /// <summary>
@@ -480,6 +507,14 @@ public class BossEnemy : BaseEnemy
             BossKilled(this);
     }
 
+    /// <summary>
+    /// Event method for the Boss spawn event.
+    /// </summary>
+    protected virtual void OnBossSpawned()
+    {
+        if (BossSpawned != null)
+            BossSpawned(this);
+    }
 
     /// <summary>
     /// Draws the object some damage and lowers the health.
@@ -526,5 +561,6 @@ public class BossEnemy : BaseEnemy
     {
         base.ResetValues();
         BossKilled = null;
+        spawnCount = 0;
     }
 }
