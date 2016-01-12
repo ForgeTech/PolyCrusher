@@ -108,7 +108,7 @@ MonoBehaviour:
   hitsTillExplosion: 4
   explodeable: 1
   respawn: 1
-  timeTillRespawn: 10
+  timeTillRespawn: 20
   deactivators: []
   powerUpPrefab: {fileID: 191898, guid: 89c14861e46496a44b12daf67b6a76ec, type: 2}
   powerUpProbability: .100000001
@@ -141,6 +141,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: powerUpProbability
       value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: timeTillRespawn
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
