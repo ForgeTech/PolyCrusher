@@ -1417,9 +1417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ad6b5b83d57d24aac84822d04af6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 8000
+  health: 7000
   minHealth: 0
-  maxHealth: 8000
+  maxHealth: 7000
   enemyName: B055
   movementSpeed: 15
   meleeAttackDamage: 15
@@ -1431,9 +1431,9 @@ MonoBehaviour:
   hitLightTime: .200000003
   maxEnemyLifeTime: 3000
   lifeSetting:
-    onePlayer: .5
-    twoPlayers: .649999976
-    threePlayers: .850000024
+    onePlayer: .400000006
+    twoPlayers: .5
+    threePlayers: .699999988
   rangedAttackDamage: 5
   rangedAttackInterval: .150000006
   rangedAttackRange: 15
@@ -3846,6 +3846,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: sprintPhase.sprintTriggerDamage
       value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lifeSetting.onePlayer
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lifeSetting.twoPlayers
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lifeSetting.threePlayers
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 7000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 7000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
