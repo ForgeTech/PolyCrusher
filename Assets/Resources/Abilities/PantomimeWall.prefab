@@ -42,6 +42,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
+  - {fileID: 2100000, guid: 0d5a842e54700d943b8a6a136153c311, type: 2}
   - {fileID: 2100000, guid: b0125e72c4ef61043ad8478556f0bbc2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
@@ -111,6 +112,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: activeTime
       value: 6
       objectReference: {fileID: 0}
@@ -138,6 +143,10 @@ Prefab:
       propertyPath: m_TimeToStationary
       value: .0500000007
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0d5a842e54700d943b8a6a136153c311, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 192818}
