@@ -7,11 +7,12 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: PantomimeWall
-  m_Shader: {fileID: 4800000, guid: 963484209d11fd7f110076aa44295342, type: 3}
-  m_ShaderKeywords: _NORMALMAP
-  m_LightmapFlags: 5
+  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _NORMALMAP
+  m_LightmapFlags: 1
   m_CustomRenderQueue: 3000
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Transparent
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -93,7 +94,7 @@ Material:
       data:
         first:
           name: _DstBlend
-        second: 0
+        second: 10
       data:
         first:
           name: _Cutoff
@@ -105,11 +106,11 @@ Material:
       data:
         first:
           name: _ZWrite
-        second: 1
+        second: 0
       data:
         first:
           name: _Glossiness
-        second: .621999979
+        second: .257999986
       data:
         first:
           name: _BumpScale
@@ -128,25 +129,25 @@ Material:
         second: 0
       data:
         first:
+          name: _EmissionScaleUI
+        second: .289999992
+      data:
+        first:
           name: _Mode
-        second: 0
+        second: 3
       data:
         first:
           name: _Metallic
         second: 0
       data:
         first:
-          name: _EmissionScaleUI
-        second: .289999992
-      data:
-        first:
           name: _BumpAmt
-        second: 77.9000015
+        second: 77
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: .308999985, g: .308999985, b: .308999985, a: 1}
       data:
         first:
           name: _Color
