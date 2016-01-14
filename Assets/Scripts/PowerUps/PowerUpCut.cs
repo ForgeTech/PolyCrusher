@@ -3,11 +3,18 @@ using System.Collections;
 
 public class PowerUpCut : PowerUp
 {
+    // Reference to the linesystem.
+    protected LineSystem lineSystem;
+
+    protected void Start()
+    {
+        lineSystem = GameObject.FindObjectOfType<LineSystem>();
+    }
+
     public override void Use()
     {
-        //============================
-        //TODO: Activate Cut script
-        //============================
+        if (lineSystem != null)
+            lineSystem.ActivateCutting();
 
         StartCoroutine("WaitUntilReset");
     }
@@ -15,10 +22,6 @@ public class PowerUpCut : PowerUp
     protected IEnumerator WaitUntilReset()
     {
         yield return new WaitForSeconds(powerUpActiveTime);
-        
-        //============================
-        //TODO: Deactivate Cut script
-        //============================
 
         Destroy(this);
         Destroy(transform.parent);
