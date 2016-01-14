@@ -85,7 +85,7 @@ public class BossSprint : FSMState
     {
         base.DoBeforeEntering();
 
-        Debug.Log("Boss: Sprint Attack State");
+        //Debug.Log("Boss: Sprint Attack State");
         attackFinished = false;
 
         ParticleSystem[] p = bossEnemy.TurbineParticles;

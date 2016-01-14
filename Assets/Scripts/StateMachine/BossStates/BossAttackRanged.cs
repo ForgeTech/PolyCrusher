@@ -12,7 +12,7 @@ public class BossAttackRanged : BossAttackMelee
     /// </summary>
     public override void DoBeforeEntering()
     {
-        Debug.Log("Boss: Ranged Attack State");
+        //Debug.Log("Boss: Ranged Attack State");
 
         if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;
@@ -71,7 +71,7 @@ public class BossAttackRanged : BossAttackMelee
         // Attack only if allowed.
         if (attackAllowed && !attackStarted)
         {
-            Debug.Log("RangedBoss: Attack!");
+            //Debug.Log("RangedBoss: Attack!");
 
             //Play animation.
             Animator anim = e.GetComponent<Animator>();

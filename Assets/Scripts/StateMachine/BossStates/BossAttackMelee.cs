@@ -106,7 +106,7 @@ public class BossAttackMelee : FSMState
     {
         base.DoBeforeEntering();
 
-        Debug.Log("Boss: Melee Attack State");
+        //Debug.Log("Boss: Melee Attack State");
 
         if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;

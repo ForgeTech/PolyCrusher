@@ -64,7 +64,7 @@ public class BossIdle : FSMState
         // Calculate new target player.
         bossEnemy.CalculateTargetPlayer();
 
-        Debug.Log("Boss: Idle State");
+        //Debug.Log("Boss: Idle State");
     }
 
     /// <summary>

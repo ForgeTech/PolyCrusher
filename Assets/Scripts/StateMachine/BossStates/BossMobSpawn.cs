@@ -51,7 +51,7 @@ public class BossMobSpawn : FSMState
     /// </summary>
     public override void DoBeforeEntering()
     {
-        Debug.Log("Boss: Mob Spawn State");
+        //Debug.Log("Boss: Mob Spawn State");
 
         if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;

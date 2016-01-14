@@ -12,7 +12,7 @@ public class BossAttackSpecial : BossAttackMelee
     /// </summary>
     public override void DoBeforeEntering()
     {
-        Debug.Log("Boss: Special Attack State");
+        //Debug.Log("Boss: Special Attack State");
 
         if (currentPhaseTime <= 0f)
             this.currentPhaseTime = this.phaseTime;

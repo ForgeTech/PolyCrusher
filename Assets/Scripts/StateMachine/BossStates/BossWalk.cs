@@ -72,7 +72,7 @@ public class BossWalk : FSMState
     {
         base.DoBeforeEntering();
 
-        Debug.Log("Boss: Walk State");
+        //Debug.Log("Boss: Walk State");
     }
 
     /// <summary>
