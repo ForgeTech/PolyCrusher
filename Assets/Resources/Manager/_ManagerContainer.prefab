@@ -14,6 +14,8 @@ GameObject:
   - 114: {fileID: 11470604}
   - 114: {fileID: 11490592}
   - 114: {fileID: 11449808}
+  - 114: {fileID: 11456658}
+  - 114: {fileID: 11442916}
   m_Layer: 0
   m_Name: Announcer
   m_TagString: Untagged
@@ -1463,6 +1465,19 @@ MonoBehaviour:
   - {fileID: 190022, guid: bfff6609152739043a7199d4c7c47b2f, type: 2}
   FountainEmissionRate: 80
   PondEmissionRate: 15
+--- !u!114 &11442916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 715c6e834fcdd2c468b371bb7042b717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioCategory: PolyFail
+  clips: []
 --- !u!114 &11446570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1559,6 +1574,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioCategory: PlayerDeath
+  clips: []
+--- !u!114 &11456658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 715c6e834fcdd2c468b371bb7042b717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioCategory: PolyExecute
   clips: []
 --- !u!114 &11457946
 MonoBehaviour:

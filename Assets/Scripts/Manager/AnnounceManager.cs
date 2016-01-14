@@ -12,6 +12,8 @@ public class AnnounceManager : MonoBehaviour
     protected MultipleAudioclips trap;
     protected MultipleAudioclips bossWave;
     protected MultipleAudioclips playerDeath;
+    protected MultipleAudioclips polyExecute;
+    protected MultipleAudioclips polyFail;
 
     // Use this for initialization
     void Start ()
@@ -75,6 +77,24 @@ public class AnnounceManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Announces the poly execute.
+    /// </summary>
+    protected void AnnouncePolyExecute()
+    {
+        if (polyExecute != null)
+            polyExecute.PlayRandomClip();
+    }
+
+    /// <summary>
+    /// Announces the poly fail.
+    /// </summary>
+    protected void AnnouncePolyFail()
+    {
+        if (polyFail != null)
+            polyFail.PlayRandomClip();
+    }
+
+    /// <summary>
     /// Initializes the sound.
     /// </summary>
     protected virtual void InitializeAudioSource()
@@ -104,6 +124,10 @@ public class AnnounceManager : MonoBehaviour
                         bossWave = clips[i];
                     if (clips[i].AudioCategory == "PlayerDeath")
                         playerDeath = clips[i];
+                    if (clips[i].AudioCategory == "PolyExecute")
+                        polyExecute = clips[i];
+                    if (clips[i].AudioCategory == "PolyFail")
+                        polyFail = clips[i];
                 }
             }
         }
