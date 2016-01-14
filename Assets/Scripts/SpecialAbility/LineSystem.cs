@@ -14,7 +14,7 @@ public class LineSystem : MonoBehaviour {
     public float polyDistance;
 
     [Header("Set the active time for the cutting lines Power-Up")]
-    public int powerUpTime;
+    public int powerUpTime = 12;
 
 
   
