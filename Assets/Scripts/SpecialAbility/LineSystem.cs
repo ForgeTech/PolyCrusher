@@ -13,11 +13,11 @@ public class LineSystem : MonoBehaviour {
     public float healDistancePadding;
     public float polyDistance;
 
-    
+    [Header("Set the active time for the cutting lines Power-Up")]
+    public int powerUpTime;
 
 
-    private bool isChangingHeal;
-    private bool isChangingNormal;
+  
    
     public Material[] mats;
     public GameObject health;
@@ -27,11 +27,12 @@ public class LineSystem : MonoBehaviour {
 
     private ParticleSystem[] energyParticles;
     private ParticleSystem[] healthParticles;
-    
 
-    
-   
-    
+
+    private bool isChangingHeal;
+    private bool isChangingNormal;
+
+
 
     private GameObject[] players;
     private GameObject[] healingparticles;
@@ -42,14 +43,11 @@ public class LineSystem : MonoBehaviour {
 
     private Vector3[] oldPlayerPosition;
 
-    private float[] incremenetTimers;
-   // private float[] incrementEnergyTimers;
+    private float[] incremenetTimers;  
 
     private bool[] playerMoved;
     private bool[] playerHealing;
-    private int[] playersInReach;
-
-    
+    private int[] playersInReach;   
 
 
     private BasePlayer[] playerScripts;
@@ -66,7 +64,11 @@ public class LineSystem : MonoBehaviour {
     private int[] activeMaterial;
     private int lineRendererLength;
 
-    public bool activateCutting;
+    private bool activateCutting;
+
+   
+
+    private float timeActive;
 
 
     private Vector3 bufferVectorA;
@@ -88,8 +90,7 @@ public class LineSystem : MonoBehaviour {
         playerScripts = new BasePlayer[4];
         lerpTimes = new float[4];
 
-        energyFillUp = new bool[4];
-        //incrementEnergyTimers = new float[4];
+        energyFillUp = new bool[4];       
 
         healingparticles = new GameObject[4];
         energyParticles = new ParticleSystem[4];
@@ -99,6 +100,7 @@ public class LineSystem : MonoBehaviour {
         normalAnimation = new bool[6];
 
         activateCutting = false;
+        timeActive = powerUpTime;
 
         bufferVectorA = new Vector3();
         bufferVectorB = new Vector3();
@@ -107,29 +109,19 @@ public class LineSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
-
-        for(int i = 0; i < energyParticles.Length; i++)
+        for (int i = 0; i < energyParticles.Length; i++)
         {
             healthParticles[i] = (Instantiate(health, Vector3.zero, Quaternion.Euler(-90, 0, 0)) as GameObject).GetComponent<ParticleSystem>();
             healthParticles[i].enableEmission = false;
 
-
             energyParticles[i] = (Instantiate(energy, Vector3.zero, Quaternion.Euler(-90, 0, 0)) as GameObject).GetComponent<ParticleSystem>();
             energyParticles[i].enableEmission = false;
-
         }
-
-
-
         UpdatePlayerStatus();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-        
-
         if (players.Length >1)
         {
             UpdateConnectionType();            
@@ -138,6 +130,14 @@ public class LineSystem : MonoBehaviour {
 
             if (activateCutting)
             {
+                activateCutting = false;
+                timeActive = powerUpTime;
+                
+            }
+
+            if(powerUpTime >= 0.0f)
+            {
+                timeActive -= Time.deltaTime;
                 CuttingLinesPowerUp();
             }
 
@@ -145,14 +145,11 @@ public class LineSystem : MonoBehaviour {
 
             HealOverTime();
 
-            UpdateLines();
-
-          
+            UpdateLines();          
         }
 
         if(players.Length == 1)
         {
-
             energyParticles[0].transform.position = players[0].transform.position;
 
             if (playerScripts[0].Energy!= playerScripts[0].MaxEnergy)
@@ -164,19 +161,20 @@ public class LineSystem : MonoBehaviour {
             {
                 playerScripts[0].StopEnergyRefill = true;
                 energyParticles[0].enableEmission = false;
-            }
-           
-        }
-
-        
-      
-  
+            }           
+        } 
 	}
 
-   
+    public void ActivateCutting()
+    {
+        if (timeActive <= 0.0f)
+        {
+            activateCutting = true;
+        }
+    }
+      
     private void CuttingLinesPowerUp()
     {    
-
         for(int i = 0; i < lineRenderer.Length; i++)
         {                         
             RaycastHit[] hits;
@@ -188,42 +186,30 @@ public class LineSystem : MonoBehaviour {
             lineRenderer[i].material = mats[3];
             lineRenderer[i].SetWidth(healLineWidth, healLineWidth);
 
-            hits = Physics.RaycastAll(new Ray(bufferVectorB, Vector3.Normalize(bufferVectorA - bufferVectorB)), Vector3.Distance(bufferVectorB, bufferVectorA), (1 << 9));
-           
+            hits = Physics.RaycastAll(new Ray(bufferVectorB, Vector3.Normalize(bufferVectorA - bufferVectorB)), Vector3.Distance(bufferVectorB, bufferVectorA), (1 << 9));           
            
             foreach (RaycastHit hit in hits)
-            {
-                   
-               
+            {              
                 if (hit.transform.GetComponent<MonoBehaviour>())
                 {
                     MonoBehaviour gotHit = hit.transform.GetComponent<MonoBehaviour>();
                     if (gotHit is BaseEnemy)
                     {
                         BaseEnemy enemy = hit.transform.GetComponent<BaseEnemy>();
-
                         if (gotHit is BossEnemy)
                         {
                             Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
-
                         }
                         else
                         {
-                            enemy.InstantKill();                           
-
+                            enemy.InstantKill();
                             enemy.gameObject.AddComponent<CutUpMesh>();
                             Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation),2);
-
-
                         }
                     }
-
                 }
             }
-        }     
-       
-
-
+        }  
     }
 
 
@@ -231,27 +217,16 @@ public class LineSystem : MonoBehaviour {
     {
         for (int i = 0; i < lineRenderer.Length; i++)
         {
-            
-
-
-
             float distance = Vector3.Distance(players[firstVertex[i]].transform.position, players[secondVertex[i]].transform.position);
             if (activeMaterial[i] == 0 && !normalAnimation[i] && !healAnimation[i] && distance < healDistance)
             {
-
                 healAnimation[i] = true;
-
             }
-
 
             else if (activeMaterial[i] == 1 && !normalAnimation[i] && !healAnimation[i] && distance >= healDistance )
             {
-                normalAnimation[i] = true;
-
-               
+                normalAnimation[i] = true;               
             }
-
-
 
             if (healAnimation[i])
             {
@@ -266,9 +241,7 @@ public class LineSystem : MonoBehaviour {
                     activeMaterial[i] = 1;
                     lerpTimes[i] = 0.0f;
                     healAnimation[i] = false;
-
                 }
-
             }else if (normalAnimation[i])
             {
                 if (lerpTimes[i] < 1.0f)
@@ -283,13 +256,8 @@ public class LineSystem : MonoBehaviour {
                     activeMaterial[i] = 0;
                     lerpTimes[i] = 0.0f;
                     normalAnimation[i] = false;
-
                 }
-
-            }
-            
-            
-                     
+            }                    
         }
     }
 
@@ -304,17 +272,12 @@ public class LineSystem : MonoBehaviour {
 
             if (playerScripts[i].IsMoving)
             {
-
                 playerMoved[i] = true;
                 playerHealing[i] = false;
-
             }else
             {
                 playerMoved[i] = false;
-                
-
             }
-
         }
     }
 
@@ -323,14 +286,11 @@ public class LineSystem : MonoBehaviour {
     {
         for (int i = 0; i < players.Length; i++)
         {
-
             playersInReach[i] = 0;
-
             for (int j = 0; j < players.Length; j++)
             {
                 if (i != j)
                 {
-
                     if (Vector3.Distance(players[i].transform.position, players[j].transform.position) <= healDistance)
                     {
                         playersInReach[i]++;
@@ -353,7 +313,6 @@ public class LineSystem : MonoBehaviour {
                         {
                             playerHealing[j] = false;
                             healthParticles[i].enableEmission = false;
-
                         }
                     }
                 }
@@ -367,40 +326,27 @@ public class LineSystem : MonoBehaviour {
     {
         for (int i = 0; i < players.Length; i++)
         {
-
-
-
             if (playerHealing[i])
             {
-
                 if (playerScripts[i].Health >0 &&  playerScripts[i].Health < playerScripts[i].MaxHealth && players[i].activeSelf)
-                {
-                   
+                {                   
                     incremenetTimers[i] += Time.deltaTime* playersInReach[i] * healAmount;
                     if (incremenetTimers[i] >= 1.0f)
                     {
                         incremenetTimers[i] = 0.0f;
                         playerScripts[i].Health += 1;
-                    }            
-                  
-                        
-                     healthParticles[i].enableEmission = true;
-                    
-
+                    }                      
+                    healthParticles[i].enableEmission = true;
                 }
                 else if(playerScripts[i].Health <=0 || !players[i].activeSelf || playerScripts[i].Health == playerScripts[i].MaxHealth)
-                {
-                    
-                   healthParticles[i].enableEmission = false;                                 
-
+                {                    
+                   healthParticles[i].enableEmission = false;
                 }
             }
             else
             {                
                 healthParticles[i].enableEmission = false;
             }
-
-
 
             if (playersInReach[i] > 0)
             {
@@ -409,7 +355,6 @@ public class LineSystem : MonoBehaviour {
                     energyFillUp[i] = true;
                     playerScripts[i].StopEnergyRefill = false;
                     energyParticles[i].enableEmission = true;
-
                 }
                 else
                 {
@@ -417,32 +362,19 @@ public class LineSystem : MonoBehaviour {
                     playerScripts[i].StopEnergyRefill = true;
                     energyParticles[i].enableEmission = false;
                 }
-
-
-
-
             }else
             {
-
                 playerScripts[i].StopEnergyRefill = true;
                 energyParticles[i].enableEmission = false;
             }
-
-
-
         }
-
-
-
     }
 
 
     void UpdateLines()
     {
         for (int i = 0; i < lineRenderer.Length; i++)
-        {            
-            
-
+        {
             lineRenderer[i].SetWidth(normalLineWidth, normalLineWidth);
             lineRenderer[i].SetPosition(0, new Vector3(players[firstVertex[i]].transform.position.x, players[firstVertex[i]].transform.position.y + heightOffset, players[firstVertex[i]].transform.position.z));
             lineRenderer[i].SetPosition(1, new Vector3(players[secondVertex[i]].transform.position.x, players[secondVertex[i]].transform.position.y + heightOffset, players[secondVertex[i]].transform.position.z));
@@ -450,8 +382,7 @@ public class LineSystem : MonoBehaviour {
 
 
         for (int i = 0; i < players.Length; i++)
-        {
-           
+        {           
             if (playerHealing[i])
             {
                 playerHealing[i] = false;
@@ -463,7 +394,6 @@ public class LineSystem : MonoBehaviour {
 void UpdatePlayerStatus(BasePlayer basePlayer)
     {
         UpdatePlayerStatus();
-
     }
 
 
@@ -492,8 +422,7 @@ void UpdatePlayerStatus(BasePlayer basePlayer)
             if (energyParticles[i] != null)
             {
                 energyParticles[i].enableEmission = false;
-            }
-            
+            }            
         }
 
 
@@ -515,22 +444,17 @@ void UpdatePlayerStatus(BasePlayer basePlayer)
         {
             oldPlayerPosition = new Vector3[players.Length];
 
-
             oldPlayerPosition = new Vector3[players.Length];
             lineRenderer = new LineRenderer[linesNeeded[players.Length - 1]];
             lerpTimes = new float[linesNeeded[players.Length - 1]];
             activeMaterial = new int[linesNeeded[players.Length - 1]];
 
-
             for (int i = 0; i < players.Length; i++)
             {
                 oldPlayerPosition[i] = players[i].transform.position;
             }
-
-
-            //healingparticles = new GameObject[players.Length];
+            
             incremenetTimers = new float[players.Length];
-
 
             for (int i = 0; i < linesNeeded[players.Length - 1]; i++)
             {
@@ -543,7 +467,6 @@ void UpdatePlayerStatus(BasePlayer basePlayer)
 
                 go.transform.parent = this.gameObject.transform;
             }  
-        }
-         
+        }         
     }
 }
