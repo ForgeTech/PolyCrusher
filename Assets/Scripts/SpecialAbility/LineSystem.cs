@@ -100,7 +100,7 @@ public class LineSystem : MonoBehaviour {
         normalAnimation = new bool[6];
 
         activateCutting = false;
-        timeActive = powerUpTime;
+        timeActive = 0.0f;
 
         bufferVectorA = new Vector3();
         bufferVectorB = new Vector3();

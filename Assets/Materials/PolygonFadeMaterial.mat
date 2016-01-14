@@ -2,15 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: PolygonFadeMaterial
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -80,16 +82,16 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
           name: _SrcBlend
         second: 1
       data:
         first:
           name: _DstBlend
         second: 10
+      data:
+        first:
+          name: _Cutoff
+        second: .5
       data:
         first:
           name: _Parallax
@@ -120,10 +122,6 @@ Material:
         second: 0
       data:
         first:
-          name: _EmissionScaleUI
-        second: .400000006
-      data:
-        first:
           name: _Mode
         second: 3
       data:
@@ -134,6 +132,10 @@ Material:
         first:
           name: _InvFade
         second: .0500000007
+      data:
+        first:
+          name: _EmissionScaleUI
+        second: .400000006
     m_Colors:
       data:
         first:
@@ -145,9 +147,9 @@ Material:
         second: {r: 1, g: 0, b: 0, a: .286274523}
       data:
         first:
-          name: _EmissionColorUI
-        second: {r: 1, g: .134482741, b: .134482741, a: .352941185}
-      data:
-        first:
           name: _TintColor
         second: {r: 1, g: 0, b: 0, a: .250980407}
+      data:
+        first:
+          name: _EmissionColorUI
+        second: {r: 1, g: .134482741, b: .134482741, a: .352941185}
