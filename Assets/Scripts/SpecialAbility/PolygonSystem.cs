@@ -6,136 +6,149 @@ using XInputDotNetPure;
 
 public class PolygonSystem : MonoBehaviour
 {
-    public GameObject[] players;
+    [HideInInspector]
+    public List<GameObject> enemies;
+
+    [HideInInspector]
+    public bool detonate;
+
+    [Header("Particles")]
     public GameObject explosionParticle;
     public GameObject playerStandingParticle;
 
+    [Header("Sound files ")]
     public AudioClip polyLoading;
     public AudioClip polyExplosion;
-    public AudioClip polyFail;
+    public AudioClip polyFail;    
 
-
-    public bool loadingSoundPlaying;
-    public bool declineSoundPlaying;
-
-    public Color color;
-
-    public float polyLerpDistance;
-
-
-    public Vector3 point;
-
-    public Color[] flashColors;
-
-
-    public float requiredPolyDistance;
-
+    [Header("Materials for the polygon")]
     public Material[] mats;
 
+    [Header("polygon setup")]
     public float heightOffset;
+    public float polyStartHeight;
+    public float polyStartSpeed;
+    public float standStillRequiredTime;
+    public float requiredPolyDistance;
+
+    [Header("Damage the boss takes when the polygon hits")]
+    public int bossDamage;
+
+    [Header("Set the active time for the cutting lines Power-Up")]
+    public int powerUpTime;
+
+
+   
+
+
+    private GameObject[] players;
+    private bool loadingSoundPlaying;
+    private bool declineSoundPlaying;
+
+
+    private float polyLerpDistance;
+
+
+    private Vector3 point;
+
+    private Color[] flashColors;
+
+
+    
 
     private Vector3[] oldPlayerPosition;
-    public int[] playerAlignment;
 
-    public bool detonate;
-    public bool specialIsUsable;
+   
+    private bool specialIsUsable;
 
-    public int oldDonkey;
-    public int donkey;
+    private int oldDonkey;
+    private int donkey;
 
-    public float polyThickness;
+   
 
-    public bool changedToTri;
-    public bool changedToQuad;
+   
+
+  
 
     private MeshFilter flippedMeshFilter;
     private MeshFilter meshFilter;
 
-    public SphereCollider sphere;
+    private SphereCollider sphere;
+   
+   
 
-    public float charging;
 
-    public Mesh dummy;
+    private Vector3 middlePoint = new Vector3();
 
-    public float startAnimTime = 2.0f;
-
-    public Vector3 middlePoint = new Vector3();
+   
 
     private Mesh polygon;
     private Mesh triPolygon;
 
 
-    public float[] angles;
-    public float[] distances;
+    private float[] angles;
+    
 
-    public Vector3 intersectPosition;
+    private Vector3 intersectPosition;
 
-    public float explosionCooldown;
+    private float explosionCooldown;
 
-    public bool polyIsStarting;
-    public bool polyIsEnding;
-    public bool polyIsFailing;
-    public bool polyIsLoading;
-    public bool screenFlash;
-    public bool fadeOut;
+    private bool polyIsStarting;
+    private bool polyIsEnding;
+    private bool polyIsFailing;
+    private bool polyIsLoading;
+    private bool screenFlash;
+    private bool fadeOut;
 
-    public GameObject poly;
-    public GameObject triPoly;
-    public GameObject screenFade;
+    private GameObject poly;
+    private GameObject triPoly;
+    private GameObject screenFade;
     public GameObject bigExplosionParticle;
 
-    public Image whiteScreen;
+    private Image whiteScreen;
 
 
-    public GameObject[] polyParts;
-    public Mesh[] polys;
-    public MeshFilter[] filters;
-    public MeshRenderer[] renderers;
-    public MeshCollider[] colliders;
-    public BasePlayer[] playerScripts;
-    public float[] polyOffsets;
+    private GameObject[] polyParts;
+    private Mesh[] polys;
+    private MeshFilter[] filters;
+    private MeshRenderer[] renderers;
+    private MeshCollider[] colliders;
+    private BasePlayer[] playerScripts;
+    private float[] polyOffsets;
 
-    public float[] polyStartAnimLerpTimes;
-    public float polyEndAnimLerpTime;
-    public float polyFailAnimLerpTime;
-    public float polyLoadingAnimLerpTime;
-    public float screenFlashAnimTime;
+    private float[] polyStartAnimLerpTimes;
+    private float polyEndAnimLerpTime;
+    private float polyFailAnimLerpTime;
+    private float polyLoadingAnimLerpTime;
+    private float screenFlashAnimTime;
 
-    public bool polyFailTween;
-    public bool polyFailTween2;
+    private bool polyFailTween;
+    private bool polyFailTween2;
 
     public float transitionCooldown;
-    public float currentCooldown;
+    private float currentCooldown;
 
 
-    public bool[] polyTweens;
+    private bool[] polyTweens;
 
-    public bool polyStart;
-    public bool polyEnd;
+    private bool polyStart;
+    private bool polyEnd;
 
-    public int colliderFrameTime;
+    private int colliderFrameTime;
 
-    public float currentStandStill;
-    public float standStillRequiredTime;
+    private float currentStandStill;
+   
 
-    public float polyStartHeight;
-    public float polyStartSpeed;
+    private int[] intersectedLines;
 
-    public int[] intersectedLines;
+   
 
-    public List<GameObject> enemies;
-    public List<GameObject> affectedEnemies;
 
     private int[] linesNeeded;
     private int[] firstVertex;
     private int[] secondVertex;
 
     private Vector3[] cornerPoints;
-
-
-    //stuff for 
-    public bool activateViration = false;
-
 
 
 
@@ -151,10 +164,6 @@ public class PolygonSystem : MonoBehaviour
         whiteScreen = screenFade.AddComponent<Image>();
         whiteScreen.color = Color.clear;
         screenFade.transform.SetParent(this.transform, false);
-
-   
-
-
     }
 
 
@@ -166,13 +175,8 @@ public class PolygonSystem : MonoBehaviour
         secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
 
         screenFlash = false;
-
-
-
-
         cornerPoints = new Vector3[4];
-        enemies = new List<GameObject>();
-        affectedEnemies = new List<GameObject>();
+        enemies = new List<GameObject>();  
         polyParts = new GameObject[4];
         polys = new Mesh[4];
         filters = new MeshFilter[4];
@@ -180,8 +184,7 @@ public class PolygonSystem : MonoBehaviour
         colliders = new MeshCollider[4];
         polyOffsets = new float[4];
         polyStartAnimLerpTimes = new float[4];
-        polyTweens = new bool[4];
-       
+        polyTweens = new bool[4];       
 
         flashColors = new Color[2];
         flashColors[0] = Color.clear;
@@ -206,122 +209,91 @@ public class PolygonSystem : MonoBehaviour
             colliders[i].isTrigger = true;
             colliders[i].enabled = false;
             polyParts[i].AddComponent<TriangleCollision>();
-        }
-
-
-       
+        }       
 
         detonate = false;
         UpdatePlayerStatus();
     }
 
+    /// <summary>
+    /// this method detects enemies that are within a certain readius to the player(s) 
+    /// </summary>
     private void DetectPlayerNearEnemies()
     {
         for (int i = 0; i < players.Length; i++)
         {
-
             Collider[] colls = Physics.OverlapSphere(players[i].transform.position, 4.0f);
-
             foreach (Collider coll in colls)
             {
                 if (coll.tag == "Enemy")
                 {
-                    coll.gameObject.tag = "SentencedToDeath";
-                    coll.GetComponent<BaseEnemy>().CanShoot = false;
-                    coll.GetComponent<BaseEnemy>().MeleeAttackDamage = 0;
-                    enemies.Add(coll.gameObject);
+                    if(coll.GetComponent<MonoBehaviour>() is BossEnemy)
+                    {
+                        coll.GetComponent<BossEnemy>().TakeDamage(bossDamage, null);
+                    }
+                    else
+                    {
+                        coll.gameObject.tag = "SentencedToDeath";
+                        coll.GetComponent<BaseEnemy>().CanShoot = false;
+                        coll.GetComponent<BaseEnemy>().MeleeAttackDamage = 0;
+                        enemies.Add(coll.gameObject);
+                    }                    
                 }
-
             }
-
-
-
         }
-
-        //Debug.Log(enemies.Count);
-
         currentCooldown = 3.0f;
-
-        
-
-
-        ChainExplosion();
-        //StartCoroutine("ChainExplosion");
+        ChainExplosion();       
     }
 
-
+    /// <summary>
+    /// every listed normal enemy is killed, a boss enemy takes damage 
+    /// </summary>
     private void ChainExplosion()
     {        
         SoundManager.SoundManagerInstance.Play(polyExplosion, Vector3.zero);
-
-        //int exploded = 0;
-        //bool explode = false;
-
-
+        
         for (int i = 0; i<enemies.Count; i++)
-        {
-            //if (enemies[i] != null && enemies[i].GetComponent<BaseEnemy>() != null && explode && exploded < 10)
-            //{
-            //    enemies[i].AddComponent<PolyExplosion>();
-
-            //    enemies[i].GetComponent<BaseEnemy>().InstantKill();
-            //    explode = false;
-            //    exploded++;
-            //}else
-            //{
-            //    enemies[i].GetComponent<BaseEnemy>().InstantKill();
-            //    explode = true;
-            //}   
-
-
+        {            
             enemies[i].AddComponent<PolyExplosion>();
             enemies[i].GetComponent<BaseEnemy>().InstantKill();
-        }     
-
-       
-
-        //for (int i = 0; i < playerScripts.Length; i++)
-        //{
-        //    playerScripts[i].Invincible = false;
-
-            
-        //}
-
+        }  
         currentCooldown = 0.05f;
 
 
-        enemies = new List<GameObject>();
-        affectedEnemies = new List<GameObject>();
-        RestoreStuff();
-        
+        if (enemies.Count == 0)
+        {
+            //TODO sound - place polyfail event here
+        }else if (enemies.Count >= 3)
+        {
+            //TODO sound - place poly success event here
+        }
 
+
+        enemies = new List<GameObject>();    
+        RestorePlayerPowers();
     }
 
 
 
-
-    void RestoreStuff()
+    /// <summary>
+    /// resets the health and energy values after using the polygon ability
+    /// </summary>
+    void RestorePlayerPowers()
     {
-
         for(int i = 0; i < players.Length; i++)
         {
             players[i].GetComponent<BasePlayer>().Health = 100;
             players[i].GetComponent<BasePlayer>().Energy = 50;
-
-
         }
 
         StartCoroutine("PlayerInvincibility");
-
-
     }
 
 
     void FixedUpdate()
     {
         if (detonate && currentCooldown <= 0.0f)
-        {
-            //Debug.Log("detonate");
+        {          
             colliderFrameTime--;
 
             for (int i = 0; i < colliders.Length; i++)
@@ -333,62 +305,35 @@ public class PolygonSystem : MonoBehaviour
 
             if (colliderFrameTime <= 0)
             {
-
                 detonate = false;
-
                 colliderFrameTime = 2;
 
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     colliders[i].sharedMesh = null;
                     colliders[i].enabled = false;
-                }
-
-
-                for (int i = 0; i < playerScripts.Length; i++)
-                {
-                    if (playerScripts[i] != null)
-                    {
-                        //playerScripts[i].Energy = 0;
-                        //playerScripts[i].Invincible = true;
-                    }
-
-                }
+                }              
                 DetectPlayerNearEnemies();
-
-
-              
-                
-               
-              
-                
-
-
             }
         }
     }
 
-
+    /// <summary>
+    /// used to give the players 2 seconds of invincibility 
+    /// </summary>
     IEnumerator PlayerInvincibility()
     {
-
         for(int i = 0; i < players.Length; i++)
         {
-
             playerScripts[i].Invincible = true;
         }
 
-
         yield return new WaitForSeconds(2.0f);
-
 
         for (int i = 0; i < players.Length; i++)
         {
-
             playerScripts[i].Invincible = false;
         }
-
-
     }
 
 
@@ -421,10 +366,6 @@ public class PolygonSystem : MonoBehaviour
                 }
             }
 
-
-
-
-
             bool distanceReached = true;
 
             for (int i = 0; i < players.Length; i++)
@@ -438,10 +379,6 @@ public class PolygonSystem : MonoBehaviour
                 }
             }
 
-
-
-
-
             if (playerEnergyCheck == 0 && distanceReached && polyStart && currentStandStill < standStillRequiredTime && currentCooldown <= 0.0f)
             {
                 currentStandStill += Time.deltaTime;
@@ -452,9 +389,6 @@ public class PolygonSystem : MonoBehaviour
                     detonate = true;
                 }
             }
-
-
-
 
             if (currentCooldown > 0.0f)
             {
@@ -548,7 +482,6 @@ public class PolygonSystem : MonoBehaviour
 
                     if (screenFlashAnimTime <= 0.0f)
                     {
-
                         screenFlash = false;
                         fadeOut = false;
                         whiteScreen.color = Color.clear;
@@ -556,34 +489,8 @@ public class PolygonSystem : MonoBehaviour
                         GamePad.SetVibration(0, 0, 0);
                     }
                 }
-
-
-
-                if(players.Length == 1)
-                {
-                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
-                }else if(players.Length == 2)
-                {
-                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
-                    GamePad.SetVibration(PlayerIndex.Two, 0, screenFlashAnimTime);
-
-                }else if(players.Length == 3)
-                {
-                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
-                    GamePad.SetVibration(PlayerIndex.Two, 0, screenFlashAnimTime);
-                    GamePad.SetVibration(PlayerIndex.Three, 0, screenFlashAnimTime);
-                    
-                }else
-                {
-                    GamePad.SetVibration(PlayerIndex.One, 0, screenFlashAnimTime);
-                    GamePad.SetVibration(PlayerIndex.Two, 0, screenFlashAnimTime);
-                    GamePad.SetVibration(PlayerIndex.Three, 0, screenFlashAnimTime);
-                    GamePad.SetVibration(PlayerIndex.Four, 0, screenFlashAnimTime);
-                }                
-            }
-           
-            HandleSpecialPolygon();
-            
+            }           
+            HandleSpecialPolygon();            
         }
         else
         {
@@ -596,87 +503,11 @@ public class PolygonSystem : MonoBehaviour
 
 
         if (oldDonkey != donkey)
-        {
-            if (donkey == -1)
-            {
-                changedToQuad = true;
-            }
-            else
-            {
-                changedToTri = true;
-            }
+        {            
             oldDonkey = donkey;
         }
-
-
-
-
-        if (activateViration)
-        {
-            activateViration = false;
-            StartCoroutine(SetVibration(0.01f));
-        }
-
     }
 
-
-    private IEnumerator SetVibration(float time)
-    {
-
-        if (players.Length == 1)
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 1);
-        }
-        else if (players.Length == 2)
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 1);
-            GamePad.SetVibration(PlayerIndex.Two, 0, 1);
-
-        }
-        else if (players.Length == 3)
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 1);
-            GamePad.SetVibration(PlayerIndex.Two, 0, 1);
-            GamePad.SetVibration(PlayerIndex.Three, 0, 1);
-
-        }
-        else
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 1);
-            GamePad.SetVibration(PlayerIndex.Two, 0, 1);
-            GamePad.SetVibration(PlayerIndex.Three, 0, 1);
-            GamePad.SetVibration(PlayerIndex.Four, 0, 1);
-        }
-    
-    yield return new WaitForSeconds(time);
-
-        if (players.Length == 1)
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 0);
-        }
-        else if (players.Length == 2)
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 0);
-            GamePad.SetVibration(PlayerIndex.Two, 0, 0);
-
-        }
-        else if (players.Length == 3)
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 0);
-            GamePad.SetVibration(PlayerIndex.Two, 0, 0);
-            GamePad.SetVibration(PlayerIndex.Three, 0, 0);
-
-        }
-        else
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0, 0);
-            GamePad.SetVibration(PlayerIndex.Two, 0, 0);
-            GamePad.SetVibration(PlayerIndex.Three, 0, 0);
-            GamePad.SetVibration(PlayerIndex.Four, 0, 0);
-        }
-    
-
-}
 
 
     private void UpdatePolyLerpDistance()
@@ -776,7 +607,6 @@ public class PolygonSystem : MonoBehaviour
         {
             return !playerScripts[index].IsMoving;
         }
-
     }
 
 
@@ -792,7 +622,6 @@ public class PolygonSystem : MonoBehaviour
             
             if (i == 0)
             {
-
                 if (polyStartAnimLerpTimes[i] <= 0.0f && !polyTweens[i])
                 {
                     polyTweens[i] = true;
@@ -807,18 +636,14 @@ public class PolygonSystem : MonoBehaviour
                     polyStartAnimLerpTimes[i] += Time.deltaTime;
                     polyOffsets[i] = Mathf.Lerp(polyStartHeight, 0.0f, polyStartAnimLerpTimes[i] * polyStartSpeed);
                 }
-
             }
             else
             {
-
-
                 if (polyStartAnimLerpTimes[i - 1] >= 0.25f && polyStartAnimLerpTimes[i] <= 1.0f)
                 {
 
                     if (polyStartAnimLerpTimes[i] <= 0.0f && !polyTweens[i])
                     {
-
                         polyTweens[i] = true;
                         Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
                         polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
@@ -827,13 +652,8 @@ public class PolygonSystem : MonoBehaviour
                     }
                     polyStartAnimLerpTimes[i] += Time.deltaTime;
                     polyOffsets[i] = Mathf.Lerp(polyStartHeight, 0.0f, polyStartAnimLerpTimes[i] * polyStartSpeed);
-
                 }
-
             }
-
-
-
         }
 
         if (polyStartAnimLerpTimes[polyStartAnimLerpTimes.Length - 1] > 1.0f)
@@ -842,25 +662,15 @@ public class PolygonSystem : MonoBehaviour
             {
                 polyStartAnimLerpTimes[i] = 0.0f;
                 polyTweens[i] = false;
-
             }
             polyStart = true;
             polyIsStarting = false;
-
-
         }
-
-
-
-
-
     }
 
 
     private void PolyEndAnimation()
     {
-
-
         if (polyEndAnimLerpTime <= 
             1.0f)
         {
@@ -871,7 +681,6 @@ public class PolygonSystem : MonoBehaviour
         {
             renderers[i].material.Lerp(renderers[i].material, mats[1], polyEndAnimLerpTime);
         }
-
 
         if (polyEndAnimLerpTime >= 1.0f)
         {
@@ -891,12 +700,27 @@ public class PolygonSystem : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// signn function used for point in tri calculation
+    /// </summary>
+    /// <param name="p1">Point1</param>
+    /// <param name="p2">Point2</param>
+    /// <param name="p3">Point3</param>
+    /// <returns></returns>
     float Sign(Vector3 p1, Vector3 p2, Vector3 p3)
     {
         return (p1.x - p3.x) * (p2.z - p3.z) - (p2.x - p3.x) * (p1.z - p3.z);
     }
 
+
+    /// <summary>
+    /// checks if a point is in a triangle
+    /// </summary>
+    /// <param name="pt"></param>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <param name="v3"></param>
+    /// <returns></returns>
     private bool IsPointInTri(Vector3 pt, Vector3 v1, Vector3 v2, Vector3 v3)
     {
         bool b1, b2, b3;
@@ -908,6 +732,10 @@ public class PolygonSystem : MonoBehaviour
         return ((b1 == b2) && (b2 == b3));
     }
 
+    /// <summary>
+    /// if the playercount is 4, then this method determines which one of them is the middle one
+    /// </summary>
+    /// <returns></returns>
     private bool DonkeyInTheMiddle()
     {
         for (int i = 0; i < players.Length; i++)
@@ -924,13 +752,15 @@ public class PolygonSystem : MonoBehaviour
         return false;
     }
 
+
+    /// <summary>
+    /// used to determine, which line connections cross in the middle (if they do)
+    /// </summary>
     void HandleIntersection()
     {
         intersectedLines[0] = -1;
-        intersectedLines[1] = -1;
-        //  if (!fU)
-        {
-            // fU = true;
+        intersectedLines[1] = -1;       
+        {            
             for (int i = 0; i < linesNeeded[players.Length - 1]; i++)
             {
                 float x1 = players[firstVertex[i]].transform.position.x;
@@ -958,7 +788,6 @@ public class PolygonSystem : MonoBehaviour
                         float B2 = x3 - x4;
                         float C2 = A2 * x3 + B2 * y3;
 
-
                         float delta = (A1 * B2) - (A2 * B1);
                         if (delta != 0)
                         {
@@ -976,7 +805,6 @@ public class PolygonSystem : MonoBehaviour
                             float newY3 = y3;
                             float newX4 = x4;
                             float newY4 = y4;
-
 
                             if (x1 > x2)
                             {
@@ -1005,11 +833,9 @@ public class PolygonSystem : MonoBehaviour
 
                             if (newX1 + 0.01 < interX && newX2 - 0.010 > interX && newY1 + 0.010 < interY && newY2 - 0.010 > interY && newX3 + 0.010 < interX && newX4 - 0.010 > interX && newY3 + 0.010 < interY && newY4 - 0.010 > interY)
                             {
-
                                 intersectedLines[0] = i;
                                 intersectedLines[1] = j;
                                 return;
-
                             }
                         }
                     }
@@ -1021,7 +847,11 @@ public class PolygonSystem : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// provides the current rotation angle for the players according to a certain middle point
+    /// important for the correct polygon mesh construction
+    /// </summary>
+    /// <param name="type"></param>
     private void GetAlignment(int type)
     {
         Vector3 middle = new Vector3();
@@ -1031,9 +861,7 @@ public class PolygonSystem : MonoBehaviour
             if (i != donkey)
             {
                 middle += players[i].transform.position;
-
             }
-
         }
         if (donkey != -1)
         {
@@ -1041,11 +869,8 @@ public class PolygonSystem : MonoBehaviour
         }
         else
         {
-            middle /= players.Length;
-           
+            middle /= players.Length;           
         }
-        
-
 
         for (int i = 0; i < players.Length; i++)
         {
@@ -1060,47 +885,29 @@ public class PolygonSystem : MonoBehaviour
             {
                 tmp = (players[i].transform.position - players[donkey].transform.position);
                 tmp2 = (Vector3.zero - players[donkey].transform.position);
-            }else if(type == 2)
-            {
-
-               
+            }
+            else if(type == 2)
+            {               
                 Vector3 tmp3 = middle * 100.0f;
                 tmp3 = new Vector3(Mathf.Round(tmp3.x), Mathf.Round(tmp3.y), Mathf.Round(tmp3.z));
-                tmp3 /= 100.0f;
-                
+                tmp3 /= 100.0f;                
                 tmp3.y += 5.0f;
-
            
                 tmp = (players[i].transform.position -tmp3)*100.0f;
                 tmp = new Vector3(Mathf.Round(tmp.x), Mathf.Round(tmp.y), Mathf.Round(tmp.z));
                 tmp /= 100.0f;
-                
-             
 
-
-                tmp2 = ( tmp3);
-
+                tmp2 = (tmp3);
             }
 
-            float newAngle =Mathf.Rad2Deg*(Mathf.Atan2(tmp.x * tmp2.x, tmp.z * tmp2.z));
-        
-
-            
-            //if (i != donkey)
-            {
-                angles[i] = newAngle;
-                //distances[i] = distance;
-            }
-
-
+            float newAngle =Mathf.Rad2Deg*(Mathf.Atan2(tmp.x * tmp2.x, tmp.z * tmp2.z));        
+            angles[i] = newAngle;
         }
 
         for (int i = 0; i < players.Length; i++)
         {
-
             for (int j = 0; j < players.Length; j++)
             {
-
                 if (i != j && angles[i] < angles[j])
                 {
                     GameObject go = players[i];
@@ -1110,14 +917,9 @@ public class PolygonSystem : MonoBehaviour
                     float tmp = angles[i];
                     angles[i] = angles[j];
                     angles[j] = tmp;
-
-
                 }
-
             }
         }
-
-
     }
 
 
@@ -1337,14 +1139,19 @@ public class PolygonSystem : MonoBehaviour
 
   
 
-
+    /// <summary>
+    /// calls the normal UpdatePlayerStatus(), the basePlayer variable is not important for this update
+    /// </summary>
+    /// <param name="basePlayer"></param>
     void UpdatePlayerStatus(BasePlayer basePlayer)
     {
         UpdatePlayerStatus();
     }
 
 
-
+    /// <summary>
+    /// method is called whenever a player is spawned or killed to upate alle the necessary properties for the polygon
+    /// </summary>
     void UpdatePlayerStatus()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -1355,26 +1162,13 @@ public class PolygonSystem : MonoBehaviour
             playerScripts[i] = players[i].GetComponent<BasePlayer>();
            
         }
-
-
-
-        charging = 1.0f;
-        oldPlayerPosition = new Vector3[players.Length];
-
-
-        changedToTri = false;
-        changedToQuad = false;
-
-
-
-        intersectedLines = new int[2];
-        playerAlignment = new int[players.Length];
+        
+        oldPlayerPosition = new Vector3[players.Length];              
         angles = new float[players.Length];
-        distances = new float[players.Length];
-
+       
+        intersectedLines = new int[2];
         intersectedLines[0] = -1;
         intersectedLines[1] = -1;
-
 
         for (int i = 0; i < players.Length; i++)
         {
