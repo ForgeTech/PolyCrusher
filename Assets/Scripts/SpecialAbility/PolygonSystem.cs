@@ -14,6 +14,7 @@ public class PolygonSystem : MonoBehaviour
 
     [Header("Particles")]
     public GameObject explosionParticle;
+    public GameObject bigExplosionParticle;
     public GameObject playerStandingParticle;
 
     [Header("Sound files ")]
@@ -30,69 +31,36 @@ public class PolygonSystem : MonoBehaviour
     public float polyStartSpeed;
     public float standStillRequiredTime;
     public float requiredPolyDistance;
+    public float transitionCooldown;
 
     [Header("Damage the boss takes when the polygon hits")]
     public int bossDamage;
-
-    [Header("Set the active time for the cutting lines Power-Up")]
-    public int powerUpTime;
-
-
-   
 
 
     private GameObject[] players;
     private bool loadingSoundPlaying;
     private bool declineSoundPlaying;
 
-
     private float polyLerpDistance;
-
-
     private Vector3 point;
+    private Color[] flashColors;    
 
-    private Color[] flashColors;
-
-
-    
-
-    private Vector3[] oldPlayerPosition;
-
-   
+    private Vector3[] oldPlayerPosition;   
     private bool specialIsUsable;
-
     private int oldDonkey;
-    private int donkey;
-
-   
-
-   
-
-  
+    private int donkey;  
 
     private MeshFilter flippedMeshFilter;
     private MeshFilter meshFilter;
-
     private SphereCollider sphere;
-   
-   
-
 
     private Vector3 middlePoint = new Vector3();
-
-   
-
     private Mesh polygon;
     private Mesh triPolygon;
-
-
-    private float[] angles;
-    
+    private float[] angles;    
 
     private Vector3 intersectPosition;
-
     private float explosionCooldown;
-
     private bool polyIsStarting;
     private bool polyIsEnding;
     private bool polyIsFailing;
@@ -103,11 +71,9 @@ public class PolygonSystem : MonoBehaviour
     private GameObject poly;
     private GameObject triPoly;
     private GameObject screenFade;
-    public GameObject bigExplosionParticle;
+    
 
-    private Image whiteScreen;
-
-
+    private Image whiteScreen;    
     private GameObject[] polyParts;
     private Mesh[] polys;
     private MeshFilter[] filters;
@@ -125,24 +91,16 @@ public class PolygonSystem : MonoBehaviour
     private bool polyFailTween;
     private bool polyFailTween2;
 
-    public float transitionCooldown;
+   
     private float currentCooldown;
-
-
     private bool[] polyTweens;
 
     private bool polyStart;
     private bool polyEnd;
 
     private int colliderFrameTime;
-
     private float currentStandStill;
-   
-
     private int[] intersectedLines;
-
-   
-
 
     private int[] linesNeeded;
     private int[] firstVertex;
