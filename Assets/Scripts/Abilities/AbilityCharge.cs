@@ -44,13 +44,7 @@ public class AbilityCharge : Ability {
     private bool charging;
     
     //if activated, the sphere collider detects nearby allies
-    private bool detectFriends;
-   
-    //activated after the charge for the final explosion
-    private bool explosion;
-
-    //activated as last phase of the charge, for restoring all settings 
-    private bool cleanUp;
+    private bool detectFriends;  
     
     //counter that holds the currently free position in the friends array
     private int currentFriend;
@@ -85,13 +79,7 @@ public class AbilityCharge : Ability {
     protected GameObject chargeParticle;
 
     // Instantiatet charge particles
-    private GameObject instantiatedChargeParticle;
-
-    [Space(5)]
-    [Header("Ragdoll explosion settings:")]
-    [SerializeField]
-    // Upwards modifier of the explosion force
-    private float upwardsModifier = 1.75f;
+    private GameObject instantiatedChargeParticle;   
 
     //---VARIABLES END
 
@@ -303,9 +291,7 @@ public class AbilityCharge : Ability {
     {
         yield return new WaitForSeconds(0.2f);               
         
-        chargeSpeed = 0.0f;
-     
-        explosion = true;
+        chargeSpeed = 0.0f;      
 
         Collider[] colls = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach(Collider coll in colls)
@@ -319,19 +305,7 @@ public class AbilityCharge : Ability {
                 }
             }
         }
-
-        /*
-        Collider[] collidingRigidbodies = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 15);
-
-        foreach (Collider objects in collidingRigidbodies)
-        {
-            if (objects != null)
-            {
-                Rigidbody colliderRigidbody = objects.gameObject.GetComponent<Rigidbody>();
-                colliderRigidbody.AddExplosionForce(13f, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
-            }
-        }
-        */
+       
         // Deal damage.
         DealDamage();      
 
@@ -357,13 +331,9 @@ public class AbilityCharge : Ability {
             if (players[i] != null)
             {
                 players[i].mass = 0.2f;
-
             }
         }
-        yield return new WaitForSeconds(0.2f);
-        explosion = false;
-        cleanUp = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);    
     }
 
 
@@ -376,13 +346,11 @@ public class AbilityCharge : Ability {
         {
             players[i] = go[i].GetComponent<Rigidbody>();
         }
-
     }
 
 
     private void UpdatePlayerStatus(BasePlayer player)
     {
         UpdatePlayerStatus();
-
     }
 }

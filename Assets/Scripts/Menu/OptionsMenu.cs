@@ -71,12 +71,12 @@ public class OptionsMenu : MonoBehaviour
     //bool newPhone = false;
 
 
-    private bool selectedChange = false;
+    
     private int maxPlayers = 4;
 
 
     private float inputCooldown;
-    private float animationTime = 0.0f;
+
     private bool inputReceived = false;
 
 
@@ -105,7 +105,7 @@ public class OptionsMenu : MonoBehaviour
 
     public float x;
 
-    bool once;
+
 
     
 
@@ -196,8 +196,6 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
-        //buttons[0].GetComponent<Button>().Select();
-
         // Register switch sound.
         ButtonSwitchEvent += PlaySwitchSound;
         ButtonAcceptEvent += PlayAcceptSound;
@@ -234,16 +232,11 @@ public class OptionsMenu : MonoBehaviour
             }
         }
 
-        GameObject.Find("GameName").GetComponent<Text>().text = network.gameName + " GAME";
-
-        once = false;
+        GameObject.Find("GameName").GetComponent<Text>().text = network.gameName + " GAME";       
 
         UpdateButtonTexts();
 
-        optionArray = new GameObject[0];
-        //StartCoroutine("ScalePlayerImages");
-        //StartCoroutine("TransformBetabanner");
-
+        optionArray = new GameObject[0];      
     }
 
 

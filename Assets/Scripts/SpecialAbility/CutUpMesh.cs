@@ -11,7 +11,7 @@ public class CutUpMesh : MonoBehaviour
     private int vertexCount;
     private int step;
     private int grandStep;
-    private Vector3 scaleFactor;
+   
     private Pool pool;
 
     private int[] vertexPosChange;
@@ -35,18 +35,16 @@ public class CutUpMesh : MonoBehaviour
         }
     }
 
-    private List<Tri> triList = new List<Tri>();
-    private bool found;
+
+
 
     MeshFilter MF;
     MeshRenderer MR;
     SkinnedMeshRenderer SMR;
-    Mesh M;
-    Vector3[] verts;
+    Mesh M;    
     Vector3[] normals;
     Vector2[] uvs;
-    Vector2[] uvs2;
-    Color[] colors;
+   
 
     GameObject GO;
     Mesh mesh;
@@ -70,20 +68,13 @@ public class CutUpMesh : MonoBehaviour
 
 
 
-    private List<int> lowerIndices;
-    private List<int> upperIndices;
-
+    
     private List<Vector2> lowUVs;
     private List<Vector2> upperUVs;
 
-    private List<Vector2> lowUVs2;
-    private List<Vector2> upperUVs2;
 
 
-
-
-    private List<Color> lowColors;
-    private List<Color> upperColors;
+   
 
 
     private List<int>[] lowIndices;
@@ -96,7 +87,7 @@ public class CutUpMesh : MonoBehaviour
     private List<Vector3> lowNormals;
     private List<Vector3> upNormals;
 
-    private Transform root;
+   
 
 
 
@@ -121,7 +112,7 @@ public class CutUpMesh : MonoBehaviour
 
         insideMeshMaterial = Resources.Load("Material/MeshSplit/MeshInsideMaterial", typeof(Material)) as Material;
         pool = Pool.current;
-        //explode = true;
+    
 
         if (GetComponent<MeshFilter>() != null)
         {
@@ -151,36 +142,26 @@ public class CutUpMesh : MonoBehaviour
         }
 
 
-        verts = M.vertices;
+       
         normals = M.normals;
         uvs = M.uv;
-        uvs2 = M.uv2;
+       
         vertexCount = M.vertexCount;
-        colors = M.colors;
-
+       
         SMR.transform.InverseTransformDirection(cutPoint);
-
-
-
-        scaleFactor = transform.localScale;
-        found = false;
 
 
         vertexPosChange = new int[vertexCount];
 
-        lowerIndices = new List<int>();
-        upperIndices = new List<int>();
+       
 
 
         lowUVs = new List<Vector2>();
         upperUVs = new List<Vector2>();
 
-        lowUVs2 = new List<Vector2>();
-        upperUVs2 = new List<Vector2>();
+      
 
 
-        lowColors = new List<Color>();
-        upperColors = new List<Color>();
 
 
         lowIndices = new List<int>[M.subMeshCount + 1];
@@ -210,9 +191,6 @@ public class CutUpMesh : MonoBehaviour
 
         upNormals = new List<Vector3>();
         lowNormals = new List<Vector3>();
-
-        root = SMR.rootBone;
-
         explode = true;
 
 
@@ -296,9 +274,8 @@ public class CutUpMesh : MonoBehaviour
 
     private void SplitInTwo()
     {
-        float start = Time.realtimeSinceStartup;
-        float end;
-
+        
+       
 
         int above = 0;
         int below = 0;
@@ -416,7 +393,7 @@ public class CutUpMesh : MonoBehaviour
 
 
             Deactivator deactivator = upper.GetComponent<Deactivator>();
-            //Deactivator deactivator = upper.AddComponent<Deactivator>();
+            
 
 
             Destroy(upper.GetComponent<MeshFilter>());

@@ -45,8 +45,6 @@ public class PlayerNetCommunicate : MonoBehaviour
 	
 	Text gameNameText;
 
-	PlayerNetCommunicate playerNetCommunicate;
-
 	List<IPEndPoint> devices;
 
 	IPEndPoint ipSender;
@@ -68,7 +66,7 @@ public class PlayerNetCommunicate : MonoBehaviour
         udpListener = new UdpClient[4];
 		IP = new IPEndPoint[4];
 
-		playerNetCommunicate = GameObject.FindObjectOfType<PlayerNetCommunicate>();
+
 		
 		horizontal = new float[4];
 		vertical = new float[4];

@@ -101,10 +101,12 @@ public class LineSystem : MonoBehaviour {
 
         activateCutting = false;
         timeActive = 0.0f;
+ 
 
         bufferVectorA = new Vector3();
         bufferVectorB = new Vector3();
       
+       
     }
 
 	// Use this for initialization

@@ -366,12 +366,8 @@ public class PolygonSystem : MonoBehaviour
                     polyIsStarting = true;
                     for(int i = 0; i < renderers.Length; i++)
                     {
-
                         renderers[i].material = mats[0];
-
                     }
-                    Debug.Log("poly starts");
-
                 }
 
                 else if (playerEnergyCheck == 0 && polyStart && currentStandStill > 0.0f && distanceReached)
@@ -536,9 +532,7 @@ public class PolygonSystem : MonoBehaviour
         if (polyFailAnimLerpTime <= 1.0f)
         {
             polyFailAnimLerpTime += Time.deltaTime;
-        }
-       
-        Debug.Log("fail");     
+        }     
 
         for (int i = 0; i < renderers.Length; i++)
         {           
@@ -1125,9 +1119,11 @@ public class PolygonSystem : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             playerScripts[i] = players[i].GetComponent<BasePlayer>();
-           
+            
+
         }
-        
+
+      
         oldPlayerPosition = new Vector3[players.Length];              
         angles = new float[players.Length];
        

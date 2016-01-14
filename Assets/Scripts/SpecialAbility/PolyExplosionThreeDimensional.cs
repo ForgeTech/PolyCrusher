@@ -16,7 +16,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     private int vertexCount;
     private int step;
-    private int grandStep;
+
     private Vector3 scaleFactor;
     private Pool pool;
     private int health;
@@ -50,7 +50,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     }
 
     private List<Tri> triList = new List<Tri>();
-    private bool found;
+   
     
 
 
@@ -90,13 +90,12 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
             step++;
         }
 
-        grandStep = step * 20;
+      
         //grandStep = 21;
 
         //scaleFactor = 0.03f * step * 2;
         scaleFactor = transform.localScale;
-        found = false;
-
+       
         health = hitsTillExplosion;
 
         if (respawn)
@@ -174,7 +173,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 int[] triangles = new int[0];
 
                 mesh = new Mesh();
-                Vector2 uvZero = new Vector2(0, 0);
+                
 
                 if (GetMatchingTri(tri.x, tri.y, tri.z))
                 {
