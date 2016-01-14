@@ -19,6 +19,18 @@ public class RayProjectile : Projectile
     [SerializeField]
     protected float lineWidth = 0.1f;
 
+    [SerializeField]
+    protected int spiralVertices = 50;
+
+    [SerializeField]
+    protected float radius = 1.2f;
+
+    [SerializeField]
+    protected float circleFrequency = 2f;
+
+    [SerializeField]
+    protected float spiralRandomOffset = 0.1f;
+
     // The initial line width.
     private float initialLineWidth;
 
@@ -43,6 +55,9 @@ public class RayProjectile : Projectile
     [SerializeField]
     protected Material rayMaterial;
 
+    [SerializeField]
+    protected Material spiralMaterial;
+
     [Space(5)]
     [Header("Targeting values")]
     // The Target layer of the ray.
@@ -51,6 +66,10 @@ public class RayProjectile : Projectile
 
     // A reference to the line renderer.
     private LineRenderer lineRenderer;
+
+    // Reference to the spiral line renderer.
+    private LineRenderer spiralRenderer;
+    private GameObject spiralGameObject;
 
     // Determines if the ray was already shot or not.
     private bool rayShot = false;
@@ -122,6 +141,10 @@ public class RayProjectile : Projectile
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(numberOfVertices - 1, transform.position + Direction * (MaxLength + distanceOffset));
                 CalculateLinePoints(MaxLength + distanceOffset);
+
+                spiralRenderer.SetPosition(0, transform.position);
+                spiralRenderer.SetPosition(spiralVertices - 1, transform.position + (Direction * (MaxLength + distanceOffset)));
+                CalculateSpiralLinePoints(MaxLength + distanceOffset);
             }
 
             rayShot = true;
@@ -140,6 +163,10 @@ public class RayProjectile : Projectile
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(numberOfVertices - 1, transform.position + (Direction * distance));
         CalculateLinePoints(distance);
+
+        spiralRenderer.SetPosition(0, transform.position);
+        spiralRenderer.SetPosition(spiralVertices - 1, transform.position + (Direction * distance));
+        CalculateSpiralLinePoints(distance);
 
         // Check if the hit-object can take damage
         if (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() is IDamageable)
@@ -178,11 +205,49 @@ public class RayProjectile : Projectile
     {
         GetComponent<MeshRenderer>().enabled = false;
 
+        // Line renderer
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = rayMaterial;
         lineRenderer.SetWidth(lineWidth / 2f, lineWidth / 2f);
         lineRenderer.SetColors(Color.white, Color.white);
         lineRenderer.SetVertexCount(numberOfVertices);
+
+        // Spiral renderer
+        spiralGameObject = new GameObject("Spiral");
+        spiralGameObject.transform.parent = transform;
+        spiralGameObject.transform.rotation = transform.rotation;
+
+        spiralRenderer = spiralGameObject.AddComponent<LineRenderer>();
+        spiralRenderer.material = spiralMaterial;
+        spiralRenderer.SetWidth(lineWidth / 2f, lineWidth / 2f);
+        spiralRenderer.SetColors(Color.white, Color.white);
+        spiralRenderer.SetVertexCount(spiralVertices);
+    }
+
+    /// <summary>
+    /// Calculates the points of the line for a spiral.
+    /// </summary>
+    /// <param name="distance"></param>
+    private void CalculateSpiralLinePoints(float distance)
+    {
+        if (numberOfVertices > 2)
+        {
+            float step = distance / spiralVertices;
+            float stepAdd = step;
+
+            for (int i = 0; i < spiralVertices - 2; i++)
+            {
+                float x =  Mathf.Sin(stepAdd * circleFrequency) * radius + Random.Range(-spiralRandomOffset, spiralRandomOffset);
+                float y = Mathf.Cos(stepAdd * circleFrequency) * radius + Random.Range(-spiralRandomOffset, spiralRandomOffset);
+
+                Quaternion rotation = Quaternion.LookRotation(Direction);
+                Vector3 pos = new Vector3(x, y, 0);
+                pos = rotation * pos;
+
+                spiralRenderer.SetPosition(i + 1, transform.position + pos + Direction * stepAdd);
+                stepAdd += step;
+            }
+        }
     }
 
     /// <summary>
@@ -229,6 +294,7 @@ public class RayProjectile : Projectile
             float lerpWidth = Mathf.Lerp(initialLineWidth / 2.0f, 0f, widthFadeTimer / (rayLifeTime / 2.0f));
             lineRenderer.SetWidth(lerpWidth, lerpWidth);
 
+            spiralRenderer.SetWidth(lerpWidth, lerpWidth);
 
             widthFadeTimer += Time.deltaTime;
         }

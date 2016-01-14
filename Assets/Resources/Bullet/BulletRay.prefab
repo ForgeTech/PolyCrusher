@@ -77,10 +77,15 @@ MonoBehaviour:
   maxLength: 14
   numberOfVertices: 18
   lineWidth: .100000001
+  spiralVertices: 90
+  radius: .5
+  circleFrequency: 5
+  spiralRandomOffset: .100000001
   rayLifeTime: .600000024
   lightningOffset: .400000006
   lengthOffset: 10
   rayMaterial: {fileID: 2100000, guid: 690d2e5129e3a904580def68d51f976a, type: 2}
+  spiralMaterial: {fileID: 2100000, guid: 7093e0c0e2c26fb4ab7810096fb1eea7, type: 2}
   targetLayer: 9
 --- !u!1001 &100100000
 Prefab:
@@ -93,6 +98,26 @@ Prefab:
       propertyPath: rayMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 690d2e5129e3a904580def68d51f976a, type: 2}
+    - target: {fileID: 0}
+      propertyPath: circleFrequency
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spiralVertices
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: radius
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spiralMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 7093e0c0e2c26fb4ab7810096fb1eea7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: spiralRandomOffset
+      value: .100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 162976}

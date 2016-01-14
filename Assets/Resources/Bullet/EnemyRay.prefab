@@ -77,10 +77,15 @@ MonoBehaviour:
   maxLength: 14
   numberOfVertices: 18
   lineWidth: .100000001
+  spiralVertices: 15
+  radius: 1.39999998
+  circleFrequency: 5000
+  spiralRandomOffset: .100000001
   rayLifeTime: .600000024
   lightningOffset: .400000006
   lengthOffset: 10
   rayMaterial: {fileID: 2100000, guid: a8a2d68559f8ab541a16efb29a45c20f, type: 2}
+  spiralMaterial: {fileID: 0}
   targetLayer: 8
 --- !u!1001 &100100000
 Prefab:
@@ -100,6 +105,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: damage
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: radius
+      value: 1.39999998
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
