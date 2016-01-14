@@ -135,7 +135,7 @@ public class LineSystem : MonoBehaviour {
                 
             }
 
-            if(powerUpTime >= 0.0f)
+            if(timeActive >= 0.0f)
             {
                 timeActive -= Time.deltaTime;
                 CuttingLinesPowerUp();
@@ -183,8 +183,8 @@ public class LineSystem : MonoBehaviour {
 
             bufferVectorB = players[secondVertex[i]].transform.position;
             bufferVectorB.y = heightOffset;
-            lineRenderer[i].material = mats[3];
-            lineRenderer[i].SetWidth(healLineWidth, healLineWidth);
+            //lineRenderer[i].material = mats[3];
+            //lineRenderer[i].SetWidth(healLineWidth, healLineWidth);
 
             hits = Physics.RaycastAll(new Ray(bufferVectorB, Vector3.Normalize(bufferVectorA - bufferVectorB)), Vector3.Distance(bufferVectorB, bufferVectorA), (1 << 9));           
            
