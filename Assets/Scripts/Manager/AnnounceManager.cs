@@ -29,6 +29,8 @@ public class AnnounceManager : MonoBehaviour
         Trap.TrapTriggered += AnnounceTrap;
         GameManager.WaveStarted += AnnounceNextWave;
         BossEnemy.BossSpawned += AnnounceBossWave;
+        PolygonSystem.PolyExecuted += AnnouncePolyExecute;
+        PolygonSystem.PolyFailed += AnnouncePolyFail;
 	}
 
     /// <summary>

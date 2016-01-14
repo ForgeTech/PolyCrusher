@@ -4,6 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using XInputDotNetPure;
 
+// Poly event handler
+public delegate void PolyExecuteEventHandler();
+public delegate void PolyFailEventHandler();
+
 public class PolygonSystem : MonoBehaviour
 {
     [HideInInspector]
@@ -108,13 +112,15 @@ public class PolygonSystem : MonoBehaviour
 
     private Vector3[] cornerPoints;
 
-
-
+    // Polygon events
+    public static PolyExecuteEventHandler PolyExecuted;
+    public static PolyFailEventHandler PolyFailed;
 
     void Awake()
     {
         BasePlayer.PlayerDied += UpdatePlayerStatus;
         BasePlayer.PlayerSpawned += UpdatePlayerStatus;
+        LevelEndManager.levelExitEvent += ResetValues;
 
         screenFade = new GameObject("Canvas Container");
         Canvas canvas = screenFade.AddComponent<Canvas>();
@@ -220,10 +226,11 @@ public class PolygonSystem : MonoBehaviour
 
         if (enemies.Count == 0)
         {
-            //TODO sound - place polyfail event here
-        }else if (enemies.Count >= 3)
+            OnPolyFailed();
+        }
+        else if (enemies.Count >= 3)
         {
-            //TODO sound - place poly success event here
+            OnPolyExecuted();
         }
 
 
@@ -1134,6 +1141,30 @@ public class PolygonSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Event method for the "PolyExecuted" event.
+    /// </summary>
+    protected void OnPolyExecuted()
+    {
+        if (PolyExecuted != null)
+            PolyExecuted();
+    }
 
+    /// <summary>
+    /// Event method for the "PolyFailed" event.
+    /// </summary>
+    protected void OnPolyFailed()
+    {
+        if (PolyFailed != null)
+            PolyFailed();
+    }
+
+    /// <summary>
+    /// Resets values.
+    /// </summary>
+    protected void ResetValues()
+    {
+        PolyFailed = null;
+        PolyExecuted = null;
+    }
 }
-
