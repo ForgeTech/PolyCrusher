@@ -6,13 +6,9 @@ public class PowerUpCut : PowerUp
     // Reference to the linesystem.
     protected LineSystem lineSystem;
 
-    protected void Start()
-    {
-        lineSystem = GameObject.FindObjectOfType<LineSystem>();
-    }
-
     public override void Use()
     {
+        lineSystem = GameObject.FindObjectOfType<LineSystem>();
         if (lineSystem != null)
             lineSystem.ActivateCutting();
 

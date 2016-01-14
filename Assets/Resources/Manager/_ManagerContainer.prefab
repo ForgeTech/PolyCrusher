@@ -1087,6 +1087,7 @@ MonoBehaviour:
   lerpSpeed: 4
   healDistancePadding: 0
   polyDistance: 0
+  powerUpTime: 12
   mats:
   - {fileID: 2100000, guid: 26ad2a7c9c4161046a7c0d6bb511ef2d, type: 2}
   - {fileID: 2100000, guid: 624c396bc2f94e34980cd709858792a2, type: 2}
@@ -1095,7 +1096,6 @@ MonoBehaviour:
   health: {fileID: 131436, guid: 2278b706a80e5a3459fd4c2a78d25d7e, type: 2}
   energy: {fileID: 146558, guid: 7e45a7591af7c8a43a050bbc0c8a1559, type: 2}
   laserParticles: {fileID: 103782, guid: 6c186ddd736f0194780b95a9f1c90977, type: 2}
-  activateCutting: 1
 --- !u!114 &11413812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1358,20 +1358,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab60844790a3a5c4190f793d81b7a3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: []
+  enemies: []
+  detonate: 0
   explosionParticle: {fileID: 187532, guid: 8ff3dcd9ee30463419a54395ba08d2c5, type: 2}
+  bigExplosionParticle: {fileID: 109618, guid: 3702b9ac7ed1b9f46903ead9a2edf487, type: 2}
   playerStandingParticle: {fileID: 174572, guid: 75ed02a9eb91d204ebf2909fde368e4c,
     type: 2}
   polyLoading: {fileID: 8300000, guid: ab1baa4bc3c386c4ba0fad86cc36c0c0, type: 3}
   polyExplosion: {fileID: 8300000, guid: d45b3daab584efa40b0a383c674f1f8f, type: 3}
   polyFail: {fileID: 8300000, guid: b2ca083b447fc2243abb70a36c43e3d9, type: 3}
-  loadingSoundPlaying: 0
-  declineSoundPlaying: 0
-  color: {r: 0, g: 0, b: 0, a: 0}
-  polyLerpDistance: 0
-  point: {x: 0, y: 0, z: 0}
-  flashColors: []
-  requiredPolyDistance: 7.5
   mats:
   - {fileID: 2100000, guid: febbee396b3337e41b19466d684030ad, type: 2}
   - {fileID: 2100000, guid: cb69ead05f14b8d4788a992b76336432, type: 2}
@@ -1380,62 +1375,12 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 43732e068e0e68a4daf7b6fd54ca0992, type: 2}
   - {fileID: 2100000, guid: fdfc7670ae73fb4449a44dcbe6ff6ea7, type: 2}
   heightOffset: 1.04999995
-  playerAlignment: 
-  detonate: 0
-  specialIsUsable: 0
-  oldDonkey: 0
-  donkey: 0
-  polyThickness: 0
-  changedToTri: 0
-  changedToQuad: 0
-  sphere: {fileID: 0}
-  charging: 0
-  dummy: {fileID: 0}
-  startAnimTime: 2
-  middlePoint: {x: 0, y: 0, z: 0}
-  angles: []
-  distances: []
-  intersectPosition: {x: 0, y: 0, z: 0}
-  explosionCooldown: .200000003
-  polyIsStarting: 0
-  polyIsEnding: 0
-  polyIsFailing: 0
-  polyIsLoading: 0
-  screenFlash: 0
-  fadeOut: 0
-  poly: {fileID: 0}
-  triPoly: {fileID: 0}
-  screenFade: {fileID: 0}
-  bigExplosionParticle: {fileID: 109618, guid: 3702b9ac7ed1b9f46903ead9a2edf487, type: 2}
-  whiteScreen: {fileID: 0}
-  polyParts: []
-  polys: []
-  filters: []
-  renderers: []
-  colliders: []
-  playerScripts: []
-  polyOffsets: []
-  polyStartAnimLerpTimes: []
-  polyEndAnimLerpTime: 0
-  polyFailAnimLerpTime: 0
-  polyLoadingAnimLerpTime: 0
-  screenFlashAnimTime: 0
-  polyFailTween: 0
-  polyFailTween2: 0
-  transitionCooldown: 1.5
-  currentCooldown: 0
-  polyTweens: 
-  polyStart: 0
-  polyEnd: 0
-  colliderFrameTime: 2
-  currentStandStill: 0
-  standStillRequiredTime: 1
   polyStartHeight: -5
   polyStartSpeed: 6
-  intersectedLines: 
-  enemies: []
-  affectedEnemies: []
-  activateViration: 0
+  standStillRequiredTime: 1
+  requiredPolyDistance: 7.5
+  transitionCooldown: 1.5
+  bossDamage: 0
 --- !u!114 &11432122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2140,6 +2085,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: pools.Array.data[13].m_Root
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerUpTime
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
