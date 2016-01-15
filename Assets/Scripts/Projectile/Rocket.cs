@@ -99,7 +99,7 @@ public class Rocket : Projectile {
     public void Shoot(Vector3 target) {
 		this.target = new Vector3(target.x, target.y - 0.1f, target.z);
 		launched = true;
-		SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
+		//SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
 		//sphereCollider.radius = 0.1f;
         //Destroy (gameObject, lifeTime);
         StartCoroutine(DestroyProjectileAfterTime(lifeTime));

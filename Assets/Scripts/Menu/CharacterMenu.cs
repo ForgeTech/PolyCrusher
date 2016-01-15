@@ -216,7 +216,7 @@ public class CharacterMenu : MonoBehaviour
         playerSelection = new int[4] { -1, -1, -1, -1 };
         currentHoveredChar = new int[4] { -1, -1, -1, -1 };
         cursorColors = new Color[4] { Color.red, Color.cyan, Color.yellow, Color.white };
-        playerClassNames = new string[6] { "Birdman", "Charger", "Fatman", "Timeshifter", "Babuschka", "Random" };
+        playerClassNames = new string[6] { "Birdman", "Charger", "Fatman", "Timeshifter", "Babuschka", "Pantomime" };
 
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
         levelInfo.ClearPlayerArrays();
@@ -291,7 +291,6 @@ public class CharacterMenu : MonoBehaviour
 
     void Update()
     {
-
         UpdatePlayerStatus();
         PlayCountdownSounds();
 
@@ -304,10 +303,6 @@ public class CharacterMenu : MonoBehaviour
                 CheckHover();
                 HandleBackButton();
                 RefreshImages();
-
-
-
-
             }
             else
             {
@@ -679,66 +674,6 @@ public class CharacterMenu : MonoBehaviour
         }
 
     }
-
-
-    /*private void Countdown()
-    {
-
-        if (timeRemaining > 0.0f)
-        {
-			Image countdownImage = GameObject.Find ("Countdown").GetComponent<Image>();
-
-			if (countdownImage.enabled == false) {
-				countdownImage.transform.localScale = Vector3.zero;
-				countdownImage.enabled = true;
-				StartCoroutine(countdownImage.transform.ScaleTo(new Vector3(1,1,1), 0.3f, AnimCurveContainer.AnimCurve.grow.Evaluate));
-				once = false;
-			}
-			
-			timeRemaining -= Time.deltaTime;
-
-			if (timeRemaining < 3f && !once) {
-
-					countdownImage.transform.localScale = Vector3.zero;
-					countdownImage.sprite = Resources.Load<Sprite> ("Menu/CharacterSelectionMenu/countdown_2");
-					StartCoroutine(countdownImage.transform.ScaleTo(new Vector3(1,1,1), 0.2f, AnimCurveContainer.AnimCurve.grow.Evaluate));
-					once = true;
-
-			} else if (((int)timeRemaining) == 1) {
-
-                countdownImage.transform.localScale = Vector3.zero;
-				countdownImage.sprite = Resources.Load<Sprite> ("Menu/CharacterSelectionMenu/countdown_1");
-				StartCoroutine(countdownImage.transform.ScaleTo(new Vector3(1,1,1), 0.2f, AnimCurveContainer.AnimCurve.grow.Evaluate));
-
-			}
-
-        }
-        else
-        {
-			GameObject.Find ("Countdown").GetComponent<Image>().enabled = false;
-        }
-
-        if (((int)timeRemaining) == 3 && !three)
-        {
-            SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
-            three = true;
-        }
-        if (((int)timeRemaining) == 2 && !two)
-        {
-            SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
-            two = true;
-        }
-        if (((int)timeRemaining) == 1 && !one)
-        {
-            SoundManager.SoundManagerInstance.Play(beepSound, Vector3.zero);
-            one = true;
-        }
-        if (((int)timeRemaining) == 0 && !zero)
-        {
-            SoundManager.SoundManagerInstance.Play(zeroSound, Vector3.zero);
-            zero = true;
-        }
-    }*/
 
 
     private void StorePlayerInformation()

@@ -15,7 +15,8 @@ public class PlayerNetCommunicate : MonoBehaviour
 {
 
 	private PlayerManager playerManager;
-    private CharacterMenu characterMenu;
+    [SerializeField]
+    private NewCharacterSelectionScript characterMenu;
     private MainMenu mainMenu;
     private LevelSelection levelSelection;
 
@@ -60,7 +61,7 @@ public class PlayerNetCommunicate : MonoBehaviour
 		ipSender = new IPEndPoint(IPAddress.Parse(LocalIPAddress()), 4441);
 
         playerManager = GameObject.FindObjectOfType<PlayerManager>();      
-        characterMenu = GameObject.FindObjectOfType<CharacterMenu>();
+        characterMenu = GameObject.FindObjectOfType<NewCharacterSelectionScript>();
         mainMenu = GameObject.FindObjectOfType<MainMenu>();
         levelSelection = GameObject.FindObjectOfType<LevelSelection>();
         udpListener = new UdpClient[4];
@@ -166,7 +167,7 @@ public class PlayerNetCommunicate : MonoBehaviour
 	}
 
 	void Update () {
-		characterMenu = GameObject.FindObjectOfType<CharacterMenu>();
+		characterMenu = GameObject.FindObjectOfType<NewCharacterSelectionScript>();
 		mainMenu = GameObject.FindObjectOfType<MainMenu>();
 		levelSelection = GameObject.FindObjectOfType<LevelSelection>();
 	}

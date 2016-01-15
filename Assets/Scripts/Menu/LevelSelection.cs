@@ -134,8 +134,7 @@ public class LevelSelection : MonoBehaviour
         playerCount = Input.GetJoystickNames().Length;
         currentPlayerCount = playerCount;
 
-        Debug.Log(playerCount);
-
+       
 		oldCounter = 0;
 
         for (int i = 0; i < playerCount; i++)
@@ -292,8 +291,7 @@ public class LevelSelection : MonoBehaviour
             
             int runningNumber = i + 1;
 
-            string curHorizontal = "P" + runningNumber + "_Horizontal";
-            
+            string curHorizontal = "P" + runningNumber + "_Horizontal";            
 
             if (Input.GetAxis(curHorizontal) <= -0.2f || Input.GetAxis(curHorizontal) >= 0.2f)
             {
@@ -302,10 +300,7 @@ public class LevelSelection : MonoBehaviour
             }else if (network.horizontal[i] <= -0.2f || network.horizontal[i] >= 0.2f)
             {
                 x = network.horizontal[i];
-
-            }
-
-           
+            }           
 
             if (!inputReceived)
             {
