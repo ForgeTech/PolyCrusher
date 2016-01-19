@@ -66,7 +66,8 @@ public class SoundManager : MonoBehaviour
 
         if (!loop)
         {
-            Destroy(g, clip.length);
+            //Destroy(g, clip.length);
+            StartCoroutine(WaitForDestroy(g, clip.length));
             audioSources.Remove(source);
         }
 
@@ -126,7 +127,8 @@ public class SoundManager : MonoBehaviour
 
         if (!loop)
         {
-            Destroy(g, clip.length);
+            //Destroy(g, clip.length);
+            StartCoroutine(WaitForDestroy(g, clip.length));
             audioSources.Remove(source);
         }
 
@@ -187,5 +189,17 @@ public class SoundManager : MonoBehaviour
             a.Stop();
             Destroy(a);
         }
+    }
+
+    /// <summary>
+    /// Waits before the given object will be destroyed.
+    /// </summary>
+    /// <param name="g"></param>
+    /// <param name="clip"></param>
+    /// <returns></returns>
+    protected IEnumerator WaitForDestroy(GameObject g, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime * 2f);
+        Destroy(g);
     }
 }
