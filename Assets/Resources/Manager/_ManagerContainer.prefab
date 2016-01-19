@@ -11,6 +11,7 @@ GameObject:
   - 82: {fileID: 8231752}
   - 114: {fileID: 11413812}
   - 114: {fileID: 11414800}
+  - 164: {fileID: 16490590}
   - 114: {fileID: 11470604}
   - 114: {fileID: 11490592}
   - 114: {fileID: 11449808}
@@ -1121,7 +1122,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioCategory: NextWave
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: d95713a4c18dabf4691c3d5c33feee0d, type: 3}
+  - {fileID: 8300000, guid: 608e5710a5e2b0c48adad9612d44db52, type: 3}
+  - {fileID: 8300000, guid: 1fa04e7b701344a429fdeba43ae6ca42, type: 3}
+  - {fileID: 8300000, guid: 8ecb807872369cb4094e00ec39216c40, type: 3}
+  - {fileID: 8300000, guid: 07ab513b6ab5e2d4ba335e62560123af, type: 3}
+  - {fileID: 8300000, guid: 50a86cfcf9979e24883d15eabcc62c7e, type: 3}
 --- !u!114 &11416250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1776,6 +1783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1b07de414ecb34ea7ea83ed67b5ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playNextWaveSound: 1
 --- !u!114 &11489478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1804,7 +1812,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioCategory: BossWave
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: 8135d532c9a7cbd429c812deb51d3c8c, type: 3}
+--- !u!164 &16490590
+AudioReverbFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104154}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -476
+  m_RoomRolloff: 0
+  m_DecayTime: 4.32000017
+  m_DecayHFRatio: .589999974
+  m_ReflectionsLevel: -789
+  m_ReverbLevel: -289
+  m_ReverbDelay: .0299999993
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 7
 --- !u!212 &21241464
 SpriteRenderer:
   m_ObjectHideFlags: 1

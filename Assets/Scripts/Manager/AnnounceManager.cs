@@ -3,6 +3,11 @@ using System.Collections;
 
 public class AnnounceManager : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField]
+    [Tooltip("Determines if the next wave announce is played or not.")]
+    protected bool playNextWaveSound = true;
+
     // Reference to the announcer voice.
     protected GameObject announcerVoice;
 
@@ -48,7 +53,10 @@ public class AnnounceManager : MonoBehaviour
     protected void AnnounceNextWave()
     {
         if (nextWave != null)
-            nextWave.PlayRandomClip();
+        {
+            if(!GameManager.GameManagerInstance.IsBossWave && playNextWaveSound)
+                nextWave.PlayRandomClip();
+        }
     }
 
     /// <summary>

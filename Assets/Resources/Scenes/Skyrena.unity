@@ -306,6 +306,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &59927563
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -477,7 +479,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1001 &126619898
 Prefab:
   m_ObjectHideFlags: 0
@@ -633,7 +635,7 @@ Transform:
   - {fileID: 1479315465}
   - {fileID: 511639026}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1001 &182607357
 Prefab:
   m_ObjectHideFlags: 0
@@ -809,6 +811,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &200393108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1088,6 +1092,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &241633433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1367,6 +1373,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &284261676
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1499,7 +1507,7 @@ Transform:
   - {fileID: 1065620437}
   - {fileID: 1734474889}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
 --- !u!1 &305747366 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: c7c0b19a9bb88704b875a702052c643e, type: 3}
@@ -1782,6 +1790,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &403790356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2464,6 +2474,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &521741619
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2773,6 +2785,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &589213168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2912,6 +2926,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &642438488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3291,6 +3307,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &701013467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5005,6 +5023,10 @@ Prefab:
       propertyPath: playTime
       value: 
       objectReference: {fileID: 1837597652}
+    - target: {fileID: 11486086, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
+      propertyPath: playNextWaveSound
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
   m_IsPrefabParent: 0
@@ -5380,6 +5402,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!54 &957220158
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5627,6 +5651,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!208 &1048603891
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5948,7 +5974,7 @@ Transform:
   - {fileID: 657927985}
   - {fileID: 714381513}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
 --- !u!4 &1123413177 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: edba780dbe745574981307d4b2c9a9bc, type: 3}
@@ -6050,6 +6076,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &1139575958
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6119,6 +6147,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &1154158739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6842,6 +6872,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &1316433584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7078,6 +7110,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &1363123587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7243,7 +7277,7 @@ Transform:
   - {fileID: 1064778393}
   - {fileID: 309170669}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1001 &1401823932
 Prefab:
   m_ObjectHideFlags: 0
@@ -7337,6 +7371,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &1401823936
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7422,6 +7458,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!208 &1433293108
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -7677,6 +7715,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &1453223017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8026,7 +8066,7 @@ Transform:
   - {fileID: 200393106}
   - {fileID: 2038182324}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!4 &1523214149 stripped
 Transform:
   m_PrefabParentObject: {fileID: 494166, guid: 341b6b5eedfaf1144948f88be97093ea, type: 2}
@@ -8167,6 +8207,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!208 &1546342821
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -8542,6 +8584,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!208 &1660582152
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -10448,6 +10492,8 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
+  powerUpPrefab: {fileID: 0}
+  powerUpProbability: .0500000007
 --- !u!65 &2038182327
 BoxCollider:
   m_ObjectHideFlags: 0
