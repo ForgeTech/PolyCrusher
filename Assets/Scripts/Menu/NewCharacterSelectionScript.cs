@@ -113,6 +113,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
     Vector3 originalScaleGameStartsText;
 
+    private bool onceLevel;
 
     // Use this for initialization
     void Start () {
@@ -241,6 +242,9 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         //onceLevel = false;
         timeBeginning = 0.0f;
         first = true;
+
+
+        
         // GameObject.Find("GameName").GetComponent<Text>().text = network.gameName + " GAME";
     }
 
@@ -314,8 +318,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         if (!once)
         {
             if (changeButtonPosition())
-            {
-                Debug.Log(-1%3);
+            {               
                 ScaleImages();
                 once = true;
             }
@@ -454,7 +457,22 @@ public class NewCharacterSelectionScript : MonoBehaviour {
             {                
                 if (!playerSelected[i])
                 {
-                    selectedCharacters[i] = hoveredCharacters[i];                   
+                    selectedCharacters[i] = hoveredCharacters[i];
+                    
+                    if(hoveredCharacters[i] == selectionImages.GetLength(1) - 1)
+                    {
+                        OnButtonDeclined();
+                        HandleBackButton();
+
+                    }
+                    else
+                    {
+                        PlaySpawnSound(hoveredCharacters[i]);
+
+
+                    }
+                    
+                                    
                     playerSelected[i] = true;
                 }
                 else
@@ -482,6 +500,40 @@ public class NewCharacterSelectionScript : MonoBehaviour {
             }
 
             
+        }
+    }
+
+
+
+
+    protected void PlaySpawnSound(int character)
+    {
+        switch (character)
+        {
+            case 0:
+                if (spawnBirdman != null)
+                    spawnBirdman.PlayRandomClip();
+                break;
+            case 1:
+                if (spawnCharger != null)
+                    spawnCharger.PlayRandomClip();
+                break;
+            case 2:
+                if (spawnFatman != null)
+                    spawnFatman.PlayRandomClip();
+                break;
+            case 3:
+                if (spawnTimeshifter != null)
+                    spawnTimeshifter.PlayRandomClip();
+                break;
+            case 4:
+                if (spawnBabuschka != null)
+                    spawnBabuschka.PlayRandomClip();
+                break;
+            case 5:
+                if (spawnPantomime != null)
+                    spawnPantomime.PlayRandomClip();
+                break;
         }
     }
 
@@ -565,13 +617,13 @@ public class NewCharacterSelectionScript : MonoBehaviour {
             {
                 if (!selectedChange[i])
                 {                    
-                    if (currentControllerInput[i] == 1)
+                    if (currentControllerInput[i] == 1 && selectedCharacters[i] == -1)
                     {                       
                         StartCoroutine(MoveUpwards(i));
                         selectedChange[i] = true;
                     }
 
-                    if (currentControllerInput[i] == 3)
+                    if (currentControllerInput[i] == 3 && selectedCharacters[i] == -1)
                     {
                         StartCoroutine(MoveDownwards(i));
                         selectedChange[i] = true;
@@ -642,6 +694,25 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
 
 
+    private void HandleBackButton()
+    {
+        if (!onceLevel)
+        {
+            if (GameObject.Find("_StartMenu").GetComponent<StartMenu>().transitionFinished)
+            {
+                onceLevel = true;
+                OnButtonDeclined();
+                GameObject.Find("_StartMenu").GetComponent<StartMenu>().ChangeScenes("CharacterSelectionObjectNew(Clone)", "Scenes/Menu/LevelSelectionObject", true);
+            }
+                
+        }
+       
+
+
+
+    }
+
+
 
 
     private void UpdatePlayerStatusOld()
@@ -700,7 +771,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
   
     private IEnumerator MoveUpwards(int index)
     {
-        Debug.Log("move upwards");
+        OnButtonSwitched();
         float y = 0;
 
         transformBack[index] --;
@@ -750,6 +821,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
     private IEnumerator MoveDownwards(int index)
     {
+        OnButtonSwitched();
         float y = 0;
 
         StartCoroutine(selectionImages[index, hoveredCharacters[index]].transform.ScaleTo(new Vector3(1, 1, 1) * 0.0f, 0.35f));
@@ -791,6 +863,14 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         }
         selectedChange[index] = false;
         currentControllerInput[index] = -1;
+
+
+        //for(int i = 0; i < selectedCharacters.Length; i++)
+        //{
+        //    if()
+
+
+        //}
 
     }
 
@@ -1057,29 +1137,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         //three = false;
     }
 
-    protected void PlaySpawnSound(int character)
-    {
-        switch (character)
-        {
-            case 0:
-                if (spawnTimeshifter != null)
-                    spawnBirdman.PlayRandomClip();
-                break;
-            case 1:
-                if (spawnCharger != null)
-                    spawnCharger.PlayRandomClip();
-                break;
-            case 2:
-                if (spawnFatman != null)
-                    spawnFatman.PlayRandomClip();
-                break;
-            case 3:
-                if (spawnBirdman != null)
-                    spawnTimeshifter.PlayRandomClip();
-                break;
-        }
-    }
-
+ 
 
 
     /// <summary>
