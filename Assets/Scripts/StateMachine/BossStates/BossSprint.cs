@@ -165,6 +165,9 @@ public class BossSprint : FSMState
             // Take Damage
             p.TakeDamage(e.MeleeAttackDamage, e);
 
+            // Camera shake
+            CameraManager.CameraReference.ShakeOnce();
+
             // Add force to the player.
             Rigidbody rigid = p.GetComponent<Rigidbody>();
 
