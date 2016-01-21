@@ -514,10 +514,10 @@ public class GameManager : MonoBehaviour
     protected void BossDied(BossEnemy e)
     {
         this.CurrentEnemyCount--;
-
+        
         MonoBehaviour m = bossSpawnInfo.boss.GetComponent<MonoBehaviour>();
 
-        if (m != null && m is BossEnemy)
+        if (m != null && m is BossEnemy && e != null)
         {
             BossEnemy b = m as BossEnemy;
 
@@ -526,6 +526,11 @@ public class GameManager : MonoBehaviour
             {
                 this.accumulatedRessourceValue += BossSpawnInfo.enemyRessourceValue;
             }
+        }
+        else if (e == null)
+        {
+            // Add the ressource also if the incoming boss is null -> the boss may be destroyed in a bad constellation
+            this.accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
         }
     }
 

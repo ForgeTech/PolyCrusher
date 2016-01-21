@@ -166,10 +166,14 @@ public class PlayerNetCommunicate : MonoBehaviour
 
 	}
 
-	void Update () {
-		characterMenu = GameObject.FindObjectOfType<NewCharacterSelectionScript>();
-		mainMenu = GameObject.FindObjectOfType<MainMenu>();
-		levelSelection = GameObject.FindObjectOfType<LevelSelection>();
+	void Update ()
+    {
+        if (playerManager == null)
+        {
+            characterMenu = GameObject.FindObjectOfType<NewCharacterSelectionScript>();
+            mainMenu = GameObject.FindObjectOfType<MainMenu>();
+            levelSelection = GameObject.FindObjectOfType<LevelSelection>();
+        }
 	}
 
     void OnLevelWasLoaded(int level)
