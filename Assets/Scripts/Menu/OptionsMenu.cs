@@ -104,9 +104,7 @@ public class OptionsMenu : MonoBehaviour
     int oldCounter = 0;
 
     public float x;
-
-
-
+    
     
 
     void Awake()
@@ -211,8 +209,7 @@ public class OptionsMenu : MonoBehaviour
         playerCount = Input.GetJoystickNames().Length;
         currentPlayerCount = playerCount;
 
-        Debug.Log(playerCount);
-
+       
         for (int i = 0; i < playerCount; i++)
         {
 
@@ -244,10 +241,8 @@ public class OptionsMenu : MonoBehaviour
     {
         buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().interactable = true;
 
-        //ConfigScript.LanguageChange(language);
         LanguageFileReader.ChangeLanguage(language);
-        Debug.Log(LanguageFileReader.selectedLanguage);
-
+      
         UpdateButtonTexts();
     }
 
@@ -456,8 +451,7 @@ public class OptionsMenu : MonoBehaviour
             }
 
             if (moveRight && selected.y != arrayLengths[(int)selected.x] - 1)
-            {
-                Debug.Log("Items " + arrayLengths[(int)selected.x]);
+            {               
                 selected.y += 1;
                 OnButtonSwitched();
                 moveRight = false;
@@ -474,8 +468,7 @@ public class OptionsMenu : MonoBehaviour
     private void ProcessOptionInput()
     {
         if (moveUp && selectedOption != 0 && selectedOption-1!=disabledOption)
-        {
-            Debug.Log("disabledOption: " + disabledOption);
+        {           
             selectedOption -= 1;
             OnButtonSwitched();
             moveUp = false;
@@ -676,8 +669,7 @@ public class OptionsMenu : MonoBehaviour
 
 
         if (moveDown && selected.y != arrayLengths[(int)selected.x]-1 && selected.y != buttonArray.GetLength(1) - 1)
-        {
-            Debug.Log("Items "+arrayLengths[(int)selected.x]);
+        {            
             selected.y += 1;
             OnButtonSwitched();
             moveDown = false;
@@ -709,10 +701,9 @@ public class OptionsMenu : MonoBehaviour
                     network.actionButton[i] = 0;
                 }
                 buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().interactable = false;
-                buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().onClick.Invoke();
+                buttonArray[(int)selected.x, (int)selected.y].GetComponent<Button>().onClick.Invoke();          
                 
-                
-                Debug.Log("Button clicked");
+               
             }
         }
 
@@ -929,8 +920,7 @@ public class OptionsMenu : MonoBehaviour
 
 
     public void ResolutionChange()
-    {
-        Debug.Log("res change");
+    {       
         string curRes = Screen.width.ToString();
         PrepareOptions(resolutions, curRes);
     }
@@ -946,8 +936,7 @@ public class OptionsMenu : MonoBehaviour
         {
             optionArray[i].SetActive(true);
             if (toCompare == optionArray[i].name)
-            {
-                Debug.Log(toCompare + " found!");
+            {                
                 optionArray[i].GetComponentInChildren<Text>().color = Color.white;
                 optionArray[i].GetComponent<Button>().interactable = false;
                                
@@ -1060,25 +1049,25 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetResolutionFHD()
     {
-        Screen.SetResolution(1920, 1080, true);
+        Screen.SetResolution(1920, 1080, Screen.fullScreen);
         DeactivateOptionItems();
     }
 
     public void SetResolutionHDplus()
     {
-        Screen.SetResolution(1600, 900, true);
+        Screen.SetResolution(1600, 900, Screen.fullScreen);
         DeactivateOptionItems();
     }
 
     public void SetResolutionHD13()
     {
-        Screen.SetResolution(1366, 768, true);
+        Screen.SetResolution(1366, 768, Screen.fullScreen);
         DeactivateOptionItems();
     }
 
     public void SetResolutionHD()
     {
-        Screen.SetResolution(1280, 720, true);
+        Screen.SetResolution(1280, 720, Screen.fullScreen);
         DeactivateOptionItems();
     }
 
@@ -1116,15 +1105,12 @@ public class OptionsMenu : MonoBehaviour
                     if (allTextObjects[i].activeSelf == false)
                     {
                         allTextObjects[i].SetActive(true);
-                        allTextObjects[i].GetComponentInChildren<Text>().text = LanguageFileReader.GetLanguageObject(allTextObjects[i].name);
-                        Debug.Log("changed language");
-
+                        allTextObjects[i].GetComponentInChildren<Text>().text = LanguageFileReader.GetLanguageObject(allTextObjects[i].name);                       
                         allTextObjects[i].SetActive(false);
                     }
                     else
                     {
-                        allTextObjects[i].GetComponentInChildren<Text>().text = LanguageFileReader.GetLanguageObject(allTextObjects[i].name);
-                        Debug.Log("changed language");
+                        allTextObjects[i].GetComponentInChildren<Text>().text = LanguageFileReader.GetLanguageObject(allTextObjects[i].name);                       
                     }
                 }
             }

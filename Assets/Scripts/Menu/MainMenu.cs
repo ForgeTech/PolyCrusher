@@ -85,9 +85,7 @@ public class MainMenu : MonoBehaviour
 				OnButtonAccepted();
 				GameObject.Find ("_StartMenu").GetComponent<StartMenu> ().ChangeScenes ("MainMenuObject(Clone)", "Scenes/Menu/LevelSelectionObject", false);
 			}
-		}
-
-		//StartCoroutine(WaitUntilAcceptSoundFinished(1));
+		}		
     }
 
     void Awake()
@@ -124,8 +122,7 @@ public class MainMenu : MonoBehaviour
 
 		playerCount = Input.GetJoystickNames ().Length;
 		currentPlayerCount = playerCount;
-
-		Debug.Log (playerCount);
+		
 
 		for (int i = 0; i < playerCount; i++) {
            

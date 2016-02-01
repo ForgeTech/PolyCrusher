@@ -9,9 +9,9 @@ public class LanguageManager : MonoBehaviour {
     private int sceneIndex;
     private string prefabName;
 
-	// Use this for initialization
+	
 	void Start () {
-        sceneTextObjects = GameObject.FindObjectsOfType<Text>();
+        sceneTextObjects = FindObjectsOfType<Text>();
         sceneIndex = Application.loadedLevel;
         menuObjectNames = new string[] { "LevelSelectionObject(Clone)", "CharacterSelectionObject(Clone)", "MainMenuObject(Clone)", "OptionMenuObject(Clone)" };
 
@@ -52,21 +52,21 @@ public class LanguageManager : MonoBehaviour {
                 sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
             }     
         }
+        UpdateLanguage();
     }
 	
-	// Update is called once per frame
+	
 	void Update () {
-        
-        
-        UpdateTextList();
-        UpdateLanguage();
+        if (sceneIndex == 0)
+        {
+            UpdateTextList();
+            UpdateLanguage();
+        }  
 	}
 
     void UpdateTextList()
-    {
-        //Debug.Log("new text objects loaded");
-        sceneTextObjects = GameObject.FindObjectsOfType<Text>();
-        //UpdateLanguage();
+    {      
+        sceneTextObjects = FindObjectsOfType<Text>();     
     }
 
 

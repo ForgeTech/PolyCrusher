@@ -99,7 +99,7 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
 
-		buttons = new GameObject[7];
+		buttons = new GameObject[8];
 
 		buttons[0] = GameObject.Find("Select_Level_01");
 		buttons[1] = GameObject.Find("Select_Level_02");
@@ -107,7 +107,8 @@ public class LevelSelection : MonoBehaviour
 		buttons[3] = GameObject.Find("Select_Level_04");
         buttons[4] = GameObject.Find("Select_Level_05");
 		buttons[5] = GameObject.Find("Select_Level_06");
-        buttons[6] = GameObject.Find("Select_Main_Menu");
+        buttons[6] = GameObject.Find("Select_Level_07");
+        buttons[7] = GameObject.Find("Select_Main_Menu");
 
         levelTransformBack = buttons.Length - 1;
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
@@ -117,9 +118,7 @@ public class LevelSelection : MonoBehaviour
 
         distance = Screen.width - middlePos.x;
 
-        Debug.Log(distance);
-
-        //buttonSize = Screen.height / 2.7f;
+      
 
         maxPlayers = 4;
 
@@ -146,8 +145,7 @@ public class LevelSelection : MonoBehaviour
         }
 
         for (int i = 0; i < levelInfo.phonePlayerSlotTaken.Length; i++)
-        {
-			//Debug.Log (levelInfo.phonePlayerSlotTaken[0] + " " + levelInfo.phonePlayerSlotTaken[1] + " " +levelInfo.phonePlayerSlotTaken[2] + " " +levelInfo.phonePlayerSlotTaken[3] + " ");
+        {		
             if (levelInfo.phonePlayerSlotTaken[i] && playerCount < 4)
             {
                 playerSlotPhone[i] = true;
@@ -156,7 +154,7 @@ public class LevelSelection : MonoBehaviour
             }
         }
 
-        levelIndices = new int[6];
+        levelIndices = new int[7];
 
 		levelIndices [0] = 1;
 		levelIndices [1] = 2;
@@ -164,6 +162,8 @@ public class LevelSelection : MonoBehaviour
 		levelIndices [3] = 4;
 		levelIndices [4] = 5;
         levelIndices [5] = 6;
+        levelIndices [6] = 7;
+
 
         for (int i = 0; i < buttons.Length; i++) {
 			buttons[i].GetComponent<Image>().enabled = false;
@@ -256,7 +256,9 @@ public class LevelSelection : MonoBehaviour
 
     public void SelectLevel05() { changeMenuLevel (4, false); }
 
-    public void SelectLevel06() { changeMenuLevel(5, false); }
+    public void SelectLevel06() { changeMenuLevel (5, false); }
+
+    public void SelectLevel07() { changeMenuLevel (6, false); }
 
     public void SelectMainMenu() { changeMenuLevel (0, true); }
 

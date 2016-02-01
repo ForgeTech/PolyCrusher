@@ -12,6 +12,8 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     private float heightDistance;
 
 
+    private Color[] imageColors;
+
     private PlayerNetCommunicate network;
     private LevelStartInformation levelInfo;
     private Canvas canvas;
@@ -27,7 +29,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     private int[] transformBack;
     [SerializeField]
     private int[] currentControllerInput;
-    private int maxPlayers;
+  
     private bool[] inputReceived;
     private float[] inputCooldown;
     private bool[] selectedChange;
@@ -117,7 +119,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        maxPlayers = 4;
+       
         playerCursorSlot = new int[] {-1,-1,-1,-1 };
         middlePos = new Vector2[4];
         for(int i = 0; i < middlePos.Length; i++)
@@ -134,6 +136,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         selectedChange = new bool[4];
 
         levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
+        levelInfo.ClearPlayerArrays();
         network = GameObject.FindObjectOfType<PlayerNetCommunicate>();
         canvas = GameObject.FindObjectOfType<Canvas>();
 
@@ -216,10 +219,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
         slides[1] = GameObject.Find("slide_2");
 
-
-
         slides[2] = GameObject.Find("slide_3");
-
 
         infoBar = GameObject.Find("InfoBar");
 
@@ -243,6 +243,10 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         timeBeginning = 0.0f;
         first = true;
 
+
+        imageColors = new Color[2];
+        imageColors[0] = Color.white;
+        imageColors[1] = new Color(0.3f,0.3f,0.3f);
 
         
         // GameObject.Find("GameName").GetComponent<Text>().text = network.gameName + " GAME";
@@ -274,9 +278,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
             if((int)selectionImages[i,1].transform.position.y != 0)
             {
                 count++;
-            }
-
-
+            } 
         }
 
         if(count == 4)
@@ -313,8 +315,6 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-
-
         if (!once)
         {
             if (changeButtonPosition())
@@ -324,13 +324,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
             }
         }
 
-
-
-
-
-
-
-        UpdatePlayerStatusOld();
+        UpdatePlayerStatus();
         
         HideInactiveElements();
         for (int i = 0; i < inputReceived.Length; i++)
@@ -352,7 +346,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         {            
             if (!CheckPlayerReady())
             {
-                
+                ResetImages();
                 HandleInput();
                 ProcessInput();
                 HandleSelection();
@@ -367,6 +361,20 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         }
     }
 
+    private void ResetImages()
+    {
+        for(int i=0; i < selectionImages.GetLength(0); i++)
+        {
+            for(int j = 0; j < selectionImages.GetLength(1); j++)
+            {
+
+                selectionImages[i, j].GetComponent<Image>().color = imageColors[0];
+            }
+        }
+
+
+    }
+
     private void HideAll()
     {
         for(int i = 0; i < selectionImages.GetLength(0); i++)
@@ -376,61 +384,41 @@ public class NewCharacterSelectionScript : MonoBehaviour {
                 selectionImages[i, j].SetActive(false);
                 //selectionImages[i, j].transform.FindChild(selectionImages[i, j].name).gameObject.SetActive(false);
                 readyTexts[i, j].SetActive(false);
-
-
-
             }
-
-
         }
-
-
     }
  
     private void ScaleImages()
     {
         for (int i = 0; i < selectionImages.GetLength(0); i++)
-        {           
-            //int jMinus = 0;
-            //int jPlus = 0;
-
-            //if(hoveredCharacters[i] == 0)
-            //{
-            //    jMinus = playerImages.Length - 1;
-            //    jPlus = 1;
-            //}else if(hoveredCharacters[i] == playerImages.Length - 1)
-            //{
-            //    jMinus = playerImages.Length - 2;
-            //    jPlus = 0;
-            //}
-            //else
-            //{
-            //    jMinus = hoveredCharacters[i] - 1;
-            //    jPlus = hoveredCharacters[i] + 1;
-            //}
+        {        
+            
                               
             StartCoroutine(selectionImages[i, hoveredCharacters[i]].transform.ScaleTo(new Vector3(1, 1, 1) * 0.6f, 0.35f));
-            //StartCoroutine(selectionImages[i, jMinus].transform.ScaleTo(new Vector3(1, 1, 1) * 0.35f, 0.35f));
-            //StartCoroutine(selectionImages[i, jPlus].transform.ScaleTo(new Vector3(1, 1, 1) * 0.35f, 0.35f));         
+            
         }
     }
 
 
+
+    
 
     private void UpdateImageDisplay()
     {
-        for(int i = 0; i < maxPlayers; i++)
+        for (int i = 0; i < selectedCharacters.Length; i++)
         {
-            for(int j = 0; j < selectedCharacters.Length; j++)
+            for(int j = 0; j < selectionImages.GetLength(0); j++)
             {
-                if(i!= j && hoveredCharacters[i] == selectedCharacters[j])
+                for(int k = 0; k < selectionImages.GetLength(1); k++)
                 {
-                    StartCoroutine(MoveUpwards(i));
+                    if (i!= j && k == selectedCharacters[i])
+                    {                        
+                        selectionImages[j, k].GetComponent<Image>().color = imageColors[1];
+                    }                    
                 }
-            }
+            }           
         }
     }
-
 
 
 
@@ -463,16 +451,11 @@ public class NewCharacterSelectionScript : MonoBehaviour {
                     {
                         OnButtonDeclined();
                         HandleBackButton();
-
                     }
                     else
                     {
-                        PlaySpawnSound(hoveredCharacters[i]);
-
-
-                    }
-                    
-                                    
+                        PlaySpawnSound(hoveredCharacters[i]);                        
+                    }                                   
                     playerSelected[i] = true;
                 }
                 else
@@ -483,13 +466,22 @@ public class NewCharacterSelectionScript : MonoBehaviour {
             }
             
             if(runningNumber>=4 && network.actionButton[runningNumber%4]==1 && acceptSelection)
-            {
-                Debug.Log("phone selection running number: "+runningNumber);
+            {                
                 network.actionButton[runningNumber % 4] = 0;
 
                 if (!playerSelected[i])
                 {
-                    selectedCharacters[i] = hoveredCharacters[i];                    
+                    selectedCharacters[i] = hoveredCharacters[i];
+
+                    if (hoveredCharacters[i] == selectionImages.GetLength(1) - 1)
+                    {
+                        OnButtonDeclined();
+                        HandleBackButton();
+                    }
+                    else
+                    {
+                        PlaySpawnSound(hoveredCharacters[i]);
+                    }
                     playerSelected[i] = true;
                 }
                 else
@@ -497,9 +489,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
                     selectedCharacters[i] = -1;
                     playerSelected[i] = false;
                 }
-            }
-
-            
+            }            
         }
     }
 
@@ -600,15 +590,6 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
 
 
-
-
-
-
- 
-
-
-
-
     private void ProcessInput()
     {
         for(int i = 0; i < playerCursorSlot.Length; i++)
@@ -703,19 +684,14 @@ public class NewCharacterSelectionScript : MonoBehaviour {
                 onceLevel = true;
                 OnButtonDeclined();
                 GameObject.Find("_StartMenu").GetComponent<StartMenu>().ChangeScenes("CharacterSelectionObjectNew(Clone)", "Scenes/Menu/LevelSelectionObject", true);
-            }
-                
+            }                
         }
-       
-
-
-
     }
 
 
 
 
-    private void UpdatePlayerStatusOld()
+    private void UpdatePlayerStatus()
     {
 
         int newPhoneCount = 0;
@@ -773,7 +749,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     {
         OnButtonSwitched();
         float y = 0;
-
+         
         transformBack[index] --;
 
         if(transformBack[index] == -1)
@@ -863,15 +839,6 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         }
         selectedChange[index] = false;
         currentControllerInput[index] = -1;
-
-
-        //for(int i = 0; i < selectedCharacters.Length; i++)
-        //{
-        //    if()
-
-
-        //}
-
     }
 
 
@@ -882,11 +849,8 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     {
         async = Application.LoadLevelAsync(levelInfo.levelIndex);
         async.allowSceneActivation = false;
-        while (async.progress < 0.9f)
-        {
-            //Debug.Log(async.progress);
-        }
-        Debug.Log("level loaded 90%");
+       
+     
         skipText.enabled = true;
         levelLoaded = true;
         yield return async;
@@ -1094,7 +1058,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         if (music != null)
             Destroy(music);
 
-        Debug.Log("level start activation");
+      
     }
 
 

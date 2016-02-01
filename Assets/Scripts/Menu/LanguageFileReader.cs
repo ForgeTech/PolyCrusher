@@ -13,14 +13,12 @@ public class LanguageFileReader : MonoBehaviour {
     static Dictionary<string, string> obj;
     static Dictionary<string, string> currentLanguage;
     static XmlNode selectedNode;
+   
     public static string selectedLanguage;
 
-    void Start()
-    {
-        //selectedLanguage = ConfigScript.IniReadValue("language", "active");
-        Debug.Log("selected Language: " + selectedLanguage);
-        GetLanguages();
-        Debug.Log("List count " + languages.Count);
+    void Awake()
+    {       
+        GetLanguages();      
     }
 
     public void GetLanguages()
@@ -32,13 +30,13 @@ public class LanguageFileReader : MonoBehaviour {
         foreach (XmlNode languageObject in languagesList)
         {
             XmlNodeList languageContent = languageObject.ChildNodes;
-            obj = new Dictionary<string, string>(); // Create a object(Dictionary) to colect the both nodes inside the level node and then put into levels[] array.
+            obj = new Dictionary<string, string>(); 
 
-            foreach (XmlNode languageItems in languageContent) // levels itens nodes.
+            foreach (XmlNode languageItems in languageContent) 
             {
                 if (languageItems.Name == "name")
                 {
-                    obj.Add("name", languageItems.InnerText); // put this in the dictionary.
+                    obj.Add("name", languageItems.InnerText); 
                 }               
 
                 if (languageItems.Name == "object")
@@ -51,22 +49,21 @@ public class LanguageFileReader : MonoBehaviour {
 
         XmlNodeList selected = xmlDoc.GetElementsByTagName("selected");
         selectedNode = selected[0];
-        selectedLanguage = selected[0].InnerText;
-        Debug.Log("XML_Language: "+selectedLanguage); 
+        selectedLanguage = selected[0].InnerText;       
 
         ExtractCurrentLanguage();
+
+        
     }
 
 
     private static void ExtractCurrentLanguage()
     {
         foreach(Dictionary<string, string> dict in languages)
-        {
-            //Debug.Log("dict");
+        {           
             if(dict["name"] == selectedLanguage)
             {
-                currentLanguage = dict;
-                //Debug.Log("dict: " + currentLanguage.Count);
+                currentLanguage = dict;                
             }
         }
     }
@@ -87,6 +84,14 @@ public class LanguageFileReader : MonoBehaviour {
     {
         selectedLanguage = language;
         selectedNode.InnerText = language;
+        //selectedNode.
+        SetNewLanguage(language);
         ExtractCurrentLanguage();
+    }
+
+
+    private static void SetNewLanguage(string language)
+    {
+
     }
 }
