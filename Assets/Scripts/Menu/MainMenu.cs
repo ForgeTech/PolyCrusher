@@ -151,12 +151,13 @@ public class MainMenu : MonoBehaviour
 
 	IEnumerator ScalePlayerImages() {
 
-		GameObject[] buttonsNew = new GameObject[3];
-        
-		
+        //event build 
+        //GameObject[] buttonsNew = new GameObject[3];
+
+        GameObject[] buttonsNew = new GameObject[1];
 		buttonsNew[0] = GameObject.Find("Crush_Poly_Text");
-		buttonsNew[1] = GameObject.Find("Game_Stats_Text");
-		buttonsNew[2] = GameObject.Find("Leave_Game_Text");
+		//buttonsNew[1] = GameObject.Find("Game_Stats_Text");
+		//buttonsNew[2] = GameObject.Find("Leave_Game_Text");
 
         Text[] texts = GameObject.FindObjectsOfType<Text>();
 

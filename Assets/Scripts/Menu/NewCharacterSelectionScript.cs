@@ -861,21 +861,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     protected IEnumerator WaitForAcceptSound()
     {
         OnButtonAccepted();
-
-        //if (!GameObject.Find("slide_2").GetComponent<Image>().enabled)
-        //{
-        //    GameObject.Find("slide_2").GetComponent<Image>().enabled = true;
-        //}
-        //else if (!GameObject.Find("slide_3").GetComponent<Image>().enabled)
-        //{
-        //    GameObject.Find("slide_3").GetComponent<Image>().enabled = true;
-        //}
-        //else
-        //{
-        //    yield return new WaitForSeconds(acceptSound.length);
-        //    CrushPolys();
-        //}
-
+        
         if (!slides[1].activeInHierarchy)
         {
             slides[1].SetActive(true);
