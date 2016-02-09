@@ -142,6 +142,14 @@ public class LineSystem : MonoBehaviour {
             {
                 timeActive -= Time.deltaTime;
                 CuttingLinesPowerUp();
+                if (timeActive < 0.0f)
+                {
+                    for(int i = 0; i < lineRenderer.Length; i++)
+                    {
+                        lineRenderer[i].material = mats[activeMaterial[i]];
+
+                    }
+                }
             }
 
             HandleHealthRecovery();
