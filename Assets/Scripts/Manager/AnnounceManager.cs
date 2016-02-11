@@ -54,8 +54,11 @@ public class AnnounceManager : MonoBehaviour
     {
         if (nextWave != null)
         {
-            if(!GameManager.GameManagerInstance.IsBossWave && playNextWaveSound)
-                nextWave.PlayRandomClip();
+            if (GameManager.gameManagerInstance.Wave > 1)
+            {
+                if (!GameManager.GameManagerInstance.IsBossWave && playNextWaveSound)
+                    nextWave.PlayRandomClip();
+            }
         }
     }
 
