@@ -12,6 +12,15 @@ public delegate void WaveStartedEventHandler();
 public delegate void WaveEndedEventHandler();
 
 /// <summary>
+/// Enumeration for the different game modes.
+/// </summary>
+public enum GameMode
+{
+    NormalMode = 0,
+    YOLOMode = 1
+}
+
+/// <summary>
 /// Implements the wave system and the spawning decision for the enemies.
 /// The game manager is implemented with the Singleton-Pattern.
 /// </summary>
@@ -105,6 +114,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Class Members
+
+    [Header("========Game Mode Information==========")]
+    // Current game mode
+    [SerializeField]
+    protected GameMode gameMode = GameMode.NormalMode;
 
     [Header("==========Spawn Information============")]
     // Spawn information.
@@ -213,6 +227,14 @@ public class GameManager : MonoBehaviour
 
             return gameManagerInstance;
         }
+    }
+
+    /// <summary>
+    /// Gets the current game mode.
+    /// </summary>
+    public GameMode CurrentGameMode
+    {
+        get { return this.gameMode; }
     }
 
     /// <summary>
