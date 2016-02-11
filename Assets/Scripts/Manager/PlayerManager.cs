@@ -143,6 +143,9 @@ public class PlayerManager : MonoBehaviour
         startTime = (int)Time.realtimeSinceStartup;
         measureTime = true;
 
+        // start session
+        DataCollector.instance.startSession();
+
         //Assign the used slots
         if (levelInfo != null)
         {

@@ -119,11 +119,12 @@ public class DataCollector : MonoBehaviour
 
     public class Session
     {
-        public Session()
+        public Session(string mode)
         {
             macAddress = getMAC();
             version = DataCollector.instance.buildVersion;
-            inEditor = Application.isEditor; 
+            inEditor = Application.isEditor;
+            this.mode = mode;
             time = (int)(Time.time * 1000);
         }
 
@@ -133,6 +134,7 @@ public class DataCollector : MonoBehaviour
         public string macAddress { get; set; }
 		public string version { get; set; }
         public bool inEditor { get; set; }
+        public string mode { get; set; }
 
         //public DateTime Timestamp { get; set; }
 
@@ -200,11 +202,8 @@ public class DataCollector : MonoBehaviour
                     }
                     break;
             }
-
-
-            startSession();
-
-
+            
+            //startSession();
         }
 	}
 
@@ -213,7 +212,7 @@ public class DataCollector : MonoBehaviour
     /// creates a new session, notifies server and retrieves session id
     /// * should be called at the beginning of game session (before level starts)
     /// </summary>
-    public void startSession(){
+    public void startSession(string mode){
         if (DataCollector.instance.enabled)
         {
             // if a session is still running, end it
@@ -222,8 +221,18 @@ public class DataCollector : MonoBehaviour
             }
 
             // create new session
-            currentSession = new Session();
+            currentSession = new Session(mode);
             sessionRunning = true;
+
+            switch (GameManager.GameManagerInstance.CurrentGameMode)
+            {
+                case GameMode.NormalMode:
+                    currentSession.mode = "normal";
+                    break;
+                case GameMode.YOLOMode:
+                    currentSession.mode = "yolo";
+                    break;
+            }
 
             // upload session
             switch (connectVia)
@@ -251,6 +260,11 @@ public class DataCollector : MonoBehaviour
         }
     }
 
+    public void startSession()
+    {
+        startSession("normal");
+    }
+
     /// <summary>
     /// To be called if current game session ends, with name and email for highscore
     /// </summary>
@@ -261,6 +275,7 @@ public class DataCollector : MonoBehaviour
             Event endEvent = new Event(Event.TYPE.sessionEnd);
             endEvent.addPlayerCount().addWave().addLevel();
             endEvent.addGameName(gameName);
+            endEvent.addMode(currentSession.mode);
             addEvent(endEvent);
         }
 
