@@ -55,7 +55,7 @@ public class PlayerManager : MonoBehaviour
     private static TimeUtil playTime = null;
 
     // Start time for time measurement.
-    private int startTime = 0;
+    private float startTime = 0;
 
     // Signals if the time should be measured or not.
     private bool measureTime;
@@ -206,7 +206,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (measureTime)
         {
-            int endTime = (int)Time.realtimeSinceStartup;
+            float endTime = Time.realtimeSinceStartup;
             playTime = TimeUtil.SecondsToTime(endTime - startTime);
         }
     }
