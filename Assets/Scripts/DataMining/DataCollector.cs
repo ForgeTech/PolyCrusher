@@ -41,11 +41,10 @@ public class DataCollector : MonoBehaviour
         [Tooltip("Determines how many events should be uploaded at once.")]
         public int bundleSize = 10;
         [Tooltip("Version number which will be saved in the session objects.")]
-        public string buildVersion = "0.1b";
+        public string buildVersion = "0.2";
         public bool log = true;
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
-        
         
 
     // MongoDB fields
@@ -436,6 +435,9 @@ public class DataCollector : MonoBehaviour
         eventQueue.Clear();
         string serializedEvents = e.ToJson();
 
+        // encode serialized events
+        serializedEvents = encode(serializedEvents);
+
         if (log) { Debug.Log("DataCollector: uploading " + e.Length + " events"); }
 
         WWWForm form = new WWWForm();
@@ -542,6 +544,12 @@ public class DataCollector : MonoBehaviour
     public void ResetValues()
     {
         RankReceived = null;
+    }
+
+    public static string encode(string plainText)
+    {
+        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+        return System.Convert.ToBase64String(plainTextBytes);
     }
 }
 
