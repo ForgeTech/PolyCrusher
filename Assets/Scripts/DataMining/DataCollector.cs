@@ -279,6 +279,8 @@ public class DataCollector : MonoBehaviour
             addEvent(endEvent);
         }
 
+       
+
         sessionRunning = false;
         eventQueue.Clear();
         kills.Clear();
@@ -310,8 +312,15 @@ public class DataCollector : MonoBehaviour
         // reference current session
         e.session_id = currentSession._id;
 
-        // set event time
-        e.time = (int)(Time.time * 1000) - DataCollector.instance.currentSession.time;
+        // set event time (if session end take official time)
+        if(e.type == Event.TYPE.sessionEnd)
+        {
+            e.time = PlayerManager.PlayTime.TotalTime;
+        }
+        else
+        {
+            e.time = (int)(Time.time * 1000) - DataCollector.instance.currentSession.time;
+        }
 
         // add event to queue for later upload
         eventQueue.Enqueue(e);
@@ -516,7 +525,20 @@ public class DataCollector : MonoBehaviour
     public IEnumerator DownlaodHighscoreRank()
     {
         WWWForm form = new WWWForm();
-        form.AddField("data", Event.getWave().ToString());
+
+        String data;
+        if (currentSession.mode != "yolo")
+        {
+            data = Event.getWave().ToString();
+        }
+        else
+        {
+            data = currentSession.time.ToString();
+        }
+
+        form.AddField("data", data);
+        form.AddField("mode", currentSession.mode);
+
         WWW www = new WWW(scriptsAddress + "getRank.php", form);
         yield return www;
         int rank = 0;
