@@ -35,9 +35,30 @@ public class TimeUtil
         get { return this.second; }
     }
 
+    /// <summary>
+    /// Gets the milliseconds
+    /// </summary>
     public int Milliseconds
     {
         get { return this.milliseconds; }
+    }
+
+    /// <summary>
+    /// Gets the total time in milliseconds.
+    /// </summary>
+    public int TotalTime
+    {
+        get
+        {
+            int sumTime = 0;
+
+            sumTime += this.Milliseconds;
+            sumTime += this.Second * 1000;
+            sumTime += this.Minute * 60 * 1000;
+            sumTime += this.Hour * 60 * 60 * 1000;
+
+            return sumTime;
+        }
     }
 
     public TimeUtil(int hour, int minute, int second, int milliseconds)
