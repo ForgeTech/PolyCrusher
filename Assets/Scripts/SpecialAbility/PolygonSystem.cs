@@ -112,6 +112,9 @@ public class PolygonSystem : MonoBehaviour
 
     private Vector3[] cornerPoints;
 
+    [HideInInspector]
+    public int currentBossDamage;
+
     // Polygon events
     public static PolyExecuteEventHandler PolyExecuted;
     public static PolyFailEventHandler PolyFailed;
@@ -173,8 +176,9 @@ public class PolygonSystem : MonoBehaviour
             colliders[i].isTrigger = true;
             colliders[i].enabled = false;
             polyParts[i].AddComponent<TriangleCollision>();
-        }       
+        }
 
+        colliderFrameTime = 2;
         detonate = false;
         UpdatePlayerStatus();
     }
@@ -193,7 +197,8 @@ public class PolygonSystem : MonoBehaviour
                 {
                     if(coll.GetComponent<MonoBehaviour>() is BossEnemy)
                     {
-                        coll.GetComponent<BossEnemy>().TakeDamage(bossDamage, null);
+                        coll.GetComponent<BossEnemy>().TakeDamage(currentBossDamage, null);
+                        currentBossDamage = 0;                       
                     }
                     else
                     {
@@ -258,15 +263,24 @@ public class PolygonSystem : MonoBehaviour
     void FixedUpdate()
     {
         if (detonate && currentCooldown <= 0.0f)
-        {          
+        {
+
+            
+           
             colliderFrameTime--;
 
-            for (int i = 0; i < colliders.Length; i++)
+            if (colliderFrameTime == 1)
             {
-                colliders[i].enabled = true;
-                colliders[i].sharedMesh = null;
-                colliders[i].sharedMesh = polys[i];
+                currentBossDamage = bossDamage;
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    colliders[i].enabled = true;
+                    colliders[i].sharedMesh = null;
+                    colliders[i].sharedMesh = polys[i];
+                }
             }
+
+           
 
             if (colliderFrameTime <= 0)
             {

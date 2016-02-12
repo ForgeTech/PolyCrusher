@@ -11,14 +11,22 @@ public class TriangleCollision : MonoBehaviour {
         polygonSystemScript = GetComponentInParent<PolygonSystem>();
 	}
 	
-    void OnTriggerStay(Collider coll)
+    void OnTriggerEnter(Collider coll)
     {
         if(polygonSystemScript.detonate == true && coll.tag=="Enemy")
         {
-            coll.tag = "SentencedToDeath";
-            coll.GetComponent<BaseEnemy>().CanShoot = false;
-            coll.GetComponent<BaseEnemy>().MeleeAttackDamage = 0;
-            polygonSystemScript.enemies.Add(coll.gameObject);
+            if (coll.GetComponent<MonoBehaviour>() is BossEnemy)
+            {
+                coll.GetComponent<BossEnemy>().TakeDamage(polygonSystemScript.currentBossDamage, null);              
+                polygonSystemScript.currentBossDamage = 0;
+            }
+            else
+            {
+                coll.tag = "SentencedToDeath";
+                coll.GetComponent<BaseEnemy>().CanShoot = false;
+                coll.GetComponent<BaseEnemy>().MeleeAttackDamage = 0;
+                polygonSystemScript.enemies.Add(coll.gameObject);                
+            }           
         }
     }
 

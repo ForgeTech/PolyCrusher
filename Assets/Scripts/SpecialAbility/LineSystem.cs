@@ -64,7 +64,7 @@ public class LineSystem : MonoBehaviour {
     private int[] activeMaterial;
     private int lineRendererLength;
     
-    [SerializeField]
+ 
     private bool activateCutting;
 
    
