@@ -112,6 +112,15 @@ public class Event{
         return this;
     }
 
+    /// <summary>
+    /// Sets a mode for this game (either normal or yolo)
+    /// </summary>
+    public Event addMode(string mode)
+    {
+        this.mode = mode;
+        return this;
+    }
+
     #endregion
 
     /// <summary>
@@ -156,6 +165,8 @@ public class Event{
     protected string name { get; set; }
     [BsonIgnoreIfNull]
     protected string email { get; set; }
+    [BsonIgnoreIfNull]
+    protected string mode { get; set; }
 
     #endregion
 }

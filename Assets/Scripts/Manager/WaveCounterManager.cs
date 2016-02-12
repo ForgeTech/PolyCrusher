@@ -70,7 +70,7 @@ public class WaveCounterManager : MonoBehaviour
         if (playTime != null)
         {
             TimeUtil time = PlayerManager.PlayTime;
-            playTime.text = string.Format("{0:00}:{1:00}:{2:00}", time.Hour, time.Minute, time.Second);
+            playTime.text = string.Format("{0:00}:{1:00}:{2:00}", time.Minute, time.Second, time.Milliseconds);
         }
     }
 

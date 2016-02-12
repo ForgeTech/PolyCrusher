@@ -9,6 +9,8 @@ public class TimeUtil
 
     protected int second;
 
+    protected int milliseconds;
+
     /// <summary>
     ///  Gets the hour.
     /// </summary>
@@ -33,15 +35,41 @@ public class TimeUtil
         get { return this.second; }
     }
 
+    /// <summary>
+    /// Gets the milliseconds
+    /// </summary>
+    public int Milliseconds
+    {
+        get { return this.milliseconds; }
+    }
 
-    public TimeUtil(int hour, int minute, int second)
+    /// <summary>
+    /// Gets the total time in milliseconds.
+    /// </summary>
+    public int TotalTime
+    {
+        get
+        {
+            int sumTime = 0;
+
+            sumTime += this.Milliseconds;
+            sumTime += this.Second * 1000;
+            sumTime += this.Minute * 60 * 1000;
+            sumTime += this.Hour * 60 * 60 * 1000;
+
+            return sumTime;
+        }
+    }
+
+    public TimeUtil(int hour, int minute, int second, int milliseconds)
     {
         this.hour = hour;
         this.minute = minute;
         this.second = second;
+        this.milliseconds = milliseconds;
     }
 
-    public TimeUtil() : this(0, 0, 0)
+    public TimeUtil() : this(0, 0, 0, 0)
     {
     }
 
@@ -50,12 +78,13 @@ public class TimeUtil
     /// </summary>
     /// <param name="seconds">Seconds</param>
     /// <returns>Time format.</returns>
-    public static TimeUtil SecondsToTime(int seconds)
+    public static TimeUtil SecondsToTime(float seconds)
     {
-        int h = seconds / 3600;
-        int m = (seconds / 60) % 60;
-        int s = seconds % 60;
+        int h = (int)(seconds / 3600);
+        int m = (int)((seconds / 60) % 60);
+        int s = (int)(seconds % 60);
+        int ms = (int)((seconds - Mathf.Floor(seconds)) * 1000);
 
-        return new TimeUtil(h, m, s);
+        return new TimeUtil(h, m, s, ms);
     }
 }

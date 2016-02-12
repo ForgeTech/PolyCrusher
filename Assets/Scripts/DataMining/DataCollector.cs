@@ -41,11 +41,10 @@ public class DataCollector : MonoBehaviour
         [Tooltip("Determines how many events should be uploaded at once.")]
         public int bundleSize = 10;
         [Tooltip("Version number which will be saved in the session objects.")]
-        public string buildVersion = "0.1b";
+        public string buildVersion = "0.2";
         public bool log = true;
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
-        
         
 
     // MongoDB fields
@@ -120,11 +119,12 @@ public class DataCollector : MonoBehaviour
 
     public class Session
     {
-        public Session()
+        public Session(string mode)
         {
             macAddress = getMAC();
             version = DataCollector.instance.buildVersion;
-            inEditor = Application.isEditor; 
+            inEditor = Application.isEditor;
+            this.mode = mode;
             time = (int)(Time.time * 1000);
         }
 
@@ -134,6 +134,7 @@ public class DataCollector : MonoBehaviour
         public string macAddress { get; set; }
 		public string version { get; set; }
         public bool inEditor { get; set; }
+        public string mode { get; set; }
 
         //public DateTime Timestamp { get; set; }
 
@@ -201,11 +202,8 @@ public class DataCollector : MonoBehaviour
                     }
                     break;
             }
-
-
-            startSession();
-
-
+            
+            //startSession();
         }
 	}
 
@@ -214,7 +212,7 @@ public class DataCollector : MonoBehaviour
     /// creates a new session, notifies server and retrieves session id
     /// * should be called at the beginning of game session (before level starts)
     /// </summary>
-    public void startSession(){
+    public void startSession(string mode){
         if (DataCollector.instance.enabled)
         {
             // if a session is still running, end it
@@ -223,8 +221,18 @@ public class DataCollector : MonoBehaviour
             }
 
             // create new session
-            currentSession = new Session();
+            currentSession = new Session(mode);
             sessionRunning = true;
+
+            switch (GameManager.GameManagerInstance.CurrentGameMode)
+            {
+                case GameMode.NormalMode:
+                    currentSession.mode = "normal";
+                    break;
+                case GameMode.YOLOMode:
+                    currentSession.mode = "yolo";
+                    break;
+            }
 
             // upload session
             switch (connectVia)
@@ -252,6 +260,11 @@ public class DataCollector : MonoBehaviour
         }
     }
 
+    public void startSession()
+    {
+        startSession("normal");
+    }
+
     /// <summary>
     /// To be called if current game session ends, with name and email for highscore
     /// </summary>
@@ -262,6 +275,7 @@ public class DataCollector : MonoBehaviour
             Event endEvent = new Event(Event.TYPE.sessionEnd);
             endEvent.addPlayerCount().addWave().addLevel();
             endEvent.addGameName(gameName);
+            endEvent.addMode(currentSession.mode);
             addEvent(endEvent);
         }
 
@@ -296,8 +310,15 @@ public class DataCollector : MonoBehaviour
         // reference current session
         e.session_id = currentSession._id;
 
-        // set event time
-        e.time = (int)(Time.time * 1000) - DataCollector.instance.currentSession.time;
+        // set event time (if session end take official time)
+        if(e.type == Event.TYPE.sessionEnd)
+        {
+            e.time = PlayerManager.PlayTime.TotalTime;
+        }
+        else
+        {
+            e.time = (int)(Time.time * 1000) - DataCollector.instance.currentSession.time;
+        }
 
         // add event to queue for later upload
         eventQueue.Enqueue(e);
@@ -436,6 +457,9 @@ public class DataCollector : MonoBehaviour
         eventQueue.Clear();
         string serializedEvents = e.ToJson();
 
+        // encode serialized events
+        serializedEvents = encode(serializedEvents);
+
         if (log) { Debug.Log("DataCollector: uploading " + e.Length + " events"); }
 
         WWWForm form = new WWWForm();
@@ -499,7 +523,20 @@ public class DataCollector : MonoBehaviour
     public IEnumerator DownlaodHighscoreRank()
     {
         WWWForm form = new WWWForm();
-        form.AddField("data", Event.getWave().ToString());
+
+        String data;
+        if (currentSession.mode != "yolo")
+        {
+            data = Event.getWave().ToString();
+        }
+        else
+        {
+            data = PlayerManager.PlayTime.TotalTime.ToString();
+        }
+
+        form.AddField("data", data);
+        form.AddField("mode", currentSession.mode);
+
         WWW www = new WWW(scriptsAddress + "getRank.php", form);
         yield return www;
         int rank = 0;
@@ -511,19 +548,23 @@ public class DataCollector : MonoBehaviour
             try
             {
                 rank = Convert.ToInt32(response);
-                if (log) { Debug.Log("WWW Ok: " + response); }
+                if (log) { 
+                    Debug.Log("WWW Ok: " + response);
+                }
             }
             catch (FormatException e)
             {
-                if (log) { 
-                    Debug.Log("WWW Ok, Unexpected response:" + response);
-                    Debug.Log(e.ToString());
-                }
+                //if (log) { 
+                Debug.Log("WWW Ok, Unexpected response:" + response);
+                Debug.Log(e.ToString());
+                //}
             }
         }
         else
         {
-            if (log) { Debug.Log("WWW Error: " + www.error); }
+            //if (log) {
+                Debug.Log("WWW Error: " + www.error);
+            //}
         }
 
         OnRankReceived(rank);
@@ -542,6 +583,12 @@ public class DataCollector : MonoBehaviour
     public void ResetValues()
     {
         RankReceived = null;
+    }
+
+    public static string encode(string plainText)
+    {
+        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+        return System.Convert.ToBase64String(plainTextBytes);
     }
 }
 

@@ -187,7 +187,9 @@ public class RocketBehaviour : MonoBehaviour {
                 if (objects != null)
                 {
                     Rigidbody colliderRigidbody = objects.gameObject.GetComponent<Rigidbody>();
-                    colliderRigidbody.AddExplosionForce(13f, transform.position, damageRadius, 1.75f, ForceMode.Impulse);
+
+                    if(colliderRigidbody != null)
+                        colliderRigidbody.AddExplosionForce(13f, transform.position, damageRadius, 1.75f, ForceMode.Impulse);
                 }
             }
 
