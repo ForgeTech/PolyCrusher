@@ -23,13 +23,17 @@ public class LevelEndManager : MonoBehaviour {
 	Text t4;
 	Text t5;
 
-	Vector3 originalScale;
+    Vector3 originalScaleYolo;
+    Vector3 originalScale;
 	Vector3 originalScale1;
 	Vector3 originalScale4;
 	Vector3 originalScale5;
 	Vector3 originalScale6;
 
 	GameObject nameField;
+
+    UnityEngine.UI.Image redOverlay;
+    UnityEngine.UI.Text yoloTime;
 
 	Boolean dead = false;
 
@@ -78,11 +82,22 @@ public class LevelEndManager : MonoBehaviour {
 		dead = false;
 		once = false;
 
+        redOverlay = GameObject.Find("RedOverlay").GetComponent<Image>();
+        yoloTime = redOverlay.GetComponentInChildren<Text>();
 	}
 
 	void ShowEndScreen() {
 
-		if (camObject != null && nameField != null) {
+		if (camObject != null && nameField != null)
+        {
+            if(GameManager.GameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
+            {
+                TimeUtil playtime = PlayerManager.PlayTime;
+
+                redOverlay.enabled = true;
+                yoloTime.enabled = true;
+                yoloTime.text = string.Format("{0:00}:{1:00}:{2:00}", playtime.Minute, playtime.Second, playtime.Milliseconds);
+            }
 
 			im = GameObject.Find ("InnerCircle").GetComponent<Image> ();
 				
@@ -111,6 +126,9 @@ public class LevelEndManager : MonoBehaviour {
 			t3.enabled = true;
 			t4.enabled = true;	
 			im.enabled = true;
+
+            originalScaleYolo = yoloTime.transform.localScale;
+            yoloTime.transform.localScale = Vector3.zero;
 
 			originalScale = im.transform.localScale;
 			im.transform.localScale = Vector3.zero;
@@ -200,10 +218,16 @@ public class LevelEndManager : MonoBehaviour {
 
 	protected IEnumerator ShowNumbers()
 	{
-		yield return new WaitForSeconds(1.0f);
-		
-		StartCoroutine(t1.transform.ScaleTo(originalScale1, 0.3f, AnimCurveContainer.AnimCurve.shortUpscale.Evaluate));
-		
+        yield return new WaitForSeconds(1.0f);
+
+        StartCoroutine(yoloTime.transform.ScaleTo(originalScale1, 0.3f, AnimCurveContainer.AnimCurve.shortUpscale.Evaluate));
+
+        if (GameManager.GameManagerInstance.CurrentGameMode != GameMode.YOLOMode)
+        {
+            yield return new WaitForSeconds(1.0f);
+            StartCoroutine(t1.transform.ScaleTo(originalScale1, 0.3f, AnimCurveContainer.AnimCurve.shortUpscale.Evaluate));
+        }
+
 		yield return new WaitForSeconds(0.3f);
 		
 		StartCoroutine(t2.transform.ScaleTo(originalScale4, 0.3f, AnimCurveContainer.AnimCurve.grow.Evaluate));
@@ -218,8 +242,9 @@ public class LevelEndManager : MonoBehaviour {
 		
 	}
 
-	public void StartMainMenu() {
-
+	public void StartMainMenu()
+    {
+        redOverlay.enabled = false;
 		GameObject.Find ("InnerCircle").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Menu/LevelFinished/loadingScreen");
 
 		network.CreateGameName ();
