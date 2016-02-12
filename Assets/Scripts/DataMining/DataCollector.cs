@@ -548,21 +548,23 @@ public class DataCollector : MonoBehaviour
             try
             {
                 rank = Convert.ToInt32(response);
-                //if (log) { 
-                Debug.Log("WWW Ok: " + response);
-                //}
+                if (log) { 
+                    Debug.Log("WWW Ok: " + response);
+                }
             }
             catch (FormatException e)
             {
                 //if (log) { 
-                    Debug.Log("WWW Ok, Unexpected response:" + response);
-                    Debug.Log(e.ToString());
+                Debug.Log("WWW Ok, Unexpected response:" + response);
+                Debug.Log(e.ToString());
                 //}
             }
         }
         else
         {
-            if (log) { Debug.Log("WWW Error: " + www.error); }
+            //if (log) {
+                Debug.Log("WWW Error: " + www.error);
+            //}
         }
 
         OnRankReceived(rank);
