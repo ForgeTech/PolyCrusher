@@ -548,7 +548,9 @@ public class DataCollector : MonoBehaviour
             try
             {
                 rank = Convert.ToInt32(response);
-                //if (log) { Debug.Log("WWW Ok: " + response); }
+                //if (log) { 
+                Debug.Log("WWW Ok: " + response);
+                //}
             }
             catch (FormatException e)
             {
