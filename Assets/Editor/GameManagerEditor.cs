@@ -12,6 +12,9 @@ public class GameManagerEditor : Editor
     // Serialized version of the game manager.
     private SerializedObject serializedGameManager;
 
+    // Styles
+    private GUIStyle titleStyle;
+
     /// <summary>
     /// Is called every time the inspected object is selected.
     /// </summary>
@@ -19,6 +22,8 @@ public class GameManagerEditor : Editor
     {
         gameManager = (GameManager)target;
         serializedGameManager = new SerializedObject(gameManager);
+
+        InitStyles();
     }
 
     /// <summary>
@@ -32,13 +37,27 @@ public class GameManagerEditor : Editor
         EditorGUILayout.Space();
         DrawSpawnInformation();
         EditorGUILayout.Space();
+
+        EditorGUIUtility.labelWidth = Screen.width * 0.65f;
         DrawRessourceSetting();
         EditorGUILayout.Space();
         DrawEnemyCountSettings();
         EditorGUILayout.Space();
         DrawWaveIncreaseSettings();
         EditorGUILayout.Space();
+        EditorGUIUtility.labelWidth = 0;
         DrawUtilities();
+    }
+
+    /// <summary>
+    /// Inits the styles.
+    /// </summary>
+    private void InitStyles()
+    {
+        titleStyle = new GUIStyle();
+        titleStyle.alignment = TextAnchor.MiddleCenter;
+        titleStyle.fontSize = 15;
+        titleStyle.fontStyle = FontStyle.Bold;
     }
 
     /// <summary>
@@ -50,7 +69,7 @@ public class GameManagerEditor : Editor
         SerializedProperty serializedGameMode = serializedGameManager.FindProperty("gameMode");
 
         // Draw GUI
-        EditorGUILayout.LabelField("Game Mode", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Game Mode", titleStyle);
 
         EditorGUILayout.BeginHorizontal("box");
 
@@ -73,7 +92,7 @@ public class GameManagerEditor : Editor
         SerializedProperty bossSpawnInfo = serializedGameManager.FindProperty("bossSpawnInfo");
 
         //Draw GUI
-        EditorGUILayout.LabelField("Spawn Information", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Spawn Information", titleStyle);
 
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.PropertyField(spawnInfo, true);     //True --> Include children
@@ -91,11 +110,11 @@ public class GameManagerEditor : Editor
         SerializedProperty currentEnemyRessourceValue = serializedGameManager.FindProperty("currentEnemyRessourceValue");
 
         //Draw GUI
-        EditorGUILayout.LabelField("Ressource Settings", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Ressource Settings", titleStyle);
 
         EditorGUILayout.BeginVertical("box");
-        EditorGUILayout.PropertyField(enemyRessourcePool);
-        EditorGUILayout.PropertyField(currentEnemyRessourceValue);
+        EditorGUILayout.PropertyField(enemyRessourcePool, new GUIContent("Ressource Pool"));
+        EditorGUILayout.PropertyField(currentEnemyRessourceValue, new GUIContent("Current Ressources"));
         EditorGUILayout.EndVertical();
     }
 
@@ -109,11 +128,11 @@ public class GameManagerEditor : Editor
         SerializedProperty timeBetweenWave = serializedGameManager.FindProperty("timeBetweenWave");
 
         //Draw GUI
-        EditorGUILayout.LabelField("Enemy Count Settings", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Enemy Count Settings", titleStyle);
 
         EditorGUILayout.BeginVertical("box");
-        EditorGUILayout.PropertyField(maxEnemyActiveCount);
-        EditorGUILayout.PropertyField(currentEnemyCount);
+        EditorGUILayout.PropertyField(maxEnemyActiveCount, new GUIContent("Max Enemies"));
+        EditorGUILayout.PropertyField(currentEnemyCount, new GUIContent("Enemy Count"));
         EditorGUILayout.PropertyField(timeBetweenWave);
         EditorGUILayout.EndVertical();
     }
@@ -130,11 +149,11 @@ public class GameManagerEditor : Editor
         SerializedProperty enemyDamageIncreaseFactor = serializedGameManager.FindProperty("enemyDamageIncreaseFactor");
 
         //Draw GUI
-        EditorGUILayout.LabelField("Wave Increase Settings", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Wave Increase Settings", titleStyle);
 
         EditorGUILayout.BeginVertical("box");
-        EditorGUILayout.PropertyField(enemyRessourceIncreaseFactor);
-        EditorGUILayout.PropertyField(enemyCountIncreaseFactor);
+        EditorGUILayout.PropertyField(enemyRessourceIncreaseFactor, new GUIContent("Res. Increase Factor"));
+        EditorGUILayout.PropertyField(enemyCountIncreaseFactor, new GUIContent("Enemy Count Increase"));
         EditorGUILayout.PropertyField(timeBetweeenWaveDecreaseFactor);
         EditorGUILayout.PropertyField(enemyHealthIncreaseFactor);
         EditorGUILayout.PropertyField(enemyDamageIncreaseFactor);
@@ -146,14 +165,13 @@ public class GameManagerEditor : Editor
     /// </summary>
     public void DrawUtilities()
     {
-        EditorGUILayout.LabelField("Utilities", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Utilities", titleStyle);
 
         EditorGUILayout.BeginVertical("box");
 
         EditorGUILayout.BeginHorizontal();
 
         EditorGUILayout.BeginVertical();
-        EditorGUILayout.LabelField("Kills enemies with 'Enemy' tag.", EditorStyles.label);
         if (GUILayout.Button("Kill Enemies", GUILayout.Height(Screen.height * 0.03f)))
         {
             gameManager.KillAllEnemies();
@@ -161,7 +179,6 @@ public class GameManagerEditor : Editor
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical();
-        EditorGUILayout.LabelField("Resets all resources.", EditorStyles.label);
         if (GUILayout.Button("Reset Resources", GUILayout.Height(Screen.height * 0.03f)))
         {
             gameManager.CurrentEnemyRessourceValue = 0;
