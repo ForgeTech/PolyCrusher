@@ -115,12 +115,12 @@ public class GameManager : MonoBehaviour
 
     #region Class Members
 
-    [Header("========Game Mode Information==========")]
+    //[Header("========Game Mode Information==========")]
     // Current game mode
     [SerializeField]
     protected GameMode gameMode = GameMode.NormalMode;
 
-    [Header("==========Spawn Information============")]
+    //[Header("==========Spawn Information============")]
     // Spawn information.
     [SerializeField]
     protected SpawnInformation[] spawnInfo;
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     // The wave count.
     protected int wave = 0;
 
-    [Header("==========Ressource Settings============")]
+    //[Header("==========Ressource Settings============")]
     // The max enemy ressources
     [SerializeField]
     protected int enemyRessourcePool = 10;
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
     // The accumulated ressource value.
     protected int accumulatedRessourceValue;
 
-    [Header("==========Enemy Count Settings==========")]
+    //[Header("==========Enemy Count Settings==========")]
     // Describes how many enemies are allowed to be active at the same time.
     [SerializeField]
     protected int maxEnemyActiveCount = 10;
@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
 
     #region Increase per wave variables
 
-    [Header("=========Wave Increase Settings=========")]
+    //[Header("=========Wave Increase Settings=========")]
     [Tooltip("The increase factor of the enemy ressources for every wave. Value should be between 0 and 1!")]
     [SerializeField]
     protected float enemyRessourceIncreaseFactor = 0.2f;
@@ -571,6 +571,24 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBetweenWave);
         StartNextWave();
+    }
+
+    /// <summary>
+    /// Kills all the active enemies, based on the "Enemy" tag.
+    /// </summary>
+    public void KillAllEnemies()
+    {
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for(int i = 0; i < obj.Length; i++)
+        {
+            BaseEnemy enemy = obj[i].GetComponent<BaseEnemy>();
+
+            if (enemy != null)
+            {
+                enemy.InstantKill();
+            }
+        }
     }
 
     /// <summary>
