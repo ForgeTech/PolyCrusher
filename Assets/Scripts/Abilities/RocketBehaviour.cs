@@ -7,6 +7,7 @@ public class RocketBehaviour : MonoBehaviour {
 	[SerializeField]
 	private float lifeTime = 4f;
 
+	[SerializeField]
 	private int damage = 75;
 
 	// Vector of the target which the missle must approach.
