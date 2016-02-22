@@ -263,9 +263,7 @@ public class PolygonSystem : MonoBehaviour
     void FixedUpdate()
     {
         if (detonate && currentCooldown <= 0.0f)
-        {
-
-            
+        {     
            
             colliderFrameTime--;
 
@@ -396,9 +394,7 @@ public class PolygonSystem : MonoBehaviour
                     for (int i = 0; i < renderers.Length; i++)
                     {
                         renderers[i].material.Lerp(mats[0], mats[3], currentStandStill);
-
                     }
-
                 }
 
                 else if (playerEnergyCheck == 0 && polyStart && currentStandStill > 0.0f && !distanceReached)
@@ -549,8 +545,8 @@ public class PolygonSystem : MonoBehaviour
         }     
 
         for (int i = 0; i < renderers.Length; i++)
-        {           
-            renderers[i].material.Lerp(mats[4], mats[0], polyLerpDistance);
+        {        
+    
             renderers[i].material.Lerp(mats[3], renderers[i].material , polyFailAnimLerpTime * 2);
         }       
 
