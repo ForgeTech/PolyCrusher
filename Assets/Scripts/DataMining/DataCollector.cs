@@ -484,11 +484,12 @@ public class DataCollector : MonoBehaviour
         }
         else
         {
-            if (log) { Debug.Log("WWW Error: " + www.error); }
             for (int i = 0; i < e.Length; i++)
             {
                 eventQueue.Enqueue(e[i]);  // reinsert
             }
+            //if (log) 
+            Debug.Log("WWW Error: " + www.error);
         }
     }
 
@@ -513,10 +514,12 @@ public class DataCollector : MonoBehaviour
             }
             else
             {
-                if (log) { Debug.Log("WWW Ok, Unexpected response:" + response); }
+                //if (log) 
+                Debug.Log("WWW Ok, Unexpected response:" + response);
             }
         }else{
-            if (log) { Debug.Log("WWW Error: " + www.error); }
+            //if (log)
+            Debug.Log("WWW Error: " + www.error);
         }
     }
 
