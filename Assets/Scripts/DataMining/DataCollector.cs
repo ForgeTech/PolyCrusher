@@ -40,12 +40,12 @@ public class DataCollector : MonoBehaviour
     [Header("Settings")]
         [Tooltip("Determines how many events should be uploaded at once.")]
         public int bundleSize = 10;
-        [Tooltip("Version number which will be saved in the session objects.")]
-        public string buildVersion = "0.2";
         public bool log = true;
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
-        
+
+    // VERSION NUMBER
+    private string buildVersion = "0.2";
 
     // MongoDB fields
     private MongoServer server;
