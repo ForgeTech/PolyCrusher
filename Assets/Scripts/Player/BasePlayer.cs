@@ -92,11 +92,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     protected float currentDeathTime;
 
 	//Phone player slot for the mobile controller input.
-	[SerializeField]
+	//[SerializeField]
 	protected int phonePlayerSlot = -1;
 
 	//Network script for the mobile controller input.
-	[SerializeField]
+	//[SerializeField]
 	protected PlayerNetCommunicate network;
 
 
