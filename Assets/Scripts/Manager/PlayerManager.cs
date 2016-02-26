@@ -70,6 +70,69 @@ public class PlayerManager : MonoBehaviour
 
     #region Properties
     /// <summary>
+    /// Gets the player count of the actual game session.
+    /// Also dead players will be in the count number.
+    /// </summary>
+    public int PlayerCountInGameSession
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < playerSlot.Length; i++)
+            {
+                if (playerSlot[i])
+                    count++;
+            }
+            return count;
+        }
+    }
+
+    /// <summary>
+    /// Gets all players of the actual game session.
+    /// Also dead players will be counted.
+    /// </summary>
+    public BasePlayer[] PlayersInGameSession
+    {
+        get
+        {
+            BasePlayer[] currPlayers = new BasePlayer[PlayerCountInGameSession];
+            for (int i = 0, j = 0; i < playerReferences.Length && j < currPlayers.Length; i++)
+            {
+                if (playerReferences[i] != null)
+                {
+                    BasePlayer p = playerReferences[i].GetComponent<BasePlayer>();
+
+                    if (p != null)
+                    {
+                        currPlayers[j] = p;
+                        j++;
+                    }
+                }
+            }
+
+            return currPlayers;
+        }
+    }
+
+    /// <summary>
+    /// Gets all player names of the actual game session.
+    /// Also dead players will be in the count number.
+    /// </summary>
+    public string[] PlayerNamesInGameSession
+    {
+        get
+        {
+            BasePlayer[] p = PlayersInGameSession;
+            string[] playerStrings = new string[p.Length];
+
+            for (int i = 0; i < p.Length; i++)
+                playerStrings[i] = p[i].PlayerName;
+
+            return playerStrings;
+        }
+    }
+
+    /// <summary>
     /// Gets the actual player count.
     /// </summary>
     public static int PlayerCount

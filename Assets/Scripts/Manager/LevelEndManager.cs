@@ -49,16 +49,21 @@ public class LevelEndManager : MonoBehaviour {
 
 	bool once;
 
+    // Reference to the player manager.
+    PlayerManager playerManagerReference;
 
 	public static event LevelExitDelegate levelExitEvent;
 	
-	void Awake () {
+	void Awake ()
+    {
 		PlayerManager.AllPlayersDeadEventHandler += ShowEndScreen;
 		DataCollector.RankReceived += GetOnlineRank;
 	}
 
-	void Start () {
+	void Start ()
+    {
 		camObject = GameObject.FindGameObjectWithTag("MainCamera");
+        playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
 
 		if (camObject != null) {
 
@@ -86,9 +91,26 @@ public class LevelEndManager : MonoBehaviour {
         yoloTime = redOverlay.GetComponentInChildren<Text>();
 	}
 
-	void ShowEndScreen() {
+	void ShowEndScreen()
+    {
+        /*//========Test=========
+        if (playerManagerReference != null)
+        {
+            string[] playerNames = playerManagerReference.PlayerNamesInGameSession;
+            BasePlayer[] players = playerManagerReference.PlayersInGameSession;
 
-		if (camObject != null && nameField != null)
+            Debug.Log("PlayerGameSessionCount: " + playerManagerReference.PlayerCountInGameSession);
+
+            for (int i = 0; i < playerManagerReference.PlayerCountInGameSession; i++)
+            {
+                Debug.Log("PlayerNames: " + playerNames[i]);
+                Debug.Log("PlayerReferences: " + players[i].PlayerName + ", " + players[i].transform.position);
+            }
+            
+        }
+        //=====================*/
+
+        if (camObject != null && nameField != null)
         {
             if(GameManager.GameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
             {
