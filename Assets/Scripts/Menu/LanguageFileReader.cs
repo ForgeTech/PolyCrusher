@@ -1,29 +1,31 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using System.IO;
+using System;
 
 public class LanguageFileReader : MonoBehaviour {
 
-    public TextAsset GameAsset;   
-
+ 
+    private TextAsset GameAsset;
     static List<Dictionary<string, string>> languages = new List<Dictionary<string, string>>();
     static Dictionary<string, string> obj;
     static Dictionary<string, string> currentLanguage;
     static XmlNode selectedNode;
-   
+    static XmlDocument xmlDoc;
     public static string selectedLanguage;
 
     void Awake()
-    {       
-        GetLanguages();      
+    {
+        GameAsset = Resources.Load("Language/languages") as TextAsset;
+        xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(GameAsset.text);           
+       
+        GetLanguages();        
     }
 
     public void GetLanguages()
     {
-        XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
+        xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
         xmlDoc.LoadXml(GameAsset.text); // load the file.
         XmlNodeList languagesList = xmlDoc.GetElementsByTagName("language"); // array of the language nodes.
 
@@ -47,9 +49,21 @@ public class LanguageFileReader : MonoBehaviour {
             languages.Add(obj); // add whole obj dictionary in the languages[].
         }
 
+       
+
         XmlNodeList selected = xmlDoc.GetElementsByTagName("selected");
         selectedNode = selected[0];
-        selectedLanguage = selected[0].InnerText;       
+        selectedLanguage = selected[0].InnerText;
+
+        string temp = PlayerPrefs.GetString("SelectedLanguage");
+        if (!String.IsNullOrEmpty(temp))
+        {
+            selectedLanguage = temp;          
+        }
+        else
+        {
+            PlayerPrefs.SetString("SelectedLanguage", selectedLanguage);           
+        }
 
         ExtractCurrentLanguage();
 
@@ -75,23 +89,16 @@ public class LanguageFileReader : MonoBehaviour {
         {
             return currentLanguage[key];
         }
-        return null;
-        
+        return null;        
     }
 
    
     public static void ChangeLanguage(string language)
     {
         selectedLanguage = language;
-        selectedNode.InnerText = language;
-        //selectedNode.
-        SetNewLanguage(language);
+        PlayerPrefs.SetString("SelectedLanguage", language);
         ExtractCurrentLanguage();
     }
 
 
-    private static void SetNewLanguage(string language)
-    {
-
-    }
 }

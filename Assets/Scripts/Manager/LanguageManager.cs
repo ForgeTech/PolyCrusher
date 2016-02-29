@@ -28,7 +28,6 @@ public class LanguageManager : MonoBehaviour {
                     if (go.name != prefabName)
                     {
                         prefabName = go.name;
-
                         UpdateTextList();
                     }
                     break;
