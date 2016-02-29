@@ -125,6 +125,13 @@ public class DataCollector : MonoBehaviour
             version = DataCollector.instance.buildVersion;
             inEditor = Application.isEditor;
             this.mode = mode;
+
+            PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
+            if (playerManagerReference != null)
+            {
+                players = playerManagerReference.PlayerCountInGameSession;
+            }
+            
             time = (int)(Time.time * 1000);
         }
 
@@ -135,6 +142,8 @@ public class DataCollector : MonoBehaviour
 		public string version { get; set; }
         public bool inEditor { get; set; }
         public string mode { get; set; }
+        [BsonIgnoreIfNull]
+        public int players { get; set; }
 
         //public DateTime Timestamp { get; set; }
 
@@ -275,12 +284,16 @@ public class DataCollector : MonoBehaviour
             Event endEvent = new Event(Event.TYPE.sessionEnd);
             endEvent.addPlayerCount().addWave().addLevel();
             endEvent.addGameName(gameName);
+            endEvent.addPlayerCharacters();
             endEvent.addMode(currentSession.mode);
             addEvent(endEvent);
         }
 
         sessionRunning = false;
+
+        // is the hound burried here?
         eventQueue.Clear();
+
         kills.Clear();
         deathtime.Clear();
     }

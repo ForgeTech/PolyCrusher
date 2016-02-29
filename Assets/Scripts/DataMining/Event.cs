@@ -76,7 +76,12 @@ public class Event{
 
     public Event addPlayerCount()
     {
-        this.playerCount = PlayerManager.PlayerCount;
+        PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
+        if(playerManagerReference != null)
+        {
+            this.playerCount = playerManagerReference.PlayerCountInGameSession;
+        }
+
         return this;
     }
 
@@ -118,6 +123,20 @@ public class Event{
     public Event addMode(string mode)
     {
         this.mode = mode;
+        return this;
+    }
+
+    /// <summary>
+    /// Adds all chosen character names
+    /// </summary>
+    public Event addPlayerCharacters()
+    {
+        PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
+        if(playerManagerReference != null)
+        {
+            this.characters = playerManagerReference.PlayerNamesInGameSession;
+        }
+        
         return this;
     }
 
@@ -167,6 +186,8 @@ public class Event{
     protected string email { get; set; }
     [BsonIgnoreIfNull]
     protected string mode { get; set; }
+    [BsonIgnoreIfNull]
+    public string[] characters { get; set; }
 
     #endregion
 }
