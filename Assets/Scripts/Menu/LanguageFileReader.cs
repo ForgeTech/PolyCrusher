@@ -10,7 +10,7 @@ public class LanguageFileReader : MonoBehaviour {
     static List<Dictionary<string, string>> languages = new List<Dictionary<string, string>>();
     static Dictionary<string, string> obj;
     static Dictionary<string, string> currentLanguage;
-    static XmlNode selectedNode;
+   
     static XmlDocument xmlDoc;
     public static string selectedLanguage;
 
@@ -50,10 +50,6 @@ public class LanguageFileReader : MonoBehaviour {
         }
 
        
-
-        XmlNodeList selected = xmlDoc.GetElementsByTagName("selected");
-        selectedNode = selected[0];
-        selectedLanguage = selected[0].InnerText;
 
         string temp = PlayerPrefs.GetString("SelectedLanguage");
         if (!String.IsNullOrEmpty(temp))

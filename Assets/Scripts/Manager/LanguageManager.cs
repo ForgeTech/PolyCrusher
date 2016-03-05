@@ -39,16 +39,20 @@ public class LanguageManager : MonoBehaviour {
             GameObject go = GameObject.Find("YOLO_Label");
             if (go != null)
             {
-                sceneTextObjects = new Text[3];
-                sceneTextObjects[0] = GameObject.Find("WaveRoundText").GetComponent<Text>();
-                sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
-                sceneTextObjects[2] = go.GetComponent<Text>();
+                //sceneTextObjects = new Text[4];
+                //sceneTextObjects[0] = GameObject.Find("WaveRoundText").GetComponent<Text>();
+                //sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
+                //sceneTextObjects[2] = go.GetComponent<Text>();
+
+                sceneTextObjects = FindObjectsOfType<Text>();
+                
             }
             else
             {
-                sceneTextObjects = new Text[2];
-                sceneTextObjects[0] = GameObject.Find("WaveRoundText").GetComponent<Text>();
-                sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
+                sceneTextObjects = FindObjectsOfType<Text>();
+                //sceneTextObjects = new Text[2];
+                //sceneTextObjects[0] = GameObject.Find("WaveRoundText").GetComponent<Text>();
+                //sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
             }     
         }
         UpdateLanguage();

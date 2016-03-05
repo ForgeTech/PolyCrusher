@@ -86,7 +86,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     public string playerWithMostKills()
     {
-        string character = "No one";
+        string character = ReturnStandardValueInCurrentLanguage();
         int topKills = 0;
         foreach(KeyValuePair<string,int> kv in kills)
         {
@@ -104,7 +104,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     public string playerWithLeastDeathtime()
     {
-        string character = "No one";
+        string character = ReturnStandardValueInCurrentLanguage();
         int bottomDeathtime = -1;
         foreach (KeyValuePair<string, int> kv in deathtime)
         {
@@ -606,6 +606,26 @@ public class DataCollector : MonoBehaviour
         var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
         return System.Convert.ToBase64String(plainTextBytes);
     }
+
+
+    /// <summary>
+    /// returns a "no one" string in the current active language
+    /// </summary>
+    private string ReturnStandardValueInCurrentLanguage()
+    {
+        string currentLanguage = PlayerPrefs.GetString("SelectedLanguage");
+        if (currentLanguage != null)
+        {
+            switch (currentLanguage)
+            {
+                case "German": return "KEINER"; 
+                case "English": return "NO ONE";
+            }
+        }
+        return "NO ONE";
+    }
+
+
 }
 
 /*

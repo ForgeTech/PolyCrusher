@@ -22,13 +22,16 @@ public class LevelEndManager : MonoBehaviour {
 	Text t3;
 	Text t4;
 	Text t5;
+    Text[] t6;
 
-    Vector3 originalScaleYolo;
+    //Vector3 originalScaleYolo;
     Vector3 originalScale;
 	Vector3 originalScale1;
 	Vector3 originalScale4;
 	Vector3 originalScale5;
 	Vector3 originalScale6;
+    Vector3[] originalScaleTexts;
+
 
 	GameObject nameField;
 
@@ -49,8 +52,7 @@ public class LevelEndManager : MonoBehaviour {
 
 	bool once;
 
-    // Reference to the player manager.
-    PlayerManager playerManagerReference;
+    
 
 	public static event LevelExitDelegate levelExitEvent;
 	
@@ -62,8 +64,7 @@ public class LevelEndManager : MonoBehaviour {
 
 	void Start ()
     {
-		camObject = GameObject.FindGameObjectWithTag("MainCamera");
-        playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
+		camObject = GameObject.FindGameObjectWithTag("MainCamera");       
 
 		if (camObject != null) {
 
@@ -127,6 +128,8 @@ public class LevelEndManager : MonoBehaviour {
 			t2 = GameObject.Find ("RankingNumber").GetComponent<Text> ();
 			t3 = GameObject.Find ("CrushedNumber").GetComponent<Text> ();
 			t4 = GameObject.Find ("PlayerNumber").GetComponent<Text> ();
+
+            t6 = im.GetComponentsInChildren<Text>();
 				
 			//GameObject.Find ("JoinText").GetComponent<Text> ().enabled = false;
 			GameObject.Find ("GameName").GetComponent<Text> ().enabled = false;
@@ -149,7 +152,36 @@ public class LevelEndManager : MonoBehaviour {
 			t4.enabled = true;	
 			im.enabled = true;
 
-            originalScaleYolo = yoloTime.transform.localScale;
+            originalScaleTexts = new Vector3[t6.Length];
+
+            for (int i = 0; i < t6.Length; i++)
+            {
+                if(t6[i].name != "InWaveNumber" && t6[i].name != "Text" &&t6[i].name != "Loading")
+                {
+                    if (t6[i].name == "InWave")
+                    {
+                        if (GameManager.GameManagerInstance.CurrentGameMode != GameMode.YOLOMode)
+                        {
+                            originalScaleTexts[i] = t6[i].transform.localScale;
+                            t6[i].transform.localScale = Vector3.zero;
+                            t6[i].enabled = true;
+                        }
+                    }
+                    else
+                    {
+                        originalScaleTexts[i] = t6[i].transform.localScale;
+                        t6[i].transform.localScale = Vector3.zero;
+                        t6[i].enabled = true;
+                    }
+
+                   
+                }
+               
+            }
+
+
+
+            //originalScaleYolo = yoloTime.transform.localScale;
             yoloTime.transform.localScale = Vector3.zero;
 
 			originalScale = im.transform.localScale;
@@ -158,10 +190,14 @@ public class LevelEndManager : MonoBehaviour {
 			originalScale1 = t1.transform.localScale;
 			t1.transform.localScale = Vector3.zero;
 
+           
+
 			originalScale4 = t2.transform.localScale;
 			t2.transform.localScale = Vector3.zero;
 
-			originalScale5 = t3.transform.localScale;
+            Debug.Log("oriscale before: " + originalScale4);
+
+            originalScale5 = t3.transform.localScale;
 			t3.transform.localScale = Vector3.zero;
 
 			originalScale6 = t4.transform.localScale;
@@ -170,7 +206,8 @@ public class LevelEndManager : MonoBehaviour {
 			t1.text = GameManager.gameManagerInstance.Wave + "!";
 
 			nameField.SetActive (true);
-
+            nameField.GetComponent<InputField>().Select();
+            nameField.GetComponent<InputField>().ActivateInputField();
 			StartCoroutine(WaitForScaleFinish ());
 				
 			camObject.GetComponent<UnityStandardAssets.ImageEffects.ColorCorrectionCurves> ().enabled = true;
@@ -185,12 +222,19 @@ public class LevelEndManager : MonoBehaviour {
 	}
 
 	IEnumerator WaitForScaleFinish() {
-
-		GameObject.Find ("InnerCircle").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Menu/LevelFinished/innerCircle");
+		GameObject.Find ("InnerCircle").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Menu/LevelFinished/innerCircle_withoutText");
+       
+        for (int i = 0; i < t6.Length; i++)
+        {
+            if (t6[i].name != "Text" && t6[i].name != "InWaveNumber" && t6[i].name != "Loading")
+            {
+                StartCoroutine(t6[i].transform.ScaleTo(originalScaleTexts[i], 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
+            }
+            
+        }
 		StartCoroutine(im.transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.grow.Evaluate));
 		yield return new WaitForSeconds (1.0f);
 		endScreenIsShown = true;
-
 	}
 
 	void Update() {
@@ -234,7 +278,6 @@ public class LevelEndManager : MonoBehaviour {
 					StartMainMenu();
 				}
 			}
-
 		}
 	}
 
@@ -242,12 +285,18 @@ public class LevelEndManager : MonoBehaviour {
 	{
         yield return new WaitForSeconds(1.0f);
 
-        StartCoroutine(yoloTime.transform.ScaleTo(originalScale1, 0.3f, AnimCurveContainer.AnimCurve.shortUpscale.Evaluate));
+        
 
         if (GameManager.GameManagerInstance.CurrentGameMode != GameMode.YOLOMode)
         {
-            yield return new WaitForSeconds(1.0f);
+            //yield return new WaitForSeconds(1.0f);
+
+            Debug.Log("non yolo triggered:  "+originalScale1);
             StartCoroutine(t1.transform.ScaleTo(originalScale1, 0.3f, AnimCurveContainer.AnimCurve.shortUpscale.Evaluate));
+        }
+        else
+        {
+            StartCoroutine(yoloTime.transform.ScaleTo(originalScale1, 0.3f, AnimCurveContainer.AnimCurve.shortUpscale.Evaluate));
         }
 
 		yield return new WaitForSeconds(0.3f);
@@ -267,7 +316,25 @@ public class LevelEndManager : MonoBehaviour {
 	public void StartMainMenu()
     {
         redOverlay.enabled = false;
-		GameObject.Find ("InnerCircle").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Menu/LevelFinished/loadingScreen");
+
+        foreach(Text t in t6)
+        {
+            if(t.name == "Loading")
+            {
+                Debug.Log("loading set to visible");
+                t.enabled = true;
+            }
+            else
+            {
+                t.enabled = false;
+            }
+            
+        }
+
+
+        GameObject.Find ("InnerCircle").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Menu/LevelFinished/loadingScreen_withoutText");
+
+
 
 		network.CreateGameName ();
 
