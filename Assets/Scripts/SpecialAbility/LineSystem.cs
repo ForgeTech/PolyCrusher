@@ -40,6 +40,7 @@ public class LineSystem : MonoBehaviour {
 
     private  bool[] healAnimation;
     private bool[] normalAnimation;
+    private bool[] cuttingAnimation;
 
     private Vector3[] oldPlayerPosition;
 
@@ -64,7 +65,7 @@ public class LineSystem : MonoBehaviour {
     private int[] activeMaterial;
     private int lineRendererLength;
     
- 
+    [SerializeField]
     private bool activateCutting;
 
    
@@ -99,6 +100,7 @@ public class LineSystem : MonoBehaviour {
 
         healAnimation = new bool[6];
         normalAnimation = new bool[6];
+        cuttingAnimation = new bool[6];
 
         activateCutting = false;
         timeActive = 0.0f;
@@ -194,7 +196,7 @@ public class LineSystem : MonoBehaviour {
 
             bufferVectorB = players[secondVertex[i]].transform.position;
             bufferVectorB.y = heightOffset;
-            lineRenderer[i].material = mats[3];
+          
             lineRenderer[i].SetWidth(healLineWidth, healLineWidth);
 
             hits = Physics.RaycastAll(new Ray(bufferVectorB, Vector3.Normalize(bufferVectorA - bufferVectorB)), Vector3.Distance(bufferVectorB, bufferVectorA), (1 << 9));           
@@ -229,22 +231,44 @@ public class LineSystem : MonoBehaviour {
         for (int i = 0; i < lineRenderer.Length; i++)
         {
             float distance = Vector3.Distance(players[firstVertex[i]].transform.position, players[secondVertex[i]].transform.position);
-            if (activeMaterial[i] == 0 && !normalAnimation[i] && !healAnimation[i] && distance < healDistance)
+
+            if (timeActive > 0.0f && !cuttingAnimation[i] && activeMaterial[i] != 3)
+            {
+                cuttingAnimation[i] = true;
+
+            }
+            else if ((activeMaterial[i] == 0 || activeMaterial[i]==3 )&& !normalAnimation[i] && !healAnimation[i] && !cuttingAnimation[i] && distance < healDistance && timeActive<=0.0f)
             {
                 healAnimation[i] = true;
             }
 
-            else if (activeMaterial[i] == 1 && !normalAnimation[i] && !healAnimation[i] && distance >= healDistance )
+            else if ((activeMaterial[i] == 1 || activeMaterial[i] == 3) && !normalAnimation[i] && !healAnimation[i] && !cuttingAnimation[i] && distance >= healDistance && timeActive <= 0.0f)
             {
                 normalAnimation[i] = true;               
             }
 
-            if (healAnimation[i])
+            if (cuttingAnimation[i])
             {
                 if (lerpTimes[i] < 1.0f)
                 {
                     lerpTimes[i] += lerpSpeed * Time.deltaTime;
-                    lineRenderer[i].material.Lerp(mats[0], mats[1], lerpTimes[i]);
+                    lineRenderer[i].material.Lerp(mats[activeMaterial[i]], mats[3], lerpTimes[i]);
+                }
+                else
+                {
+                    lineRenderer[i].material = mats[3];
+                    activeMaterial[i] = 3;
+                    lerpTimes[i] = 0.0f;
+                    cuttingAnimation[i] = false;
+                }
+
+            }
+            else if (healAnimation[i])
+            {
+                if (lerpTimes[i] < 1.0f)
+                {
+                    lerpTimes[i] += lerpSpeed * Time.deltaTime;
+                    lineRenderer[i].material.Lerp(mats[activeMaterial[i]], mats[1], lerpTimes[i]);
                 }
                 else
                 {
@@ -258,7 +282,7 @@ public class LineSystem : MonoBehaviour {
                 if (lerpTimes[i] < 1.0f)
                 {
                     lerpTimes[i] += lerpSpeed * Time.deltaTime;
-                    lineRenderer[i].material.Lerp(mats[1], mats[0], lerpTimes[i]);
+                    lineRenderer[i].material.Lerp(mats[activeMaterial[i]], mats[0], lerpTimes[i]);
                 }
                 else
                 {
@@ -434,6 +458,11 @@ void UpdatePlayerStatus(BasePlayer basePlayer)
             {
                 energyParticles[i].enableEmission = false;
             }            
+
+            if(healthParticles[i] != null)
+            {
+                healthParticles[i].enableEmission = false;
+            }
         }
 
 

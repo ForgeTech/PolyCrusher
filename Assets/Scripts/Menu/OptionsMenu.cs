@@ -363,6 +363,7 @@ public class OptionsMenu : MonoBehaviour
         else
         {
             optionArray[selectedOption].GetComponent<Button>().Select();
+            //optionArray[selectedOption].transform.localScale = new Vector3(0.8f,0.8f,0.8f);
             optionArray[optionOld].GetComponentInChildren<Text>().color = Color.white;
             optionArray[selectedOption].GetComponentInChildren<Text>().color = Color.red;
         }
