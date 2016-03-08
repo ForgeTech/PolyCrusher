@@ -110,6 +110,8 @@ public class PolygonSystem : MonoBehaviour
     private int[] firstVertex;
     private int[] secondVertex;
 
+    private int[] polyIndices;
+
     private Vector3[] cornerPoints;
 
     [HideInInspector]
@@ -141,6 +143,9 @@ public class PolygonSystem : MonoBehaviour
         firstVertex = new int[] { 0, 1, 2, 0, 1, 2 };
         secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
 
+       
+        polyIndices = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+    
         screenFlash = false;
         cornerPoints = new Vector3[4];
         enemies = new List<GameObject>();  
@@ -595,9 +600,9 @@ public class PolygonSystem : MonoBehaviour
                 {
                     polyTweens[i] = true;
                     Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
-                    polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
+                   // polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
 
-                    StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+                    //StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.grow.Evaluate));
                 }
 
                 if (polyStartAnimLerpTimes[i] <= 1.0f)
@@ -615,9 +620,9 @@ public class PolygonSystem : MonoBehaviour
                     {
                         polyTweens[i] = true;
                         Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
-                        polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
+                       // polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
 
-                        StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+                        //StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.grow.Evaluate));
                     }
                     polyStartAnimLerpTimes[i] += Time.deltaTime;
                     polyOffsets[i] = Mathf.Lerp(polyStartHeight, 0.0f, polyStartAnimLerpTimes[i] * polyStartSpeed);
@@ -923,7 +928,8 @@ public class PolygonSystem : MonoBehaviour
                     polys[i].vertices = new Vector3[] { new Vector3(vbot[i].x, vbot[i].y + polyOffsets[i], vbot[i].z), new Vector3(vbot[(i + 1) % 4].x, vbot[(i + 1) % 4].y + polyOffsets[i], vbot[(i + 1) % 4].z), new Vector3(vbot[4].x, vbot[4].y + polyOffsets[i], vbot[4].z), new Vector3(vtop[i].x, vtop[i].y + polyOffsets[i], vtop[i].z), new Vector3(vtop[(i + 1) % 4].x, vtop[(i + 1) % 4].y + polyOffsets[i], vtop[(i + 1) % 4].z), new Vector3(vtop[4].x, vtop[4].y + polyOffsets[i], vtop[4].z) };
                     polys[i].normals = new Vector3[] { Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up };
                     polys[i].uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1), new Vector2(1, 0.5f), new Vector2(1, 1) };
-                    polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                    //polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                    polys[i].SetTriangles(polyIndices, 0);
                     polys[i].Optimize();
                     polys[i].RecalculateBounds();
                     filters[i].sharedMesh = polys[i];
@@ -968,7 +974,8 @@ public class PolygonSystem : MonoBehaviour
                     polys[i].vertices = new Vector3[] { new Vector3(vbot[i].x, vbot[i].y + polyOffsets[i], vbot[i].z), new Vector3(vbot[(i + 1) % 3].x, vbot[(i + 1) % 3].y + polyOffsets[i], vbot[(i + 1) % 3].z), new Vector3(vbot[3].x, vbot[3].y + polyOffsets[i], vbot[3].z), new Vector3(vtop[i].x, vtop[i].y + polyOffsets[i], vtop[i].z), new Vector3(vtop[(i + 1) % 3].x, vtop[(i + 1) % 3].y + polyOffsets[i], vtop[(i + 1) % 3].z), new Vector3(vtop[3].x, vtop[3].y + polyOffsets[i], vtop[3].z) };
                     polys[i].normals = new Vector3[] { Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up };
                     polys[i].uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1), new Vector2(1, 0.5f), new Vector2(1, 1) };
-                    polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                    //polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                    polys[i].SetTriangles(polyIndices, 0);
                     polys[i].Optimize();
                     polys[i].RecalculateBounds();
                     filters[i].sharedMesh = polys[i];
@@ -1011,9 +1018,11 @@ public class PolygonSystem : MonoBehaviour
                 polys[i].vertices = new Vector3[] { new Vector3(vbot[i].x, vbot[i].y + polyOffsets[i], vbot[i].z), new Vector3(vbot[(i + 1) % 3].x, vbot[(i + 1) % 3].y + polyOffsets[i], vbot[(i + 1) % 3].z), new Vector3(vbot[3].x, vbot[3].y + polyOffsets[i], vbot[3].z), new Vector3(vtop[i].x, vtop[i].y + polyOffsets[i], vtop[i].z), new Vector3(vtop[(i + 1) % 3].x, vtop[(i + 1) % 3].y + polyOffsets[i], vtop[(i + 1) % 3].z), new Vector3(vtop[3].x, vtop[3].y + polyOffsets[i], vtop[3].z) };
                 polys[i].normals = new Vector3[] { Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up };
                 polys[i].uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1), new Vector2(1, 0.5f), new Vector2(1, 1) };
-                polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                //polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                polys[i].SetTriangles(polyIndices,0);
                 polys[i].Optimize();
                 polys[i].RecalculateBounds();
+               
                 filters[i].sharedMesh = polys[i];
                 cornerPoints[i] = vbot[i];
 
@@ -1098,7 +1107,8 @@ public class PolygonSystem : MonoBehaviour
                 polys[i].vertices = new Vector3[] { new Vector3(vbot[i].x, vbot[i].y + polyOffsets[i], vbot[i].z), new Vector3(vbot[(i + 1) % 4].x, vbot[(i + 1) % 4].y + polyOffsets[i], vbot[(i + 1) % 4].z), new Vector3(vbot[4].x, vbot[4].y + polyOffsets[i], vbot[4].z), new Vector3(vtop[i].x, vtop[i].y + polyOffsets[i], vtop[i].z), new Vector3(vtop[(i + 1) % 4].x, vtop[(i + 1) % 4].y + polyOffsets[i], vtop[(i + 1) % 4].z), new Vector3(vtop[4].x, vtop[4].y + polyOffsets[i], vtop[4].z) };
                 polys[i].normals = new Vector3[] { Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up };
                 polys[i].uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1), new Vector2(1, 0.5f), new Vector2(1, 1) };
-                polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                //polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
+                polys[i].SetTriangles(polyIndices, 0);
                 polys[i].Optimize();
                 polys[i].RecalculateBounds();
                 filters[i].sharedMesh = polys[i];
