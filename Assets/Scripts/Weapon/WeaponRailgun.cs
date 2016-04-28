@@ -77,7 +77,6 @@ public class WeaponRailgun : Weapon
             Quaternion rotation = Quaternion.Euler(new Vector3(0f, currentAngle, 0f));
             Vector3 direction = rotation * transform.forward;
             
-
             RaycastHit hit;
             
             // Raycast 16: BossShield

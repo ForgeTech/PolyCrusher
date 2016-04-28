@@ -5,7 +5,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 {
     public GameObject explosion;
 
-
     public bool explode = false;
     public float extrudeFactor;
     public int hitsTillExplosion;
@@ -155,8 +154,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         return false;
     }
 
-
-
     private void ExplodePartial(int start)
     {
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
@@ -253,8 +250,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
                 }
 
-
-
                 mesh.vertices = newVerts;
                 mesh.normals = newNormals;
                 mesh.uv = newUvs;
@@ -274,12 +269,10 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                     GO.transform.rotation = transform.rotation;
                     GO.transform.localScale = new Vector3(scaleFactor.x, scaleFactor.y, scaleFactor.z);
 
-
                     deactivator.attachedRenderer.material = MR.materials[submesh];
                     deactivator.attachedFilter.mesh = mesh;
                     deactivators.Add(deactivator);
 
-                    
                     GO.AddComponent<BoxCollider>();
                     
                 }
@@ -304,22 +297,27 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         
     }
 
-
-
     void OnTriggerEnter(Collider coll)
     {        
         if (coll.GetComponent<Collider>().tag == "Bullet" || coll.GetComponent<Collider>().tag == "EnemyBullet")
         {
-            health--;
-            if (health <= 0 && explodeable)
-            {
-                explode = true;
-                explodeable = false;
-            }
+            DecrementHealth();
         }        
     }
 
+    /// <summary>
+    /// Decrements the health and checks if the object should explode.
+    /// </summary>
+    public void DecrementHealth()
+    {
+        this.health--;
 
+        if (health <= 0 && explodeable)
+        {
+            explode = true;
+            explodeable = false;
+        }
+    }
 
     private void TriggerRespawn()
     {
@@ -346,4 +344,3 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         CancelInvoke();
     }
 }
-

@@ -115,9 +115,6 @@ public class RayProjectile : Projectile
         {
             RaycastHit hitInfo;
 
-            //Debug.Log("RayProjectile: Shoot()");
-
-            
             // Boss shield layer
             if (targetLayer == 9 && Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << 16, QueryTriggerInteraction.Collide))
             {
@@ -130,6 +127,10 @@ public class RayProjectile : Projectile
                 }
             }
             else if (Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << targetLayer))
+            {
+                GenerateRay(hitInfo);
+            }
+            else if (Physics.Raycast(transform.position, Direction, out hitInfo, maxLength, 1 << 10))
             {
                 GenerateRay(hitInfo);
             }
@@ -173,6 +174,13 @@ public class RayProjectile : Projectile
         {
             (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() as IDamageable).TakeDamage(Damage, this.OwnerScript);
             SpawnDeathParticle(hitInfo.transform.position);
+        }
+
+        // Check for destructible item
+        PolyExplosionThreeDimensional destructible = hitInfo.transform.gameObject.GetComponent<PolyExplosionThreeDimensional>();
+        if (destructible != null)
+        {
+            destructible.DecrementHealth();
         }
     }
 
