@@ -2,13 +2,16 @@
 using System.Collections;
 
 public class CheckNetwork : MonoBehaviour {
-	
+    [SerializeField]
+    private GameObject networkManagerPrefab;
+
 	// Use this for initialization
 	void Awake () {
-
 		if (GameObject.FindObjectOfType<PlayerNetCommunicate> () == null) {
-			Instantiate(Resources.Load<GameObject>("Manager/_Network"));
+            if (networkManagerPrefab != null)
+                Instantiate(networkManagerPrefab);
+            else
+                throw new System.Exception("Network Manager prefab is null!");
 		}
-	
 	}
 }

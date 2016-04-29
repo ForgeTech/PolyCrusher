@@ -1507,6 +1507,7 @@ MonoBehaviour:
   requiredPolyDistance: 7.5
   transitionCooldown: 1.5
   bossDamage: 500
+  currentBossDamage: 0
 --- !u!114 &11432122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1743,6 +1744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4861fa4d7c8c440f2b6e0a4bfc48796f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkManagerPrefab: {fileID: 157608, guid: e157dc893a1fa4e9f89c86f6ae811a34, type: 2}
 --- !u!114 &11466478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1968,7 +1970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2266460c8fd5df1468177b7b0db1f007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameAsset: {fileID: 4900000, guid: 8d8343dcd0381ca4c86d07beb900063e, type: 3}
 --- !u!114 &11482812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1985,7 +1986,6 @@ MonoBehaviour:
   serverIP: 185.26.156.41:61116
   authenticate: 0
   bundleSize: 50
-  buildVersion: 0.1d
   log: 0
   logEvents: 0
 --- !u!114 &11486086
@@ -2338,6 +2338,10 @@ Prefab:
       propertyPath: powerUpTime
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: networkManagerPrefab
+      value: 
+      objectReference: {fileID: 157608, guid: e157dc893a1fa4e9f89c86f6ae811a34, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172654}
