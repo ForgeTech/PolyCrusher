@@ -44,7 +44,12 @@ MonoBehaviour:
   bulletLifeTime: 1
   weaponAccuracy: 5
   weaponName: Railgun
-  bulletPrefabName: Bullet/BulletRay
+  bulletPrefab: {fileID: 0}
+  muzzleFlashLight: {fileID: 0}
+  muzzleFlashTime: .100000001
+  numberCheckRays: 9
+  checkAngle: 30
+  debugMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
