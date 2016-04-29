@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyCost: 55
   abilityCoolDown: 1.39999998
-  prefabString: Abilities/ChickenAbility
+  chickenPrefab: {fileID: 173664, guid: 97815cabb0a802e44b799a2c8182f53b, type: 2}
 --- !u!114 &11460234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2206,8 +2206,6 @@ MonoBehaviour:
   playerName: Birdman
   playerPrefix: P1_
   deathTime: 3.29999995
-  phonePlayerSlot: -1
-  network: {fileID: 0}
   movementSpeed: 20
   analogStickTolerance: .100000001
   rotationSpeed: 6
@@ -2449,6 +2447,10 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 1.36800003
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chickenPrefab
+      value: 
+      objectReference: {fileID: 173664, guid: 97815cabb0a802e44b799a2c8182f53b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134618}

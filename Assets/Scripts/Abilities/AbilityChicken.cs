@@ -6,9 +6,8 @@ using System.Collections;
 /// </summary>
 public class AbilityChicken : Ability
 {
-    // The prefab path to the chicken ability prefab.
     [SerializeField]
-    protected string prefabString = "Abilities/ChickenAbility";
+    protected GameObject chickenPrefab;
 
     protected override void Start()
     {
@@ -21,7 +20,7 @@ public class AbilityChicken : Ability
         {
             base.Use();
 
-            GameObject obj = Instantiate(Resources.Load<GameObject>(prefabString));
+            GameObject obj = Instantiate(chickenPrefab);
 
             obj.GetComponent<ChickenBehaviour>().OwnerScript = this.OwnerScript;
             obj.SetActive(false);
