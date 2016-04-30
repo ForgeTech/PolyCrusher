@@ -7,12 +7,8 @@ public class LevelStartInfoManager : MonoBehaviour {
 	void Start () {
         if (GameObject.FindObjectOfType<LevelStartInformation>() == null)
         {
+            // TODO: Remove Resource.Load to move the Manager folder out of the Resources folder!!!
             Instantiate(Resources.Load<GameObject>("Manager/LevelStartInformationContainer"));
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
