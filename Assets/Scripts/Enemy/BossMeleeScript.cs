@@ -5,19 +5,10 @@ using System.Collections;
 /// Uses the area of damage object and deals damage when it reaches it's max size.
 /// All players in the circle get a damage and will be pushed outside.
 /// </summary>
-public class BossMeleeScript : MonoBehaviour
+public class BossMeleeScript : AttackVisualizationScript
 {
-    // Radius of the damage area.
-    public float damageRadius;
-
     // Damage of the attack.
     public int damage;
-
-    // Time until damage will taken.
-    public float activationTime;
-
-    // Current timer value.
-    private float currentTime;
 
     // Specifies if the script has been initialized.
     [HideInInspector]
@@ -29,60 +20,30 @@ public class BossMeleeScript : MonoBehaviour
     // Owner
     BossEnemy owner;
 
-    // The height of the tween animation.
-    public float easeInHeight = 4f;
-
-    // Start material color.
-    public Material startColor;
-
-    // End material color.
-    public Material endColor;
-
-    // Renderer reference.
-    private Renderer rend;
-
-    // Particles of death.
-    public GameObject explosionParticle;
-
-    // Audioclip
-    public AudioClip sound;
-
-    // Pitch of the sound
-    [Range(0f, 2f)]
-    public float soundPitch = 0.5f;
-
-    [Range(0f, 5f)]
-    public float soundVolume = 0.3f;
-
     // Use this for initialization
-    void Start ()
+    protected override void Start ()
     {
-        transform.localScale = Vector3.zero;
-        rend = GetComponent<Renderer>();
-        //this.attackStarted = false;
+        base.Start();
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    protected override void Update()
     {
         if (this.attackStarted)
         {
-            // TODO: attack started cant be set to true
-            if (currentTime >= activationTime)
-            {
-                DealDamage();
-                currentTime = 0;
-                StartCoroutine(transform.MoveTo(transform.position + new Vector3(0, easeInHeight, 0), 0.2f, Ease.CubeIn));
-                StartCoroutine(transform.ScaleTo(Vector3.zero, 0.2f, Ease.CubeIn));
-                Destroy(this.gameObject, 0.28f);
-            }
+            base.Update();
 
             // Material Lerp
-            rend.material.Lerp(startColor, endColor, currentTime / activationTime);
-
-            currentTime += Time.deltaTime;
+            rend.material.Lerp(startColor, endColor, currentTime / lerpTime);
         }
-	}
+    }
+
+    protected override void FadeOutHandler()
+    {
+        DealDamage();
+        currentTime = 0;
+        FadeOutAnimation();
+        Destroy(this.gameObject, 0.28f);
+    }
 
     /// <summary>
     /// Initializes the behaviour.
@@ -90,16 +51,12 @@ public class BossMeleeScript : MonoBehaviour
     public void InitMeleeScript(float damageRadius, float activationTime, BossEnemy owner, int damage)
     {
         this.attackStarted = true;
-        this.damageRadius = damageRadius;
-        this.activationTime = activationTime;
+        this.effectRadius = damageRadius;
+        this.lerpTime = activationTime;
         this.owner = owner;
         this.damage = damage;
 
-        Vector3 originalPos = transform.position;
-        transform.position += new Vector3(0, easeInHeight, 0);
-
-        StartCoroutine(transform.MoveTo(originalPos, activationTime * 0.5f, Ease.CubeOut));
-        StartCoroutine(transform.ScaleTo(new Vector3(damageRadius, damageRadius, 0.3f), activationTime, Ease.CubeOut));
+        FadeInAnimation();
     }
 
     /// <summary>
@@ -107,7 +64,7 @@ public class BossMeleeScript : MonoBehaviour
     /// </summary>
     public void InitMeleeScript(BossEnemy owner)
     {
-        InitMeleeScript(this.damageRadius, this.activationTime, owner, this.damage);
+        InitMeleeScript(this.effectRadius, this.lerpTime, owner, this.damage);
     }
 
     /// <summary>
@@ -115,7 +72,7 @@ public class BossMeleeScript : MonoBehaviour
     /// </summary>
     private void DealDamage()
     {
-        Transform[] players = GetAllPlayersInRadius(damageRadius);
+        Transform[] players = GetAllPlayersInRadius(effectRadius);
 
         for (int i = 0; i < players.Length; i++)
         {
@@ -124,7 +81,6 @@ public class BossMeleeScript : MonoBehaviour
             if (m is BasePlayer)
             {
                 m.GetComponent<BasePlayer>().TakeDamage(damage, owner);
-                //m.GetComponent<Rigidbody>().AddExplosionForce(owner.PushAwayForce, transform.position, damageRadius, 0f, ForceMode.Impulse);
                 m.GetComponent<Rigidbody>().AddForce((players[i].position - (transform.position + new Vector3(0.05f, 0, 0))).normalized * owner.PushAwayForce, ForceMode.Impulse);
             }
         }

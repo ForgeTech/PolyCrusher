@@ -148,6 +148,7 @@ MonoBehaviour:
   midAirExplosionParticlePrefab: {fileID: 158560, guid: 0c4eb52e90a81884195f986f684f05aa,
     type: 2}
   explosionSound: {fileID: 8300000, guid: 5aed2e3ab53b66a4c92d272975be1d18, type: 3}
+  attackVisualization: {fileID: 163292, guid: 5cd9e216ee9b68e4caa07e4d0ef6b545, type: 2}
 --- !u!135 &13556380
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -179,6 +180,10 @@ Prefab:
       propertyPath: damageRadius
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVisualization
+      value: 
+      objectReference: {fileID: 163292, guid: 5cd9e216ee9b68e4caa07e4d0ef6b545, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146494}

@@ -64,6 +64,9 @@ public class Rocket : Projectile {
 	// The actual target
 	private Vector3 targetPos;
 
+    [SerializeField]
+    protected GameObject attackVisualization;
+
 	/// <summary>
 	/// Gets or sets the speed of the projectile.
 	/// </summary>
@@ -97,15 +100,22 @@ public class Rocket : Projectile {
     }
 
     public void Shoot(Vector3 target) {
+        CreateAttackVisualization(target);
 		this.target = new Vector3(target.x, target.y - 0.1f, target.z);
 		launched = true;
-		//SphereCollider sphereCollider = transform.GetComponent<SphereCollider>();
-		//sphereCollider.radius = 0.1f;
-        //Destroy (gameObject, lifeTime);
         StartCoroutine(DestroyProjectileAfterTime(lifeTime));
 		Shoot();
 	}
-	
+
+    private void CreateAttackVisualization(Vector3 target)
+    {
+        NavMeshHit hit;
+        if(NavMesh.SamplePosition(target, out hit, 5f, NavMesh.AllAreas))
+            Instantiate(attackVisualization, hit.position, attackVisualization.transform.rotation);
+        else
+            Instantiate(attackVisualization, target, attackVisualization.transform.rotation);
+    }
+
 	protected override void Shoot() {
 		if (launched){
 
