@@ -4,77 +4,41 @@ using UnityEngine.UI;
 
 public class LanguageManager : MonoBehaviour {
 
+    [SerializeField]
+    private static LanguageManager instance;
+
     private Text[] sceneTextObjects;
-    private string[] menuObjectNames;
-    private int sceneIndex;
-    private string prefabName;
+    private string replacementText;
 
-	
-	void Start () {
-        sceneTextObjects = FindObjectsOfType<Text>();
-        sceneIndex = Application.loadedLevel;
-        menuObjectNames = new string[] { "LevelSelectionObject(Clone)", "CharacterSelectionObject(Clone)", "MainMenuObject(Clone)", "OptionMenuObject(Clone)" };
-
-        if (sceneIndex == 0)
+    public static LanguageManager Instance
+    {
+        get
         {
-            GameObject go;
-
-            for (int i = 0; i < menuObjectNames.Length; i++)
+            if (instance == null)
             {
-                go = GameObject.Find(menuObjectNames[i]);
-
-                if (go != null)
-                {
-                    if (go.name != prefabName)
-                    {
-                        prefabName = go.name;
-                        UpdateTextList();
-                    }
-                    break;
-                }
+                instance = FindObjectOfType<LanguageManager>();
             }
+            return instance;
         }
-        else
-        {
-            GameObject go = GameObject.Find("YOLO_Label");
-            if (go != null)
-            {
-                //sceneTextObjects = new Text[4];
-                //sceneTextObjects[0] = GameObject.Find("WaveRoundText").GetComponent<Text>();
-                //sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
-                //sceneTextObjects[2] = go.GetComponent<Text>();
+    }
 
-                sceneTextObjects = FindObjectsOfType<Text>();
-                
-            }
-            else
-            {
-                sceneTextObjects = FindObjectsOfType<Text>();
-                //sceneTextObjects = new Text[2];
-                //sceneTextObjects[0] = GameObject.Find("WaveRoundText").GetComponent<Text>();
-                //sceneTextObjects[1] = GameObject.Find("BossText").GetComponent<Text>();
-            }     
-        }
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    void Start () {
+        UpdateTextList();        
         UpdateLanguage();
     }
-	
-	
-	void Update () {
-        if (sceneIndex == 0)
-        {
-            UpdateTextList();
-            UpdateLanguage();
-        }  
-	}
 
-    void UpdateTextList()
+    public void UpdateTextList()
     {      
-        sceneTextObjects = FindObjectsOfType<Text>();     
+        sceneTextObjects = FindObjectsOfType<Text>();       
     }
 
-
-
-    void UpdateLanguage()
+    public void UpdateLanguage()
     {
         for(int i = 0; i < sceneTextObjects.Length; i++)
         {

@@ -14,8 +14,11 @@ public class LanguageFileReader : MonoBehaviour {
     static XmlDocument xmlDoc;
     public static string selectedLanguage;
 
+    private string defaultLanguage = "English";
+
     void Awake()
     {
+        selectedLanguage = "English";
         GameAsset = Resources.Load("Language/languages") as TextAsset;
         xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(GameAsset.text);           
@@ -58,7 +61,8 @@ public class LanguageFileReader : MonoBehaviour {
         }
         else
         {
-            PlayerPrefs.SetString("SelectedLanguage", selectedLanguage);           
+            PlayerPrefs.SetString("SelectedLanguage", defaultLanguage);
+            selectedLanguage = defaultLanguage;
         }
 
         ExtractCurrentLanguage();
