@@ -93,32 +93,38 @@ public class BossWalk : FSMState
     {
         if (e != null && e.TargetPlayer != null)
         {
-            RaycastHit hitInfo;
+            BasePlayer targetPlayer = e.TargetPlayer.GetComponent<BasePlayer>();
 
-            Vector3 playerPos = new Vector3(e.TargetPlayer.position.x, e.TargetPlayer.position.y + 1f, e.TargetPlayer.position.z);
-            Vector3 enemyPos = new Vector3(e.transform.position.x, e.transform.position.y + 1f, e.transform.position.z);
-            Ray ray = new Ray(enemyPos, (playerPos - enemyPos).normalized);
-
-            // Raycast hit check
-            bool hit = Physics.Raycast(ray, out hitInfo, detectionRange, 1 << playerLayer);
-
-            // Check if the payer target equals the collided target.
-            if (hit)
+            // Only check the hit if the target player is a BasePlayer (Could be for example a chicken behaviour).
+            if (targetPlayer != null)
             {
-                MonoBehaviour m = hitInfo.transform.GetComponent<MonoBehaviour>();
+                RaycastHit hitInfo;
 
-                if (m != null && m is BasePlayer)
+                Vector3 playerPos = new Vector3(e.TargetPlayer.position.x, e.TargetPlayer.position.y + 1f, e.TargetPlayer.position.z);
+                Vector3 enemyPos = new Vector3(e.transform.position.x, e.transform.position.y + 1f, e.transform.position.z);
+                Ray ray = new Ray(enemyPos, (playerPos - enemyPos).normalized);
+
+                // Raycast hit check
+                bool hit = Physics.Raycast(ray, out hitInfo, detectionRange, 1 << playerLayer);
+
+                // Check if the player target equals the collided target.
+                if (hit)
                 {
-                    // If the names aren't equal there is no hit.
-                    if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
-                        hit = false;
+                    MonoBehaviour m = hitInfo.transform.GetComponent<MonoBehaviour>();
+
+                    if (m != null && m is BasePlayer)
+                    {
+                        // If the names aren't equal there is no hit.
+                        if (((BasePlayer)m).PlayerName != targetPlayer.PlayerName)
+                            hit = false;
+                    }
                 }
+
+                // Debug draw Ray
+                Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * detectionRange, Color.green);
+
+                return hit;
             }
-
-            // Debug draw Ray
-            Debug.DrawRay(enemyPos, (playerPos - enemyPos).normalized * detectionRange, Color.green);
-
-            return hit;
         }
         return false;
     }
