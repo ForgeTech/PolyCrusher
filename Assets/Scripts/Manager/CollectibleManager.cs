@@ -17,6 +17,10 @@ public class CollectibleManager : MonoBehaviour {
 	// Rate of the pond particle system
 	[SerializeField]
 	protected float PondEmissionRate = 15F;
+
+    // Particle burst for the pissing pete signs.
+    [SerializeField]
+    protected GameObject signParticleBurst;
 	
 	// Number of active PowerUps
 	private int activePowerUpsCount = 0;
@@ -121,16 +125,10 @@ public class CollectibleManager : MonoBehaviour {
                 {
                     for(int i = 0; i < PowerUpSigns.Length; i++)
                     {
-                        Instantiate(Resources.Load("Particles/Wrapper/ParticleWrapperSignsBurst"), PowerUpSigns[i].transform.position, PowerUpSigns[i].transform.rotation);
+                        Instantiate(signParticleBurst, PowerUpSigns[i].transform.position, PowerUpSigns[i].transform.rotation);
 
                         Vector3 targetPosition = PowerUpSpawnPoints[actualSpawnpoint].transform.position;
                         PowerUpSigns[i].transform.LookAt(targetPosition, new Vector3(0.0f, 1.0f, 0.0f));
-                        //PowerUpSigns[i].transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
-
-                        /*if (PowerUpSigns[i].transform.position.z > PowerUpSpawnPoints[actualSpawnpoint].transform.position.z)
-                        {
-                            PowerUpSigns[i].transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
-                        }*/
                     }
                 }
 			}
@@ -146,4 +144,3 @@ public class CollectibleManager : MonoBehaviour {
 		StartCoroutine("WaitUntilFirstPlayerSpawn");
 	}
 }
-
