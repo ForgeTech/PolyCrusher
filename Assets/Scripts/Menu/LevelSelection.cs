@@ -99,6 +99,9 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
 
+        LanguageManager.Instance.UpdateTextList();
+        LanguageManager.Instance.UpdateLanguage();
+
 		buttons = new GameObject[8];
 
 		buttons[0] = GameObject.Find("Select_Level_01");
@@ -168,6 +171,9 @@ public class LevelSelection : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++) {
 			buttons[i].GetComponent<Image>().enabled = false;
 		}
+
+
+
 
     }
 

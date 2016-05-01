@@ -22,8 +22,10 @@ public delegate void ButtonDeclinedEvent();
 public class MainMenu : MonoBehaviour
 {
 
-    public GameObject[] buttons;
+    public Button[] buttons;
     public int selected;
+
+    private Text[] texts;
 
     private bool moveLeft = false;
     private bool moveRight = false;
@@ -67,12 +69,17 @@ public class MainMenu : MonoBehaviour
     private event ButtonAcceptedEvent ButtonAcceptEvent;
     private event ButtonDeclinedEvent ButtonDeclineEvent;
 
+    private RumbleManager rumbleManager;
+
 	int oldCounter = 0;
 
 	public float x;
 
 	bool once;
-	
+
+
+    private string curHorizontal;
+
     /// <summary>
     /// Loads the level selection menu.
     /// </summary>
@@ -105,7 +112,20 @@ public class MainMenu : MonoBehaviour
 	
     void Start()
     {
-		buttons [0].GetComponent<Button> ().Select ();
+
+        LanguageManager.Instance.UpdateTextList();
+        LanguageManager.Instance.UpdateLanguage();
+
+        Text[] temp;
+        texts = new Text[buttons.Length];
+        for(int i = 0; i < buttons.Length; i++)
+        {
+            temp = buttons[i].GetComponentsInChildren<Text>();
+            texts[i] = temp[1];
+        }
+      
+
+        buttons[0].Select ();
        // buttons[0].GetComponentInChildren<Text>().color = Color.yellow;
 
 		// Register switch sound.
@@ -147,7 +167,10 @@ public class MainMenu : MonoBehaviour
 		StartCoroutine ("ScalePlayerImages");
 		StartCoroutine ("TransformBetabanner");
 
-	}
+
+        rumbleManager = RumbleManager.Instance;
+        //rumbleManager.Rumble(0, RumbleType.BasicRumble);
+    }
 
 	IEnumerator ScalePlayerImages() {
 
@@ -220,7 +243,7 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void HandlePhonePlayerJoin(int slot)
     {
-
+       
         bool joined = false;
 
         if (currentPlayerCount < 4)
@@ -276,19 +299,19 @@ public class MainMenu : MonoBehaviour
 
         UpdatePlayerStatus();
 
-        buttons[selected].GetComponent<Button>().Select();
+        buttons[selected].Select();
         
 
         for(int i = 0; i < buttons.Length; i++)
         {
-            Text[] texts = buttons[i].GetComponentsInChildren<Text>();
+            //Text[] texts = buttons[i].GetComponentsInChildren<Text>();
             if (i!= selected)
             {
-                texts[1].color = Color.red;
+                texts[i].color = Color.red;
             }
             else
             {
-                texts[1].color = Color.yellow;
+                texts[i].color = Color.yellow;
             }
            
            
@@ -366,7 +389,7 @@ public class MainMenu : MonoBehaviour
 
             int runningNumber = i + 1;
 
-            string curHorizontal = "P" + runningNumber + "_Horizontal";
+            curHorizontal = "P" + runningNumber + "_Horizontal";
 
 
             if (Input.GetAxis(curHorizontal) <= -0.2f || Input.GetAxis(curHorizontal) >= 0.2f )
@@ -467,6 +490,9 @@ public class MainMenu : MonoBehaviour
                 {
                     network.actionButton[i] = 0;
                 }
+
+               
+
                 buttons[selected].GetComponent<Button>().onClick.Invoke();
             }
 

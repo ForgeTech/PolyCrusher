@@ -194,6 +194,11 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
+
+        LanguageManager.Instance.UpdateTextList();
+        LanguageManager.Instance.UpdateLanguage();
+
+
         // Register switch sound.
         ButtonSwitchEvent += PlaySwitchSound;
         ButtonAcceptEvent += PlayAcceptSound;
@@ -244,6 +249,9 @@ public class OptionsMenu : MonoBehaviour
         LanguageFileReader.ChangeLanguage(language);
       
         UpdateButtonTexts();
+
+       
+        LanguageManager.Instance.UpdateLanguage();
     }
 
 
