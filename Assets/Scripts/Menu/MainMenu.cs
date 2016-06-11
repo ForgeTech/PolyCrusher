@@ -69,7 +69,7 @@ public class MainMenu : MonoBehaviour
     private event ButtonAcceptedEvent ButtonAcceptEvent;
     private event ButtonDeclinedEvent ButtonDeclineEvent;
 
-    private RumbleManager rumbleManager;
+    //private RumbleManager rumbleManager;
 
 	int oldCounter = 0;
 
@@ -168,7 +168,7 @@ public class MainMenu : MonoBehaviour
 		StartCoroutine ("TransformBetabanner");
 
 
-        rumbleManager = RumbleManager.Instance;
+        //rumbleManager = RumbleManager.Instance;
         //rumbleManager.Rumble(0, RumbleType.BasicRumble);
     }
 

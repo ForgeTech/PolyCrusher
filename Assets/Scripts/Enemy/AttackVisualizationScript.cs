@@ -48,6 +48,8 @@ public class AttackVisualizationScript : MonoBehaviour {
     [SerializeField]
     protected bool animateOnStart = true;
 
+    private bool fadeAlreadyStarted = false;
+
     protected virtual void Start () {
         transform.localScale = Vector3.zero;
         rend = GetComponent<Renderer>();
@@ -61,8 +63,9 @@ public class AttackVisualizationScript : MonoBehaviour {
 	}
 
     private void WaitForFadeOut() {
-        if (currentTime >= lerpTime) {
+        if (!fadeAlreadyStarted && currentTime >= lerpTime) {
             FadeOutHandler();
+            fadeAlreadyStarted = true;
         }
         currentTime += Time.deltaTime;
     }

@@ -65,13 +65,13 @@ public class BossShield : MonoBehaviour
     public void CreateEnemyRay(Vector3 position, Vector3 originalForward)
     {
         GameObject g = Instantiate(enemyRay) as GameObject;
-        RayProjectile ray;
+        PerlinRayProjectile ray;
 
-        if (g != null && g.GetComponent<MonoBehaviour>() is RayProjectile)
+        if (g != null && g.GetComponent<MonoBehaviour>() is PerlinRayProjectile)
         {
-            Debug.Log("Instantiate enemy ray");
+            //Debug.Log("Instantiate enemy ray");
 
-            ray = g.GetComponent<MonoBehaviour>() as RayProjectile;
+            ray = g.GetComponent<MonoBehaviour>() as PerlinRayProjectile;
             ray.OwnerScript = null;
             ray.Damage = ray.Damage;
             ray.name = "RayBullet";

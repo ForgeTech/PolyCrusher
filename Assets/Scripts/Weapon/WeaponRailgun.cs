@@ -29,20 +29,19 @@ public class WeaponRailgun : Weapon
             base.Use();
 
             GameObject g = Instantiate(bulletPrefab) as GameObject;
-            RayProjectile ray;
+            g.transform.position = transform.position;
+            g.name = "RayBullet";
+            PerlinRayProjectile ray;
             
-            if (g != null && g.GetComponent<MonoBehaviour>() is RayProjectile)
+            if (g != null && g.GetComponent<MonoBehaviour>() is PerlinRayProjectile)
             {
-                ray = g.GetComponent<MonoBehaviour>() as RayProjectile;
+                ray = g.GetComponent<MonoBehaviour>() as PerlinRayProjectile;
                 ray.OwnerScript = this.OwnerScript;
                 ray.Damage = this.WeaponDamage;
-                ray.name = "RayBullet";
-                ray.transform.position = transform.position;
 
                 //Shoot
                 ray.Shoot(CalculateAim(ray));
             }
-
 
             shootIsAllowed = false;
             StartCoroutine(WaitForNextShot());
@@ -55,7 +54,7 @@ public class WeaponRailgun : Weapon
     /// </summary>
     /// <param name="ray">Ray projectile</param>
     /// <returns>The direction vector of the shot.</returns>
-    protected virtual Vector3 CalculateAim(RayProjectile ray)
+    protected virtual Vector3 CalculateAim(PerlinRayProjectile ray)
     {
         // The smallast distance of the raycasts
         float minDistance = -1f;
