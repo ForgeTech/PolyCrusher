@@ -18,7 +18,6 @@ public class PerlinLine : MonoBehaviour
     [SerializeField]
     private Transform endPosition;
 
-    [Header("Particle settings")]
     [SerializeField]
     protected float particleSize = 0.6f;
 
@@ -33,7 +32,6 @@ public class PerlinLine : MonoBehaviour
     [SerializeField]
     protected float scale = 1f;
 
-    [Header("Animation Settings")]
     [SerializeField]
     protected float rayAnimationSpeed = 2f;
 

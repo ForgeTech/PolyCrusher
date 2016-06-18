@@ -440,6 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a91e240690f3f48b80f7949d92c7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  motionVectorAdaptionSpeed: 12
   cameraDamping: .300000012
   maxSpeed: 30
   cameraHeight: 34
@@ -480,6 +481,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: shakeDamping
       value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: motionVectorAdaptionSpeed
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

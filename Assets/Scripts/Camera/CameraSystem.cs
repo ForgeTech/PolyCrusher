@@ -20,6 +20,13 @@ public class CameraSystem : MonoBehaviour
     //The whole bounding box of all players
     public static Bounds playerBounds;
 
+    // Motion vector of the player walking direction
+    public static Vector3 playerMotionVector = Vector3.forward;
+    private Vector3 lastPlayerCenterPosition = Vector3.zero;
+
+    [SerializeField]
+    protected float motionVectorAdaptionSpeed = 12f;
+
     //Velocity
     private Vector3 velocity = Vector3.zero;
 
@@ -132,7 +139,10 @@ public class CameraSystem : MonoBehaviour
         CalculateDeltaTime();
 
         if (players != null)
+        {
             CalculatePlayerBoundingBox();
+            CalculatePlayerMotionVector();
+        }
 	}
 
     /// <summary>
@@ -192,6 +202,17 @@ public class CameraSystem : MonoBehaviour
 
         shakeX = 0f;
         shakeZ = 0f;
+    }
+
+    private void CalculatePlayerMotionVector()
+    {
+        playerMotionVector = Vector3.RotateTowards(playerMotionVector, playerBounds.center - lastPlayerCenterPosition, 
+            Time.deltaTime * motionVectorAdaptionSpeed, 0f);
+
+        playerMotionVector.Normalize();
+        playerMotionVector.Set(playerMotionVector.x, 0f, playerMotionVector.z);
+
+        lastPlayerCenterPosition = playerBounds.center;
     }
 
     /// <summary>
@@ -351,6 +372,8 @@ public class CameraSystem : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(playerBounds.center, playerBounds.size);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(playerBounds.center + new Vector3(0, 1f, 0), playerBounds.center + playerMotionVector * 4f);
     }
 
     /// <summary>
