@@ -45,8 +45,15 @@ public class GameManagerEditor : Editor
         EditorGUILayout.Space();
         DrawWaveIncreaseSettings();
         EditorGUILayout.Space();
+        DrawSpecialWaveProperties();
+        EditorGUILayout.Space();
         EditorGUIUtility.labelWidth = 0;
         DrawUtilities();
+
+        if (GUI.changed)
+            EditorUtility.SetDirty(gameManager);
+
+        serializedGameManager.ApplyModifiedProperties();
     }
 
     /// <summary>
@@ -157,6 +164,19 @@ public class GameManagerEditor : Editor
         EditorGUILayout.PropertyField(timeBetweeenWaveDecreaseFactor);
         EditorGUILayout.PropertyField(enemyHealthIncreaseFactor);
         EditorGUILayout.PropertyField(enemyDamageIncreaseFactor);
+        EditorGUILayout.EndVertical();
+    }
+
+    public void DrawSpecialWaveProperties()
+    {
+        SerializedProperty specialWaveEnabled = serializedGameManager.FindProperty("specialWaveModeEnabled");
+        SerializedProperty specialWaveProbability = serializedGameManager.FindProperty("specialWaveProbablity");
+
+        EditorGUILayout.LabelField("Special Wave Settings", titleStyle);
+
+        EditorGUILayout.BeginVertical("box");
+        EditorGUILayout.PropertyField(specialWaveEnabled, new GUIContent("Special Wave Mode Enabled"));
+        EditorGUILayout.PropertyField(specialWaveProbability, new GUIContent("Ocurrance probablity"));
         EditorGUILayout.EndVertical();
     }
 

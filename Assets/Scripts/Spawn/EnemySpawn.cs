@@ -38,8 +38,12 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     protected bool drawGizmo = true;
 
+    private static bool eventAlreadyAdded = false;
+
     // Event handler for the enemy spawn.
     public static event EnemySpawnedEventHandler EnemySpawned;
+
+    private static int specialWaveEnemyIndex = -1;
 
     /// <summary>
     /// Gets the middlepoint of the players.
@@ -52,6 +56,12 @@ public class EnemySpawn : MonoBehaviour
     void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
+
+        if (!eventAlreadyAdded)
+        {
+            GameManager.WaveStarted += ChooseSingleEnemyForSpecialWave;
+            eventAlreadyAdded = true;
+        }
     }
 
     void Start()
@@ -121,11 +131,25 @@ public class EnemySpawn : MonoBehaviour
                 // Draw active spawn points (Debug)
                 Debug.DrawLine(new Vector3(transform.position.x, 0.5f, transform.position.z), CameraSystem.playerBounds.center, Color.cyan);
 
-                // Spawn enemy.
-                int index = ChooseEnemy();
+                int index = -1;
+                if (GameManager.GameManagerInstance.IsCurrentlySpecialWave)
+                    index = specialWaveEnemyIndex;
+                else
+                    index = ChooseEnemy();
+
+                // In the case were only one enemy should be spawned which needs more ressources than available, this compoensation value is used.
+                // This case happens especially in the special wave mode.
+                int ressourceCompensationValue = 0;
+
+                // Compensation value check
+                if (GameManager.GameManagerInstance.CurrentEnemyRessourceValue != 0 
+                    && GameManager.GameManagerInstance.CurrentEnemyRessourceValue - GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue < 0)
+                {
+                    ressourceCompensationValue = GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue - GameManager.GameManagerInstance.CurrentEnemyRessourceValue;
+                }
 
                 //Check Ressources and wave
-                if (GameManager.GameManagerInstance.CurrentEnemyRessourceValue - GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue >= 0
+                if ((GameManager.GameManagerInstance.CurrentEnemyRessourceValue + ressourceCompensationValue) - GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue >= 0
                     && GameManager.GameManagerInstance.SpawnInfo[index].minWave <= GameManager.GameManagerInstance.Wave)
                 {
                     // Instantiate enemy.
@@ -189,6 +213,25 @@ public class EnemySpawn : MonoBehaviour
     }
 
     /// <summary>
+    /// Chooses randomly an enemy which is allowed for the current wave and returns its index.
+    /// </summary>
+    /// <returns>Enemy index</returns>
+    protected static void ChooseSingleEnemyForSpecialWave()
+    {
+        int currentWave = GameManager.GameManagerInstance.Wave;
+        ArrayList allowedEnemiesForWave = new ArrayList();
+
+        for (int i = 0; i < GameManager.GameManagerInstance.SpawnInfo.Length; i++)
+        {
+            if (currentWave >= GameManager.GameManagerInstance.SpawnInfo[i].minWave)
+                allowedEnemiesForWave.Add(i);
+        }
+        
+        specialWaveEnemyIndex = (int) allowedEnemiesForWave[Random.Range(0, allowedEnemiesForWave.Count - 1)];
+        Debug.Log("[EnemySpawn]: Single enemy index calculated for special wave.");
+    }
+
+    /// <summary>
     /// Chooses an enemy based on it's probability and returns the index of the spawn info array.
     /// </summary>
     protected int ChooseEnemy()
@@ -246,5 +289,6 @@ public class EnemySpawn : MonoBehaviour
     protected virtual void ResetValues()
     {
         EnemySpawned = null;
+        eventAlreadyAdded = false;
     }
 }

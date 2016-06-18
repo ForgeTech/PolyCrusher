@@ -1631,6 +1631,8 @@ MonoBehaviour:
     enemyName: B055
     spawnEveryXWave: 7
     waveSpawnVariation: 2
+  specialWaveModeEnabled: 1
+  specialWaveProbablity: .100000001
   enemyRessourcePool: 30
   currentEnemyRessourceValue: 0
   maxEnemyActiveCount: 20
@@ -2347,6 +2349,18 @@ Prefab:
       propertyPath: signParticleBurst
       value: 
       objectReference: {fileID: 166402, guid: 9ca6f2c3541d0564b98b3867017d4ff3, type: 2}
+    - target: {fileID: 0}
+      propertyPath: randomSpawnRadius
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: enemyRessourcePool
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialWaveProbablity
+      value: .100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172654}

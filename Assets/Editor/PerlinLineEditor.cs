@@ -25,12 +25,6 @@ public class PerlinLineEditor : Editor
         InitStyles();
     }
 
-    //void OnSceneGUI()
-    //{
-    //    perlinLineScript.UpdateInEditor();
-    //    SceneView.RepaintAll();
-    //}
-
     public override void OnInspectorGUI()
     {
         DrawTargetInformation();
@@ -40,6 +34,11 @@ public class PerlinLineEditor : Editor
         DrawPerlinNoiseSettings();
         EditorGUILayout.Space();
         DrawAnimationSettings();
+
+        if (GUI.changed)
+            EditorUtility.SetDirty(perlinLineScript);
+
+        serializedPerlinLineScript.ApplyModifiedProperties();
     }
 
     private void DrawTargetInformation()

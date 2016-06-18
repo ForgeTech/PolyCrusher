@@ -24,6 +24,7 @@ public enum GameMode
 /// Implements the wave system and the spawning decision for the enemies.
 /// The game manager is implemented with the Singleton-Pattern.
 /// </summary>
+[System.Serializable]
 public class GameManager : MonoBehaviour
 {
     #region Inner classes
@@ -115,12 +116,10 @@ public class GameManager : MonoBehaviour
 
     #region Class Members
 
-    //[Header("========Game Mode Information==========")]
     // Current game mode
     [SerializeField]
     protected GameMode gameMode = GameMode.NormalMode;
 
-    //[Header("==========Spawn Information============")]
     // Spawn information.
     [SerializeField]
     protected SpawnInformation[] spawnInfo;
@@ -128,6 +127,17 @@ public class GameManager : MonoBehaviour
     // Boss spawn information.
     [SerializeField]
     protected BossSpawnInformation bossSpawnInfo;
+
+    [SerializeField]
+    protected bool specialWaveModeEnabled = true;
+
+    // Determines if special waves are currently enabled.
+    private bool isCurrentlySpecialWave = false;
+
+    // The probability of the ocurrence of special waves [0, 1].
+    [SerializeField]
+    [Range(0, 1)]
+    protected float specialWaveProbablity = 0.05f;
 
     // Represenation of the game manager
     public static GameManager gameManagerInstance;
@@ -207,8 +217,6 @@ public class GameManager : MonoBehaviour
     [Tooltip("The increase factor of the enemy damage for every wave. Value should be between 0 and 1!")]
     [SerializeField]
     protected float enemyDamageIncreaseFactor = 0.1f;
-
-    
     #endregion
 
     #endregion
@@ -280,7 +288,10 @@ public class GameManager : MonoBehaviour
         get { return this.currentEnemyRessourceValue; }
         set
         {
-            this.currentEnemyRessourceValue = value;
+            if (value >= 0)
+                this.currentEnemyRessourceValue = value;
+            else
+                this.CurrentEnemyRessourceValue = 0;
 
             if (this.currentEnemyRessourceValue == 0 && this.currentEnemyCount == 0)
             {
@@ -356,6 +367,30 @@ public class GameManager : MonoBehaviour
         get { return this.accumulatedRessourceValue; }
     }
 
+    /// <summary>
+    /// Gets if the special wave mode is enabled.
+    /// </summary>
+    public bool SpecialWaveModeEnabled
+    {
+        get { return this.specialWaveModeEnabled; }
+    }
+
+    /// <summary>
+    /// Gets if the current wave is a special wave.
+    /// </summary>
+    public bool IsCurrentlySpecialWave
+    {
+        get { return this.isCurrentlySpecialWave; }
+    }
+
+    /// <summary>
+    /// Gets the special wave probability.
+    /// </summary>
+    public float SpecialWaveProbablity
+    {
+        get { return this.specialWaveProbablity; }
+    }
+
     #endregion
 
     #region Methods
@@ -404,14 +439,6 @@ public class GameManager : MonoBehaviour
         //Debug.
         Debug.Log("GameManager: Wave " + wave + " start!");
 
-        // If the wave is beyond 1, increase the settings to make the game harder.
-        if (Wave > 1)
-        {
-            CalculateNextWaveValues();
-        }
-
-        CurrentEnemyRessourceValue = EnemyRessourcePool;
-
         // Check if it is a boss wave.
         if (this.wave % bossSpawnWaves == 0)
         {
@@ -419,6 +446,13 @@ public class GameManager : MonoBehaviour
             bossSpawnInfo.enemyRessourceValue = EnemyRessourcePool;
         }
 
+        // If the wave is beyond 1, increase the settings to make the game harder.
+        if (Wave > 1)
+        {
+            CalculateNextWaveValues();
+        }
+
+        CurrentEnemyRessourceValue = EnemyRessourcePool;
         WaveActive = true;
 
         OnWaveStarted();
@@ -450,6 +484,11 @@ public class GameManager : MonoBehaviour
 
         // Set the accumulated ressource value back to 0.
         accumulatedRessourceValue = 0;
+
+        // Calculates if the wave is a special wave or not.
+        if (SpecialWaveModeEnabled && !IsBossWave) {
+            isCurrentlySpecialWave = Random.Range(0.0f, 1.0f) < SpecialWaveProbablity;
+        }
     }
 
     /// <summary>
