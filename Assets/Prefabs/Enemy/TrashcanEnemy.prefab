@@ -89,6 +89,7 @@ GameObject:
   - 195: {fileID: 19585416}
   - 65: {fileID: 6535646}
   - 114: {fileID: 11453606}
+  - 114: {fileID: 11480144}
   m_Layer: 9
   m_Name: TrashcanEnemy
   m_TagString: Enemy
@@ -466,6 +467,21 @@ MonoBehaviour:
   hitLightTime: .200000003
   maxEnemyLifeTime: 300
   bulletPrefab: {fileID: 140958, guid: 55e20ccbf7ad6f0458c2892e46a100a8, type: 2}
+--- !u!114 &11480144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17befa90ec3024d499ed7fea01aef4e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTimeToRespawn: 8
+  minTimeToRespawn: 3
+  spawnDistanceFromPlayers: 25
+  spawnPositionDelta: 10
 --- !u!137 &13750898
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -557,6 +573,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: enemyName
       value: TrashCan
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minTimeToRespawn
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnDistanceFromPlayers
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -293,14 +293,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         //Find player
         CalculateTargetPlayer();
 
+        EnemySpawnScaleTween();
+
         //Init Finite state machine.
         MakeFSM();
-
-        // Spawn scale
-        Vector3 originalScale = transform.localScale;
-        transform.localScale = Vector3.zero;
-
-        StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
 
         // Invoke enemy death.
         Invoke("InstantKill", maxEnemyLifeTime);
@@ -553,6 +549,15 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     {
         if (EnemyKilled != null)
             EnemyKilled(this);
+    }
+
+    public void EnemySpawnScaleTween()
+    {
+        // Spawn scale
+        Vector3 originalScale = transform.localScale;
+        transform.localScale = Vector3.zero;
+
+        StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
     }
 
     /// <summary>

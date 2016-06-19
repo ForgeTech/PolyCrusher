@@ -104,6 +104,7 @@ GameObject:
   - 65: {fileID: 6546710}
   - 195: {fileID: 19525538}
   - 114: {fileID: 11453218}
+  - 114: {fileID: 11467844}
   m_Layer: 9
   m_Name: RangedBallistic
   m_TagString: Enemy
@@ -325,7 +326,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133788}
-  m_LocalRotation: {x: .678969979, y: .197482437, z: -.678970695, w: .197482646}
+  m_LocalRotation: {x: .67896992, y: .197482407, z: -.678970635, w: .197482616}
   m_LocalPosition: {x: 2.47531279e-05, y: -.00532778306, z: .0104920138}
   m_LocalScale: {x: 1, y: 1, z: .974999785}
   m_Children: []
@@ -609,6 +610,21 @@ MonoBehaviour:
   maxEnemyLifeTime: 300
   bulletPrefab: {fileID: 146494, guid: 72162962b63bfc444b05fa329215e2de, type: 2}
   minimumRange: 6
+--- !u!114 &11467844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17befa90ec3024d499ed7fea01aef4e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTimeToRespawn: 15
+  minTimeToRespawn: 4
+  spawnDistanceFromPlayers: 25
+  spawnPositionDelta: 10
 --- !u!137 &13739604
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1732,6 +1748,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxTimeToRespawn
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnDistanceFromPlayers
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

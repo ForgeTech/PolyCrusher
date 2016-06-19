@@ -90,7 +90,15 @@ public class CameraSystem : MonoBehaviour
     //=================================================
 
     // Reference of the child camera object
-    Camera cam;
+    private Camera cam;
+    
+    /// <summary>
+    /// Gets the cam of the camera system.
+    /// </summary>
+    public Camera Cam
+    {
+        get { return this.cam; }
+    }
 
     [Space(5)]
     [Header("Camera Shake settings")]
