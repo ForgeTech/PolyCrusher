@@ -74,10 +74,17 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     //Player name
     [SerializeField]
     protected string playerName;
-
+    [System.Obsolete("Use 'PlayerIdentifier' instead.")]
     public string PlayerName{
         get { return playerName; }
     }
+
+    [SerializeField]
+    protected PlayerEnum playerIdentifier = PlayerEnum.Birdman;
+    public PlayerEnum PlayerIdentifier {
+        get { return this.playerIdentifier; }
+    }
+
 
     //Player prefix for the controller input.
     [SerializeField]

@@ -1959,10 +1959,9 @@ MonoBehaviour:
   energyRefillRate: .280000001
   energyIncrement: 1
   playerName: Pantomime
+  playerIdentifier: 4
   playerPrefix: P1_
   deathTime: 3.29999995
-  phonePlayerSlot: -1
-  network: {fileID: 0}
   movementSpeed: 20
   analogStickTolerance: .100000001
   rotationSpeed: 6
@@ -2397,6 +2396,10 @@ Prefab:
       propertyPath: bloodParticles
       value: 
       objectReference: {fileID: 149012, guid: 7e0d42e889efde4448c4983a3a8a5c60, type: 2}
+    - target: {fileID: 0}
+      propertyPath: playerIdentifier
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193704}
