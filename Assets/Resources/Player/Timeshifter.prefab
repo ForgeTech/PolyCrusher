@@ -1394,7 +1394,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149956}
-  m_LocalRotation: {x: .673879206, y: -.652568281, z: -.0719790235, w: -.338910729}
+  m_LocalRotation: {x: .673879266, y: -.65256834, z: -.071979031, w: -.338910758}
   m_LocalPosition: {x: .0117888842, y: 1.67970443, z: -.105552927}
   m_LocalScale: {x: .999999523, y: 1, z: .99999994}
   m_Children:
@@ -2690,6 +2690,7 @@ MonoBehaviour:
   energyRefillRate: .189999998
   energyIncrement: 1
   playerName: Timeshifter
+  playerIdentifier: 2
   playerPrefix: P1_
   deathTime: 3.29999995
   movementSpeed: 20
@@ -3101,6 +3102,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y
       value: .787999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerIdentifier
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
