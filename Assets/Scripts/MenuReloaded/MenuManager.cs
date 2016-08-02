@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections;
 
 public class MenuManager : MonoBehaviour {
-       
     readonly Dictionary<int, GameObject> components = new Dictionary<int, GameObject>();
 
     [SerializeField]
@@ -11,7 +10,6 @@ public class MenuManager : MonoBehaviour {
 
     private SelectorInterface selector;
     private InputInterface input;
-
 
     private bool acceptInput = true;
 
@@ -29,10 +27,7 @@ public class MenuManager : MonoBehaviour {
             HandleNavigation();
             HandleSelection();
         }
-       
     }
-
-
 
     void HandleSelection()
     {
@@ -42,30 +37,25 @@ public class MenuManager : MonoBehaviour {
             try
             {
                 components.TryGetValue(selector.Current, out g);
-            }catch(KeyNotFoundException e)
+            } catch(KeyNotFoundException e)
             {
                 throw e;
             }
-           
-
             g.GetComponent<ActionHandlerInterface>().PerformAction();
         }
     }
 
-
     void HandleNavigation()
     {
-
         if (input.GetHorizontal("P1_") > 0.5f)
         {
             selector.Next();
             StartCoroutine(InputCooldown(0.2f));
-        }else if (input.GetHorizontal("P1_") < -0.5f)
+        } else if (input.GetHorizontal("P1_") < -0.5f)
         {
             selector.Previous();
             StartCoroutine(InputCooldown(0.2f));
         }
-
     }
 
     private IEnumerator InputCooldown(float time)
@@ -73,7 +63,6 @@ public class MenuManager : MonoBehaviour {
         acceptInput = false;
         yield return new WaitForSeconds(time);
         acceptInput = true;
-
     }
 
     /// <summary>
