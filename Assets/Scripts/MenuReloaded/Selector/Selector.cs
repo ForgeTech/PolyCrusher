@@ -10,7 +10,8 @@ public class Selector : AbstractSelector
     private int minValue;
     private int maxValue;
 
-    public Selector(int startIndex, Dictionary<int, GameObject> components ) : base(startIndex, components)
+    public Selector(int startIndex, Dictionary<int, GameObject> components, TransitionHandlerInterface transitionHandler) 
+        : base(startIndex, components, transitionHandler)
     {
         FindMinAndMaxKey();
     }

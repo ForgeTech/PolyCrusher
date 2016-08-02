@@ -12,9 +12,15 @@ public abstract class AbstractSelector : SelectorInterface
     // A map of all menu item components which can be scrolled through.
     protected readonly Dictionary<int, GameObject> components;
 
-    public AbstractSelector(int startIndex, Dictionary<int, GameObject> components) {
+    protected readonly TransitionHandlerInterface transitionHandler;
+
+    public AbstractSelector(int startIndex, Dictionary<int, GameObject> components, TransitionHandlerInterface transitionHandler)
+    {
         this.currentSelectionIndex = startIndex;
         this.components = components;
+        this.transitionHandler = transitionHandler;
+
+        SetInitialFocus();
     }
 
     public int Current
@@ -48,6 +54,12 @@ public abstract class AbstractSelector : SelectorInterface
         }
     }
 
+    protected virtual void SetInitialFocus()
+    {
+        GameObject current = GetElementyByKey(Current);
+        transitionHandler.OnFocus(current);
+    }
+
     public void Next()
     {
         BeforeSelection(GetElementyByKey(Current));
@@ -55,12 +67,14 @@ public abstract class AbstractSelector : SelectorInterface
         AfterSelection(GetElementyByKey(Current));
     }
 
-    protected virtual void BeforeSelection(GameObject elementBefore)
+    protected virtual void BeforeSelection(GameObject currentElement)
     {
+        transitionHandler.OnDefocus(currentElement);
     }
 
-    protected virtual void AfterSelection(GameObject elementAfter)
+    protected virtual void AfterSelection(GameObject currentElement)
     {
+        transitionHandler.OnFocus(currentElement);
     }
 
     public void Previous()

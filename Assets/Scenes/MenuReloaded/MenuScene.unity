@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -114,10 +114,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1320067030}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -15}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &85917902
 MonoBehaviour:
@@ -281,6 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionID: 4
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &388781876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,7 +579,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: .235226542, g: .960784316, b: .921604276, a: 1}
@@ -646,6 +648,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionID: 0
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1320067035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,6 +785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionID: 1
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1383041858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,6 +994,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionID: 3
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1640708042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,6 +1203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionID: 2
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1678785420
 MonoBehaviour:
   m_ObjectHideFlags: 0

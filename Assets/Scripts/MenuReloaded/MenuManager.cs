@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class MenuManager : MonoBehaviour {
+public class MenuManager : MonoBehaviour
+{
     readonly Dictionary<int, GameObject> components = new Dictionary<int, GameObject>();
 
     [SerializeField]
@@ -13,16 +14,21 @@ public class MenuManager : MonoBehaviour {
 
     private bool acceptInput = true;
 
-	// Use this for initialization
-	void Start () {
+    private MenuManager parent = null;
+
+    // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
+    private bool isInputActive = true;
+
+    void Start ()
+    {
         InitializeDictionary();
-        selector = new Selector(startIndex, components);
+        selector = new Selector(startIndex, components, new DefaultColorTransition());
         input = new TestInput();
     }
 	
-	// Update is called once per frame
-	void Update () {
-        if (acceptInput)
+	void Update ()
+    {
+        if (acceptInput && isInputActive)
         {
             HandleNavigation();
             HandleSelection();
@@ -37,11 +43,12 @@ public class MenuManager : MonoBehaviour {
             try
             {
                 components.TryGetValue(selector.Current, out g);
-            } catch(KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 throw e;
             }
-            g.GetComponent<ActionHandlerInterface>().PerformAction();
+            g.GetComponent<ActionHandlerInterface>().PerformAction(this);
         }
     }
 
