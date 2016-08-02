@@ -115,7 +115,7 @@ public class BossWalk : FSMState
                     if (m != null && m is BasePlayer)
                     {
                         // If the names aren't equal there is no hit.
-                        if (((BasePlayer)m).PlayerName != targetPlayer.PlayerName)
+                        if (((BasePlayer)m).PlayerIdentifier != targetPlayer.PlayerIdentifier)
                             hit = false;
                     }
                 }

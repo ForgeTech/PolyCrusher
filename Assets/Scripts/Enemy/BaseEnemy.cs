@@ -361,7 +361,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
             if(damageDealer != null && damageDealer is BasePlayer)
             {
-              character = ((BasePlayer)damageDealer).PlayerName;
+              character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
             }
             new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
         }
@@ -403,7 +403,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
                 if (damageDealer != null && damageDealer is BasePlayer)
                 {
-                    character = ((BasePlayer)damageDealer).PlayerName;
+                    character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
                 }
                 new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
             }

@@ -126,7 +126,7 @@ public class PlayerManager : MonoBehaviour
             string[] playerStrings = new string[p.Length];
 
             for (int i = 0; i < p.Length; i++)
-                playerStrings[i] = p[i].PlayerName;
+                playerStrings[i] = p[i].PlayerIdentifier.ToString("g");
 
             return playerStrings;
         }

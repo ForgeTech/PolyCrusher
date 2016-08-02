@@ -498,7 +498,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 }
 
         // Update is called once per frame
-        void Update () 
+    void Update () 
     {
         if (!IsDead)
         {
@@ -792,7 +792,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                     enemyName = ((BaseEnemy)damageDealer).EnemyName;
                 }
 
-                new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerName).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();
+                new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();
             }
 
             // Instantiate particles if the prefab reference isn't null.

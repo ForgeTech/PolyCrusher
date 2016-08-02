@@ -89,7 +89,7 @@ public class SpecialPowerUp : MonoBehaviour {
                 Instantiate(pickUpParticles, transform.position, pickUpParticles.transform.rotation);
 
             // send event
-            new Event(Event.TYPE.powerup).addWave().addCharacter(player.PlayerName).addPos(this.transform).addLevel().send();
+            new Event(Event.TYPE.powerup).addWave().addCharacter(player.PlayerIdentifier.ToString("g")).addPos(this.transform).addLevel().send();
             MeshRenderer meshRenderer = transform.GetComponent<MeshRenderer>();
 
             // if the mesh renderer is in a childobject of the gameobject, then search all renderers of the child gameobject 

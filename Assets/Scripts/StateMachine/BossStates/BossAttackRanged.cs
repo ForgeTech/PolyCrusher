@@ -47,7 +47,7 @@ public class BossAttackRanged : BossAttackMelee
                     if (e.TargetPlayer != null && e.TargetPlayer.GetComponent<BasePlayer>() != null)
                     {
                         // If the names aren't equal there is no hit.
-                        if (((BasePlayer)m).PlayerName != e.TargetPlayer.GetComponent<BasePlayer>().PlayerName)
+                        if (((BasePlayer)m).PlayerIdentifier != e.TargetPlayer.GetComponent<BasePlayer>().PlayerIdentifier)
                             hit = false;
                     }
                 }
