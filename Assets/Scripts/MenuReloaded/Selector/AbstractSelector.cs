@@ -12,13 +12,13 @@ public abstract class AbstractSelector : SelectorInterface
     // A map of all menu item components which can be scrolled through.
     protected readonly Dictionary<int, GameObject> components;
 
-    protected readonly TransitionHandlerInterface transitionHandler;
+    protected readonly TransitionHandlerInterface[] transitionHandler;
 
-    public AbstractSelector(int startIndex, Dictionary<int, GameObject> components, TransitionHandlerInterface transitionHandler)
+    public AbstractSelector(int startIndex, Dictionary<int, GameObject> components, TransitionHandlerInterface[] transitions)
     {
         this.currentSelectionIndex = startIndex;
         this.components = components;
-        this.transitionHandler = transitionHandler;
+        this.transitionHandler = transitions;
 
         SetInitialFocus();
     }
@@ -59,7 +59,7 @@ public abstract class AbstractSelector : SelectorInterface
         GameObject current = GetElementyByKey(Current);
 
         if (current != null)
-            transitionHandler.OnFocus(current);
+            InvokeTransitionFocus(current);
     }
 
     public void Next()
@@ -74,12 +74,24 @@ public abstract class AbstractSelector : SelectorInterface
 
     protected virtual void BeforeSelection(GameObject currentElement)
     {
-        transitionHandler.OnDefocus(currentElement);
+        InvokeTransitionDeFocus(currentElement);
     }
 
     protected virtual void AfterSelection(GameObject currentElement)
     {
-        transitionHandler.OnFocus(currentElement);
+        InvokeTransitionFocus(currentElement);
+    }
+
+    private void InvokeTransitionFocus(GameObject currentElement)
+    {
+        foreach (TransitionHandlerInterface transition in transitionHandler)
+            transition.OnFocus(currentElement);
+    }
+
+    private void InvokeTransitionDeFocus(GameObject currentElement)
+    {
+        foreach (TransitionHandlerInterface transition in transitionHandler)
+            transition.OnDefocus(currentElement);
     }
 
     public void Previous()

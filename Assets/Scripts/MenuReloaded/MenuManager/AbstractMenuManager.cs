@@ -43,7 +43,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public void InitializeMenuManager()
     {
         InitializeDictionary();
-        selector = new Selector(startIndex, components, new DefaultColorTransition());
+        selector = new Selector(startIndex, components, new TransitionHandlerInterface[] { new DefaultColorTransition(), new DefaultScaleTransition() });
         input = new TestInput();
     }
 
