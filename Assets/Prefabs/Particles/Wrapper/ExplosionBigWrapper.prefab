@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fde50f24f4f0c4d835319e27185ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles: {fileID: 19873164, guid: 3702b9ac7ed1b9f46903ead9a2edf487, type: 2}
+  particles: {fileID: 19800574, guid: 54f53c5eebb756a4f9da64d09d79e45c, type: 2}
   lightColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
   lightFadeTime: .400000006
 --- !u!1001 &100100000
@@ -48,7 +48,12 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: particles
+      value: 
+      objectReference: {fileID: 19800574, guid: 54f53c5eebb756a4f9da64d09d79e45c,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 122468}
