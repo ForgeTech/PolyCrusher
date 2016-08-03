@@ -743,12 +743,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7e2e404a37ba7c24598c9f8ae7841465, type: 2}
-  - {fileID: 2100000, guid: 033953a2a89f70744bd7edda3d130891, type: 2}
   - {fileID: 2100000, guid: 1ca987b96eceb3840b004dcae5a9f055, type: 2}
-  - {fileID: 2100000, guid: f533cde3d81c4834faada454322a38d0, type: 2}
-  - {fileID: 2100000, guid: 985bbc67186570e4caddfbd1ce6f75e9, type: 2}
-  - {fileID: 2100000, guid: 87fc4c3049d735d4c91803b9e51ac70f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -817,9 +812,37 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: enemyName
       value: BossMinion
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 033953a2a89f70744bd7edda3d130891, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ca987b96eceb3840b004dcae5a9f055, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f533cde3d81c4834faada454322a38d0, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 985bbc67186570e4caddfbd1ce6f75e9, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[5]
+      value: 
+      objectReference: {fileID: 2100000, guid: 87fc4c3049d735d4c91803b9e51ac70f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ca987b96eceb3840b004dcae5a9f055, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 149272}

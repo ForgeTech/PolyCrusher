@@ -57,14 +57,19 @@ public abstract class AbstractSelector : SelectorInterface
     protected virtual void SetInitialFocus()
     {
         GameObject current = GetElementyByKey(Current);
-        transitionHandler.OnFocus(current);
+
+        if (current != null)
+            transitionHandler.OnFocus(current);
     }
 
     public void Next()
     {
-        BeforeSelection(GetElementyByKey(Current));
-        OnNext();
-        AfterSelection(GetElementyByKey(Current));
+        if (components.Count > 0)
+        {
+            BeforeSelection(GetElementyByKey(Current));
+            OnNext();
+            AfterSelection(GetElementyByKey(Current));
+        }
     }
 
     protected virtual void BeforeSelection(GameObject currentElement)
@@ -79,9 +84,12 @@ public abstract class AbstractSelector : SelectorInterface
 
     public void Previous()
     {
-        BeforeSelection(GetElementyByKey(Current));
-        OnPrevious();
-        AfterSelection(GetElementyByKey(Current));
+        if (components.Count > 0)
+        {
+            BeforeSelection(GetElementyByKey(Current));
+            OnPrevious();
+            AfterSelection(GetElementyByKey(Current));
+        }
     }
 
     #region Abstract Methods

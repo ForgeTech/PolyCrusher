@@ -2,10 +2,11 @@
 using UnityEngine.UI;
 using System;
 
-public class TestActionColor : MonoBehaviour, ActionHandlerInterface
+public class TestActionColor : AbstractActionHandler
 {
-    public void PerformAction<T>(T t)
+    public override void PerformAction<T>(T t)
     {
         gameObject.GetComponentInChildren<Text>().text = "it works!";
+        OnActionPerformed();
     }
 }

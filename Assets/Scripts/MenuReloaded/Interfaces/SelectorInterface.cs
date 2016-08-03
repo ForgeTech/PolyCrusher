@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-interface SelectorInterface
+﻿public interface SelectorInterface
 {
     int Current { get; }
        
