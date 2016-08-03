@@ -24,11 +24,12 @@ public class NavigationInformation : MonoBehaviour {
         get { return this.highlightedColor; }
     }
 
+    /// <summary>
+    /// The ID (or index) of the element.
+    /// </summary>
     public int SelectionID
     {
-        get
-        {
-            return selectionID;
-        }
+        get { return selectionID; }
+        set { this.selectionID = value; }
     }
 }

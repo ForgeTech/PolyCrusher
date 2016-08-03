@@ -4,15 +4,19 @@ using UnityEngine.UI;
 
 public abstract class SubMenuAction : AbstractActionHandler
 {
+    [Header("Sub-Menu UI Elements")]
+    [SerializeField]
+    protected RectTransform container;
+
     public override void PerformAction<T>(T manager)
     {
         MenuManager parentManager = manager.GetComponent<MenuManager>();
 
         if (parentManager != null)
         {
-            // Create a SubMenu GameObject
-            GameObject subMenu = new GameObject("SubMenuManager");
-            subMenu.transform.parent = transform;
+            // Instantiate a SubMenu GameObject
+            GameObject subMenu = Instantiate(container.gameObject);
+            subMenu.transform.SetParent(transform, false);
 
             // Add the SubMenuManager component to the GameObject and initialize after the component generation!
             SubMenuManager subMenuManager = subMenu.AddComponent<SubMenuManager>();
