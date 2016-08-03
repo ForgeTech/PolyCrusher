@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using XInputDotNetPure;
 
 // Poly event handler
 public delegate void PolyExecuteEventHandler();
@@ -462,7 +461,6 @@ public class PolygonSystem : MonoBehaviour
                         fadeOut = false;
                         whiteScreen.color = Color.clear;
                         screenFlashAnimTime = 0.0f;
-                        GamePad.SetVibration(0, 0, 0);
                     }
                 }
             }           
