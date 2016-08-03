@@ -189,6 +189,9 @@ public class Event{
     [BsonIgnoreIfNull]
     public string[] characters { get; set; }
 
+    [BsonIgnore]
+    public bool isSaved { get; set; }
+
     #endregion
 }
 

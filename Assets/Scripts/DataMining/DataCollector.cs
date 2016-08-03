@@ -11,6 +11,7 @@ using System.Text;
 using System.Net.NetworkInformation;
 using System.Net;
 using System.IO;
+using System.Linq;
 using System;
 
 public delegate void RankReceivedDelegate(int rank);
@@ -60,8 +61,11 @@ public class DataCollector : MonoBehaviour
 
     // general fields
     private bool sessionRunning = false;
-    private Queue eventQueue;
+    private Queue eventQueue; // is not generic because then there would be no clone function
     private Session currentSession;
+
+    // list of all events of all local sessions
+    private List<Event> localEvents;
 
     // for tracking
     private IDictionary<string, int> kills; 
@@ -160,6 +164,7 @@ public class DataCollector : MonoBehaviour
 	/// </summary>
 	void Start () {
         eventQueue = new Queue();
+        localEvents = new List<Event>();
         kills = new Dictionary<string, int>();
         deathtime = new Dictionary<string, int>();
 
@@ -607,6 +612,27 @@ public class DataCollector : MonoBehaviour
         return System.Convert.ToBase64String(plainTextBytes);
     }
 
+    /// <summary>
+    /// Loads all locally saved events (main purpose: local highscore)
+    /// </summary>
+    public void LoadEvents()
+    {
+        // mark events as saved!
+        // TODO
+    }
+
+    /// <summary>
+    /// Saves all new events locally
+    /// </summary>
+    public void SaveEvents()
+    {
+       // iterate through all not saved events
+       foreach (Event e in localEvents.Where(e => (e.isSaved == false)))
+       {
+            // save e
+       }
+       // TODO
+    }
 
     /// <summary>
     /// returns a "no one" string in the current active language
