@@ -37,7 +37,7 @@ public class PolygonSystem : MonoBehaviour
     public float transitionCooldown;
 
     [Header("Damage the boss takes when the polygon hits")]
-    public int bossDamage;
+    public int[] bossDamage;
 
 
     private GameObject[] players;
@@ -155,7 +155,8 @@ public class PolygonSystem : MonoBehaviour
         colliders = new MeshCollider[4];
         polyOffsets = new float[4];
         polyStartAnimLerpTimes = new float[4];
-        polyTweens = new bool[4];       
+        polyTweens = new bool[4];   
+            
 
         flashColors = new Color[2];
         flashColors[0] = Color.clear;
@@ -273,7 +274,7 @@ public class PolygonSystem : MonoBehaviour
 
             if (colliderFrameTime == 1)
             {
-                currentBossDamage = bossDamage;
+                currentBossDamage = bossDamage[players.Length-1];
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     colliders[i].enabled = true;
@@ -597,7 +598,7 @@ public class PolygonSystem : MonoBehaviour
                 if (polyStartAnimLerpTimes[i] <= 0.0f && !polyTweens[i])
                 {
                     polyTweens[i] = true;
-                    Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
+                   // Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
                    // polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
 
                     //StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.grow.Evaluate));
@@ -617,7 +618,7 @@ public class PolygonSystem : MonoBehaviour
                     if (polyStartAnimLerpTimes[i] <= 0.0f && !polyTweens[i])
                     {
                         polyTweens[i] = true;
-                        Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        //Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
                        // polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
 
                         //StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.grow.Evaluate));
