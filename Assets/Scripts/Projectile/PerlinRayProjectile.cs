@@ -185,6 +185,7 @@ public class PerlinRayProjectile : Projectile
             if (destructible != null)
             {
                 destructible.DecrementHealth();
+                SpawnDeathParticle(hitInfo.transform.position);
             }
         }
         else
@@ -219,6 +220,14 @@ public class PerlinRayProjectile : Projectile
 
     protected override void SpawnDeathParticle(Vector3 position)
     {
+        if (deathParticlePrefab != null)
+        {
+            GameObject particle = Instantiate(deathParticlePrefab) as GameObject;
+            particle.transform.position = position;
+
+            if (particle.GetComponent<ParticleSystem>() != null)
+                particle.GetComponent<ParticleSystem>().Play();
+        }
     }
 
     protected override void DestroyProjectile()
