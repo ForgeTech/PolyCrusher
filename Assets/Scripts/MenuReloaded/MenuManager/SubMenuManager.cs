@@ -4,9 +4,14 @@ using System;
 
 public class SubMenuManager : AbstractMenuManager
 {
+    // In ms
+    [Header("Sub Menu Settings")]
+    [SerializeField]
+    protected float fadeOutTweenTime = 0.2f;
+
     protected override void Start()
     {
-        // TODO: Do nothing
+        // Do nothing
         // Initialize has to be called manually.
     }
 
@@ -15,15 +20,18 @@ public class SubMenuManager : AbstractMenuManager
 
     public override void DestroyMenuManager()
     {
+        RectTransform rect = GetComponent<RectTransform>();
+        LeanTween.scale(rect, Vector3.zero, fadeOutTweenTime).setEase(LeanTweenType.easeOutCubic);
+
         // DeRegister parent
         parent.DeRegisterSubMenu();
 
         // Destroy children
         foreach (var pair in components)
-            Destroy(pair.Value);
+            Destroy(pair.Value, fadeOutTweenTime);
 
         // Destroy manager
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, fadeOutTweenTime);
     }
 
     public void RegisterParent(MenuManager parent)

@@ -17,6 +17,5 @@ public class DefaultScaleTransition : TransitionHandlerInterface
     {
         RectTransform rect = gameobject.GetComponent<RectTransform>();
         LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), LERP_TIME).setEase(LeanTweenType.easeInBounce).setLoopPingPong(1);
-        
     }
 }

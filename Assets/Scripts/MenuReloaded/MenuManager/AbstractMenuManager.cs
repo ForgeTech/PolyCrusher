@@ -7,12 +7,19 @@ public abstract class AbstractMenuManager : MonoBehaviour
     const float INPUT_WAIT_TIME = 0.1f;
 
     #region Inspector fields
+    [Header("Selection Settings")]
     [SerializeField]
     private int startIndex;
+
+    [Header("Timing Settings")]
+    [Tooltip("The time which is waited before the button action is triggered.")]
+    [SerializeField]
+    private float buttonPressedWaitTime = 0.2f;
     #endregion
 
     protected SelectorInterface selector;
     protected InputInterface input;
+    protected ElementPressedHandler elementPressedHandler;
 
     protected bool acceptInput = true;
     // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
@@ -44,6 +51,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         InitializeDictionary();
         selector = new Selector(startIndex, components, new TransitionHandlerInterface[] { new DefaultColorTransition(), new DefaultScaleTransition() });
+        elementPressedHandler = new ElementPressedSize();
         input = new TestInput();
     }
 
@@ -60,9 +68,14 @@ public abstract class AbstractMenuManager : MonoBehaviour
             {
                 throw e;
             }
-            g.GetComponent<ActionHandlerInterface>().PerformAction(this);
-            OnComponentSelected(g);
+            StartCoroutine(WaitBeforeTriggerAction(g));
         }
+    }
+
+    private void PerformActionOnSelectedElement(GameObject selectedElement)
+    {
+        selectedElement.GetComponent<ActionHandlerInterface>().PerformAction(this);
+        OnComponentSelected(selectedElement);
     }
 
     protected virtual void HandleNavigation()
@@ -94,12 +107,23 @@ public abstract class AbstractMenuManager : MonoBehaviour
         }
     }
 
+    #region IEnumerator methods
     protected IEnumerator InputCooldown()
     {
         acceptInput = false;
         yield return new WaitForSeconds(INPUT_WAIT_TIME);
         acceptInput = true;
     }
+
+    protected IEnumerator WaitBeforeTriggerAction(GameObject selectedGameObject)
+    {
+        acceptInput = false;
+        elementPressedHandler.ElementPressed(selectedGameObject);
+        yield return new WaitForSeconds(buttonPressedWaitTime);
+        PerformActionOnSelectedElement(selectedGameObject);
+        acceptInput = true;
+    }
+    #endregion
 
     #region Abstract Methods
     public abstract void DestroyMenuManager();
