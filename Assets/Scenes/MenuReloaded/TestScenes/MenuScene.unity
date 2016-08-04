@@ -283,6 +283,7 @@ MonoBehaviour:
   selectionID: 4
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
 --- !u!114 &388781876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b49e8d49c331c043a8869aa67f5a823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitions: 0200000003000000
+  pressedHandler: 02000000
   container: {fileID: 22449968, guid: 932b95349b3c54c4394ea060febed35e, type: 2}
   buttons:
   - {fileID: 11417632, guid: 177903edc21fdef438aa63cca88aa212, type: 2}
@@ -383,6 +386,7 @@ GameObject:
   - 92: {fileID: 733194128}
   - 124: {fileID: 733194127}
   - 81: {fileID: 733194126}
+  - 114: {fileID: 733194131}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -457,6 +461,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &733194131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 733194125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646b5bc27a658f447b1d929fd5ffbd70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 1
+  showGeneratedNormals: 0
+  offsetScale: .200000003
+  blurRadius: 18
+  edgeThresholdMin: .0500000007
+  edgeThreshold: .200000003
+  edgeSharpness: 4
+  dlaaSharp: 0
+  ssaaShader: {fileID: 4800000, guid: b3728d1488b02490cbd196c7941bf1f8, type: 3}
+  dlaaShader: {fileID: 4800000, guid: 017ca72b9e8a749058d13ebd527e98fa, type: 3}
+  nfaaShader: {fileID: 4800000, guid: ce0cb2621f6d84e21a87414e471a3cce, type: 3}
+  shaderFXAAPreset2: {fileID: 4800000, guid: 6f1418cffd12146f2a83be795f6fa5a7, type: 3}
+  shaderFXAAPreset3: {fileID: 4800000, guid: c182fa94a5a0a4c02870641efcd38cd5, type: 3}
+  shaderFXAAII: {fileID: 4800000, guid: cd5b323dcc592457790ff18b528f5e67, type: 3}
+  shaderFXAAIII: {fileID: 4800000, guid: c547503fff0e8482ea5793727057041c, type: 3}
 --- !u!1 &1242942347
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +685,7 @@ MonoBehaviour:
   selectionID: 0
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
 --- !u!114 &1320067035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,6 +823,7 @@ MonoBehaviour:
   selectionID: 1
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
 --- !u!114 &1383041858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,6 +1033,7 @@ MonoBehaviour:
   selectionID: 3
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
 --- !u!114 &1640708042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,6 +1243,7 @@ MonoBehaviour:
   selectionID: 2
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
 --- !u!114 &1678785420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,6 +1255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b49e8d49c331c043a8869aa67f5a823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitions: 0200000003000000
+  pressedHandler: 02000000
   container: {fileID: 22449968, guid: 932b95349b3c54c4394ea060febed35e, type: 2}
   buttons:
   - {fileID: 11417632, guid: 177903edc21fdef438aa63cca88aa212, type: 2}
@@ -1294,3 +1330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startIndex: 0
+  buttonPressedWaitTime: .200000003
+  transitions: 0300000002000000
+  pressedHandler: 02000000

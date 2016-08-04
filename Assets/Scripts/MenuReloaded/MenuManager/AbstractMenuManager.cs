@@ -15,6 +15,13 @@ public abstract class AbstractMenuManager : MonoBehaviour
     [Tooltip("The time which is waited before the button action is triggered.")]
     [SerializeField]
     private float buttonPressedWaitTime = 0.2f;
+
+    [Header("Transitions")]
+    [SerializeField]
+    public TransitionEnum[] transitions;
+
+    [SerializeField]
+    public ElementPressedEnum[] pressedHandler;
     #endregion
 
     protected SelectorInterface selector;
@@ -49,10 +56,16 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public void InitializeMenuManager()
     {
         InitializeDictionary();
-        selector = new Selector(startIndex, components,
-            new TransitionHandlerInterface[] { new DefaultColorTransition(), new DefaultScaleTransition() },
-            new ElementPressedHandler[] { new ElementPressedSize() });
+        InitializeSelector();
         input = new TestInput();
+    }
+
+    protected void InitializeSelector()
+    {
+        TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
+        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
+
+        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
     }
 
     protected virtual void HandleSelection()
