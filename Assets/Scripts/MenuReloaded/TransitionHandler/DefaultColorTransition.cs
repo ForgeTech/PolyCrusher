@@ -9,6 +9,11 @@ public class DefaultColorTransition : TransitionHandlerInterface
     // In ms
     private const float LERP_TIME = 0.2f;
 
+    public void CancelTransitionEffect()
+    {
+        // Do nothing here
+    }
+
     public void OnDefocus(GameObject gameobject)
     {
         NavigationInformation info = gameobject.GetComponent<NavigationInformation>();

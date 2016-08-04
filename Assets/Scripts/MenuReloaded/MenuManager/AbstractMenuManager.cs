@@ -19,7 +19,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected SelectorInterface selector;
     protected InputInterface input;
-    protected ElementPressedHandler elementPressedHandler;
 
     protected bool acceptInput = true;
     // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
@@ -50,8 +49,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public void InitializeMenuManager()
     {
         InitializeDictionary();
-        selector = new Selector(startIndex, components, new TransitionHandlerInterface[] { new DefaultColorTransition(), new DefaultScaleTransition() });
-        elementPressedHandler = new ElementPressedSize();
+        selector = new Selector(startIndex, components,
+            new TransitionHandlerInterface[] { new DefaultColorTransition(), new DefaultScaleTransition() },
+            new ElementPressedHandler[] { new ElementPressedSize() });
         input = new TestInput();
     }
 
@@ -118,7 +118,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected IEnumerator WaitBeforeTriggerAction(GameObject selectedGameObject)
     {
         acceptInput = false;
-        elementPressedHandler.ElementPressed(selectedGameObject);
+        selector.HandleElementSelected();
         yield return new WaitForSeconds(buttonPressedWaitTime);
         PerformActionOnSelectedElement(selectedGameObject);
         acceptInput = true;

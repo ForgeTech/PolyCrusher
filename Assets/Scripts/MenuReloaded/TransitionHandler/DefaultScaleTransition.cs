@@ -12,10 +12,15 @@ public class DefaultScaleTransition : TransitionHandlerInterface
     {
         // Do nothing
     }
-
+    
     public void OnFocus(GameObject gameobject)
     {
         RectTransform rect = gameobject.GetComponent<RectTransform>();
-        LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), LERP_TIME).setEase(LeanTweenType.easeInBounce).setLoopPingPong(1);
+        float halfLerpTime = LERP_TIME * 0.5f;
+
+        LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), halfLerpTime)
+            .setOnComplete(() => {
+                LeanTween.scale(rect, Vector2.one, halfLerpTime);
+            });
     }
 }

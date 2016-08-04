@@ -10,6 +10,11 @@ public class ElementPressedSize : ElementPressedHandler
     public void ElementPressed(GameObject pressedGameObject)
     {
         RectTransform rect = pressedGameObject.GetComponent<RectTransform>();
-        LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), LERP_TIME).setEase(LeanTweenType.easeInOutBounce).setLoopPingPong(1);
+        float halfLerpTime = LERP_TIME * 0.5f;
+
+        LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), halfLerpTime)
+            .setOnComplete(() => {
+                LeanTween.scale(rect, Vector2.one, halfLerpTime);
+            });
     }
 }
