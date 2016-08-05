@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+using System.Collections;
+using System;
+
+/// <summary>
+/// Loads level by name.
+/// </summary>
+public class LevelLoadByName : AbstractActionHandler
+{
+    [SerializeField]
+    private string levelName = null;
+
+    public override void PerformAction<T>(T triggerInstance)
+    {
+        if (levelName != null)
+            Application.LoadLevel(levelName);
+        else
+            Debug.LogError("Level name is null!");
+
+        OnActionPerformed();
+    }
+}
