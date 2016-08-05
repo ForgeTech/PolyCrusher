@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Collections.Generic;
 
-using System.Net.NetworkInformation;
 using System.Collections;
 
 using UnityEngine.UI;
@@ -20,9 +19,9 @@ public class PlayerNetCommunicate : MonoBehaviour
     private MainMenu mainMenu;
     private LevelSelection levelSelection;
 
-	public UdpClient[] udpListener;
-	public UdpClient socket;
-	public IPEndPoint[] IP;
+	volatile public UdpClient[] udpListener;
+	volatile public UdpClient socket;
+	volatile public IPEndPoint[] IP;
 
 	public float[] horizontal; //left
 	public float[] vertical; //left
@@ -32,13 +31,13 @@ public class PlayerNetCommunicate : MonoBehaviour
 	public int[] actionButton;
 	public int[] interaction;
 	public int[] stickSize;
-	public String gameName = "";
+	volatile public String gameName = "";
 	public String[] deviceID;
 
-	public Boolean created = true;
+	volatile public Boolean created = true;
 	public Boolean[] taken;
 
-	int PLAYER = 0;
+	volatile int PLAYER = 0;
 	int PLAYER_ACTIVE = 0;
 	int PORT = 4443;
 
@@ -46,7 +45,7 @@ public class PlayerNetCommunicate : MonoBehaviour
 	
 	Text gameNameText;
 
-	List<IPEndPoint> devices;
+	volatile List<IPEndPoint> devices;
 
 	IPEndPoint ipSender;
 
@@ -214,10 +213,16 @@ public class PlayerNetCommunicate : MonoBehaviour
 			int slot = PLAYER;
 
 			if (debugLogs) {
-				Debug.Log ("Creating listener for player " + slot + " on port: " + IP [slot].Port);
+                UnityThreadHelper.Dispatcher.Dispatch(() => {
+                    Debug.Log("Creating listener for player " + slot + " on port: " + IP[slot].Port);
+                });
+				
 			}
 
-			created = true;
+            lock(this)
+            {
+                created = true;
+            }
 
 			while (true) {
 
@@ -405,28 +410,36 @@ public class PlayerNetCommunicate : MonoBehaviour
 	void BroadcastIP () {
 		
 		UnityThreadHelper.CreateThread (() => {
-
 			String data = "";
 
-			try {
-				byte[] answerByte = socket.Receive (ref ipSender);
-				data = Encoding.ASCII.GetString (answerByte, 0, answerByte.Length);
-			} catch (Exception e) { Debug.Log(e); }
+            try
+            {
+                lock (socket)
+                {
+                    byte[] answerByte = socket.Receive(ref ipSender);
+                    data = Encoding.ASCII.GetString(answerByte, 0, answerByte.Length);
+                }
+            }
+            catch (Exception e)
+            {
+                UnityThreadHelper.Dispatcher.Dispatch(() => { Debug.LogError(data); });
+            }
 					
-			if (debugLogs) {
-				Debug.Log(data);
-			}
+			if (debugLogs) 
+                    UnityThreadHelper.Dispatcher.Dispatch(() => { Debug.LogError(data); });
 					
 			if (data.Equals("0000")) {
 				string str = "0000" + gameName;
 				byte[] sendBytes = Encoding.ASCII.GetBytes(str);
 				IPEndPoint sendIP = new IPEndPoint(ipSender.Address, 4442);
-				devices.Add(sendIP);
+                lock(devices)
+                {
+                    devices.Add(sendIP);
+                }
 				socket.Send(sendBytes, sendBytes.Length, sendIP);
 			}
 
 			UnityThreadHelper.Dispatcher.Dispatch(() => BroadcastIP()); 
-
 		});
 	}
 
@@ -452,9 +465,6 @@ public class PlayerNetCommunicate : MonoBehaviour
 			Debug.Log (e.Message);
 			Debug.Log ("Could not close close socket!");
 		}
-
-
-
 	}
 
     void OnApplicationQuit()

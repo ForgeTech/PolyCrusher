@@ -40,7 +40,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
     private bool[] playerSlot = new bool[4];
     [SerializeField]
     private bool[] playerSlotPhone = new bool[4];
-    private bool newPhone;
+    volatile private bool newPhone;
 
     private bool once = false;
     private Vector2[] middlePos;
