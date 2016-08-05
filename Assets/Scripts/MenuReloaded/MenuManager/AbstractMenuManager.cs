@@ -131,7 +131,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected IEnumerator WaitBeforeTriggerAction(GameObject selectedGameObject)
     {
         acceptInput = false;
-        selector.HandleElementSelected();
+        selector.HandleSelectedElement();
         yield return new WaitForSeconds(buttonPressedWaitTime);
         PerformActionOnSelectedElement(selectedGameObject);
         acceptInput = true;
