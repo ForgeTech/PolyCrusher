@@ -84,8 +84,12 @@ public class RespawnOffscreen : MonoBehaviour
 
         // Enemy hack, since the OnEnable funtion is not called properly :/
         BaseEnemy enemy = GetComponent<BaseEnemy>();
+
         if (enemy != null)
+        {
             enemy.EnemySpawnScaleTween();
+            navAgent.speed = enemy.InitialMovementSpeed;
+        }
     }
 
     /// <summary>
