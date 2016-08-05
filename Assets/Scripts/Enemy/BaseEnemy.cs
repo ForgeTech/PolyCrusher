@@ -327,7 +327,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     protected virtual void MakeFSM()
     {
         // Follow behaviour
-        FollowPlayer follow = new FollowPlayer(attackRange, playerAttackLayer);
+        FollowPlayer follow = new FollowPlayer(attackRange, playerAttackLayer, gameObject);
         follow.AddTransition(Transition.InPlayerAttackRange, StateID.AttackPlayer);
         follow.AddTransition(Transition.ReachedDestination, StateID.Idle);
 
@@ -468,6 +468,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         //Animation
         if (anim != null)
         {
+            anim.speed = 1f;
             anim.SetBool("Death", true);
 
             // Normal Scale Fade out.

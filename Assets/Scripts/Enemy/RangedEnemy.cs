@@ -17,7 +17,7 @@ public class RangedEnemy : BaseEnemy
     protected override void MakeFSM()
     {
         // Follow behaviour
-        FollowPlayer follow = new FollowPlayer(attackRange, playerAttackLayer);
+        FollowPlayer follow = new FollowPlayer(attackRange, playerAttackLayer, gameObject);
         follow.AddTransition(Transition.InPlayerAttackRange, StateID.AttackPlayer);
         follow.AddTransition(Transition.ReachedDestination, StateID.Idle);
 

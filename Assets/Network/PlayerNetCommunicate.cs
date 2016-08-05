@@ -422,7 +422,7 @@ public class PlayerNetCommunicate : MonoBehaviour
             }
             catch (Exception e)
             {
-                UnityThreadHelper.Dispatcher.Dispatch(() => { Debug.LogError(data); });
+                UnityThreadHelper.Dispatcher.Dispatch(() => { Debug.LogError(e); });
             }
 					
 			if (debugLogs) 

@@ -12,11 +12,16 @@ public class FollowPlayer : FSMState
     // Layer of the players
     int playerLayer = 8;
 
-    public FollowPlayer(float playerAttackRange, int playerLayer)
+    private readonly GameObject enemy;
+    private readonly Animator animator;
+
+    public FollowPlayer(float playerAttackRange, int playerLayer, GameObject enemy)
     {
         this.playerAttackRange = playerAttackRange;
         this.stateID = StateID.FollowPlayer;
         this.playerLayer = playerLayer;
+        this.enemy = enemy;
+        this.animator = enemy.GetComponent<Animator>();
     }
 
 
@@ -37,8 +42,7 @@ public class FollowPlayer : FSMState
             if (hit && hitInfo.transform.gameObject.tag == "Player" && e != null)
             {
                 // Set animator speed back to 1.
-                Animator anim = npc.GetComponent<Animator>();
-                anim.speed = 1;
+                animator.speed = 1;
                 
                 e.SetTransition(Transition.InPlayerAttackRange);
             }
@@ -65,21 +69,20 @@ public class FollowPlayer : FSMState
         }
 
         // Animator settings
-        Animator anim = npc.GetComponent<Animator>();
         float moveValue = (agent.desiredVelocity).magnitude / npc.GetComponent<BaseEnemy>().InitialMovementSpeed;
 
         //Debug.Log("Move Value: " + moveValue);
-        if (anim != null)
+        if (animator != null)
         {
             if (!agent.pathPending)
             {
-                anim.speed = moveValue;
-                anim.SetFloat("MoveValue", moveValue);
+                animator.speed = moveValue;
+                animator.SetFloat("MoveValue", moveValue);
             }
             else
             {
-                anim.speed = 1f;
-                anim.SetFloat("MoveValue", 1.0f);
+                animator.speed = 1f;
+                animator.SetFloat("MoveValue", 1.0f);
             }
         }
     }
