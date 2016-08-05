@@ -75,7 +75,7 @@ public abstract class AbstractSelector : SelectorInterface
         }
     }
 
-    public virtual void HandleElementSelected()
+    public virtual void HandleSelectedElement()
     {
         foreach (ElementPressedHandler pressed in elementPressedHandler)
         {

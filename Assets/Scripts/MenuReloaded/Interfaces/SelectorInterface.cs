@@ -4,5 +4,5 @@
        
     void Next();
     void Previous();
-    void HandleElementSelected();
+    void HandleSelectedElement();
 }
