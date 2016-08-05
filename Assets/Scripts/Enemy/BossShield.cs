@@ -34,7 +34,7 @@ public class BossShield : MonoBehaviour
             {
                 // Size tween
                 transform.localScale = originalScale * 0.3f;
-                StartCoroutine(transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+                LeanTween.scale(gameObject, originalScale, 0.5f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 
                 Vector3 forward = other.transform.forward;
                 Vector3 position = other.transform.position;

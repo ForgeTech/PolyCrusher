@@ -90,9 +90,8 @@ public class Bullet : Projectile
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
 
-        StartCoroutine(transform.ScaleTo(originalScale, 0.1f, AnimCurveContainer.AnimCurve.upscale.Evaluate));
+        LeanTween.scale(this.gameObject, originalScale, 0.1f).setEase(AnimCurveContainer.AnimCurve.upscale);
 
-        //Destroy(this.gameObject, BulletLifeTime);
         StartCoroutine(DestroyProjectileAfterTime(BulletLifeTime));
     }
 

@@ -100,7 +100,7 @@ public class ChickenBehaviour : MonoBehaviour
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
 
-        StartCoroutine(transform.ScaleTo(originalScale, 0.9f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+        LeanTween.scale(this.gameObject, originalScale, 0.9f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 	}
 
     void FixedUpdate()

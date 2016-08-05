@@ -56,8 +56,7 @@ public class PieBehaviour : MonoBehaviour
         // Scale tween
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
-
-        StartCoroutine(transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+        LeanTween.scale(gameObject, originalScale, 0.5f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 
         StartCoroutine(WaitForAllowExplosion());
     }

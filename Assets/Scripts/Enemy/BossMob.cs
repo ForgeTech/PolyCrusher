@@ -37,7 +37,7 @@ public class BossMob : BaseEnemy
         OnBossMobKilled();
 
         //Scale Fade out
-        StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+        LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart);
 
         //Destroy
         Destroy(this.gameObject, lifeTimeAfterDeath);

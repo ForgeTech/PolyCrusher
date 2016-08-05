@@ -471,7 +471,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             anim.SetBool("Death", true);
 
             // Normal Scale Fade out.
-            StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+            LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart);
         }
  
 
@@ -557,7 +557,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
 
-        StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+        //StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+        LeanTween.scale(this.gameObject, originalScale, 0.7f).setEase(AnimCurveContainer.AnimCurve.pingPong);
     }
 
     /// <summary>

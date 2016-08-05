@@ -780,7 +780,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             // Health Level tween.
             Vector3 originalScale = originalHealthLevelScale;
             healthLevel.transform.localScale = Vector3.zero;
-            StartCoroutine(healthLevel.transform.ScaleTo(originalScale, 0.5f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+            LeanTween.scale(healthLevel.rectTransform, originalScale, 0.5f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 
             // send event if player will be dead
             if (Health - damage < 0 && !IsDead)
@@ -832,7 +832,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                 Vector3 originalScale = energyLevel.transform.localScale;
                 energyLevel.transform.localScale = Vector3.zero;
 
-                StartCoroutine(energyLevel.transform.ScaleTo(originalScale, 0.4f, AnimCurveContainer.AnimCurve.upscale.Evaluate));
+                LeanTween.scale(energyLevel.rectTransform, originalScale, 0.4f).setEase(AnimCurveContainer.AnimCurve.upscale);
             }
 
             Energy += addEnergy;

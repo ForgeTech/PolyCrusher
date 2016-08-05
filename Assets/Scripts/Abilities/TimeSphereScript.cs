@@ -18,7 +18,7 @@ public class TimeSphereScript : MonoBehaviour {
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
 
-        StartCoroutine(transform.ScaleTo(originalScale, 0.9f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+        LeanTween.scale(gameObject, originalScale, 0.9f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 	}
 	
 	void OnTriggerEnter(Collider collider){
