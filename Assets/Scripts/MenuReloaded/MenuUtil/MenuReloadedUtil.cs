@@ -21,7 +21,7 @@ public class MenuReloadedUtil
                     pickedTransitions[i] = new DefaultColorTransition();
                     break;
                 case TransitionEnum.NoOp:
-                    // TODO
+                    pickedTransitions[i] = new NoOpTransitionHandler();
                     break;
             }
         }
@@ -37,16 +37,16 @@ public class MenuReloadedUtil
             switch (pressedHandler[i])
             {
                 case ElementPressedEnum.TextColorHandler:
-                    // TODO
+                    pickedPressedHandler[i] = new ElementPressedTextColor();
                     break;
                 case ElementPressedEnum.ImageColorHandler:
-                    // TODO
+                    pickedPressedHandler[i] = new ElementPressedImageColor();
                     break;
                 case ElementPressedEnum.SizeHandler:
                     pickedPressedHandler[i] = new ElementPressedSize();
                     break;
                 case ElementPressedEnum.NoOp:
-                    // TODO
+                    pickedPressedHandler[i] = new ElementPressedNoOp();
                     break;
             }
         }

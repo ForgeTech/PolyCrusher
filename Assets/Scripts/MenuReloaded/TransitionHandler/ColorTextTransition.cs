@@ -11,7 +11,7 @@ public class ColorTextTransition : TransitionHandlerInterface
         NavigationInformation info = gameobject.GetComponent<NavigationInformation>();
         Text text = gameobject.GetComponent<Text>();
         Color startColor = new Color(text.color.r, text.color.g, text.color.b);
-
+        
         LeanTween.value(gameobject, startColor, info.NormalColor, LERP_TIME).setOnUpdate(
             (Color val) => { text.color = val; }
         ).setEase(LeanTweenType.easeInQuad);
