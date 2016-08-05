@@ -4,8 +4,8 @@ using System;
 public class ElementPressedSize : ElementPressedHandler
 {
     // In ms
-    private const float LERP_TIME = 0.1f;
-    const float SIZE_MULTIPLIER = 1.1f;
+    private const float LERP_TIME = 0.2f;
+    const float SIZE_MULTIPLIER = 1.3f;
 
     public void ElementPressed(GameObject pressedGameObject)
     {

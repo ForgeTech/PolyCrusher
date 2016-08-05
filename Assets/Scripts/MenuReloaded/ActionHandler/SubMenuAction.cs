@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public abstract class SubMenuAction : AbstractActionHandler
 {
+    [Header("Transitions")]
+    [SerializeField]
+    private TransitionEnum[] transitions;
+
+    [SerializeField]
+    private ElementPressedEnum[] pressedHandler;
+
     [Header("Sub-Menu UI Elements")]
     [SerializeField]
     protected RectTransform container;
@@ -20,6 +27,11 @@ public abstract class SubMenuAction : AbstractActionHandler
 
             // Add the SubMenuManager component to the GameObject and initialize after the component generation!
             SubMenuManager subMenuManager = subMenu.AddComponent<SubMenuManager>();
+
+            // TODO: Find a cleaner way to assign these 2 handler!
+            subMenuManager.transitions = transitions;
+            subMenuManager.pressedHandler = pressedHandler;
+
             GenerateComponents(subMenuManager);
             subMenuManager.InitializeMenuManager();
             subMenuManager.RegisterParent(parentManager);

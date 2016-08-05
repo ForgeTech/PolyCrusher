@@ -1,5 +1,13 @@
 ﻿using UnityEngine;
 
+public enum ElementPressedEnum
+{
+    TextColorHandler = 0,
+    ImageColorHandler = 1,
+    SizeHandler = 2,
+    NoOp = 3
+}
+
 /// <summary>
 /// Interface for all interactive UI-Elements which can be pressed.
 /// </summary>
