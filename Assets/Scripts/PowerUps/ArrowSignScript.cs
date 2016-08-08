@@ -9,7 +9,6 @@ public class ArrowSignScript : MonoBehaviour {
     public GameObject[] arrows;
     int counter;
     Vector3[] originalSize;
-    bool init = true;
 
     public float maxScaleFactor = 1.5f;
     public float minScaleFactor = 0.5f;
