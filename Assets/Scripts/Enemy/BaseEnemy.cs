@@ -356,13 +356,21 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     public virtual void TakeDamage(int damage, MonoBehaviour damageDealer)
     {
         // send event if enemy will be dead
-        if(Health - damage < 0 && !enemyIsDead){
+        if(Health - damage <= 0 && !enemyIsDead){
             string character = "undefined";
 
-            if(damageDealer != null && damageDealer is BasePlayer)
+            if (damageDealer != null)
             {
-              character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
+                if (damageDealer is BasePlayer)
+                {
+                    character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
+                }
+                else
+                {
+                    character = damageDealer.name;
+                }
             }
+
             new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
         }
 
@@ -394,17 +402,25 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         if (noDeathAnimation)
         {
             // send event if enemy will be dead
-            if (Health - damage < 0 && !enemyIsDead)
+            if (Health - damage <= 0 && !enemyIsDead)
             {
                 string character = "undefined";
 
                 originRagdollForcePosition = damageDealerPosition;
                 killedWithRagdoll = true;
 
-                if (damageDealer != null && damageDealer is BasePlayer)
+                if (damageDealer != null)
                 {
-                    character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
+                    if (damageDealer is BasePlayer)
+                    {
+                        character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
+                    }
+                    else
+                    {
+                        character = damageDealer.name;
+                    }
                 }
+
                 new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
             }
 
