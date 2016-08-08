@@ -23,7 +23,7 @@ public class BossBullet : Bullet
 
             if (m != null && m is IDamageable)
             {
-                ((IDamageable)m).TakeDamage(Damage, this.OwnerScript);
+                ((IDamageable)m).TakeDamage(Damage, this);
 
                 ApplyExplosionForce(other.gameObject, transform.position);
                 DestroyProjectile();

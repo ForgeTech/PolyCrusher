@@ -194,7 +194,7 @@ public class Rocket : Projectile {
 						MonoBehaviour m = objects.gameObject.GetComponent<MonoBehaviour>();
 						if (m != null && m is IDamageable)
 						{
-							((IDamageable)m).TakeDamage(damage, this.OwnerScript);
+							((IDamageable)m).TakeDamage(damage, this);
 						}
 					}
 				}

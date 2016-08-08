@@ -214,7 +214,7 @@ public class AbilityCharge : Ability {
             if (c.gameObject.GetComponent<MonoBehaviour>() is BaseEnemy)
             {
                 BaseEnemy e = c.gameObject.GetComponent<MonoBehaviour>() as BaseEnemy;
-                e.TakeDamage(explosionDamage, this.OwnerScript, true, transform.position);
+                e.TakeDamage(explosionDamage, this, true, transform.position);
             }
         }
 
@@ -301,7 +301,7 @@ public class AbilityCharge : Ability {
                 coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
                 if (coll.GetComponent<BaseEnemy>() != null)
                 {
-                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this.OwnerScript, true, transform.position);
+                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this, true, transform.position);
                 }
             }
         }
