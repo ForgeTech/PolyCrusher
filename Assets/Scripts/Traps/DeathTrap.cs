@@ -37,7 +37,7 @@ public class DeathTrap : Trap, ITriggerable
             Vector3 tmpPosition = other.GetComponent<Transform>().position;
             Quaternion tmpRotation = other.GetComponent<Transform>().rotation;
             player.CurrentDeathTime = 0.0f;
-            player.InstantKill();
+            player.InstantKill(this);
 
             //create playerMesh to destroy it without destroying the real player
             GameObject destroyMesh = null;
@@ -84,7 +84,7 @@ public class DeathTrap : Trap, ITriggerable
             }
             else
             {
-                enemy.InstantKill();
+                enemy.InstantKill(this);
                 enemy.gameObject.AddComponent<PolyExplosion>();
             }
         }

@@ -626,7 +626,7 @@ public class GameManager : MonoBehaviour
 
             if (enemy != null)
             {
-                enemy.InstantKill();
+                enemy.InstantKill(this);
             }
         }
     }

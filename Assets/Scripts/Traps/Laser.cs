@@ -48,7 +48,7 @@ public class Laser : MonoBehaviour
                         {
                             addScript = false;
                         }
-                        player.InstantKill();
+                        player.InstantKill(this);
 
                         //create playerMesh to destroy it without destroying the real player
                         GameObject destroyMesh = null;
@@ -104,7 +104,7 @@ public class Laser : MonoBehaviour
                         }
                         else
                         {
-                            enemy.InstantKill();
+                            enemy.InstantKill(this);
                             //enemy.gameObject.AddComponent<PolyExplosion>();
 
                             enemy.gameObject.AddComponent<CutUpMesh>();

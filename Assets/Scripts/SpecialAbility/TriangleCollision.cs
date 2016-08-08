@@ -17,7 +17,7 @@ public class TriangleCollision : MonoBehaviour {
         {
             if (coll.GetComponent<MonoBehaviour>() is BossEnemy)
             {
-                coll.GetComponent<BossEnemy>().TakeDamage(polygonSystemScript.currentBossDamage, null);              
+                coll.GetComponent<BossEnemy>().TakeDamage(polygonSystemScript.currentBossDamage, this);              
                 polygonSystemScript.currentBossDamage = 0;
             }
             else

@@ -215,7 +215,7 @@ public class LineSystem : MonoBehaviour {
                         }
                         else
                         {
-                            enemy.InstantKill();
+                            enemy.InstantKill(this);
                             enemy.gameObject.AddComponent<CutUpMesh>();
                             Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation),2);
                         }

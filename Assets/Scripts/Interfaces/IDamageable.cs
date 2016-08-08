@@ -16,7 +16,7 @@ public interface IDamageable
     /// <summary>
     /// Lowers the health to zero.
     /// </summary>
-    void InstantKill();
+    void InstantKill(MonoBehaviour trigger);
 
     /// <summary>
     /// Gets or sets the actual health value.

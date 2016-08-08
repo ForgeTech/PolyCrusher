@@ -244,11 +244,11 @@ public class CutUpMesh : MonoBehaviour
 
             if (playerScript != null)
             {
-                playerScript.InstantKill();
+                playerScript.InstantKill(this);
             }
             else if (enemyScript != null)
             {
-                enemyScript.InstantKill();
+                enemyScript.InstantKill(this);
             }
             else
             {

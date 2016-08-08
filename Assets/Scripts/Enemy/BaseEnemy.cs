@@ -437,9 +437,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <summary>
     /// Sets the health instantly to the min health value.
     /// </summary>
-    public virtual void InstantKill()
+    public virtual void InstantKill(MonoBehaviour trigger)
     {
-        TakeDamage(MaxHealth, null);
+        TakeDamage(MaxHealth, trigger);
     }
 
     /// <summary>

@@ -202,7 +202,7 @@ public class PolygonSystem : MonoBehaviour
                 {
                     if(coll.GetComponent<MonoBehaviour>() is BossEnemy)
                     {
-                        coll.GetComponent<BossEnemy>().TakeDamage(currentBossDamage, null);
+                        coll.GetComponent<BossEnemy>().TakeDamage(currentBossDamage, this);
                         currentBossDamage = 0;                       
                     }
                     else
@@ -229,7 +229,7 @@ public class PolygonSystem : MonoBehaviour
         for (int i = 0; i<enemies.Count; i++)
         {            
             enemies[i].AddComponent<PolyExplosion>();
-            enemies[i].GetComponent<BaseEnemy>().InstantKill();
+            enemies[i].GetComponent<BaseEnemy>().InstantKill(this);
         }  
         currentCooldown = 0.05f;
 

@@ -813,9 +813,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// <summary>
     /// Lowers the health to zero.
     /// </summary>
-    public virtual void InstantKill()
+    public virtual void InstantKill(MonoBehaviour trigger)
     {
         this.Health = minHealth;
+        new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(trigger.name).addLevel().addPlayerCount().send();
     }
 
     /// <summary>

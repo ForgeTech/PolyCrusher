@@ -10,16 +10,16 @@ using MongoDB.Bson.Serialization.Attributes;
 public class Event{
     public enum TYPE : byte
     {
-        gameStart = 0,
-        death = 1,
-        kill = 2,
-        powerup = 3,
-        join = 4,
-        disconnect = 5,
-        ability = 6,
-        superAbility = 7,
-        waveUp = 8,
-        sessionEnd = 9
+        gameStart = 0,  // session is started
+        death = 1,      // player is killled
+        kill = 2,       // enemy is killed
+        powerup = 3,    // powerup is picked up
+        join = 4,       // mobile contorller joins game
+        disconnect = 5, // mobile controller leaves game
+        ability = 6,    // player ability is triggered
+        superAbility = 7,   // super ability is triggered
+        waveUp = 8,     // next wave
+        sessionEnd = 9  // session ends
     }
 
     #region Chain Methods
@@ -126,6 +126,12 @@ public class Event{
         return this;
     }
 
+    public Event addCause(string cause)
+    {
+        this.cause = cause;
+        return this;
+    }
+
     /// <summary>
     /// Adds all chosen character names
     /// </summary>
@@ -188,10 +194,11 @@ public class Event{
     protected string mode { get; set; }
     [BsonIgnoreIfNull]
     public string[] characters { get; set; }
-
+    [BsonIgnoreIfNull]
+    public string cause { get; set; }
+    
     [BsonIgnore]
     public bool isSaved { get; set; }
-
     #endregion
 }
 

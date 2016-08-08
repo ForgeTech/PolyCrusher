@@ -432,7 +432,7 @@ public class LineConnection : MonoBehaviour {
 
             if (IsPointInTri(coll.transform.position, players[0].transform.position, players[1].transform.position, players[2].transform.position) || IsPointInTri(coll.transform.position, players[0].transform.position, players[2].transform.position, players[3].transform.position))
             {
-                coll.GetComponent<BaseEnemy>().InstantKill();
+                coll.GetComponent<BaseEnemy>().InstantKill(this);
             }
         }
 
