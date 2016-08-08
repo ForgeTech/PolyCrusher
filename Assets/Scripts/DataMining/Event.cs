@@ -161,7 +161,10 @@ public class Event{
 
     public override string ToString()
     {
-        return "Event (type: " + this.type.ToString() + ")";
+        string str = "Event ";
+        str += this.ToJson();
+       
+        return str;
     }
 
     #region Class Members

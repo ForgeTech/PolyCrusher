@@ -381,7 +381,7 @@ public class DataCollector : MonoBehaviour
         // event log
         if (logEvents)
         {
-            Debug.Log("[DataCollector] DataCollector: Added " + e.ToString());
+            Debug.Log("[DataCollector] " + e.ToString());
         }
 
         // if event queue gets big enough upload data
