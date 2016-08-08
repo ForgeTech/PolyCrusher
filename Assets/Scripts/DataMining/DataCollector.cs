@@ -206,12 +206,12 @@ public class DataCollector : MonoBehaviour
                         MongoDatabase db = server.GetDatabase(databaseName);
                         events = db.GetCollection<Event>("events");
                         sessions = db.GetCollection<Session>("sessions");
-                        if (log) { Debug.Log("DataCollector: Connected to database."); }
+                        if (log) { Debug.Log("[DataCollector] DataCollector: Connected to database."); }
                     }
                     else
                     {
                         // deactivate DataCollector if connection fails
-                        if (log) { Debug.Log("DataCollector: Could not connect to database."); }
+                        if (log) { Debug.Log("[DataCollector] DataCollector: Could not connect to database."); }
                         DataCollector.instance.enabled = false;
                     }
                     break;
@@ -262,7 +262,7 @@ public class DataCollector : MonoBehaviour
                         // check if session id could be retrieved (needed for referencing session in events)
                         if (currentSession._id == null)
                         {
-                            if (log) { Debug.Log("Could not retrieve session_id."); }
+                            if (log) { Debug.Log("[DataCollector] Could not retrieve session_id."); }
                             currentSession = null;
                             sessionRunning = false;
                         }
@@ -381,7 +381,7 @@ public class DataCollector : MonoBehaviour
         // event log
         if (logEvents)
         {
-            Debug.Log("DataCollector: Added " + e.ToString());
+            Debug.Log("[DataCollector] DataCollector: Added " + e.ToString());
         }
 
         // if event queue gets big enough upload data
@@ -405,7 +405,7 @@ public class DataCollector : MonoBehaviour
                                 server.Ping();
                             } catch {
                                 connected = false;
-                                if (log) { Debug.Log("DataCollector: No connection. Retry with next event."); }
+                                if (log) { Debug.Log("[DataCollector] No connection. Retry with next event."); }
                             }
 
                             if (connected)
@@ -478,7 +478,7 @@ public class DataCollector : MonoBehaviour
         // encode serialized events
         serializedEvents = encode(serializedEvents);
 
-        if (log) { Debug.Log("DataCollector: uploading " + e.Length + " events"); }
+        if (log) { Debug.Log("[DataCollector] uploading " + e.Length + " events"); }
 
         WWWForm form = new WWWForm();
         form.AddField("data", serializedEvents);
@@ -489,11 +489,11 @@ public class DataCollector : MonoBehaviour
             string response = www.text;
             if (response == "success")
             {
-                if (log) { Debug.Log("DataCollector: event upload successful"); }
+                if (log) { Debug.Log("[DataCollector] event upload successful"); }
             }
             else
             {
-                if (log) { Debug.Log("DataCollector: unexpected response: " + response); }
+                if (log) { Debug.Log("[DataCollector] unexpected response: " + response); }
                 for (int i = 0; i < e.Length; i++)
                 {
                     eventQueue.Enqueue(e[i]);  // reinsert
@@ -507,7 +507,7 @@ public class DataCollector : MonoBehaviour
                 eventQueue.Enqueue(e[i]);  // reinsert
             }
             //if (log) 
-            Debug.Log("WWW Error: " + www.error);
+            Debug.Log("[DataCollector] WWW Error: " + www.error);
         }
     }
 
@@ -528,16 +528,16 @@ public class DataCollector : MonoBehaviour
             if (response.Length == 24)  // check if response is 24 characters long == id
             {
                 currentSession._id = response;
-                if (log) { Debug.Log("WWW Ok: " + response); }
+                if (log) { Debug.Log("[DataCollector] WWW Ok: " + response); }
             }
             else
             {
                 //if (log) 
-                Debug.Log("WWW Ok, Unexpected response:" + response);
+                Debug.Log("[DataCollector] WWW Ok, Unexpected response:" + response);
             }
         }else{
             //if (log)
-            Debug.Log("WWW Error: " + www.error);
+            Debug.Log("[DataCollector] WWW Error: " + www.error);
         }
     }
 
@@ -570,13 +570,13 @@ public class DataCollector : MonoBehaviour
             {
                 rank = Convert.ToInt32(response);
                 if (log) { 
-                    Debug.Log("WWW Ok: " + response);
+                    Debug.Log("[DataCollector] WWW Ok: " + response);
                 }
             }
             catch (FormatException e)
             {
                 //if (log) { 
-                Debug.Log("WWW Ok, Unexpected response:" + response);
+                Debug.Log("[DataCollector] WWW Ok, Unexpected response:" + response);
                 Debug.Log(e.ToString());
                 //}
             }
@@ -584,7 +584,7 @@ public class DataCollector : MonoBehaviour
         else
         {
             //if (log) {
-                Debug.Log("WWW Error: " + www.error);
+                Debug.Log("[DataCollector] WWW Error: " + www.error);
             //}
         }
 
