@@ -125,10 +125,11 @@ public class CollectibleManager : MonoBehaviour {
                 {
                     for(int i = 0; i < PowerUpSigns.Length; i++)
                     {
-                        Instantiate(signParticleBurst, PowerUpSigns[i].transform.position, PowerUpSigns[i].transform.rotation);
+                        //Instantiate(signParticleBurst, PowerUpSigns[i].transform.position, PowerUpSigns[i].transform.rotation);
 
                         Vector3 targetPosition = PowerUpSpawnPoints[actualSpawnpoint].transform.position;
-                        PowerUpSigns[i].transform.LookAt(targetPosition, new Vector3(0.0f, 1.0f, 0.0f));
+                        LeanTween.rotateY(PowerUpSigns[i], targetPosition.y, 0.3f).setEase(LeanTweenType.easeInQuad);
+                        //PowerUpSigns[i].transform.LookAt(targetPosition, new Vector3(0.0f, 1.0f, 0.0f));
                     }
                 }
 			}
