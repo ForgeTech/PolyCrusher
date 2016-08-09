@@ -131,7 +131,7 @@ public class LevelSelection : MonoBehaviour
 
         playerSlotPhone = new bool[4];
 
-		GameObject.Find("GameNameLevelSelection").GetComponent<Text>().text = network.gameName + " GAME";
+		//GameObject.Find("GameNameLevelSelection").GetComponent<Text>().text = network.gameName + " GAME";
 
         playerCount = Input.GetJoystickNames().Length;
         currentPlayerCount = playerCount;
@@ -492,7 +492,7 @@ public class LevelSelection : MonoBehaviour
 			HandleSelection();
 		}
 
-		ChangeImages ();
+		//ChangeImages ();
 
     }
 

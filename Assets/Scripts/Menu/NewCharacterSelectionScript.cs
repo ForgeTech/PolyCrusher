@@ -234,7 +234,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
 
 
 
-        originalVecInfo = infoBar.transform.localPosition;
+        //originalVecInfo = infoBar.transform.localPosition;
 
         gamerCountdown.SetActive(false);
         gamerCountdownTime = 20.0f;
@@ -967,7 +967,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         if (playerHasChosen == 0)
         {
             gamerCountdown.SetActive(false);
-            infoBar.transform.localPosition = originalVecInfo;
+            //infoBar.transform.localPosition = originalVecInfo;
             first = true;
         }
 
@@ -975,7 +975,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
         {
 
             gamerCountdown.SetActive(false);
-            infoBar.transform.localPosition = originalVecInfo;
+            //infoBar.transform.localPosition = originalVecInfo;
             first = true;
 
             return true;
@@ -990,7 +990,7 @@ public class NewCharacterSelectionScript : MonoBehaviour {
                 timeBeginning = Time.time;
                 gamerCountdownTime = 20.0f;
                 gamerCountdown.SetActive(true);
-                infoBar.transform.localPosition = new Vector3(infoBar.transform.localPosition.x, -200, 0);
+                //infoBar.transform.localPosition = new Vector3(infoBar.transform.localPosition.x, -200, 0);
                 first = false;
             }
             else

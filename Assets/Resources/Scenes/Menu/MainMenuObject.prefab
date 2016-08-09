@@ -308,7 +308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &157892
 GameObject:
   m_ObjectHideFlags: 1
@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &198342
 GameObject:
   m_ObjectHideFlags: 1
@@ -997,8 +997,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttons:
   - {fileID: 11402688}
-  - {fileID: 11460328}
-  - {fileID: 11437536}
   selected: 0
   inputCooldownTime: .200000003
   levelInfo: {fileID: 0}
@@ -2326,7 +2324,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -420, y: -138.899994}
+  m_AnchoredPosition: {x: 0, y: -138.899994}
   m_SizeDelta: {x: 260, y: 260}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22482804
@@ -2438,7 +2436,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[1]
+      value: 
+      objectReference: {fileID: 11460328}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[2]
+      value: 
+      objectReference: {fileID: 11437536}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189410}

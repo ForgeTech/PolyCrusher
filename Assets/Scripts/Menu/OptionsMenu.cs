@@ -932,6 +932,8 @@ public class OptionsMenu : MonoBehaviour
     {       
         string curRes = Screen.width.ToString();
         PrepareOptions(resolutions, curRes);
+
+        
     }
 
 
