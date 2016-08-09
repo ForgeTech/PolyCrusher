@@ -46,7 +46,7 @@ public class DataCollector : MonoBehaviour
         public bool logEvents = false;
 
     // VERSION NUMBER
-    private string buildVersion = "0.2";
+    private string buildVersion = "0.3";
 
     // MongoDB fields
     private MongoServer server;
@@ -143,6 +143,7 @@ public class DataCollector : MonoBehaviour
         [BsonIgnore]
         public string _id { get; set; }
         public string macAddress { get; set; }
+        public string steamId { get; set; }
 		public string version { get; set; }
         public bool inEditor { get; set; }
         public string mode { get; set; }
