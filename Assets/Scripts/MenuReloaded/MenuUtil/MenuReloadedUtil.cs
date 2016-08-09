@@ -20,6 +20,9 @@ public class MenuReloadedUtil
                 case TransitionEnum.ImageColorChange:
                     pickedTransitions[i] = new DefaultColorTransition();
                     break;
+                case TransitionEnum.LevelTransition:
+                    pickedTransitions[i] = new LevelScaleTransition();
+                    break;
                 case TransitionEnum.NoOp:
                     pickedTransitions[i] = new NoOpTransitionHandler();
                     break;

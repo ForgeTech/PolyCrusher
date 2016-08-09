@@ -28,16 +28,12 @@ public class Selector : AbstractSelector
     protected override void OnNext()
     {
         if (!CheckIndex(++Current))
-        {
             Current = minValue;
-        }
     }
 
     protected override void OnPrevious()
     {
         if (!CheckIndex(--Current))
-        {
             Current = maxValue;
-        }
     }
 }
