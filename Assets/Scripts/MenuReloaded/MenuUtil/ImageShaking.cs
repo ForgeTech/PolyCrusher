@@ -5,7 +5,10 @@ using UnityEngine.UI;
 public class ImageShaking : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 0.6f;
+    private float minSpeed = 4f;
+
+    [SerializeField]
+    private float maxSpeed = 8f;
 
     [SerializeField]
     private float shakeScale = 10f;
@@ -14,8 +17,10 @@ public class ImageShaking : MonoBehaviour
 
 	void Start ()
     {
+        float speed = Random.Range(minSpeed, maxSpeed);
+
         img = GetComponent<Image>();
-        Vector2 randomDirection = new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f));
+        Vector2 randomDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         randomDirection.Normalize();
 
         LeanTween.value(img.gameObject, Vector2.zero, randomDirection * shakeScale, speed)
