@@ -225,7 +225,7 @@ public class PolygonSystem : MonoBehaviour
     private void ChainExplosion()
     {        
         SoundManager.SoundManagerInstance.Play(polyExplosion, Vector3.zero);
-        new Event(Event.TYPE.superAbility).addPlayerCount().addWave().addLevel().addPos(this.middlePoint.x, this.middlePoint.z).addKills(enemies.Count);
+        new Event(Event.TYPE.superAbility).addPlayerCount().addWave().addLevel().addPos(this.middlePoint.x, this.middlePoint.z).addKills(enemies.Count).send();
 
         for (int i = 0; i<enemies.Count; i++)
         {            
