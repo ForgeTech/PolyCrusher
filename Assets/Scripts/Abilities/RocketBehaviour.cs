@@ -176,7 +176,7 @@ public class RocketBehaviour : MonoBehaviour {
                     MonoBehaviour enemyScripts = objects.gameObject.GetComponent<MonoBehaviour>();
                     if (enemyScripts != null && enemyScripts is BaseEnemy)
                     {
-                        ((BaseEnemy)enemyScripts).TakeDamage(damage, this, true, transform.position);
+                        ((BaseEnemy)enemyScripts).TakeDamage(damage, this, transform.position);
                     }
                 }
             }

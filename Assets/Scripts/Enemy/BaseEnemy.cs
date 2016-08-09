@@ -392,62 +392,20 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     }
 
     /// <summary>
-    /// Draws the object some damage and lowers the health.
+    /// Deals damage and enables ragdoll (no death animation) if enemy would die from this damage.
     /// </summary>
     /// <param name="damage">Damage</param>
     /// <param name="damageDealer">The damage dealer</param>
     /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
-    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation, Vector3 damageDealerPosition)
+    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, Vector3 damageDealerPosition)
     {
-        if (noDeathAnimation)
+        if(Health - damage <= 0)
         {
-            // send event if enemy will be dead
-            if (Health - damage <= 0 && !enemyIsDead)
-            {
-                string character = "undefined";
-
-                originRagdollForcePosition = damageDealerPosition;
-                killedWithRagdoll = true;
-
-                if (damageDealer != null)
-                {
-                    if (damageDealer is BasePlayer)
-                    {
-                        character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
-                    }
-                    else
-                    {
-                        character = damageDealer.name;
-                    }
-                }
-
-                new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
-            }
-
-            // Blood particle
-            if (bloodParticle != null && damageDealer != null)
-                Instantiate(bloodParticle, transform.position, bloodParticle.transform.rotation);
-
-            if (Health >= 0)
-            {
-                // Enemy will be dead, so set the Animator to null;
-                if (Health - damage <= minHealth)
-
-                    // Substract health
-                    Health -= damage;
-            }
-
-            // Light blink
-            if (lightComponent != null)
-            {
-                SetLightColor(damageDealer);
-                StartCoroutine(ColorBlink(hitLightTime));
-            }
+            originRagdollForcePosition = damageDealerPosition;
+            killedWithRagdoll = true;
         }
-        else
-        {
-            TakeDamage(damage, damageDealer);
-        }
+        
+        TakeDamage(damage, damageDealer);
     }
 
     /// <summary>

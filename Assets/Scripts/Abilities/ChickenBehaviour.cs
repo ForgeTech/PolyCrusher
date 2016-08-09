@@ -189,7 +189,7 @@ public class ChickenBehaviour : MonoBehaviour
                 BaseEnemy e = (enemy.GetComponent<MonoBehaviour>() as BaseEnemy);
 
                 // Deal damage to the enemy
-                e.TakeDamage(damage, this, true, transform.position);
+                e.TakeDamage(damage, this, transform.position);
             }
         }
 

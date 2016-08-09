@@ -101,7 +101,7 @@ public class BossEnemy : BaseEnemy
         /// <summary>
         /// The current damage value.
         /// </summary>
-        [HideInInspector]
+        //[HideInInspector]
         public int currentDamage = 0;
     }
 
@@ -526,20 +526,6 @@ public class BossEnemy : BaseEnemy
         base.TakeDamage(damage, damageDealer);
 
         sprintPhase.currentDamage += damage;        
-    }
-
-    /// <summary>
-    /// Draws the object some damage and lowers the health.
-    /// </summary>
-    /// <param name="damage">Damage</param>
-    /// <param name="damageDealer">The damage dealer</param>
-    /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
-    public override void TakeDamage(int damage, MonoBehaviour damageDealer, bool noDeathAnimation, Vector3 damageDealerPosition)
-    {
-        base.TakeDamage(damage, damageDealer, noDeathAnimation, damageDealerPosition);
-
-        if (noDeathAnimation)
-            sprintPhase.currentDamage += damage;
     }
 
     /// <summary>

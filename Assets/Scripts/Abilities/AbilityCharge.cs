@@ -214,7 +214,7 @@ public class AbilityCharge : Ability {
             if (c.gameObject.GetComponent<MonoBehaviour>() is BaseEnemy)
             {
                 BaseEnemy e = c.gameObject.GetComponent<MonoBehaviour>() as BaseEnemy;
-                e.TakeDamage(explosionDamage, this, true, transform.position);
+                e.TakeDamage(explosionDamage, this, transform.position);
             }
         }
 
@@ -293,6 +293,8 @@ public class AbilityCharge : Ability {
         
         chargeSpeed = 0.0f;      
 
+       
+
         Collider[] colls = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach(Collider coll in colls)
         {
@@ -301,7 +303,8 @@ public class AbilityCharge : Ability {
                 coll.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
                 if (coll.GetComponent<BaseEnemy>() != null)
                 {
-                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this, true, transform.position);
+                    // deal 0 damage for more blood particles (whos idea was that?!)
+                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this, transform.position);
                 }
             }
         }
