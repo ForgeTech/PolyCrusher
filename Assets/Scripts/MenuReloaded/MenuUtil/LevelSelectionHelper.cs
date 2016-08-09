@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A helper which is an addition to the AbstractMenuManager.
+/// It should be only used for the level selection.
+/// The script handles the placement of the level islands and the corresponding tweens,
+/// the whole selection is part of the AbstractMenuManager.
+/// </summary>
 [RequireComponent(typeof(AbstractMenuManager))]
 public class LevelSelectionHelper : MonoBehaviour
 {
+    #region Inspector variables
     [Header("Settings")]
     [SerializeField]
     private float gapSize = 660f;
@@ -21,6 +28,7 @@ public class LevelSelectionHelper : MonoBehaviour
     [SerializeField]
     private Color pressedColor;
 
+    [Header("Tweening options")]
     [SerializeField]
     private float tweenTime = 0.2f;
 
@@ -32,14 +40,25 @@ public class LevelSelectionHelper : MonoBehaviour
 
     [SerializeField]
     private LeanTweenType levelTransitionEaseType = LeanTweenType.easeOutExpo;
+    #endregion
 
+    #region Internal members
     private AbstractMenuManager menuManager;
     private SelectorInterface selector;
     private RectTransform[] levelIslands;
     private Color originalArrowColor;
+    #endregion
+
+    private Vector2 tweenOutPosition = new Vector2(0f, 5000f);
 
 	private void Start ()
     {
+        Initialize();
+	}
+
+    private void Initialize()
+    {
+        // Initialize the menu manager and the selector
         menuManager = GetComponent<AbstractMenuManager>();
         selector = menuManager.Selector;
         menuManager.NavigationNext += HandleNextSelection;
@@ -47,6 +66,7 @@ public class LevelSelectionHelper : MonoBehaviour
 
         levelIslands = new RectTransform[menuManager.MenuComponents.Count];
 
+        // Fill the internal level array
         for (int i = 0; i < levelIslands.Length; i++)
         {
             GameObject tmp;
@@ -54,45 +74,38 @@ public class LevelSelectionHelper : MonoBehaviour
             levelIslands[i] = tmp.GetComponent<RectTransform>();
         }
 
+        // Other initialization steps
         originalArrowColor = leftArrow.color;
+        RepositionElements();
+    }
 
-        RePositionElements();
-	}
-
-    private void RePositionElements()
+    private void RepositionElements()
     {
         Vector3 offset = new Vector3(gapSize, 0f, 0f);
 
         for (int i = 0; i < levelIslands.Length; i++)
         {
-            RectTransform island;
-            if (i == CalculateIndex(selector.Current - 1))
-            {
-                island = levelIslands[CalculateIndex(selector.Current - 1)];
-                TweenLevelIsland(island, island.anchoredPosition, middlePoint - offset);
+            int index;
 
-                //levelIslands[CalculateIndex(selector.Current - 1)].anchoredPosition = middlePoint - offset;
-            }
+            if (i == (index = CalculateIndex(selector.Current - 2)))
+                DoReposition(index, middlePoint - offset * 2f);
+            else if (i == (index = CalculateIndex(selector.Current - 1)))
+                DoReposition(index, middlePoint - offset);
             else if (i == selector.Current)
-            {
-                island = levelIslands[selector.Current];
-                TweenLevelIsland(island, island.anchoredPosition, middlePoint);
-
-                //levelIslands[selector.Current].anchoredPosition = middlePoint;
-            }
-            else if (i == CalculateIndex(selector.Current + 1))
-            {
-                island = levelIslands[CalculateIndex(selector.Current + 1)];
-                TweenLevelIsland(island, island.anchoredPosition, middlePoint + offset);
-
-                //levelIslands[CalculateIndex(selector.Current + 1)].anchoredPosition = middlePoint + offset;
-            }
+                DoReposition(selector.Current, middlePoint);
+            else if (i == (index = CalculateIndex(selector.Current + 1)))
+                DoReposition(index, middlePoint + offset);
+            else if (i == (index = CalculateIndex(selector.Current + 2)))
+                DoReposition(index, middlePoint + offset * 2f);
             else
-            {
-                island = levelIslands[i];
-                TweenLevelIsland(island, island.anchoredPosition, new Vector2(0, 1200f));
-            }
+                levelIslands[i].anchoredPosition = tweenOutPosition;
         }
+    }
+
+    private void DoReposition(int index, Vector2 offset)
+    {
+        RectTransform island = levelIslands[index];
+        TweenLevelIsland(island, island.anchoredPosition, offset);
     }
 
     private void TweenLevelIsland(RectTransform island, Vector2 from, Vector2 to)
@@ -114,16 +127,22 @@ public class LevelSelectionHelper : MonoBehaviour
         return ((a % n) + n) % n;
     }
 
+    /// <summary>
+    /// Callback which is registered at the AbstractMenuManager.
+    /// </summary>
     private void HandleNextSelection()
     {
         TweenArrow(rightArrow);
-        RePositionElements();
+        RepositionElements();
     }
 
+    /// <summary>
+    /// Callback which is registered at the AbstractMenuManager.
+    /// </summary>
     private void HandlePreviousSelection()
     {
         TweenArrow(leftArrow);
-        RePositionElements();
+        RepositionElements();
     }
 
     private void TweenArrow(Image arrow)
