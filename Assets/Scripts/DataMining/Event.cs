@@ -41,10 +41,10 @@ public class Event{
     {
         switch (c)
         {
-            case "AbilityCharge": addCause(c); c = PlayerEnum.Charger.ToString(); break;
-            case "PieBehaviour": addCause(c); c = PlayerEnum.Babuschka.ToString(); break;
-            case "Rocket": addCause(c); c = PlayerEnum.Fatman.ToString(); ; break;
-            case "ChickenBehaviour": addCause(c); c = PlayerEnum.Birdman.ToString(); ; break;
+            case "Ability": addCause("AbilityCharge"); c = PlayerEnum.Charger.ToString(); break;
+            case "PieAbility(Clone)": addCause(c); c = PlayerEnum.Babuschka.ToString(); break;
+            case "Missile(Clone)": addCause(c); c = PlayerEnum.Fatman.ToString(); ; break;
+            case "ChickenAbility(Clone)": addCause(c); c = PlayerEnum.Birdman.ToString(); ; break;
         }
 
         this.character = c;
