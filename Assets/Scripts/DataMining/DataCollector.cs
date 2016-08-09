@@ -85,6 +85,7 @@ public class DataCollector : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Return character name of player with the most kills
     /// </summary>
@@ -160,10 +161,15 @@ public class DataCollector : MonoBehaviour
     }
 
 
-	/// <summary>
-	/// Initializes connection to database
-	/// </summary>
-	void Start () {
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    /// <summary>
+    /// Initializes connection to database
+    /// </summary>
+    void Start () {
         eventQueue = new Queue();
         localEvents = new List<Event>();
         kills = new Dictionary<string, int>();
