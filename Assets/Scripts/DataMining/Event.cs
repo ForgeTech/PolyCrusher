@@ -37,6 +37,13 @@ public class Event{
         return this;
     }
 
+    public Event addPos(float x, float z) {
+        pos = new float[2];
+        pos[0] = x;
+        pos[1] = z;
+        return this;
+    }
+
     public Event addCharacter(string c)
     {
         switch (c)
@@ -134,9 +141,21 @@ public class Event{
         return this;
     }
 
+    /// <summary>
+    /// Name of the cause of a certain event (eg the cause of a kill could be a special ability)
+    /// </summary>
     public Event addCause(string cause)
     {
         this.cause = cause;
+        return this;
+    }
+
+    /// <summary>
+    /// the number of kills a event caused
+    /// </summary>
+    public Event addKills(int kills)
+    {
+        this.kills = kills;
         return this;
     }
 
@@ -184,30 +203,32 @@ public class Event{
     [BsonIgnoreIfNull]
     public string character { get; set; }
     [BsonIgnoreIfNull]
-    protected string enemy { get; set; }
+    public string enemy { get; set; }
     [BsonIgnoreIfNull]
-    protected float? wave { get; set; }
+    public float? wave { get; set; }
     [BsonIgnoreIfNull]
-    protected string level { get; set; }
+    public string level { get; set; }
     [BsonIgnoreIfNull]
-    protected float[] pos { get; set; }
+    public float[] pos { get; set; }
     [BsonIgnoreIfNull]
-    protected int? playerCount { get; set; }    // ? to make variable nullable
+    public int? playerCount { get; set; }    // ? to make variable nullable
     [BsonIgnoreIfNull]
-    protected string device { get; set; }
+    public string device { get; set; }
     [BsonIgnoreIfNull]
-    protected string powerup { get; set; }
+    public string powerup { get; set; }
     [BsonIgnoreIfNull]
-    protected string name { get; set; }
+    public string name { get; set; }
     [BsonIgnoreIfNull]
-    protected string email { get; set; }
+    public string email { get; set; }
     [BsonIgnoreIfNull]
-    protected string mode { get; set; }
+    public string mode { get; set; }
     [BsonIgnoreIfNull]
     public string[] characters { get; set; }
     [BsonIgnoreIfNull]
     public string cause { get; set; }
-    
+    [BsonIgnoreIfNull]
+    public int? kills { get; set; }      // ? to make variable nullable
+
     [BsonIgnore]
     public bool isSaved { get; set; }
     #endregion
