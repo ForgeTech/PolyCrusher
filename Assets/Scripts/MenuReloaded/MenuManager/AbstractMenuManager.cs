@@ -1,20 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
+public enum MenuSelection
+{
+    HorizontalSelection = 0,
+    VerticalSelection = 1
+}
 
 public abstract class AbstractMenuManager : MonoBehaviour
 {
-    const float INPUT_WAIT_TIME = 0.1f;
-
     #region Inspector fields
     [Header("Selection Settings")]
     [SerializeField]
     private int startIndex;
 
+    [SerializeField]
+    private MenuSelection menuSelection = MenuSelection.VerticalSelection;
+
     [Header("Timing Settings")]
     [Tooltip("The time which is waited before the button action is triggered.")]
     [SerializeField]
     private float buttonPressedWaitTime = 0.2f;
+
+    [SerializeField]
+    private float stickMovedWaitTime = 0.3f;
 
     [Header("Transitions")]
     [SerializeField]
@@ -26,8 +37,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected SelectorInterface selector;
     protected InputInterface input;
+    protected MenuInputHandler menuInputHandler;
 
-    protected bool acceptInput = true;
+    protected bool acceptButtonInput = true;
+    protected bool acceptStickInput = true;
     // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
     protected bool isInputActive = true;
 
@@ -37,6 +50,19 @@ public abstract class AbstractMenuManager : MonoBehaviour
     #region Delegates and Events
     public delegate void SelectedEventHandler(AbstractMenuManager triggerManager, GameObject selectedComponent);
     public event SelectedEventHandler ComponentSelected;
+
+    public delegate void NavigationHandler();
+    public event NavigationHandler NavigationNext;
+    public event NavigationHandler NavigationPrevious;
+    #endregion
+
+    #region Properties
+    public Dictionary<int, GameObject> MenuComponents
+    {
+        get { return this.components; }
+    }
+
+    public SelectorInterface Selector { get { return this.selector; } }
     #endregion
 
     protected virtual void Start ()
@@ -46,10 +72,13 @@ public abstract class AbstractMenuManager : MonoBehaviour
 	
 	protected virtual void Update ()
     {
-        if (acceptInput && isInputActive)
+        if (isInputActive)
         {
-            HandleNavigation();
-            HandleSelection();
+            if (acceptStickInput)
+                HandleNavigation();
+
+            if (acceptButtonInput)
+                HandleSelection();
         }
     }
 
@@ -58,6 +87,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
         InitializeDictionary();
         InitializeSelector();
         input = new TestInput();
+        menuInputHandler = new DefaultMenuInputHandler(input);
     }
 
     protected void InitializeSelector()
@@ -71,18 +101,15 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void HandleSelection()
     {
         GameObject g;
-        if (input.GetButtonDown("P1_Ability"))
-        {
-            try
-            {
+        menuInputHandler.HandleSelectInput("P1_", () => {
+            try {
                 components.TryGetValue(selector.Current, out g);
             }
-            catch (KeyNotFoundException e)
-            {
+            catch (KeyNotFoundException e) {
                 throw e;
             }
             StartCoroutine(WaitBeforeTriggerAction(g));
-        }
+        });
     }
 
     private void PerformActionOnSelectedElement(GameObject selectedElement)
@@ -93,16 +120,24 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected virtual void HandleNavigation()
     {
-        if (input.GetHorizontal("P1_") > 0.5f)
-        {
+        // Action callbacks
+        Action next = () => {
             selector.Next();
-            StartCoroutine(InputCooldown());
-        }
-        else if (input.GetHorizontal("P1_") < -0.5f)
-        {
+            OnNextSelection();
+            StartCoroutine(StickInputCooldown());
+
+        };
+        Action previous = () => {
             selector.Previous();
-            StartCoroutine(InputCooldown());
-        }
+            OnPreviousSelection();
+            StartCoroutine(StickInputCooldown());
+        };
+
+        if (menuSelection == MenuSelection.HorizontalSelection)
+            menuInputHandler.HandleHorizontalInput("P1_", previous, next);
+        else if (menuSelection == MenuSelection.VerticalSelection)
+            menuInputHandler.HandleVerticalInput("P1_", previous, next);
+
     }
 
     /// <summary>
@@ -121,20 +156,20 @@ public abstract class AbstractMenuManager : MonoBehaviour
     }
 
     #region IEnumerator methods
-    protected IEnumerator InputCooldown()
+    protected IEnumerator StickInputCooldown()
     {
-        acceptInput = false;
-        yield return new WaitForSeconds(INPUT_WAIT_TIME);
-        acceptInput = true;
+        acceptStickInput = false;
+        yield return new WaitForSeconds(stickMovedWaitTime);
+        acceptStickInput = true;
     }
 
     protected IEnumerator WaitBeforeTriggerAction(GameObject selectedGameObject)
     {
-        acceptInput = false;
+        acceptButtonInput = false;
         selector.HandleSelectedElement();
         yield return new WaitForSeconds(buttonPressedWaitTime);
         PerformActionOnSelectedElement(selectedGameObject);
-        acceptInput = true;
+        acceptButtonInput = true;
     }
     #endregion
 
@@ -147,6 +182,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         if (ComponentSelected != null)
             ComponentSelected(this, selectedComponent);
+    }
+
+    protected void OnNextSelection()
+    {
+        if (NavigationNext != null)
+            NavigationNext();
+    }
+
+    protected void OnPreviousSelection()
+    {
+        if (NavigationPrevious != null)
+            NavigationPrevious();
     }
     #endregion
 }

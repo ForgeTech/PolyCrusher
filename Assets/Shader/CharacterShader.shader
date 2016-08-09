@@ -15,7 +15,7 @@
 		Cull Back
 
 		CGPROGRAM
-         #pragma surface surf Standard alpha
+         #pragma surface surf Standard //alpha
  
          sampler2D _MainTex;
 		 fixed4 _FillColor;
@@ -42,10 +42,11 @@
 		ZWrite On
         ZTest LEqual
 		Lighting On
+		Cull Back
 		
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard alpha
+		#pragma surface surf Standard //alpha
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
