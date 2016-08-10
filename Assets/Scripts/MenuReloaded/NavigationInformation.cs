@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Contains information about the navigation index of each interactive element
@@ -21,6 +20,15 @@ public class NavigationInformation : MonoBehaviour
 
     [SerializeField]
     private Color pressedColor = Color.yellow;
+
+    [SerializeField]
+    private Vector3 originalScale = Vector3.one;
+
+    [SerializeField]
+    private Vector3 deselectedScale = Vector3.one * 0.9f;
+
+    [SerializeField]
+    private LeanTweenType easeType = LeanTweenType.easeOutSine;
     #endregion
 
     #region Properties
@@ -46,6 +54,21 @@ public class NavigationInformation : MonoBehaviour
     {
         get { return selectionID; }
         set { this.selectionID = value; }
+    }
+
+    public Vector3 OriginalScale
+    {
+        get { return this.originalScale; }
+    }
+
+    public Vector3 DeselectedScale
+    {
+        get { return this.deselectedScale; }
+    }
+
+    public LeanTweenType EaseType
+    {
+        get { return this.easeType; }
     }
     #endregion
 }

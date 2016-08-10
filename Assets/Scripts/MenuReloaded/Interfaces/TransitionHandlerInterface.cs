@@ -6,7 +6,7 @@ public enum TransitionEnum
     TextColorChange = 1,
     SizeChange = 2,
     ImageColorChange = 3,
-    LevelTransition = 4,
+    ScaleDescale = 4,
     NoOp = 5
 }
 
