@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TimeSphereScript : MonoBehaviour {
-
+public class TimeSphereScript : MonoBehaviour
+{
 	[SerializeField]
 	private float activeTime = 7.5f;
 
 	[SerializeField]
 	private float slowFactor = 4f;
 
+    [SerializeField]
+    private float fadeOutTweenTime = 0.3f;
+
 	void Start()
     {
-
 		StartCoroutine(WaitForDestroy());
-		Destroy(gameObject, activeTime);
+		
 
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
@@ -75,5 +77,9 @@ public class TimeSphereScript : MonoBehaviour {
 		// AND set the collider beneath the ground to trigger OnTriggerExit()
 		myCollider.center = new Vector3(0f,-25f,0f);
 
-	}
+        LeanTween.scale(gameObject, Vector3.zero, fadeOutTweenTime).setEase(LeanTweenType.easeOutSine);
+        yield return new WaitForSeconds(fadeOutTweenTime);
+
+        Destroy(gameObject);
+    }
 }
