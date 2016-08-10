@@ -1,39 +1,41 @@
 ﻿using System;
+using InControl;
 
 public class DefaultMenuInputHandler : MenuInputHandler
 {
-    readonly InputInterface input;
-    float stickDeadZone = 0.4f;
+    private readonly PlayerControlActions playerControlActions;
+    private float stickDeadZone = 0.4f;
 
-    public DefaultMenuInputHandler(InputInterface input)
+    public DefaultMenuInputHandler(PlayerControlActions playerControlActions)
     {
-        this.input = input;
+        this.playerControlActions = playerControlActions;
     }
 
-    public void HandleBackInput(string playerPrefix, Action onInput)
+    public void HandleBackInput(Action onInput)
     {
-        // TODO: Wait for InControl implementation
-    }
-
-    public void HandleHorizontalInput(string playerPrefix, Action onInputLeft, Action onInputRight)
-    {
-        if (input.GetHorizontal(playerPrefix) > stickDeadZone)
-            onInputRight();
-        else if (input.GetHorizontal(playerPrefix) < -stickDeadZone)
-            onInputLeft();
-    }
-
-    public void HandleSelectInput(string playerPrefix, Action onInput)
-    {
-        if (input.GetButtonDown(playerPrefix + "Ability"))
+        if (playerControlActions.Back)
             onInput();
     }
 
-    public void HandleVerticalInput(string playerPrefix, Action onInputLeft, Action onInputRight)
+    public void HandleHorizontalInput(Action onInputLeft, Action onInputRight)
     {
-        if (input.GetVertical(playerPrefix) > stickDeadZone)
+        if (playerControlActions.LeftHorizontal > stickDeadZone)
             onInputRight();
-        else if (input.GetVertical(playerPrefix) < -stickDeadZone)
+        else if (playerControlActions.LeftHorizontal < -stickDeadZone)
+            onInputLeft();
+    }
+
+    public void HandleSelectInput(Action onInput)
+    {
+        if (playerControlActions.Ability || playerControlActions.Join)
+            onInput();
+    }
+
+    public void HandleVerticalInput(Action onInputLeft, Action onInputRight)
+    {
+        if (playerControlActions.LeftVertical > stickDeadZone)
+            onInputRight();
+        else if (playerControlActions.LeftVertical < -stickDeadZone)
             onInputLeft();
     }
 }

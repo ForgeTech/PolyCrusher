@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using InControl;
 
 public enum MenuSelection
 {
@@ -36,7 +37,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
     #endregion
 
     protected SelectorInterface selector;
-    protected InputInterface input;
     protected MenuInputHandler menuInputHandler;
 
     protected bool acceptButtonInput = true;
@@ -86,8 +86,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         InitializeDictionary();
         InitializeSelector();
-        input = new TestInput();
-        menuInputHandler = new DefaultMenuInputHandler(input);
+        SetPlayerControlActions(PlayerControlActions.CreateWithGamePadBindings());
+    }
+
+    public void SetPlayerControlActions(PlayerControlActions action)
+    {
+        menuInputHandler = new DefaultMenuInputHandler(action);
     }
 
     protected void InitializeSelector()
@@ -101,7 +105,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void HandleSelection()
     {
         GameObject g;
-        menuInputHandler.HandleSelectInput("P1_", () => {
+        menuInputHandler.HandleSelectInput(() => {
             try {
                 components.TryGetValue(selector.Current, out g);
             }
@@ -134,9 +138,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
         };
 
         if (menuSelection == MenuSelection.HorizontalSelection)
-            menuInputHandler.HandleHorizontalInput("P1_", previous, next);
+            menuInputHandler.HandleHorizontalInput(previous, next);
         else if (menuSelection == MenuSelection.VerticalSelection)
-            menuInputHandler.HandleVerticalInput("P1_", previous, next);
+            menuInputHandler.HandleVerticalInput(previous, next);
 
     }
 

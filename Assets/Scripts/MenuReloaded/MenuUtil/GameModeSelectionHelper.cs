@@ -11,9 +11,6 @@ public class GameModeSelectionHelper : MonoBehaviour
     #region Inspector values
     [Header("General settings")]
     [SerializeField]
-    private float deselectionSize = 0.9f;
-
-    [SerializeField]
     private float tweenTime = 0.35f;
 
     [SerializeField]
