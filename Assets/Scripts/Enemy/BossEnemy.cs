@@ -473,6 +473,16 @@ public class BossEnemy : BaseEnemy
         UpdateHUDElements();
     }
 
+    public override void EnemySpawnScaleTween()
+    {
+        // Spawn scale
+        Vector3 originalScale = transform.localScale;
+        transform.localScale = Vector3.zero;
+
+        // Only tween the boss with the old tweening system, because with LeanTween there are some problems with the health bar.
+        StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
+    }
+
     protected override void DestroyEnemy()
     {
         //Disable

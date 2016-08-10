@@ -526,13 +526,12 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             EnemyKilled(this);
     }
 
-    public void EnemySpawnScaleTween()
+    public virtual void EnemySpawnScaleTween()
     {
         // Spawn scale
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
 
-        //StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
         LeanTween.scale(this.gameObject, originalScale, 0.7f).setEase(AnimCurveContainer.AnimCurve.pingPong);
     }
 
