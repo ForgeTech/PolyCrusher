@@ -56,12 +56,24 @@ class SteamManager : MonoBehaviour
 
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
 
-    //Leaderboard
+    //current leaderboard handle
     private SteamLeaderboard_t currSteamLeaderboard;
 
     //persisted stats
-    public int totalGamesPlayed;
-    public int assesKilled;
+    private int totalGamesPlayed;
+    private int assesKilled;
+    private int totalGameStarts;
+    private int enemiesKilled;
+
+    //current stats
+    private float waveReached;
+    private int playerCount;
+    private bool smartEnough;
+    private bool creditsViewed;
+    private bool mangoPicked;
+    private bool firstWaveDeath;
+    private bool trapDeath;
+    private bool mobileJoin;
 
     private void Awake()
     {
@@ -208,16 +220,66 @@ class SteamManager : MonoBehaviour
         if (!statsValid)
             return;
 
-        if (totalGamesPlayed >= 21)
+        #region Unlock and store achievements
+        
+        //games played
+        if (totalGamesPlayed == 21)
             UnlockAchievement(AchievementID.ACH_PLAY_21_GAMES);
-        if (assesKilled >= 1000)
+        else if (totalGamesPlayed == 42)
+            UnlockAchievement(AchievementID.ACH_PLAY_42_GAMES);
+
+        //enemies killed
+        if (assesKilled == 1000)
             UnlockAchievement(AchievementID.ACH_KILL_1000_ASSES);
+        if (enemiesKilled == 2)
+            UnlockAchievement(AchievementID.ACH_KILL_TWO_ENEMIES);
+
+        //waves reached
+        if(waveReached >= 10 && waveReached <= 19)
+            UnlockAchievement(AchievementID.ACH_REACH_W10);
+        else if (waveReached >= 20 && waveReached <= 29)
+            UnlockAchievement(AchievementID.ACH_REACH_W20);
+        else if (waveReached >= 30)
+            UnlockAchievement(AchievementID.ACH_REACH_W30);
+
+        //player count
+        if(playerCount == 1)
+            UnlockAchievement(AchievementID.ACH_PLAY_ALONE);
+        else if (playerCount == 4)
+            UnlockAchievement(AchievementID.ACH_PLAY_WITH_FOUR);
+
+        //menu
+        if (smartEnough)
+            UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
+        if (creditsViewed)
+            UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
+        if(totalGameStarts == 1)
+            UnlockAchievement(AchievementID.ACH_STARTED_GAME_ONCE);
+        else if (totalGameStarts == 3)
+            UnlockAchievement(AchievementID.ACH_STARTED_GAME_THRICE);
+        else if (totalGameStarts == 10)
+            UnlockAchievement(AchievementID.ACH_STARTED_GAME_TEN_TIMES);
+
+        //player death
+        if (firstWaveDeath)
+            UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
+        if (trapDeath)
+            UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
+
+        //player join
+        if (mobileJoin)
+            UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
+
+
+        #endregion
 
         //Store stats in the Steam database if necessary
         if (storeStats)
         {
             SteamUserStats.SetStat("TotalGamesPlayed", totalGamesPlayed);
+            SteamUserStats.SetStat("TotalGameStarts", totalGameStarts);
             SteamUserStats.SetStat("AssesKilled", assesKilled);
+            SteamUserStats.SetStat("EnemiesKilled", enemiesKilled);
 
             bool success = SteamUserStats.StoreStats();
             // If this failed, we never sent anything to the server, try again later.
@@ -319,6 +381,9 @@ class SteamManager : MonoBehaviour
 
             // load stats
             SteamUserStats.GetStat("TotalGamesPlayed", out totalGamesPlayed);
+            SteamUserStats.GetStat("TotalGameStarts", out totalGameStarts);
+            SteamUserStats.GetStat("AssesKilled", out assesKilled);
+            SteamUserStats.GetStat("EnemiesKilled", out enemiesKilled);
         }
         else
         {
@@ -355,19 +420,28 @@ class SteamManager : MonoBehaviour
     /// This method can be used by the DataCollector to send Data to the SteamManager.
     /// </summary>
     /// <param name="e">The Event that is sent by the DataCollector.</param>
-    public void logEvent(Event e)
+    public void logAchievementEvent(Event e)
     {
         switch (e.type)
         {
             case Event.TYPE.gameStart:
+                playerCount = (int)e.playerCount;
+                smartEnough = true;
                 break;
             case Event.TYPE.ability:
                 break;
             case Event.TYPE.death:
+                if (e.wave >= 1 && e.wave < 2)
+                    firstWaveDeath = true;
+                if (e.enemy.Equals("laser_trap"))
+                    trapDeath = true;
                 break;
             case Event.TYPE.join:
+                if (e.cause.Equals("smartphone"))
+                    mobileJoin = true;
                 break;
             case Event.TYPE.kill:
+                enemiesKilled++;
                 if (e.enemy.Equals("MeleeVeryWeak"))
                     assesKilled++;
                 break;
@@ -377,14 +451,34 @@ class SteamManager : MonoBehaviour
                 break;
             case Event.TYPE.sessionEnd:
                 totalGamesPlayed++;
-                SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.mode + " - " + e.playerCount + " Players");
+                waveReached = (float)e.wave;
+                //save leaderboard entry
+                SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.mode + " - " + e.playerCount + " players");
                 LeaderboardFindResult.Set(handle);
-                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)e.wave, null, 0);
+                if(e.mode.Equals("normal"))
+                    SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)waveReached, null, 0);
+                if (e.mode.Equals("yolo"))
+                    SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, null, 0);
+                //store new persisted stats next frame
+                storeStats = true;
                 break;
         }
+    }
 
-        // update stats next frame
-        storeStats = true;
+    public void logAchievementData(AchievementID id)
+    {
+        switch (id)
+        {
+            case AchievementID.ACH_STARTED_GAME_ONCE:
+                totalGameStarts++;
+                break;
+            case AchievementID.ACH_CREDITS_VIEWED:
+                creditsViewed = true;
+                break;
+            case AchievementID.ACH_PICK_SPACETIME_MANGO:
+                mangoPicked = true;
+                break;
+        }
     }
 
     /// <summary>
