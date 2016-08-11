@@ -15,7 +15,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     #region Inspector fields
     [Header("Selection Settings")]
     [SerializeField]
-    private int startIndex;
+    protected int startIndex;
 
     [SerializeField]
     private MenuSelection menuSelection = MenuSelection.VerticalSelection;
@@ -94,7 +94,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
         menuInputHandler = new DefaultMenuInputHandler(action);
     }
 
-    protected void InitializeSelector()
+    public void SwitchNavigationActivationState()
+    {
+        acceptStickInput = !acceptStickInput;
+    }
+
+    protected virtual void InitializeSelector()
     {
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
         ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);

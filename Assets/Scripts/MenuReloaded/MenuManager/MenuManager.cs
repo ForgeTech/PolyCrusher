@@ -1,11 +1,11 @@
 ﻿public class MenuManager : AbstractMenuManager
 {
-    public void RegisterSubMenu()
+    public void DeactivateInput()
     {
         this.isInputActive = false;
     }
 
-    public void DeRegisterSubMenu()
+    public void ActivateInput()
     {
         this.isInputActive = true;
     }
