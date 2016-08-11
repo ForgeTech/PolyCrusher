@@ -54,6 +54,7 @@ class SteamManager : MonoBehaviour
     private CallResult<LeaderboardFindResult_t> LeaderboardFindResult;
     private CallResult<LeaderboardScoreUploaded_t> LeaderboardScoreUploaded;
 
+    //achievements
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
 
     //current leaderboard handle
@@ -61,19 +62,26 @@ class SteamManager : MonoBehaviour
 
     //persisted stats
     private int totalGamesPlayed;
-    private int assesKilled;
     private int totalGameStarts;
+
+    private int charactersPlayed;
+    private bool charactersPlayedAchieved = false;
+
+    private int assesKilled;
+    private bool assesKilledAchieved = false;
+
     private int enemiesKilled;
+    private bool enemiesKilledAchieved = false;
+
+    private int enemiesCut;
+    private bool enemiesCutAchieved = false;
+
+    private int bulletsShot;
+    private bool bulletsShotAchieved = false;
 
     //current stats
-    private float waveReached;
-    private int playerCount;
-    private bool smartEnough;
-    private bool creditsViewed;
-    private bool mangoPicked;
-    private bool firstWaveDeath;
-    private bool trapDeath;
-    private bool mobileJoin;
+    private IDictionary<string, int> characterPowerups = new Dictionary<string, int>();
+    private int totalPowerups;
 
     private void Awake()
     {
@@ -90,7 +98,7 @@ class SteamManager : MonoBehaviour
             // The most common case where this happens is the SteamManager getting destroyed via Application.Quit() and having some code in some OnDestroy which gets called afterwards, creating a new SteamManager.
             throw new System.Exception("Tried to Initialize the SteamAPI twice in one session!");
         }
-        
+
         DontDestroyOnLoad(gameObject);
 
         if (!Packsize.Test())
@@ -147,7 +155,7 @@ class SteamManager : MonoBehaviour
 
         everInitialized = true;
     }
-    
+
     private void OnEnable()
     {
         if (instance == null)
@@ -171,9 +179,36 @@ class SteamManager : MonoBehaviour
         // cache to compare in callbacks
         gameID = new CGameID(SteamUtils.GetAppID());
 
-        // add arbitrary achievements
-        achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Played 21 games."));
-        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Killed 1000 asses."));
+        // add achievements
+        achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games."));
+        achievements.Add(AchievementID.ACH_PLAY_42_GAMES, new Achievement("The truth - but what was the question?", "Play 42 games."));
+        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Kill 1000 asses."));
+        achievements.Add(AchievementID.ACH_CURRENT_HIGHSCORE, new Achievement("15 minutes of fame", "Rank one on any leaderboard!"));
+        achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters."));
+        achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));
+        achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone."));
+        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game."));
+        achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup."));
+        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credits."));
+        achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));
+        achievements.Add(AchievementID.ACH_A_MILLION_SHOTS, new Achievement("A million shots", "Fire a million bullets."));
+        achievements.Add(AchievementID.ACH_KILL_TWO_ENEMIES, new Achievement("Second blood", "Kill two enemies."));
+        achievements.Add(AchievementID.ACH_DIED_IN_W1, new Achievement("Sean Beaned", "Die in the very first wave."));
+        achievements.Add(AchievementID.ACH_STARTED_GAME_ONCE, new Achievement("Bronze Medal", "Start game once."));
+        achievements.Add(AchievementID.ACH_STARTED_GAME_THRICE, new Achievement("Silver Medal", "Start game thrice."));
+        achievements.Add(AchievementID.ACH_STARTED_GAME_TEN_TIMES, new Achievement("Gold Medal", "Start game ten times."));
+        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone."));
+        achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10."));
+        achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20."));
+        achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));
+        achievements.Add(AchievementID.ACH_KILL_B055_WITH_CHICKEN, new Achievement("Parricide", "Kill B055 with a chicken."));
+        achievements.Add(AchievementID.ACH_KILL_B055_WITH_CUTTING, new Achievement("Chicken Chop Suey", "Kill B055 with the cutting powerup."));
+        achievements.Add(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 40 enemies with one poly."));
+        achievements.Add(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU, new Achievement("Menu Whizz Kid", "Smart enough for the menu!"));
+        achievements.Add(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES, new Achievement("Survival Camp", "Survive yolo-mode for longer than 5 minutes."));
+        achievements.Add(AchievementID.ACH_LAST_MAN_STANDING, new Achievement("Last Man Standing", "In a 4 player game just one survives the wave with 10% health."));
+        achievements.Add(AchievementID.ACH_DIED_IN_TRAP, new Achievement("Captain Obvious", "Die in a trap."));
+        achievements.Add(AchievementID.ACH_NO_DAMAGE_UNTIL_W10, new Achievement("Halfgodlike", "Don't take any damage until wave 10."));
 
         // register callbacks
         GameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
@@ -182,7 +217,7 @@ class SteamManager : MonoBehaviour
         UserAchievementStored = Callback<UserAchievementStored_t>.Create(OnAchievementStored);
         LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(OnLeaderboardFindResult);
         LeaderboardScoreUploaded = CallResult<LeaderboardScoreUploaded_t>.Create(OnLeaderboardScoreUploaded);
-        
+
         requestedStats = false;
         statsValid = false;
 
@@ -220,8 +255,8 @@ class SteamManager : MonoBehaviour
         if (!statsValid)
             return;
 
-        #region Unlock and store achievements
-        
+        #region unlock persisted achievements
+
         //games played
         if (totalGamesPlayed == 21)
             UnlockAchievement(AchievementID.ACH_PLAY_21_GAMES);
@@ -229,47 +264,43 @@ class SteamManager : MonoBehaviour
             UnlockAchievement(AchievementID.ACH_PLAY_42_GAMES);
 
         //enemies killed
-        if (assesKilled == 1000)
+        if (assesKilled >= 1000 && !assesKilledAchieved)
+        {
             UnlockAchievement(AchievementID.ACH_KILL_1000_ASSES);
-        if (enemiesKilled == 2)
+            assesKilledAchieved = true;
+        }
+        if (enemiesKilled >= 2 && !enemiesKilledAchieved)
+        {
             UnlockAchievement(AchievementID.ACH_KILL_TWO_ENEMIES);
+            enemiesKilledAchieved = true;
+        }
+        if (enemiesCut >= 100 && !enemiesCutAchieved)
+        {
+            UnlockAchievement(AchievementID.ACH_CUT_100_ENEMIES);
+            enemiesCutAchieved = true;
+        }
 
-        //waves reached
-        if(waveReached >= 10 && waveReached <= 19)
-            UnlockAchievement(AchievementID.ACH_REACH_W10);
-        else if (waveReached >= 20 && waveReached <= 29)
-            UnlockAchievement(AchievementID.ACH_REACH_W20);
-        else if (waveReached >= 30)
-            UnlockAchievement(AchievementID.ACH_REACH_W30);
-
-        //player count
-        if(playerCount == 1)
-            UnlockAchievement(AchievementID.ACH_PLAY_ALONE);
-        else if (playerCount == 4)
-            UnlockAchievement(AchievementID.ACH_PLAY_WITH_FOUR);
+        //players
+        if (charactersPlayed == 63 && !charactersPlayedAchieved) //bitwise filled int -> 111111
+        {
+            UnlockAchievement(AchievementID.ACH_PLAY_ALL_CHARACTERS);
+            charactersPlayedAchieved = true;
+        }
 
         //menu
-        if (smartEnough)
-            UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
-        if (creditsViewed)
-            UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
-        if(totalGameStarts == 1)
+        if (totalGameStarts == 1)
             UnlockAchievement(AchievementID.ACH_STARTED_GAME_ONCE);
         else if (totalGameStarts == 3)
             UnlockAchievement(AchievementID.ACH_STARTED_GAME_THRICE);
         else if (totalGameStarts == 10)
             UnlockAchievement(AchievementID.ACH_STARTED_GAME_TEN_TIMES);
 
-        //player death
-        if (firstWaveDeath)
-            UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
-        if (trapDeath)
-            UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
-
-        //player join
-        if (mobileJoin)
-            UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
-
+        //bullets shot
+        if (bulletsShot >= 1000000 && !bulletsShotAchieved)
+        {
+            UnlockAchievement(AchievementID.ACH_A_MILLION_SHOTS);
+            bulletsShotAchieved = true;
+        }
 
         #endregion
 
@@ -280,6 +311,8 @@ class SteamManager : MonoBehaviour
             SteamUserStats.SetStat("TotalGameStarts", totalGameStarts);
             SteamUserStats.SetStat("AssesKilled", assesKilled);
             SteamUserStats.SetStat("EnemiesKilled", enemiesKilled);
+            SteamUserStats.SetStat("EnemiesCut", enemiesCut);
+            SteamUserStats.SetStat("BulletsShot", bulletsShot);
 
             bool success = SteamUserStats.StoreStats();
             // If this failed, we never sent anything to the server, try again later.
@@ -306,6 +339,7 @@ class SteamManager : MonoBehaviour
 
             // mark it down
             SteamUserStats.SetAchievement(id.ToString());
+            Debug.Log("Achievement with ID " + id.ToString() + " unlocked");
 
             // store stats
             storeStats = true;
@@ -315,6 +349,8 @@ class SteamManager : MonoBehaviour
             Debug.Log("AchievementID not found in Dictionary");
         }
     }
+
+    #region SteamAPI callbacks
 
     private void OnAchievementStored(UserAchievementStored_t pCallback)
     {
@@ -326,7 +362,7 @@ class SteamManager : MonoBehaviour
         else
             Debug.Log("Achievement '" + pCallback.m_rgchAchievementName + "' progress callback, (" + pCallback.m_nCurProgress + "," + pCallback.m_nMaxProgress + ")");
     }
-    
+
     private void OnUserStatsStored(UserStatsStored_t pCallback)
     {
         if (!((ulong)gameID == pCallback.m_nGameID))
@@ -352,7 +388,7 @@ class SteamManager : MonoBehaviour
             Debug.Log("StoreStats - failed, " + pCallback.m_eResult);
         }
     }
-    
+
     private void OnUserStatsReceived(UserStatsReceived_t pCallback)
     {
         if (!((ulong)gameID == pCallback.m_nGameID))
@@ -384,6 +420,8 @@ class SteamManager : MonoBehaviour
             SteamUserStats.GetStat("TotalGameStarts", out totalGameStarts);
             SteamUserStats.GetStat("AssesKilled", out assesKilled);
             SteamUserStats.GetStat("EnemiesKilled", out enemiesKilled);
+            SteamUserStats.GetStat("EnemiesCut", out enemiesCut);
+            SteamUserStats.GetStat("BulletsShot", out bulletsShot);
         }
         else
         {
@@ -410,11 +448,18 @@ class SteamManager : MonoBehaviour
             currSteamLeaderboard = pCallback.m_hSteamLeaderboard;
         }
     }
-    
+
     private void OnLeaderboardScoreUploaded(LeaderboardScoreUploaded_t pCallback, bool bIOFailure)
     {
         Debug.Log("[" + LeaderboardScoreUploaded_t.k_iCallback + " - LeaderboardScoreUploaded] - " + pCallback.m_bSuccess + " -- " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_nScore + " -- " + pCallback.m_bScoreChanged + " -- " + pCallback.m_nGlobalRankNew + " -- " + pCallback.m_nGlobalRankPrevious);
+
+        if (pCallback.m_nGlobalRankNew == 1) //still to test - is 1 the top rank?
+            UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
     }
+
+    #endregion
+
+    #region log and unlock current achievements
 
     /// <summary>
     /// This method can be used by the DataCollector to send Data to the SteamManager.
@@ -425,42 +470,46 @@ class SteamManager : MonoBehaviour
         switch (e.type)
         {
             case Event.TYPE.gameStart:
-                playerCount = (int)e.playerCount;
-                smartEnough = true;
-                break;
-            case Event.TYPE.ability:
+                PerformGameStartActions(e);
                 break;
             case Event.TYPE.death:
                 if (e.wave >= 1 && e.wave < 2)
-                    firstWaveDeath = true;
+                    UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
                 if (e.enemy.Equals("laser_trap"))
-                    trapDeath = true;
+                    UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
                 break;
             case Event.TYPE.join:
                 if (e.cause.Equals("smartphone"))
-                    mobileJoin = true;
+                    UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
                 break;
             case Event.TYPE.kill:
                 enemiesKilled++;
                 if (e.enemy.Equals("MeleeVeryWeak"))
                     assesKilled++;
+                if (e.enemy.Equals("B055"))
+                {
+                    if (e.cause.Equals("ChickenAbility"))
+                        UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CHICKEN);
+                    else if (e.character.Equals("_LineManager"))
+                        UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CUTTING);
+                }
+                if (e.character.Equals("_LineManager"))
+                    enemiesCut++;
                 break;
             case Event.TYPE.powerup:
+                foreach (KeyValuePair<string, int> entry in characterPowerups)
+                {
+                    if (e.character.Equals(entry.Key))
+                        characterPowerups[entry.Key]++;
+                }
+                totalPowerups++;
                 break;
             case Event.TYPE.superAbility:
+                if (e.kills >= 40)
+                    UnlockAchievement(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY);
                 break;
             case Event.TYPE.sessionEnd:
-                totalGamesPlayed++;
-                waveReached = (float)e.wave;
-                //save leaderboard entry
-                SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.mode + " - " + e.playerCount + " players");
-                LeaderboardFindResult.Set(handle);
-                if(e.mode.Equals("normal"))
-                    SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)waveReached, null, 0);
-                if (e.mode.Equals("yolo"))
-                    SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, null, 0);
-                //store new persisted stats next frame
-                storeStats = true;
+                PerformGameEndActions(e);
                 break;
         }
     }
@@ -473,13 +522,116 @@ class SteamManager : MonoBehaviour
                 totalGameStarts++;
                 break;
             case AchievementID.ACH_CREDITS_VIEWED:
-                creditsViewed = true;
+                UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
                 break;
             case AchievementID.ACH_PICK_SPACETIME_MANGO:
-                mangoPicked = true;
+                UnlockAchievement(AchievementID.ACH_PICK_SPACETIME_MANGO);
+                break;
+            case AchievementID.ACH_A_MILLION_SHOTS:
+                bulletsShot++;
+                break;
+            case AchievementID.ACH_LAST_MAN_STANDING:
+                UnlockAchievement(AchievementID.ACH_LAST_MAN_STANDING);
+                break;
+            case AchievementID.ACH_NO_DAMAGE_UNTIL_W10:
+                UnlockAchievement(AchievementID.ACH_NO_DAMAGE_UNTIL_W10);
                 break;
         }
     }
+
+    /// <summary>
+    /// Performs all actions related to the game start event.
+    /// </summary>
+    /// <param name="e">The game start event.</param>
+    private void PerformGameStartActions(Event e)
+    {
+        //playercount achievements
+        if (e.playerCount == 1)
+            UnlockAchievement(AchievementID.ACH_PLAY_ALONE);
+        else if (e.playerCount == 4)
+            UnlockAchievement(AchievementID.ACH_PLAY_WITH_FOUR);
+
+        //smart enough = game started
+        UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
+
+        foreach (string character in e.characters)
+        {
+            switch (character) //fill bitwise to save info in just one int
+            {
+                case "Timeshifter":
+                    if ((charactersPlayed & 1) != 1)
+                        charactersPlayed += 1;
+                    break;
+                case "Birdman":
+                    if ((charactersPlayed & 2) != 2)
+                        charactersPlayed += 2;
+                    break;
+                case "Charger":
+                    if ((charactersPlayed & 4) != 4)
+                        charactersPlayed += 4;
+                    break;
+                case "Fatman":
+                    if ((charactersPlayed & 8) != 8)
+                        charactersPlayed += 8;
+                    break;
+                case "Babuschka":
+                    if ((charactersPlayed & 16) != 16)
+                        charactersPlayed += 16;
+                    break;
+                case "Pantomime":
+                    if ((charactersPlayed & 32) != 32)
+                        charactersPlayed += 32;
+                    break;
+            }
+            characterPowerups.Add(character, 0);
+        }
+    }
+
+    /// <summary>
+    /// Performs all actions related to the game end event.
+    /// </summary>
+    /// <param name="e">The game end event.</param>
+    private void PerformGameEndActions(Event e)
+    {
+        //update played games
+        totalGamesPlayed++;
+        
+        //waves reached achievement
+        if (e.wave >= 10)
+            UnlockAchievement(AchievementID.ACH_REACH_W10);
+        if (e.wave >= 20)
+            UnlockAchievement(AchievementID.ACH_REACH_W20);
+        if (e.wave >= 30)
+            UnlockAchievement(AchievementID.ACH_REACH_W30);
+
+        //save leaderboard entry
+        SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.mode + " - " + e.playerCount + " players");
+        LeaderboardFindResult.Set(handle);
+        if (e.mode.Equals("normal"))
+        {
+            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)e.wave, null, 0);
+        }
+        if (e.mode.Equals("yolo"))
+        {
+            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, null, 0);
+            if (e.time / 60000f >= 5f)
+                UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
+        }
+
+        //powerup achievement
+        foreach (KeyValuePair<string, int> entry in characterPowerups)
+        {
+            if (entry.Value == totalPowerups && characterPowerups.Count > 1)
+                UnlockAchievement(AchievementID.ACH_GET_ALL_POWERUPS);
+        }
+        characterPowerups.Clear();
+        totalPowerups = 0;
+
+        //store new persisted stats next frame
+        storeStats = true;
+    }
+    
+    #endregion
 
     /// <summary>
     // OnApplicationQuit gets called too early to shutdown the SteamAPI. Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
