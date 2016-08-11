@@ -82,6 +82,9 @@ public class CameraSystem : MonoBehaviour
     [SerializeField]
     protected float cameraAdaptDampingTime = 1f;
 
+    [SerializeField]
+    protected Vector2 middlePointOffset = Vector2.zero;
+
     //Variables for the custom delta time calculation.
     float lastFrame = 0f;
     float currentFrame = 0f;
@@ -229,7 +232,9 @@ public class CameraSystem : MonoBehaviour
     private void MoveCamera()
     {
         avg = (Time.deltaTime + Time.smoothDeltaTime + myDelta) * 0.3333333f;
-        Vector3 newPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
+        Vector3 newPosition = new Vector3(playerBounds.center.x + middlePointOffset.x,
+            transform.position.y,
+            playerBounds.center.z + middlePointOffset.y);
 
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, cameraDamping, maxSpeed, avg);
     }
@@ -260,38 +265,6 @@ public class CameraSystem : MonoBehaviour
         //Debug.Log("Height: " + newHeight + "CalcValue: " + calcValue);
         //Debug.Log("CameraSystem: SquareSize: " + squareSize + ", ClampValue: " + clampValue);
         
-    }
-
-    /// <summary>
-    /// Calculates if a edge of the camera is "hitting" a player.
-    /// </summary>
-    /// <returns>True if one player is not in screenview.</returns>
-    private bool CalculateMoveRestrictions()
-    {
-        bool allPlayersInside = true;
-
-        for (int i = 0; i < players.Length; i++)
-        {
-            Vector3 viewPos = cam.WorldToViewportPoint(players[i].transform.position);
-
-            // Left
-            if (viewPos.x < 0f)
-                return false;
-
-            // Bottom
-            if (viewPos.y < 0f)
-                return false;
-
-            // Right
-            if (viewPos.y > 1f)
-                return false;
-
-            // Top
-            if (viewPos.y > 1f)
-                return false;
-        }
-
-        return allPlayersInside;
     }
 
     /// <summary>

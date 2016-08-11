@@ -2215,7 +2215,7 @@ MonoBehaviour:
   energyLevel: {fileID: 11401098}
   healthLevel: {fileID: 11474698}
   innerEnergyCircle: {fileID: 11446958}
-  cameraEdgeDetectionOffset: -.00999999978
+  cameraEdgeDetectionOffset: -.100000001
   bloodParticles: {fileID: 162124, guid: 86cc07e97b038b549b89bfa50e6dbff8, type: 2}
   characterVoice: {fileID: 145590}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
@@ -2452,6 +2452,10 @@ Prefab:
       propertyPath: chickenPrefab
       value: 
       objectReference: {fileID: 173664, guid: 97815cabb0a802e44b799a2c8182f53b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: cameraEdgeDetectionOffset
+      value: -.100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134618}
