@@ -11,7 +11,7 @@ using Steamworks;
 class SteamManager : MonoBehaviour
 {
     private static SteamManager instance;
-    private static SteamManager Instance
+    public static SteamManager Instance
     {
         get
         {
@@ -465,7 +465,7 @@ class SteamManager : MonoBehaviour
     /// This method can be used by the DataCollector to send Data to the SteamManager.
     /// </summary>
     /// <param name="e">The Event that is sent by the DataCollector.</param>
-    public void logAchievementEvent(Event e)
+    public void LogAchievementEvent(Event e)
     {
         switch (e.type)
         {
@@ -514,7 +514,7 @@ class SteamManager : MonoBehaviour
         }
     }
 
-    public void logAchievementData(AchievementID id)
+    public void LogAchievementData(AchievementID id)
     {
         switch (id)
         {
