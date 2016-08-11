@@ -484,9 +484,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: e35208a7e84094546b0a00e16753bf6d, type: 2}
-  - {fileID: 2100000, guid: 75d616bc8dd54b74fb6165a0281257e7, type: 2}
-  - {fileID: 2100000, guid: 13973b4b16aae3546be8fe4747b33d6b, type: 2}
+  - {fileID: 2100000, guid: 16d9857587d3c25419e6f79d9c25b567, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -623,6 +621,10 @@ Prefab:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: enemyName
       value: MeleeWeak
       objectReference: {fileID: 0}
@@ -630,6 +632,18 @@ Prefab:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 75d616bc8dd54b74fb6165a0281257e7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 13973b4b16aae3546be8fe4747b33d6b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 16d9857587d3c25419e6f79d9c25b567, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 110256}
