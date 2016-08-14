@@ -126,9 +126,8 @@ public class CollectibleManager : MonoBehaviour {
                     for(int i = 0; i < PowerUpSigns.Length; i++)
                     {
                         Vector3 targetPosition = PowerUpSpawnPoints[actualSpawnpoint].transform.position;
-                        Quaternion neededRotation = Quaternion.LookRotation(PowerUpSigns[i].transform.position - targetPosition);
-
-                        LeanTween.rotateLocal(PowerUpSigns[i], neededRotation.eulerAngles, 0.3f).setEase(LeanTweenType.easeOutSine);
+                        Quaternion neededRotation = Quaternion.LookRotation(targetPosition - PowerUpSigns[i].transform.position);
+                        LeanTween.rotate(PowerUpSigns[i], neededRotation.eulerAngles, 0.3f).setEase(LeanTweenType.easeOutSine);
                     }
                 }
 			}
