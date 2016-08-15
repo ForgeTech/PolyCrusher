@@ -21,6 +21,7 @@ public class PlayerControlActions : PlayerActionSet
     public PlayerOneAxisAction LeftVertical;
     public PlayerOneAxisAction RightHorizontal;
     public PlayerOneAxisAction RightVertical;
+    public PlayerAction NullAction;
 
     // Use this for initialization
     public PlayerControlActions () {
@@ -36,6 +37,7 @@ public class PlayerControlActions : PlayerActionSet
         RightRight = CreatePlayerAction("RightRight");
         RightUp = CreatePlayerAction("RightUp");
         RightDown = CreatePlayerAction("RightDown");
+        NullAction = CreatePlayerAction("Null");
         LeftHorizontal = CreateOneAxisPlayerAction(LeftLeft, LeftRight);
         LeftVertical = CreateOneAxisPlayerAction(LeftUp, LeftDown);
         RightHorizontal = CreateOneAxisPlayerAction(RightLeft, RightRight);
@@ -44,21 +46,10 @@ public class PlayerControlActions : PlayerActionSet
     }
 
     //Keyboard Controls
-    public static PlayerControlActions CreateWithKeyboardBindings()
+    public static PlayerControlActions CreateNullBinding()
     {
         PlayerControlActions p = new PlayerControlActions();
-        p.Join.AddDefaultBinding(Key.Return);
-        p.Back.AddDefaultBinding(Key.Backspace);
-        p.Pause.AddDefaultBinding(Key.Escape);
-        p.Ability.AddDefaultBinding(Key.Space);
-        p.LeftLeft.AddDefaultBinding(Key.A);
-        p.LeftRight.AddDefaultBinding(Key.D);
-        p.LeftUp.AddDefaultBinding(Key.W);
-        p.LeftDown.AddDefaultBinding(Key.S);
-        p.RightLeft.AddDefaultBinding(Key.LeftArrow);
-        p.RightRight.AddDefaultBinding(Key.RightArrow);
-        p.RightUp.AddDefaultBinding(Key.UpArrow);
-        p.RightDown.AddDefaultBinding(Key.DownArrow);
+        p.NullAction.AddDefaultBinding(InputControlType.None);
         return p;
     }
 
