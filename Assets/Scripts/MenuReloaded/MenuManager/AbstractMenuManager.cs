@@ -54,6 +54,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public delegate void NavigationHandler();
     public event NavigationHandler NavigationNext;
     public event NavigationHandler NavigationPrevious;
+
+    public delegate void PlayerActionControlChangedHandler(PlayerControlActions playerAction);
+    public event PlayerActionControlChangedHandler PlayerActionChanged;
     #endregion
 
     #region Properties
@@ -78,11 +81,14 @@ public abstract class AbstractMenuManager : MonoBehaviour
                 HandleNavigation();
 
             if (acceptButtonInput)
+            {
                 HandleSelection();
+                HandleBackSelection();
+            }
         }
     }
 
-    public void InitializeMenuManager()
+    public virtual void InitializeMenuManager()
     {
         InitializeDictionary();
         InitializeSelector();
@@ -92,6 +98,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public void SetPlayerControlActions(PlayerControlActions action)
     {
         menuInputHandler = new DefaultMenuInputHandler(action);
+        OnPlayerActionChanged(action);
     }
 
     public void SwitchNavigationActivationState()
@@ -118,6 +125,14 @@ public abstract class AbstractMenuManager : MonoBehaviour
                 throw e;
             }
             StartCoroutine(WaitBeforeTriggerAction(g));
+        });
+    }
+
+    protected virtual void HandleBackSelection()
+    {
+        GameObject g;
+        menuInputHandler.HandleBackInput(() => {
+            // TODO Call back action
         });
     }
 
@@ -203,6 +218,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         if (NavigationPrevious != null)
             NavigationPrevious();
+    }
+
+    protected void OnPlayerActionChanged(PlayerControlActions playerAction)
+    {
+        if (PlayerActionChanged != null)
+            PlayerActionChanged(playerAction);
     }
     #endregion
 }

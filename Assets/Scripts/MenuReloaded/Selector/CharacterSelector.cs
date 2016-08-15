@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System;
 
+/// <summary>
+/// A special selector which does its selection logic based on the CharacterSelectionHelper.
+/// </summary>
 public class CharacterSelector : Selector
 {
+    private static int NULL_SELECTION = -1;
     private CharacterSelectionHelper selectionHelper;
     private AbstractMenuManager menuManager;
-    private int selectedIndex = -1;
+    private int selectedIndex = NULL_SELECTION;
 
     public CharacterSelector(int startIndex, Dictionary<int, GameObject> components,
         TransitionHandlerInterface[] transitionHandlers,
@@ -25,7 +28,7 @@ public class CharacterSelector : Selector
         if (!isAlreadySelected)             // Normal selection case
             HandleCharacterSelected(Current);
         else if (selectedIndex == Current)  // Deselection case
-            HandleCharacterSelected(-1);
+            HandleCharacterSelected(NULL_SELECTION);
     }
 
     private void HandleCharacterSelected(int selectedIndex)

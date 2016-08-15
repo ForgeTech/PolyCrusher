@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using InControl;
+﻿using InControl;
 
 public class PlayerControlActions : PlayerActionSet
 {
-
     public PlayerAction Join;
     public PlayerAction Back;
     public PlayerAction Pause;
@@ -21,7 +18,7 @@ public class PlayerControlActions : PlayerActionSet
     public PlayerOneAxisAction LeftVertical;
     public PlayerOneAxisAction RightHorizontal;
     public PlayerOneAxisAction RightVertical;
-    public PlayerAction NullAction;
+    public PlayerAction NullAction = null;
 
     // Use this for initialization
     public PlayerControlActions () {
@@ -43,6 +40,11 @@ public class PlayerControlActions : PlayerActionSet
         RightHorizontal = CreateOneAxisPlayerAction(RightLeft, RightRight);
         RightVertical = CreateOneAxisPlayerAction(RightUp, RightDown);
 
+    }
+
+    public bool IsNullAction()
+    {
+        return NullAction != null ? true : false;
     }
 
     //Keyboard Controls
@@ -76,6 +78,4 @@ public class PlayerControlActions : PlayerActionSet
         p.RightDown.AddDefaultBinding(InputControlType.RightStickDown);
         return p;
     }
-
-    
 }

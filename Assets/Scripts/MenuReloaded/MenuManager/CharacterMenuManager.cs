@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CharacterMenuManager : MenuManager
 {
@@ -9,10 +8,24 @@ public class CharacterMenuManager : MenuManager
     protected override void Start()
     {
         base.Start();
+        PlayerActionChanged += HandlePlayerActionChanged;
+
         InitializeComponentSize();
 
         if (selectionHelper == null)
             Debug.LogError("Selection helper is not assigned!");
+    }
+
+    private void HandlePlayerActionChanged(PlayerControlActions playerAction)
+    {
+        if (playerAction.IsNullAction())
+        {
+            // TODO: 
+        }
+        else
+        {
+            // TODO: 
+        }
     }
 
     private void InitializeComponentSize()
@@ -22,6 +35,14 @@ public class CharacterMenuManager : MenuManager
             if (pair.Key != Selector.Current)
                 pair.Value.GetComponent<RectTransform>().localScale = Vector3.zero;
         }
+    }
+
+    public override void InitializeMenuManager()
+    {
+        InitializeDictionary();
+        InitializeSelector();
+        // Create initial null binding -> The control binding is set by another script
+        SetPlayerControlActions(PlayerControlActions.CreateNullBinding());
     }
 
     protected override void InitializeSelector()
