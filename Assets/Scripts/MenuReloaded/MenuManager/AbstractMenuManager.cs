@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using InControl;
 
 public enum MenuSelection
 {
@@ -87,6 +86,11 @@ public abstract class AbstractMenuManager : MonoBehaviour
                 HandleBackSelection();
             }
         }
+    }
+
+    public void SetMenuInputActive(bool isInputActive)
+    {
+        this.isInputActive = isInputActive;
     }
 
     public virtual void InitializeMenuManager()

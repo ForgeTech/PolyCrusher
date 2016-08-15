@@ -24,7 +24,7 @@ public class SubMenuManager : AbstractMenuManager
         LeanTween.scale(rect, Vector3.zero, fadeOutTweenTime).setEase(LeanTweenType.easeOutCubic);
 
         // DeRegister parent
-        parent.ActivateInput();
+        parent.SetMenuInputActive(true);
 
         // Destroy children
         foreach (var pair in components)
@@ -37,6 +37,6 @@ public class SubMenuManager : AbstractMenuManager
     public void RegisterParent(MenuManager parent)
     {
         this.parent = parent;
-        this.parent.DeactivateInput();
+        this.parent.SetMenuInputActive(false);
     }
 }
