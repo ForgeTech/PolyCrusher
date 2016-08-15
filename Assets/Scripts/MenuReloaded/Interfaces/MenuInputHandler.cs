@@ -6,4 +6,5 @@ public interface MenuInputHandler
     void HandleVerticalInput(Action onInputLeft, Action onInputRight);
     void HandleSelectInput(Action onInput);
     void HandleBackInput(Action onInput);
+    void DestroyPlayerAction();
 }

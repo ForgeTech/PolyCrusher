@@ -39,10 +39,13 @@ public class CharacterMenuManager : MenuManager
 
     public override void InitializeMenuManager()
     {
-        InitializeDictionary();
-        InitializeSelector();
-        // Create initial null binding -> The control binding is set by another script
-        SetPlayerControlActions(PlayerControlActions.CreateNullBinding());
+        // TODO: Only for testing 
+        base.InitializeMenuManager();
+
+        //InitializeDictionary();
+        //InitializeSelector();
+        //// Create initial null binding -> The control binding is set by another script
+        //SetPlayerControlActions(PlayerControlActions.CreateNullBinding());
     }
 
     protected override void InitializeSelector()

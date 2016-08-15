@@ -23,7 +23,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     [Header("Timing Settings")]
     [Tooltip("The time which is waited before the button action is triggered.")]
     [SerializeField]
-    private float buttonPressedWaitTime = 0.2f;
+    private float buttonPressedWaitTime = 0.3f;
 
     [SerializeField]
     private float stickMovedWaitTime = 0.3f;
@@ -40,7 +40,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected MenuInputHandler menuInputHandler;
 
     protected bool acceptButtonInput = true;
-    protected bool acceptStickInput = true;
+    protected bool acceptStickInputInternal = true;
+    protected bool acceptStickInputExternal = true;
     // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
     protected bool isInputActive = true;
 
@@ -77,7 +78,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         if (isInputActive)
         {
-            if (acceptStickInput)
+            if (acceptStickInputInternal && acceptStickInputExternal)
                 HandleNavigation();
 
             if (acceptButtonInput)
@@ -97,13 +98,16 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     public void SetPlayerControlActions(PlayerControlActions action)
     {
+        if (menuInputHandler != null)
+            menuInputHandler.DestroyPlayerAction();
+
         menuInputHandler = new DefaultMenuInputHandler(action);
         OnPlayerActionChanged(action);
     }
 
     public void SwitchNavigationActivationState()
     {
-        acceptStickInput = !acceptStickInput;
+        acceptStickInputExternal = !acceptStickInputExternal;
     }
 
     protected virtual void InitializeSelector()
@@ -161,7 +165,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
             menuInputHandler.HandleHorizontalInput(previous, next);
         else if (menuSelection == MenuSelection.VerticalSelection)
             menuInputHandler.HandleVerticalInput(previous, next);
-
     }
 
     /// <summary>
@@ -182,9 +185,11 @@ public abstract class AbstractMenuManager : MonoBehaviour
     #region IEnumerator methods
     protected IEnumerator StickInputCooldown()
     {
-        acceptStickInput = false;
+        acceptStickInputInternal = false;
+        acceptButtonInput = false;  // Also deactivate buttons so during the tween nothing can be pressed
         yield return new WaitForSeconds(stickMovedWaitTime);
-        acceptStickInput = true;
+        acceptButtonInput = true;
+        acceptStickInputInternal = true;
     }
 
     protected IEnumerator WaitBeforeTriggerAction(GameObject selectedGameObject)

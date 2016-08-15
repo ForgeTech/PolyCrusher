@@ -37,4 +37,9 @@ public class DefaultMenuInputHandler : MenuInputHandler
         else if (playerControlActions.LeftVertical < -stickDeadZone)
             onInputLeft();
     }
+
+    public void DestroyPlayerAction()
+    {
+        playerControlActions.Destroy();
+    }
 }

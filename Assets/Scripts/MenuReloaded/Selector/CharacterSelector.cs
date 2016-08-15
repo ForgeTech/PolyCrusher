@@ -26,15 +26,39 @@ public class CharacterSelector : Selector
         bool isAlreadySelected = selectionHelper.SelectionMap[Current];
 
         if (!isAlreadySelected)             // Normal selection case
+        {
             HandleCharacterSelected(Current);
+            selectionHelper.SelectAt(Current);
+        }
         else if (selectedIndex == Current)  // Deselection case
+        {
             HandleCharacterSelected(NULL_SELECTION);
+            selectionHelper.DeselectAt(Current);
+        }
+    }
+
+    protected override void OnNext()
+    {
+        if (!selectionHelper.SelectionMap[Current])
+            base.OnNext();
+
+        //// Backup routine which fixes a timing issue bug. (It may be that when the player selects often and then navigates, the count is not decremented since the deselection is not registered).
+        //int lastIndex = Current;
+        //base.OnNext();
+        //if (selectionHelper.SelectionMap[lastIndex])
+        //    selectionHelper.DeselectAt(lastIndex);
+    }
+
+    protected override void OnPrevious()
+    {
+        if (!selectionHelper.SelectionMap[Current])
+            base.OnPrevious();
     }
 
     private void HandleCharacterSelected(int selectedIndex)
     {
-        base.HandleSelectedElement();
-        this.selectedIndex = selectedIndex;
         menuManager.SwitchNavigationActivationState();
+        this.selectedIndex = selectedIndex;
+        base.HandleSelectedElement();
     }
 }
