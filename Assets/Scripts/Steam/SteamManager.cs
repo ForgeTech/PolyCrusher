@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Steamworks;
@@ -607,13 +608,14 @@ class SteamManager : MonoBehaviour
         //save leaderboard entry
         SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.mode + " - " + e.playerCount + " players");
         LeaderboardFindResult.Set(handle);
+        int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
         if (e.mode.Equals("normal"))
         {
-            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)e.wave, null, 0);
+            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)e.wave, additionalInfo, additionalInfo.Length);
         }
         if (e.mode.Equals("yolo"))
         {
-            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, null, 0);
+            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
             if (e.time / 60000f >= 5f)
                 UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
         }
