@@ -128,17 +128,17 @@ ModelImporter:
     400118: wumme_end
     400120: wumme_end_end
     4300000: charger_mesh
-    7400000: charger_rig|charger_rig|charge
-    7400002: charger_rig|charger_rig|charge_begin
-    7400004: charger_rig|charger_rig|death
-    7400006: charger_rig|charger_rig|idle
-    7400008: charger_rig|charger_rig|shoot
-    7400010: charger_rig|charger_rig|walk
-    7400012: charger_mesh|charger_rig|death
+    7400000: Charger|Charge
+    7400002: Charger|ChargeBegin
+    7400004: Charger|Death
+    7400006: Charger|Idle
+    7400008: Charger|Shoot
+    7400010: Charger|Walk
+    7400012: Charger|Death
     9500000: //RootNode
     13700000: charger_mesh
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -156,7 +156,895 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Charger|Idle
+      takeName: charger_rig|charger_rig|idle
+      firstFrame: 0
+      lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: charger_mesh
+        weight: 1
+      - path: charger_rig
+        weight: 1
+      - path: charger_rig/root
+        weight: 1
+      - path: charger_rig/root/leg_ik_L
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end/leg_ik_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end/leg_ik_R_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end/leg_orient_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end/leg_orient_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end/foot_lower_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end/foot_lower_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end/jetpack_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end/wing2_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end/wing2_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end/hand_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end/hand_R_end_end
+        weight: 1
+      - path: charger_rig/root/wumme
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end/wumme_end_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Charger|ChargeBegin
+      takeName: charger_rig|charger_rig|charge_begin
+      firstFrame: 0
+      lastFrame: 11
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: charger_mesh
+        weight: 1
+      - path: charger_rig
+        weight: 1
+      - path: charger_rig/root
+        weight: 1
+      - path: charger_rig/root/leg_ik_L
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end/leg_ik_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end/leg_ik_R_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end/leg_orient_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end/leg_orient_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end/foot_lower_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end/foot_lower_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end/jetpack_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end/wing2_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end/wing2_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end/hand_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end/hand_R_end_end
+        weight: 1
+      - path: charger_rig/root/wumme
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end/wumme_end_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Charger|Death
+      takeName: charger_rig|charger_rig|death
+      firstFrame: 0
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: charger_mesh
+        weight: 1
+      - path: charger_rig
+        weight: 1
+      - path: charger_rig/root
+        weight: 1
+      - path: charger_rig/root/leg_ik_L
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end/leg_ik_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end/leg_ik_R_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end/leg_orient_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end/leg_orient_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end/foot_lower_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end/foot_lower_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end/jetpack_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end/wing2_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end/wing2_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end/hand_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end/hand_R_end_end
+        weight: 1
+      - path: charger_rig/root/wumme
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end/wumme_end_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Charger|Charge
+      takeName: charger_rig|charger_rig|charge
+      firstFrame: 0
+      lastFrame: 7
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: charger_mesh
+        weight: 1
+      - path: charger_rig
+        weight: 1
+      - path: charger_rig/root
+        weight: 1
+      - path: charger_rig/root/leg_ik_L
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end/leg_ik_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end/leg_ik_R_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end/leg_orient_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end/leg_orient_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end/foot_lower_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end/foot_lower_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end/jetpack_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end/wing2_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end/wing2_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end/hand_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end/hand_R_end_end
+        weight: 1
+      - path: charger_rig/root/wumme
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end/wumme_end_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Charger|Shoot
+      takeName: charger_rig|charger_rig|shoot
+      firstFrame: 0
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: charger_mesh
+        weight: 1
+      - path: charger_rig
+        weight: 1
+      - path: charger_rig/root
+        weight: 1
+      - path: charger_rig/root/leg_ik_L
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end/leg_ik_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end/leg_ik_R_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end/leg_orient_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end/leg_orient_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end/foot_lower_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end/foot_lower_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end/jetpack_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end/wing2_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end/wing2_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end/hand_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end/hand_R_end_end
+        weight: 1
+      - path: charger_rig/root/wumme
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end/wumme_end_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Charger|Walk
+      takeName: charger_rig|charger_rig|walk
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: charger_mesh
+        weight: 1
+      - path: charger_rig
+        weight: 1
+      - path: charger_rig/root
+        weight: 1
+      - path: charger_rig/root/leg_ik_L
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_L/leg_ik_L_end/leg_ik_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end
+        weight: 1
+      - path: charger_rig/root/leg_ik_R/leg_ik_R_end/leg_ik_R_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_L/leg_orient_L_end/leg_orient_L_end_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end
+        weight: 1
+      - path: charger_rig/root/leg_orient_R/leg_orient_R_end/leg_orient_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_L/leg_lower_L/foot_upper_L/foot_lower_L/foot_lower_L_end/foot_lower_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/hip/leg_upper_R/leg_lower_R/foot_upper_R/foot_lower_R/foot_lower_R_end/foot_lower_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/jetpack/jetpack_end/jetpack_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_L/wing2_L/wing2_L_end/wing2_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/neck/head/wing1_R/wing2_R/wing2_R_end/wing2_R_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end/hand_L_end_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+        weight: 1
+      - path: charger_rig/root/spine_bottom/spine_midlower/spine_midupper/spine_top/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end/hand_R_end_end
+        weight: 1
+      - path: charger_rig/root/wumme
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end
+        weight: 1
+      - path: charger_rig/root/wumme/wumme_end/wumme_end_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
