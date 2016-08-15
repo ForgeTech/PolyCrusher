@@ -244,6 +244,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11421922, guid: bcdf17527ca82e048920dca8a8804f3d, type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421922, guid: bcdf17527ca82e048920dca8a8804f3d, type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421922, guid: bcdf17527ca82e048920dca8a8804f3d, type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bcdf17527ca82e048920dca8a8804f3d, type: 2}
   m_IsPrefabParent: 0
@@ -301,10 +313,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7e0a46fcf8ebe548860e441c34f8650, type: 3}
   m_IsPrefabParent: 0
---- !u!1 &598048195 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 193912, guid: bcdf17527ca82e048920dca8a8804f3d, type: 2}
-  m_PrefabInternal: {fileID: 526729207}
 --- !u!224 &598048196 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22427844, guid: bcdf17527ca82e048920dca8a8804f3d,
@@ -513,7 +521,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 415424, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11489478, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
       propertyPath: waveNumber
@@ -624,8 +632,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cad8412573a8274887d1ed8c97e27fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialBorder: {fileID: 598048195}
-  tutorialAddToPositionVector: {x: 0, y: 0, z: 6}
+  tutorialBorder: {fileID: 193912, guid: bcdf17527ca82e048920dca8a8804f3d, type: 2}
+  tutorialAddToPositionVector: {x: 0, y: 0, z: 8}
   tutorialButtonPrefab: {fileID: 154732, guid: 7124a7a6d192bb542a2e55bf2d00a126, type: 2}
   tutorialButtonPositionObject: {fileID: 1766374722}
   tutorialPrefabs:

@@ -20,11 +20,13 @@ public class TextButtonScript : MonoBehaviour {
 	// private fields
 	private ITutoriable tutorial;
 	private bool isActive = false;
+	private bool processActivation = true;
 
 	// Event handler for tutorial activation.
 	public static event TutorialActivatedHandler TutorialActivated;
 
 	void Start() {
+		LineBorderScript.TutorialLeft += SetProcessActivationTrue;
 		TutorialActivated += DeactivateTextButton;
 	}
 
@@ -33,10 +35,10 @@ public class TextButtonScript : MonoBehaviour {
 	/// </summary>
 	/// <param name="collider">Colliding object.</param>
 	void OnTriggerEnter(Collider collider) {
-		if (isActive) {
+		if (isActive || !processActivation) {
 			return;					// Escape silently!
 		}
-
+		
 		if (collider.CompareTag("Player")) {
 			TutorialActivated -= DeactivateTextButton;
 			isActive = true;
@@ -52,6 +54,11 @@ public class TextButtonScript : MonoBehaviour {
 	}
 
 	void DeactivateTextButton() {
+		processActivation = false;
 		isActive = false;
+	}
+
+	void SetProcessActivationTrue() {
+		processActivation = true;
 	}
 }

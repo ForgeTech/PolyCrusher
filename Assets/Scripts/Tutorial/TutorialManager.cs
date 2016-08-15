@@ -73,10 +73,15 @@ public class TutorialManager : MonoBehaviour {
 		int i = 0;
 		foreach(GameObject prefab in textButtons) {
 			if (!prefab.GetComponent<TextButtonScript>().IsActive) {
-				prefab.GetComponentInChildren<Text>().color = Color.grey;
+				prefab.GetComponentInChildren<Text>().color = Color.red;
 			} else {
-				tutorialBorder.transform.position = prefab.transform.position;
+				tutorialBorder.transform.position = tutorialPrefabs[i].transform.position;
 				tutorialBorder.GetComponentInChildren<Image>().enabled = true;
+				tutorialBorder.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+
+				LeanTween.value(tutorialBorder.transform.GetChild(0).gameObject, tutorialBorder.GetComponentInChildren<Image>().color.g, 0, 0.5f).setOnUpdate((float val) => {
+					tutorialBorder.GetComponentInChildren<Image>().color = new Color(val, 1f, val, 1 + (-1*val));
+				});
 			}
 			i++;
 		}
@@ -87,7 +92,13 @@ public class TutorialManager : MonoBehaviour {
 			if (!prefab.GetComponent<TextButtonScript>().IsActive) {
 				prefab.GetComponentInChildren<Text>().color = Color.yellow;
 			} else {
-				tutorialBorder.GetComponentInChildren<Image>().enabled = false;
+				LeanTween.value(tutorialBorder.transform.GetChild(0).gameObject, tutorialBorder.GetComponentInChildren<Image>().color.a, 0, 0.5f).setOnUpdate((float val) => {
+					tutorialBorder.GetComponentInChildren<Image>().color = new Color(tutorialBorder.GetComponentInChildren<Image>().color.r
+						, tutorialBorder.GetComponentInChildren<Image>().color.g
+						, tutorialBorder.GetComponentInChildren<Image>().color.b
+						, val);
+				});
+				//tutorialBorder.GetComponentInChildren<Image>().enabled = false;
 				prefab.GetComponent<TextButtonScript>().IsActive = false;
 			}
 		}

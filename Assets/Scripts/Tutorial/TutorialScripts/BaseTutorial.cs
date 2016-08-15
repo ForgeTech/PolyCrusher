@@ -11,6 +11,7 @@ public class BaseTutorial : MonoBehaviour, ITutoriable {
 		players = GameObject.FindGameObjectsWithTag("Player");
 		projector = gameObject.GetComponent<Projector>();
 		projector.enabled = false;
+		LineBorderScript.TutorialLeft += StopTutorial;
 	}
 
 	protected virtual void EnableProjector() { projector.enabled = true; }
