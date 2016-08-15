@@ -42,14 +42,12 @@ public class PlayerManager : MonoBehaviour
     //The player slots of the four players. False -> Slot free, True -> Slot filled with player
     private bool[] playerSlot;
 
-	//The player slots of the four players for the phone. False -> Slot free, True -> Slot filled with player
-	private bool[] playerSlotPhone;
 
     // References to the players -> This array should have a size of 4.
     GameObject[] playerReferences;
 
     //Container that holds the information about the selected characters
-    private LevelStartInformation levelInfo;
+    private PlayerSelectionContainer playerSelectionInformation;
 
     // The time of a whole game.
     private static TimeUtil playTime = null;
@@ -198,9 +196,9 @@ public class PlayerManager : MonoBehaviour
             spawnPosition = GameObject.FindGameObjectsWithTag("PlayerSpawn")[0].transform;
 
         playerSlot = new bool[4];
-        playerSlotPhone = new bool[4];
+       
 
-        levelInfo = GameObject.FindObjectOfType<LevelStartInformation>();
+        playerSelectionInformation = GameObject.FindObjectOfType<PlayerSelectionContainer>();
 
         playTime = new TimeUtil();
         startTime = (int)Time.realtimeSinceStartup;
@@ -210,48 +208,27 @@ public class PlayerManager : MonoBehaviour
         DataCollector.instance.startSession();
 
         //Assign the used slots
-        if (levelInfo != null)
+        if (playerSelectionInformation != null)
         {
             for (int i = 0; i < playerSlot.Length; i++)
             {
                 GameObject prefab;
 
-                if (levelInfo.playerSlot[i] != null)
+                if (playerSelectionInformation.playerActive[i])
                 {
                     playerSlot[i] = true;
-                    string prefabPath = "Player/" + levelInfo.playerSlot[i];
-                    string prefix = "P" + (i+1) + "_";
-                    prefab = Instantiate(Resources.Load<GameObject>(prefabPath)) as GameObject;
+                    prefab = Instantiate(playerSelectionInformation.playerPrefabs[playerSelectionInformation.playerPrefabIndices[i]]) as GameObject;
                     prefab.GetComponent<NavMeshAgent>().enabled = false;
-                    prefab.transform.position = spawnPosition.position;
-                    prefab.gameObject.name = "Player" + (playerCount + 1);
-                    prefab.GetComponent<BasePlayer>().PlayerPrefix = prefix;
+                    prefab.transform.position = spawnPosition.position;                   
+                    prefab.GetComponent<BasePlayer>().InputDevice = playerSelectionInformation.playerInputDevices[i];
+                    //prefab.GetComponent<BasePlayer>().PlayerActions = playerSelectionInformation.playerActions[i];
                     prefab.GetComponent<NavMeshAgent>().enabled = true;
-
                     OnPlayerJoined();
                 }
                 else
                 {
                     playerSlot[i] = false;
-                }
-
-                if (levelInfo.phonePlayerSlot[i] != null)
-                {
-                    playerSlotPhone[i] = true;
-                    string prefabPath = "Player/" + levelInfo.phonePlayerSlot[i];
-                    prefab = Instantiate(Resources.Load<GameObject>(prefabPath)) as GameObject;
-					prefab.GetComponent<NavMeshAgent>().enabled = false;
-                    prefab.transform.position = spawnPosition.position;
-                    prefab.gameObject.name = "Player" + (playerCount + 1);
-                    prefab.GetComponent<BasePlayer>().PhonePlayerSlot = i;
-					prefab.GetComponent<NavMeshAgent>().enabled = true;
-
-                    OnPlayerJoined();
-                }
-                else
-                {
-                    playerSlotPhone[i] = false;
-                }
+                }               
             }
         }
 	}
@@ -288,182 +265,182 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Adds a new player to the game.
     /// </summary>
-    private void HandlePlayerJoin()
-    {
-        GameObject prefab;
+  //  private void HandlePlayerJoin()
+  //  {
+  //      GameObject prefab;
 
-		string[] characterArray = new string[4] {"Timeshifter", "Charger", "Fatman", "Birdman"};
-		bool[] characterTaken = new bool[4] {false, false, false, false};
-		string playerPref = "";
-		bool join = false;
+		//string[] characterArray = new string[4] {"Timeshifter", "Charger", "Fatman", "Birdman"};
+		//bool[] characterTaken = new bool[4] {false, false, false, false};
+		//string playerPref = "";
+		//bool join = false;
 
-		if (playerCount < 4) {
+		//if (playerCount < 4) {
 
-			if (Input.GetAxis ("P1_Join") > 0 && !playerSlot [0]) {
-				playerSlot [0] = true;
-				playerPref = "P1_";
-				join = true;
-			} else if (Input.GetAxis ("P2_Join") > 0 && !playerSlot [1]) {
-				playerSlot [1] = true;
-				playerPref = "P2_";
-				join = true;
-			} else if (Input.GetAxis ("P3_Join") > 0 && !playerSlot [2]) {
-				playerSlot [2] = true;
-				playerPref = "P3_";
-				join = true;
-			} else if (Input.GetAxis ("P4_Join") > 0 && !playerSlot [3]) {
-				playerSlot [2] = true;
-				playerPref = "P3_";
-				join = true;
-			}
+		//	if (Input.GetAxis ("P1_Join") > 0 && !playerSlot [0]) {
+		//		playerSlot [0] = true;
+		//		playerPref = "P1_";
+		//		join = true;
+		//	} else if (Input.GetAxis ("P2_Join") > 0 && !playerSlot [1]) {
+		//		playerSlot [1] = true;
+		//		playerPref = "P2_";
+		//		join = true;
+		//	} else if (Input.GetAxis ("P3_Join") > 0 && !playerSlot [2]) {
+		//		playerSlot [2] = true;
+		//		playerPref = "P3_";
+		//		join = true;
+		//	} else if (Input.GetAxis ("P4_Join") > 0 && !playerSlot [3]) {
+		//		playerSlot [2] = true;
+		//		playerPref = "P3_";
+		//		join = true;
+		//	}
 
-			if (join) {
-				Debug.Log ("Player " + (playerCount + 1) + " joined! (Controller)");
+		//	if (join) {
+		//		Debug.Log ("Player " + (playerCount + 1) + " joined! (Controller)");
 
-				string takeCharacter = "Birdman";
+		//		string takeCharacter = "Birdman";
 				
-				if (levelInfo != null) {
+		//		if (playerSelectionInformation != null) {
 					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if (levelInfo.playerSlot [i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot [i].Equals (characterArray [j])) {
-									characterTaken [j] = true;
-								}
-							}
-						}
-					}
+		//			for (int i = 0; i < playerSelectionInformation.playerSlot.Length; i++) {
+		//				if (playerSelectionInformation.playerSlot [i] != null) {
+		//					for (int j = 0; j < playerSelectionInformation.playerSlot.Length; j++) {
+		//						if (playerSelectionInformation.playerSlot [i].Equals (characterArray [j])) {
+		//							characterTaken [j] = true;
+		//						}
+		//					}
+		//				}
+		//			}
 					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if (levelInfo.phonePlayerSlot [i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot [i].Equals (characterArray [j])) {
-									characterTaken [j] = true;
-								}
-							}
-						}
-					}
+		//			for (int i = 0; i < playerSelectionInformation.phonePlayerSlot.Length; i++) {
+		//				if (playerSelectionInformation.phonePlayerSlot [i] != null) {
+		//					for (int j = 0; j < playerSelectionInformation.phonePlayerSlot.Length; j++) {
+		//						if (playerSelectionInformation.phonePlayerSlot [i].Equals (characterArray [j])) {
+		//							characterTaken [j] = true;
+		//						}
+		//					}
+		//				}
+		//			}
 					
-					for (int i = 0; i < characterTaken.Length; i++) {
-						if (characterTaken [i] == false) {
-							takeCharacter = characterArray [i];
-						}
-					}
+		//			for (int i = 0; i < characterTaken.Length; i++) {
+		//				if (characterTaken [i] == false) {
+		//					takeCharacter = characterArray [i];
+		//				}
+		//			}
 					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if (levelInfo.playerSlotTaken [i] == false) {
-							levelInfo.playerSlot [i] = takeCharacter;
-							levelInfo.playerSlotTaken [i] = true;
-						}
-					}
-				}
+		//			for (int i = 0; i < playerSelectionInformation.playerSlot.Length; i++) {
+		//				if (playerSelectionInformation.playerSlotTaken [i] == false) {
+		//					playerSelectionInformation.playerSlot [i] = takeCharacter;
+		//					playerSelectionInformation.playerSlotTaken [i] = true;
+		//				}
+		//			}
+		//		}
 				
-				prefab = Instantiate (Resources.Load<GameObject> ("Player/" + takeCharacter)) as GameObject;
-				prefab.GetComponent<NavMeshAgent> ().enabled = false;
-				prefab.transform.position = GetPositionOfRandomPlayer (true);
-				prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer> ().PlayerPrefix = playerPref;
-				prefab.GetComponent<NavMeshAgent> ().enabled = true;
+		//		prefab = Instantiate (Resources.Load<GameObject> ("Player/" + takeCharacter)) as GameObject;
+		//		prefab.GetComponent<NavMeshAgent> ().enabled = false;
+		//		prefab.transform.position = GetPositionOfRandomPlayer (true);
+		//		prefab.gameObject.name = "Player" + (playerCount + 1);
+		//		prefab.GetComponent<BasePlayer> ().PlayerPrefix = playerPref;
+		//		prefab.GetComponent<NavMeshAgent> ().enabled = true;
 				
-				OnPlayerJoined ();
+		//		OnPlayerJoined ();
 
-				for (int i = 0; i < playerSlot.Length; i++) {
-					if (playerSlot[i] == false) {
-						playerSlot[i] = true;
-						break;
-					}
-				}
+		//		for (int i = 0; i < playerSlot.Length; i++) {
+		//			if (playerSlot[i] == false) {
+		//				playerSlot[i] = true;
+		//				break;
+		//			}
+		//		}
 				
-			}
-		}
+		//	}
+		//}
 
-    }
+  //  }
 
 	/// <summary>
 	/// Adds a new phone player to the game.
 	/// </summary>
-	public void HandlePhonePlayerJoin(int slot)
-	{
-		GameObject prefab;
-		string[] characterArray = new string[4] {"Timeshifter", "Charger", "Fatman", "Birdman"};
-		bool[] characterTaken = new bool[4] {false, false, false, false};
-		//string playerPref = "";
-		bool join = false;
+	//public void HandlePhonePlayerJoin(int slot)
+	//{
+	//	GameObject prefab;
+	//	string[] characterArray = new string[4] {"Timeshifter", "Charger", "Fatman", "Birdman"};
+	//	bool[] characterTaken = new bool[4] {false, false, false, false};
+	//	//string playerPref = "";
+	//	bool join = false;
 		
-		if (playerCount < 4) {
-			if (!playerSlotPhone[0]) {
-				playerSlotPhone[0] = true;
-				join = true;
-			} else if (!playerSlotPhone[1]) {
-				playerSlotPhone[1] = true;
-				join = true;
-			} else if (!playerSlotPhone[2]) {
-				playerSlotPhone[2] = true;
-				join = true;
-			} else if (!playerSlotPhone[3]) {
-				playerSlotPhone[3] = true;
-				join = true;
-			}
+	//	if (playerCount < 4) {
+	//		if (!playerSlotPhone[0]) {
+	//			playerSlotPhone[0] = true;
+	//			join = true;
+	//		} else if (!playerSlotPhone[1]) {
+	//			playerSlotPhone[1] = true;
+	//			join = true;
+	//		} else if (!playerSlotPhone[2]) {
+	//			playerSlotPhone[2] = true;
+	//			join = true;
+	//		} else if (!playerSlotPhone[3]) {
+	//			playerSlotPhone[3] = true;
+	//			join = true;
+	//		}
 
-			if (join) {
-				Debug.Log("Player " + (playerCount + 1)  + " joined! (Phone)");
+	//		if (join) {
+	//			Debug.Log("Player " + (playerCount + 1)  + " joined! (Phone)");
 
-				string takeCharacter = "Birdman";
+	//			string takeCharacter = "Birdman";
 				
-				if (levelInfo != null) {
+	//			if (playerSelectionInformation != null) {
 					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if(levelInfo.playerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
+	//				for (int i = 0; i < playerSelectionInformation.playerSlot.Length; i++) {
+	//					if(playerSelectionInformation.playerSlot[i] != null) {
+	//						for (int j = 0; j < playerSelectionInformation.playerSlot.Length; j++) {
+	//							if (playerSelectionInformation.playerSlot[i].Equals(characterArray[j])) {
+	//								characterTaken[j] = true;
+	//							}
+	//						}
+	//					}
+	//				}
 					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if(levelInfo.phonePlayerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
+	//				for (int i = 0; i < playerSelectionInformation.phonePlayerSlot.Length; i++) {
+	//					if(playerSelectionInformation.phonePlayerSlot[i] != null) {
+	//						for (int j = 0; j < playerSelectionInformation.phonePlayerSlot.Length; j++) {
+	//							if (playerSelectionInformation.phonePlayerSlot[i].Equals(characterArray[j])) {
+	//								characterTaken[j] = true;
+	//							}
+	//						}
+	//					}
+	//				}
 					
-					for (int i = 0; i < characterTaken.Length; i++) {
-						if (characterTaken[i] == false) {
-							takeCharacter = characterArray[i];
-						}
-					}
+	//				for (int i = 0; i < characterTaken.Length; i++) {
+	//					if (characterTaken[i] == false) {
+	//						takeCharacter = characterArray[i];
+	//					}
+	//				}
 					
-					for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-						if (levelInfo.phonePlayerSlotTaken[j] == false) {
-							levelInfo.phonePlayerSlot[j] = takeCharacter;
-							levelInfo.phonePlayerSlotTaken[j] = true;
-						}
-					}
-				}
+	//				for (int j = 0; j < playerSelectionInformation.phonePlayerSlot.Length; j++) {
+	//					if (playerSelectionInformation.phonePlayerSlotTaken[j] == false) {
+	//						playerSelectionInformation.phonePlayerSlot[j] = takeCharacter;
+	//						playerSelectionInformation.phonePlayerSlotTaken[j] = true;
+	//					}
+	//				}
+	//			}
 				
-				prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
-				prefab.GetComponent<NavMeshAgent>().enabled = false;
-				prefab.transform.position = GetPositionOfRandomPlayer(true);
-				prefab.GetComponent<NavMeshAgent>().enabled = true;
-				prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer>().PhonePlayerSlot = slot;
+	//			prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
+	//			prefab.GetComponent<NavMeshAgent>().enabled = false;
+	//			prefab.transform.position = GetPositionOfRandomPlayer(true);
+	//			prefab.GetComponent<NavMeshAgent>().enabled = true;
+	//			prefab.gameObject.name = "Player" + (playerCount + 1);
+	//			prefab.GetComponent<BasePlayer>().PhonePlayerSlot = slot;
 				
-				OnPlayerJoined();
+	//			OnPlayerJoined();
 
-				for (int i = 0; i < playerSlotPhone.Length; i++) {
-					if (playerSlotPhone[i] == false) {
-						playerSlotPhone[i] = true;
-						break;
-					}
-				}
-			}
-		}
-	}
+	//			for (int i = 0; i < playerSlotPhone.Length; i++) {
+	//				if (playerSlotPhone[i] == false) {
+	//					playerSlotPhone[i] = true;
+	//					break;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
     /// <summary>
     /// Respawns the dead players to the living players.

@@ -4,7 +4,7 @@ using System.Collections;
 public class PieBehaviour : MonoBehaviour
 {
     // Player prefix
-    protected string playerPrefix = null;
+    protected PlayerControlActions playerActions = null;
 
     [Header("Pie settings")]
     [SerializeField]
@@ -34,12 +34,12 @@ public class PieBehaviour : MonoBehaviour
     protected MonoBehaviour ownerScript;
 
     /// <summary>
-    /// Gets or sets the player prefix.
+    /// Gets or sets the player actions
     /// </summary>
-    public string PlayerPrefix
+    public PlayerControlActions PlayerActions
     {
-        get { return this.playerPrefix; }
-        set { this.playerPrefix = value; }
+        get { return playerActions; }
+        set { playerActions = value; }
     }
 
     /// <summary>
@@ -72,10 +72,10 @@ public class PieBehaviour : MonoBehaviour
     /// </summary>
     protected void HandleInput()
     {
-        if (playerPrefix != null)
+        if (playerActions != null)
         {
             // Explode if the player presses the ability button.
-            if (explosionAllowed && Input.GetButtonDown(playerPrefix + "Ability"))
+            if (explosionAllowed && playerActions.Ability)
             {
                 PerformExplosionProcedure();
             }

@@ -258,16 +258,16 @@ public class LevelEndManager : MonoBehaviour {
 				startMenu = true;
 			}
 		
-			for (int i = 0; i < 4; i++) {
-				if (network.actionButton[i] == 1) {
-					startMenu = true;
-					break;
-				}
-			}
+			//for (int i = 0; i < 4; i++) {
+			//	if (network.actionButton[i] == 1) {
+			//		startMenu = true;
+			//		break;
+			//	}
+			//}
 
-			for (int i = 0; i < 4; i++) {
-				network.actionButton[i] = 0;
-			}
+			//for (int i = 0; i < 4; i++) {
+			//	network.actionButton[i] = 0;
+			//}
 
 			if (startMenu) {
 

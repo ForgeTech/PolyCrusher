@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using InControl;
 
 
 [RequireComponent(typeof(BoxCollider))]
@@ -67,7 +67,6 @@ public class AbilityCharge : Ability {
     //true when charging true and set to false
     private bool chargingEnded = false;
 
-
     [Header("Particle")]
 
     // Particles for the explosion
@@ -82,6 +81,17 @@ public class AbilityCharge : Ability {
     private GameObject instantiatedChargeParticle;   
 
     //---VARIABLES END
+
+   public InputDevice InputDevice
+    {
+        set
+        {
+            inputDevice = value;
+        }
+    }
+
+
+
 
     void Awake()
     {
@@ -115,19 +125,12 @@ public class AbilityCharge : Ability {
         if (charging)
         {
             base.Use();
-
-            
-
-
         }
 
 
         if (setMass)
         {
             setMass = false;
-            //while charging the mass is increased, for a better overal experience^^
-            
-
         }
 
         if (chargingEnded)
@@ -223,6 +226,10 @@ public class AbilityCharge : Ability {
     //limits the charging duration
     private IEnumerator ChargerTimer()
     {
+        //rumble
+        inputDevice.Vibrate(0.3f, 0.5f);
+
+
         //if the charged distance is smaller than the max allowed distance, continue to apply force 
         if (Vector3.Distance(transform.position, oldPosition) < chargeDistance)
         {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public abstract class Ability : MonoBehaviour, IUsable
 {
@@ -22,6 +23,12 @@ public abstract class Ability : MonoBehaviour, IUsable
     // The owner of the projectile.
     protected MonoBehaviour ownerScript;
     #endregion
+
+    // the inputdevice of the owner
+    protected InputDevice inputDevice;
+
+    // the playeractions of the inputDevice;
+    protected PlayerControlActions playerActions;
 
     #region Properties
     
@@ -68,6 +75,22 @@ public abstract class Ability : MonoBehaviour, IUsable
         set { this.ownerScript = value; }
     }
 
+
+    public InputDevice InputDevice
+    {
+        set
+        {
+            inputDevice = value;
+        }
+    }
+
+    public PlayerControlActions PlayerActions
+    {
+        set
+        {
+            playerActions = value;
+        }
+    }
 
 	protected virtual void Start()
 	{

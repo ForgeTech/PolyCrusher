@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 /// <summary>
 /// Eventhandler for player deaths.
@@ -87,8 +88,16 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
 
     //Player prefix for the controller input.
-    [SerializeField]
-    protected string playerPrefix = "P1_";
+    //[SerializeField]
+    //protected string playerPrefix = "P1_";
+
+    //Input Device for accessing Rumble
+    protected InputDevice inputDevice;
+
+    //Player Actions for accessing this players input
+    protected PlayerControlActions playerActions;
+
+
 
     // Initial death time.
     [Tooltip("The time the player stays on screen after he dies.")]
@@ -102,11 +111,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 	//[SerializeField]
 	protected int phonePlayerSlot = -1;
 
-	//Network script for the mobile controller input.
-	//[SerializeField]
-	protected PlayerNetCommunicate network;
-
-
+	
     [Space(10)]
     [Header("Movement")]
     //The movement speed of the player.
@@ -316,6 +321,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     /// <summary>
     /// Gets or sets the current death time.
+    /// 
     /// </summary>
     public float CurrentDeathTime
     {
@@ -324,21 +330,36 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     }
 
     /// <summary>
-    /// Gets or sets the player prefix.
+    /// Gets or sets the inputDevice for this player
     /// </summary>
-    public string PlayerPrefix
+    public InputDevice InputDevice
     {
-        get { return this.playerPrefix; }
+        get { return inputDevice; }
         set
         {
-            this.playerPrefix = value;
+            inputDevice = value;
+            ability.InputDevice = inputDevice;
         }
     }
 
-	/// <summary>
-	/// Gets or sets the phone player slot.
-	/// </summary>
-	public int PhonePlayerSlot
+    /// <summary>
+    /// Gets or Sets the Player Actions for this player
+    /// </summary>
+    public PlayerControlActions PlayerActions
+    {
+        get { return playerActions; }
+        set
+        {
+            playerActions = value;
+            ability.PlayerActions = playerActions;
+        }
+    }   
+
+
+    /// <summary>
+    /// Gets or sets the phone player slot.
+    /// </summary>
+    public int PhonePlayerSlot
 	{
 		get { return this.phonePlayerSlot; }
 		set
@@ -396,34 +417,16 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     {
         get 
         {
-            // -1 -> Player is controlled by a controller
-            if (PhonePlayerSlot == -1)
+            float leftStickHorizontal = playerActions.LeftHorizontal;
+            float leftStickVertical = playerActions.LeftVertical;
+
+            // Horizontal check
+            if (leftStickHorizontal < analogStickTolerance && leftStickHorizontal > -analogStickTolerance)
             {
-                float leftStickHorizontal = Input.GetAxis(playerPrefix + "Horizontal");
-                float leftStickVertical = Input.GetAxis(playerPrefix + "Vertical");
-
-                // Horizontal check
-                if (leftStickHorizontal < analogStickTolerance && leftStickHorizontal > -analogStickTolerance)
-                {
-                    // Verticals check
-                    if (leftStickVertical < analogStickTolerance && leftStickVertical > -analogStickTolerance)
-                        return false;   // Player is not moving.
-                }
+                // Verticals check
+                if (leftStickVertical < analogStickTolerance && leftStickVertical > -analogStickTolerance)
+                    return false;   // Player is not moving.
             }
-            else  // Player is controlled by phone.
-            {
-                float leftStickHorizontal = network.horizontal[phonePlayerSlot];
-                float leftStickVertical = network.vertical[phonePlayerSlot];
-
-                // Horizontal check
-                if (leftStickHorizontal < analogStickTolerance && leftStickHorizontal > -analogStickTolerance)
-                {
-                    // Verticals check
-                    if (leftStickVertical < analogStickTolerance && leftStickVertical > -analogStickTolerance)
-                        return false;   // Player is not moving.
-                }
-            }
-
             // Player is moving.
             return true;
         }
@@ -468,22 +471,32 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         camLimiter = new LimitToCameraFrustum(this, cameraEdgeDetectionOffset);
 
         // Init network.
-		network = GameObject.FindObjectOfType<PlayerNetCommunicate>();
+		//network = GameObject.FindObjectOfType<PlayerNetCommunicate>();
 
         // Set the owner of the weapon and the ability.
         if (weapon != null)
             weapon.OwnerScript = this;
 
         if (ability != null)
+        {
             ability.OwnerScript = this;
+            ability.InputDevice = inputDevice;
+            ability.PlayerActions = playerActions;
+        }
 
         //Set original health level.
         originalHealthLevelScale = healthLevel.transform.localScale;
 
-        Debug.Log(playerPrefix + "Player added!");
+        //Debug.Log(playerPrefix + "Player added!");
 
         // Fire spawn event.
         OnPlayerSpawn();
+
+        playerActions = PlayerControlActions.CreateWithGamePadBindings();
+        if (inputDevice != null)
+        {           
+            playerActions.Device = inputDevice;      
+        }
 	}
 
     void OnEnable()
@@ -495,7 +508,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         Rigidbody rigid = GetComponent<Rigidbody>();
         if (rigid != null)
             rigid.mass = 0.2f;
-}
+    }
 
         // Update is called once per frame
     void Update () 
@@ -505,12 +518,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             // Refill Energy
             RefillEnergy(energyIncrement);
 
-			if (phonePlayerSlot == -1) {
+			//if (phonePlayerSlot == -1) {
 				HandleAbilityInput();
-			} else {
-				HandleAbilityInputPhone();
-			}
-
+			//} else {
+			//	HandleAbilityInputPhone();
+			//}
         }
 
         // HUD Elements
@@ -528,15 +540,17 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         camLimiter.CheckCameraBounding(transform.position);
     }
 
-	/// <summary>
-	/// Checks if ability is ready to use.
-	/// </summary>
-	void CheckAbilityStatusReady() {
-		if (!abilityUseable && phonePlayerSlot != -1 && CheckEnergyLevelWithoutSubtraction ()) {
-			abilityUseable = true;
-			network.sendData("1002", phonePlayerSlot);
-		}
-	}
+    /// <summary>
+    /// Checks if ability is ready to use.
+    /// </summary>
+    void CheckAbilityStatusReady()
+    {
+        if (!abilityUseable && phonePlayerSlot != -1 && CheckEnergyLevelWithoutSubtraction())
+        {
+            abilityUseable = true;
+            //network.sendData("1002", phonePlayerSlot);
+        }
+    }
 
     /// <summary>
     /// Handles the player input.
@@ -546,11 +560,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         //Handles the movement and rotation/shoot input.
         //playerAnimator.speed = 1f;
 
-		if (phonePlayerSlot == -1) {
+		//if (phonePlayerSlot == -1) {
 			HandleMovement ();
-		} else {
-			HandlePhoneMovement();
-		}
+		//} else {
+		//	HandlePhoneMovement();
+		//}
 
     }
 
@@ -580,14 +594,16 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     public virtual void HandleAbilityInput()
     {
         // Player presses ability button.
-        if (Input.GetButtonDown(playerPrefix + "Ability"))
-        {
+        if (playerActions.Ability)
+        {           
             if ( ability != null)
             {
                 if (ability.UseIsAllowed && CheckEnergyLevel())
                 {
                     playerAnimator.SetTrigger("Ability");
                     ability.Use();
+
+                    //inputDevice.Vibrate(0.5f, 0.4f);
 
                     // Play ability sound
                     if (abilityCharacterSound != null)
@@ -604,26 +620,16 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// Handles when the object should move (for example when there is user input).
     /// </summary>
     public virtual void HandleMovement()
-    {
-        float leftStickHorizontal = Input.GetAxis(playerPrefix + "Horizontal");
-        float leftStickVertical = Input.GetAxis(playerPrefix + "Vertical");
-        float verticalRotation = Input.GetAxis(playerPrefix + "VerticalRotation");
-        float horizontalRotation = Input.GetAxis(playerPrefix + "HorizontalRotation");
+    {       
+        float leftStickHorizontal = playerActions.LeftHorizontal;       
+        float leftStickVertical = playerActions.LeftVertical;
+        float verticalRotation = playerActions.RightVertical;
+        float horizontalRotation = playerActions.RightHorizontal;
 
         // Set animator value
         float magnitude = new Vector2(leftStickHorizontal, leftStickVertical).magnitude;
         //playerAnimator.speed = magnitude;
         playerAnimator.SetFloat("MoveValue", magnitude);
-
-        //Debug.Log("LeftStickHorizontal: " + leftStickHorizontal + ", LeftStickVertical: " + leftStickVertical);
-
-        //Reverse animation if neccessary.
-        /*if (leftStickHorizontal < 0 && horizontalRotation > 0 || horizontalRotation < 0 && leftStickHorizontal > 0)
-            playerAnimator.speed = -1;
-        else if (leftStickVertical < 0 && verticalRotation > 0 || leftStickVertical > 0 && verticalRotation < 0)
-            playerAnimator.speed = -1;
-        else
-            playerAnimator.speed = 1;*/
 
         //==============Movement====================
         if (leftStickHorizontal > analogStickTolerance)
@@ -661,7 +667,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             if (leftStickHorizontal > analogStickTolerance || leftStickHorizontal < -analogStickTolerance
                 || leftStickVertical > analogStickTolerance || leftStickVertical < -analogStickTolerance)
             {
-                Vector3 angle = new Vector3(0, Mathf.Atan2(Input.GetAxis(playerPrefix + "Horizontal"), -Input.GetAxis(playerPrefix + "Vertical")) * Mathf.Rad2Deg, 0);
+                Vector3 angle = new Vector3(0, Mathf.Atan2(playerActions.LeftHorizontal, -playerActions.LeftVertical) * Mathf.Rad2Deg, 0);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(angle), Time.deltaTime * rotationSpeed);
             }
         }
@@ -671,91 +677,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         //==========================================
     }
 
-	/// <summary>
-	/// Handles the input of the ability for phone.
-	/// </summary>
-	public virtual void HandleAbilityInputPhone()
-	{
-		// Player presses ability button.
-		if (network.actionButton[phonePlayerSlot] == 1)
-		{
-			if ( ability != null && CheckEnergyLevel() )
-			{
-				if (ability.UseIsAllowed)
-				{
-					network.sendData("1000", phonePlayerSlot);
-					playerAnimator.SetTrigger("Ability");
-					ability.Use();
-				}
-			} else {
-				abilityUseable = false;
-				network.sendData("1001", phonePlayerSlot);
-			}
-
-			network.actionButton[phonePlayerSlot] = 0;
-		}
-	}
-
-	/// <summary>
-	/// Handles when the object should move (for example when there is user input) for phones.
-	/// </summary>
-	public virtual void HandlePhoneMovement()
-	{
-		float leftStickHorizontal = network.horizontal[phonePlayerSlot];
-		float leftStickVertical = network.vertical[phonePlayerSlot];
-
-		// Set animator value
-		float magnitude = new Vector2(leftStickHorizontal, leftStickVertical).magnitude;
-		//playerAnimator.speed = magnitude;
-		playerAnimator.SetFloat("MoveValue", magnitude);
-		
-		//Debug.Log("LeftStickHorizontal: " + leftStickHorizontal + ", LeftStickVertical: " + leftStickVertical);
-		
-		//==============Movement====================
-		if (leftStickHorizontal > analogStickTolerance)
-			ManipulateMovement(movementSpeed * Mathf.Abs(leftStickHorizontal), Vector3.right);
-		else if (leftStickHorizontal < -analogStickTolerance)
-			ManipulateMovement(movementSpeed * Mathf.Abs(leftStickHorizontal), -Vector3.right);
-		
-		if (leftStickVertical > analogStickTolerance)
-			ManipulateMovement(movementSpeed * Mathf.Abs(leftStickVertical), -Vector3.forward);
-		else if (leftStickVertical < -analogStickTolerance)
-			ManipulateMovement(movementSpeed * Mathf.Abs(leftStickVertical), Vector3.forward);
-		//==========================================
-		
-		//=============Rotation=====================
-		if (network.verticalRotation[phonePlayerSlot] > analogStickTolerance || network.verticalRotation[phonePlayerSlot] < -analogStickTolerance || network.horizontalRotation[phonePlayerSlot] > analogStickTolerance || network.horizontalRotation[phonePlayerSlot] < -analogStickTolerance)
-		{
-			rightAnalogStickIsUsed = true;
-			Vector3 angle = new Vector3(0, Mathf.Atan2(network.horizontalRotation[phonePlayerSlot] , -network.verticalRotation[phonePlayerSlot] ) * Mathf.Rad2Deg, 0);
-			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(angle), Time.deltaTime * rotationSpeed);
-			
-			//Shoot when you rotate
-			Shoot();
-			
-			playerAnimator.SetBool("Shoot", true);
-		}
-		else
-		{
-			playerAnimator.SetBool("Shoot", false);
-			//Debug.Log("BasePlayer: False");
-		}
-		
-		if (!rightAnalogStickIsUsed)
-		{
-			//Check the analog stick tolerance
-			if (leftStickHorizontal > analogStickTolerance || leftStickHorizontal < -analogStickTolerance
-			    || leftStickVertical > analogStickTolerance || leftStickVertical < -analogStickTolerance)
-			{
-				Vector3 angle = new Vector3(0, Mathf.Atan2(network.horizontal[phonePlayerSlot], -network.vertical[phonePlayerSlot]) * Mathf.Rad2Deg, 0);
-				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(angle), Time.deltaTime * rotationSpeed);
-			}
-		}
-		
-		//playerAnimator.speed = 1;
-		rightAnalogStickIsUsed = false;
-		//==========================================
-	}
 
     /// <summary>
     /// Handles the actual movement with a speed in a certain direction.
@@ -875,9 +796,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             playerAnimator.SetBool("Dead", true);
 
 		//Let mobile know you died
-		if (phonePlayerSlot != -1 && !isDead) {
-			network.sendData("1003", phonePlayerSlot);
-		}
+		//if (phonePlayerSlot != -1 && !isDead) {
+		//	network.sendData("1003", phonePlayerSlot);
+		//}
 
         // Set RigidBody to isKinematic. (So the enemies does not move the player after death).
         GetComponent<Rigidbody>().isKinematic = true;

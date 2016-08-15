@@ -26,7 +26,7 @@ public class AbilityPie : Ability
                 PieBehaviour pie = obj.GetComponent<PieBehaviour>();
 
                 pie.OwnerScript = this.OwnerScript;
-                pie.PlayerPrefix = p.PlayerPrefix;
+                pie.PlayerActions = p.PlayerActions;
 
                 obj.transform.position = transform.position - transform.forward * 1.5f;
                 obj.transform.rotation = transform.rotation;

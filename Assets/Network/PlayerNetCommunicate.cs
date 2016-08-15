@@ -10,7 +10,7 @@ using System.Collections;
 
 using UnityEngine.UI;
 
-public class PlayerNetCommunicate : MonoBehaviour
+public class PlayerNetCommunicate : MonoBehaviour, NetControllInterface
 {
 
 	private PlayerManager playerManager;
@@ -467,7 +467,7 @@ public class PlayerNetCommunicate : MonoBehaviour
 		}
 	}
 
-    void OnApplicationQuit()
+    void OnDisable()
     {
 		if (debugLogs) {
 			Debug.Log ("ondestroy");
@@ -500,8 +500,10 @@ public class PlayerNetCommunicate : MonoBehaviour
 		}
 
 	}
-	
-	public string LocalIPAddress ()
+
+
+    
+    public string LocalIPAddress ()
 	{
 		IPHostEntry host;
 		string localIP = "";
@@ -514,4 +516,49 @@ public class PlayerNetCommunicate : MonoBehaviour
 		}
 		return localIP;
 	}
+
+    public float GetLeftAnalogStickHorizontal(int smartphoneIndex)
+    {
+        return horizontal[smartphoneIndex];
+    }
+
+    public float GetLeftAnalogStickVertical(int smartphoneIndex)
+    {
+        return vertical[smartphoneIndex];
+    }
+
+    public float GetRightAnalogStickHorizontal(int smartphoneIndex)
+    {
+        return horizontalRotation[smartphoneIndex];
+    }
+
+    public float GetRightAnalogStickVertical(int smartphoneIndex)
+    {
+        return verticalRotation[smartphoneIndex];
+    }
+
+    public bool GetAbilityButton(int smartphoneIndex)
+    {
+        return actionButton[smartphoneIndex] == 1 ? true : false;
+    }
+
+    public bool GetJoinButton(int smartphoneIndex)
+    {
+        return actionButton[smartphoneIndex] == 1 ? true : false;
+    }
+
+    public bool GetBackButton(int smartphoneIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool GetPauseButton(int smartphoneIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool GetConnectionStatus(int smartphoneIndex)
+    {
+        return taken[smartphoneIndex];
+    }
 }
