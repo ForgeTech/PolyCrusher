@@ -160,6 +160,15 @@ public class Event{
     }
 
     /// <summary>
+    /// the score
+    /// </summary>
+    public Event addScore(int score)
+    {
+        this.score = score;
+        return this;
+    }
+
+    /// <summary>
     /// Adds all chosen character names
     /// </summary>
     public Event addPlayerCharacters()
@@ -228,6 +237,8 @@ public class Event{
     public string cause { get; set; }
     [BsonIgnoreIfNull]
     public int? kills { get; set; }      // ? to make variable nullable
+    [BsonIgnoreIfNull]
+    public int? score { get; set; }
 
     [BsonIgnore]
     public bool isSaved { get; set; }
