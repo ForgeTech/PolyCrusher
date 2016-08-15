@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: birdman_material
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 41a9cdc4fe7a5cd4285cbe74106e3e03, type: 3}
   m_ShaderKeywords: _METALLICGLOSSMAP _SPECGLOSSMAP
   m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -34,6 +34,13 @@ Material:
           name: _DetailNormalMap
         second:
           m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 9905f29780c65d64eab3f680bcb1e91f, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -73,9 +80,16 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _MetallicGlossMap
+          name: _SpecGlossMap
         second:
           m_Texture: {fileID: 2800000, guid: 9905f29780c65d64eab3f680bcb1e91f, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Emission
+        second:
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -87,7 +101,7 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _SpecGlossMap
+          name: _Specular
         second:
           m_Texture: {fileID: 2800000, guid: 9905f29780c65d64eab3f680bcb1e91f, type: 3}
           m_Scale: {x: 1, y: 1}
@@ -107,8 +121,8 @@ Material:
         second: .5
       data:
         first:
-          name: _Parallax
-        second: .0199999996
+          name: _Smoothness
+        second: 1
       data:
         first:
           name: _ZWrite
@@ -119,8 +133,16 @@ Material:
         second: .340999991
       data:
         first:
+          name: _Metallic
+        second: .282000005
+      data:
+        first:
           name: _BumpScale
         second: 1
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
       data:
         first:
           name: _OcclusionStrength
@@ -135,16 +157,16 @@ Material:
         second: 0
       data:
         first:
-          name: _EmissionScaleUI
-        second: 0
-      data:
-        first:
           name: _Mode
         second: 0
       data:
         first:
-          name: _Metallic
-        second: .282000005
+          name: _EmissionScaleUI
+        second: 0
+      data:
+        first:
+          name: _EmissionMult
+        second: 1
     m_Colors:
       data:
         first:
@@ -169,4 +191,4 @@ Material:
       data:
         first:
           name: _FillEmission
-        second: {r: .588235319, g: .749019623, b: 1, a: 1}
+        second: {r: 0, g: .296551704, b: 1, a: 1}

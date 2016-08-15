@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: babuschka
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 41a9cdc4fe7a5cd4285cbe74106e3e03, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -78,6 +78,27 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Emission
+        second:
+          m_Texture: {fileID: 2800000, guid: 001dcb857d027df4b9de62b2d50357fb, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Occlusion
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Specular
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -90,6 +111,10 @@ Material:
       data:
         first:
           name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Smoothness
         second: .5
       data:
         first:
@@ -127,6 +152,10 @@ Material:
         first:
           name: _Mode
         second: 0
+      data:
+        first:
+          name: _EmissionMult
+        second: 1
     m_Colors:
       data:
         first:
@@ -136,3 +165,11 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _FillColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _FillEmission
+        second: {r: .303625584, g: .823529422, b: .224048465, a: 1}
