@@ -26,6 +26,10 @@ public class WaveCounterManager : MonoBehaviour
     [SerializeField]
     protected UnityEngine.UI.Text bossText;
 
+    // Reference to the special wave text message.
+    [SerializeField]
+    protected UnityEngine.UI.Text specialWaveText;
+
     // Reference to the play time label.
     [SerializeField]
     protected UnityEngine.UI.Text playTime;
@@ -41,25 +45,20 @@ public class WaveCounterManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    private void Awake()
     {
-        GameManager.WaveStarted += TriggerWaveCounterAnimation;
+        // Only trigger wave animation in normal mode
+        //if(GameManager.GameManagerInstance.CurrentGameMode == GameMode.NormalMode)
+            GameManager.WaveStarted += TriggerWaveCounterAnimation;
 
         if (waveTextPermanent != null)
-        {
             waveTextPermanent.text = "";
-        }
     }
 
-	// Use this for initialization
-	void Start () 
+    private void Update()
     {
-        
-	}
-
-    void Update()
-    {
-        FillTimeLabel();
+        if(GameManager.GameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
+            FillTimeLabel();
     }
 
     /// <summary>
@@ -84,6 +83,7 @@ public class WaveCounterManager : MonoBehaviour
             Animator number = waveNumber.GetComponent<Animator>();
             Animator roundText = waveRoundText.GetComponent<Animator>();
             Animator boss = bossText.GetComponent<Animator>();
+            Animator special = specialWaveText.GetComponent<Animator>();
 
             waveNumber.text = GameManager.GameManagerInstance.Wave.ToString();
 
@@ -94,6 +94,8 @@ public class WaveCounterManager : MonoBehaviour
 
             if (boss != null && GameManager.GameManagerInstance.IsBossWave)
                 boss.SetTrigger("WaveStarted");
+            else if (GameManager.GameManagerInstance.IsCurrentlySpecialWave)
+                special.SetTrigger("WaveStarted");
             else
                 number.SetTrigger("WaveStarted");
 
