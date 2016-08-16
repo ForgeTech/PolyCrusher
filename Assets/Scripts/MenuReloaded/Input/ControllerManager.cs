@@ -20,9 +20,9 @@ public class ControllerManager : MonoBehaviour
     void Start()
     {
         //-------------for testing purposes, needs to be deleted later on
-        smartphoneController = new SmartphoneController(0, networkController);
-        InputManager.AttachDevice(smartphoneController);
-        smartphoneControllerList.Add(smartphoneController);
+        //smartphoneController = new SmartphoneController(0, networkController);
+        //InputManager.AttachDevice(smartphoneController);
+        //smartphoneControllerList.Add(smartphoneController);
         //-------------  
 
         keyboardController = new KeyboardController();
