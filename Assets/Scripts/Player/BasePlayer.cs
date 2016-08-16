@@ -710,7 +710,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             LeanTween.scale(healthLevel.rectTransform, originalScale, 0.5f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 
             // send event if player will be dead
-            if (Health - damage < 0 && !IsDead)
+            if (Health - damage <= 0 && !IsDead)
             {
                 string enemyName = "undefined";
 
