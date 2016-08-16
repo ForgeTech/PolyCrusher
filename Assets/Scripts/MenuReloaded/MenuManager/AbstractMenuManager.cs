@@ -27,12 +27,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
     [SerializeField]
     private float stickMovedWaitTime = 0.3f;
 
+    [SerializeField]
+    private float menuSpawnTweenTime = 0.2f;
+
     [Header("Transitions")]
     [SerializeField]
     public TransitionEnum[] transitions;
 
     [SerializeField]
-    public ElementPressedEnum[] pressedHandler;
+    public ElementPressedEnum[] pressedHandlerEnum;
+
+    [SerializeField]
+    public SpawnTransitionEnum spawnHandlerEnum;
     #endregion
 
     #region Internal Fields
@@ -44,10 +50,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected bool acceptStickInputInternal = true;
     protected bool acceptStickInputExternal = true;
     // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
-    protected bool isInputActive = true;
+    protected bool isInputActive = false;
 
     // Map for all interactive components
     protected readonly Dictionary<int, GameObject> components = new Dictionary<int, GameObject>();
+
+    protected MenuSpawnTransitionHandler spawnHandler;
     #endregion
 
     #region Delegates and Events
@@ -74,9 +82,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void Start ()
     {
         InitializeMenuManager();
-	}
-	
-	protected virtual void Update ()
+        StartCoroutine(TriggerMenuSpawnTween());
+    }
+
+    protected virtual void Update ()
     {
         if (isInputActive)
         {
@@ -99,6 +108,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public virtual void InitializeMenuManager()
     {
         InitializeDictionary();
+        InitializeSpawnHandler();
         InitializeSelector();
         InitializeBackAction();
         SetPlayerControlActions(PlayerControlActions.CreateWithGamePadBindings());
@@ -119,6 +129,11 @@ public abstract class AbstractMenuManager : MonoBehaviour
         }
     }
 
+    protected virtual void InitializeSpawnHandler()
+    {
+        this.spawnHandler = MenuReloadedUtil.SpawnTransitionEnumToHandler(spawnHandlerEnum, menuSpawnTweenTime, LeanTweenType.easeOutSine);
+    }
+
     protected virtual void InitializeBackAction()
     {
         backAction = GetComponent<ActionHandlerInterface>();
@@ -134,7 +149,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void InitializeSelector()
     {
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
-        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
+        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
         selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
     }
@@ -218,6 +233,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
         yield return new WaitForSeconds(buttonPressedWaitTime);
         PerformActionOnSelectedElement(selectedGameObject);
         acceptButtonInput = true;
+    }
+
+    /// <summary>
+    /// Handles the menu spawn tween.
+    /// The input is disabled during this spawn tween.
+    /// </summary>
+    protected IEnumerator TriggerMenuSpawnTween()
+    {
+        spawnHandler.HandleMenuSpawnTransition(MenuComponents, Selector);
+        SetMenuInputActive(false);
+        yield return new WaitForSeconds(menuSpawnTweenTime);
+        SetMenuInputActive(true);
     }
     #endregion
 

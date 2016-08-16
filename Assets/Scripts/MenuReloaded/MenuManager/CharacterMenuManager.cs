@@ -28,11 +28,11 @@ public class CharacterMenuManager : MenuManager
     {
         if (playerAction.IsNullAction())
         {
-            // TODO: 
+            // TODO: Don't show menu -> Controller not registered
         }
         else
         {
-            // TODO: 
+            // TODO: Fade in menu -> Controller registered
         }
     }
 
@@ -59,7 +59,7 @@ public class CharacterMenuManager : MenuManager
     protected override void InitializeSelector()
     {
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
-        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
+        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
         selector = new CharacterSelector(startIndex, components, pickedTransitions, pickedPressedHandler, selectionHelper, this);
     }

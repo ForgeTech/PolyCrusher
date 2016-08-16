@@ -20,9 +20,11 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
     [SerializeField]
     private CharacterSelectionHelper selectionHelper;
 
+    [SerializeField]
+    private MultiplayerManager multiplayerManager;
+
     #region Internal Members
     private AbstractMenuManager menuManager;
-    private MultiplayerManager multiplayerManager;
     private ImageData[] characters;
     private Vector2 destinationPosition;
     #endregion

@@ -24,23 +24,23 @@ public class MultiplayerManager : MonoBehaviour
 
     //----------private
 
-    private const int maxPlayers = 4;
+    private static int MAX_PLAYER_COUNT = 4;
 
     private PlayerSelectionContainer playerSelectionInstance;
     private AbstractMenuManager[] menuManagers;
-    private List<InputDevice> usedInputDevices;
+    private List<InputDevice> usedInputDevices = new List<InputDevice>();
   
     private PlayerControlActions gamepadListener;
     private CharacterSelectionHelper characterSelectionHelper;
 
-    private List<SlotContainer> slots;
+    private List<SlotContainer> slots = new List<SlotContainer>(MAX_PLAYER_COUNT);
 
     private int index = 0;
 
-    private int playerCount;
-    private int playerReadyCount;
+    private int playerCount = 0;
+    private int playerReadyCount = 0;
 
-    private bool finalSelection;
+    private bool finalSelection = false;
 
 
     private class SlotContainer
@@ -72,11 +72,9 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-
-
     void OnEnable()
     {
-        slots = new List<SlotContainer>(maxPlayers);
+        slots.Clear();
         AbstractMenuManager[] menuManagers = FindObjectsOfType<AbstractMenuManager>();
         foreach(AbstractMenuManager menuManager in menuManagers)
         {
@@ -86,13 +84,11 @@ public class MultiplayerManager : MonoBehaviour
 
         InputManager.OnDeviceDetached += OnDeviceDetached;
         gamepadListener = PlayerControlActions.CreateWithGamePadBindings();
-        usedInputDevices = new List<InputDevice>();
-        playerCount = 0;
-        playerReadyCount = 0;
-        finalSelection = false;
+
+        usedInputDevices.Clear();
 
         playerSelectionInstance = GameObject.FindObjectOfType<PlayerSelectionContainer>();
-        if (playerSelectionInstance==null)
+        if (playerSelectionInstance == null)
         {
             playerSelectionInstance = ((GameObject) Instantiate(playerSelectionContainer, Vector3.zero, Quaternion.identity) ).GetComponent<PlayerSelectionContainer>();           
         }
@@ -105,7 +101,6 @@ public class MultiplayerManager : MonoBehaviour
 
         characterSelectionHelper.OnCharacterSelected += IncreasePlayerReadyCount;
         characterSelectionHelper.OnCharacterDeselected += DecreasePlayerReadyCount;
-
 
         menuManagers = FindObjectsOfType<AbstractMenuManager>();
     }
@@ -137,7 +132,7 @@ public class MultiplayerManager : MonoBehaviour
 
     void Update()
     {
-        if (playerCount < maxPlayers)
+        if (playerCount < MAX_PLAYER_COUNT)
         {
             if (JoinButtonWasPressedOnListener(gamepadListener))
             {
@@ -208,10 +203,10 @@ public class MultiplayerManager : MonoBehaviour
         const float h = 22.0f;
         var y = 10.0f;
 
-        GUI.Label(new Rect(10, y, 300, y + h), "Active players: " + playerCount + "/" + maxPlayers);
+        GUI.Label(new Rect(10, y, 300, y + h), "Active players: " + playerCount + "/" + MAX_PLAYER_COUNT);
         y += h;
 
-        if (playerCount < maxPlayers)
+        if (playerCount < MAX_PLAYER_COUNT)
         {
             GUI.Label(new Rect(10, y, 300, y + h), "Press a button to join!");
             y += h;

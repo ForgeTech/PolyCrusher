@@ -55,4 +55,17 @@ public class MenuReloadedUtil
         }
         return pickedPressedHandler;
     }
+
+    public static MenuSpawnTransitionHandler SpawnTransitionEnumToHandler(SpawnTransitionEnum spawnTransition, float tweenTime, LeanTweenType easeType)
+    {
+        MenuSpawnTransitionHandler handler = null;
+
+        switch (spawnTransition)
+        {
+            case SpawnTransitionEnum.ScaleTransition:
+                handler = new SpawnSizeHandler(tweenTime, easeType);
+                break;
+        }
+        return handler;
+    }
 }

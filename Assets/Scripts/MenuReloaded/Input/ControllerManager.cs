@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using InControl;
-using System;
 
-public class ControllerManager : MonoBehaviour {
-
+public class ControllerManager : MonoBehaviour
+{
     private List<SmartphoneController> smartphoneControllerList;
     private SmartphoneController smartphoneController;
     private KeyboardController keyboardController;
@@ -21,7 +20,7 @@ public class ControllerManager : MonoBehaviour {
     void Start()
     {
         //-------------for testing purposes, needs to be deleted later on
-        smartphoneController = new SmartphoneController(0, networkController);       
+        smartphoneController = new SmartphoneController(0, networkController);
         InputManager.AttachDevice(smartphoneController);
         smartphoneControllerList.Add(smartphoneController);
         //-------------  
