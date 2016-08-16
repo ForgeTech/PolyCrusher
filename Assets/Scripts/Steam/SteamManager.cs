@@ -9,28 +9,8 @@ using Steamworks;
 // and handles the basics of starting up and shutting down the SteamAPI for use.
 //
 [DisallowMultipleComponent]
-class SteamManager : MonoBehaviour
+class SteamManager : ISteamManager
 {
-    private static SteamManager instance;
-    public static SteamManager Instance
-    {
-        get
-        {
-            return instance ?? new GameObject("SteamManager").AddComponent<SteamManager>();
-        }
-    }
-
-    private static bool everInitialized;
-
-    private bool initialized;
-    public static bool Initialized
-    {
-        get
-        {
-            return Instance.initialized;
-        }
-    }
-
     private SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
     private static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText)
     {
@@ -84,23 +64,9 @@ class SteamManager : MonoBehaviour
     private IDictionary<string, int> characterPowerups = new Dictionary<string, int>();
     private int totalPowerups;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-
-        if (everInitialized)
-        {
-            // This is almost always an error.
-            // The most common case where this happens is the SteamManager getting destroyed via Application.Quit() and having some code in some OnDestroy which gets called afterwards, creating a new SteamManager.
-            throw new System.Exception("Tried to Initialize the SteamAPI twice in one session!");
-        }
-
-        DontDestroyOnLoad(gameObject);
+        base.Awake();
 
         if (!Packsize.Test())
         {
@@ -157,17 +123,9 @@ class SteamManager : MonoBehaviour
         everInitialized = true;
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-
-        if (!initialized)
-        {
-            return;
-        }
+        base.OnEnable();
 
         if (m_SteamAPIWarningMessageHook == null)
         {
@@ -256,7 +214,7 @@ class SteamManager : MonoBehaviour
         if (!statsValid)
             return;
 
-        #region unlock persisted achievements
+#region unlock persisted achievements
 
         //games played
         if (totalGamesPlayed == 21)
@@ -303,7 +261,7 @@ class SteamManager : MonoBehaviour
             bulletsShotAchieved = true;
         }
 
-        #endregion
+#endregion
 
         //Store stats in the Steam database if necessary
         if (storeStats)
@@ -351,7 +309,7 @@ class SteamManager : MonoBehaviour
         }
     }
 
-    #region SteamAPI callbacks
+#region SteamAPI callbacks
 
     private void OnAchievementStored(UserAchievementStored_t pCallback)
     {
@@ -458,15 +416,15 @@ class SteamManager : MonoBehaviour
             UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
     }
 
-    #endregion
+#endregion
 
-    #region log and unlock current achievements
+#region log and unlock current achievements
 
     /// <summary>
     /// This method can be used by the DataCollector to send Data to the SteamManager.
     /// </summary>
     /// <param name="e">The Event that is sent by the DataCollector.</param>
-    public void LogAchievementEvent(Event e)
+    public override void LogAchievementEvent(Event e)
     {
         switch (e.type)
         {
@@ -515,7 +473,7 @@ class SteamManager : MonoBehaviour
         }
     }
 
-    public void LogAchievementData(AchievementID id)
+    public override void LogAchievementData(AchievementID id)
     {
         switch (id)
         {
@@ -633,25 +591,15 @@ class SteamManager : MonoBehaviour
         storeStats = true;
     }
     
-    #endregion
+#endregion
 
     /// <summary>
     // OnApplicationQuit gets called too early to shutdown the SteamAPI. Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
     // Thus it is not recommended to perform any Steamworks work in other OnDestroy functions as the order of execution can not be guarenteed upon Shutdown. Prefer OnDisable().
     /// </summary>
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
-        if (instance != this)
-        {
-            return;
-        }
-
-        instance = null;
-
-        if (!initialized)
-        {
-            return;
-        }
+        base.OnDestroy();
 
         SteamAPI.Shutdown();
     }
