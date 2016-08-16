@@ -30,7 +30,7 @@ public abstract class SubMenuAction : AbstractActionHandler
 
             // TODO: Find a cleaner way to assign these 2 handler!
             subMenuManager.transitions = transitions;
-            subMenuManager.pressedHandler = pressedHandler;
+            subMenuManager.pressedHandlerEnum = pressedHandler;
 
             GenerateComponents(subMenuManager);
             subMenuManager.InitializeMenuManager();

@@ -176,6 +176,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected GameObject bloodParticles;
 
+    [Space(10)]
+    [Header("Death particle prefab")]
+    [Tooltip("Prefab of the death particles.")]
+    [SerializeField]
+    protected GameObject deathParticles;
+
     // Specifies if the object can shoot or not.
     protected bool canShoot;
 
@@ -704,13 +710,20 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             LeanTween.scale(healthLevel.rectTransform, originalScale, 0.5f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 
             // send event if player will be dead
-            if (Health - damage < 0 && !IsDead)
+            if (Health - damage <= 0 && !IsDead)
             {
                 string enemyName = "undefined";
 
                 if (damageDealer is BaseEnemy)
                 {
                     enemyName = ((BaseEnemy)damageDealer).EnemyName;
+                }
+
+                // Instantiate particles if the prefab reference isn't null.
+                if (deathParticles != null)
+                {
+                    GameObject deathParticle = Instantiate(deathParticles);
+                    deathParticle.transform.position = transform.position;
                 }
 
                 new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();

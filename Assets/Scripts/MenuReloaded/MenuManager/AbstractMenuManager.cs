@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using InControl;
 
 public enum MenuSelection
 {
@@ -28,25 +27,36 @@ public abstract class AbstractMenuManager : MonoBehaviour
     [SerializeField]
     private float stickMovedWaitTime = 0.3f;
 
+    [SerializeField]
+    private float menuSpawnTweenTime = 0.2f;
+
     [Header("Transitions")]
     [SerializeField]
     public TransitionEnum[] transitions;
 
     [SerializeField]
-    public ElementPressedEnum[] pressedHandler;
+    public ElementPressedEnum[] pressedHandlerEnum;
+
+    [SerializeField]
+    public SpawnTransitionEnum spawnHandlerEnum;
     #endregion
 
+    #region Internal Fields
     protected SelectorInterface selector;
     protected MenuInputHandler menuInputHandler;
+    protected ActionHandlerInterface backAction;
 
     protected bool acceptButtonInput = true;
     protected bool acceptStickInputInternal = true;
     protected bool acceptStickInputExternal = true;
     // Is used for sub menus -> Sub menus set this member of its parent to false when the sub menu is created.
-    protected bool isInputActive = true;
+    protected bool isInputActive = false;
 
     // Map for all interactive components
     protected readonly Dictionary<int, GameObject> components = new Dictionary<int, GameObject>();
+
+    protected MenuSpawnTransitionHandler spawnHandler;
+    #endregion
 
     #region Delegates and Events
     public delegate void SelectedEventHandler(AbstractMenuManager triggerManager, GameObject selectedComponent);
@@ -72,9 +82,11 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void Start ()
     {
         InitializeMenuManager();
-	}
-	
-	protected virtual void Update ()
+        InitializePlayerControlActions();
+        StartCoroutine(TriggerMenuSpawnTween());
+    }
+
+    protected virtual void Update ()
     {
         if (isInputActive)
         {
@@ -89,11 +101,62 @@ public abstract class AbstractMenuManager : MonoBehaviour
         }
     }
 
+    public void SetMenuInputActive(bool isInputActive)
+    {
+        this.isInputActive = isInputActive;
+    }
+
     public virtual void InitializeMenuManager()
     {
         InitializeDictionary();
+        InitializeSpawnHandler();
         InitializeSelector();
+        InitializeBackAction();
+    }
+
+    protected virtual void InitializePlayerControlActions()
+    {
         SetPlayerControlActions(PlayerControlActions.CreateWithGamePadBindings());
+    }
+
+    /// <summary>
+    /// Searches for all child objects and adds them to the dictionary. Uses the SelectionID of the NavigationInformation component as key for the dictionary
+    /// </summary>
+    protected virtual void InitializeDictionary()
+    {
+        foreach (Transform child in transform)
+        {
+            NavigationInformation ni = child.GetComponent<NavigationInformation>();
+            if (ni != null)
+                components.Add(ni.SelectionID, child.gameObject);
+            else
+                Debug.LogError("NavigationInformation component is missing!");
+        }
+    }
+
+    protected virtual void InitializeSpawnHandler()
+    {
+        this.spawnHandler = MenuReloadedUtil.SpawnTransitionEnumToHandler(spawnHandlerEnum, menuSpawnTweenTime, LeanTweenType.easeOutSine);
+    }
+
+    protected virtual void InitializeBackAction()
+    {
+        backAction = GetComponent<ActionHandlerInterface>();
+        if (backAction == null)
+        {
+            Debug.Log("<color=#ff0000ff><b>No Action Handler for the back action was found at the MenuManage GameObject."
+                + " Using NoOp Action instead.</b></color>");
+            
+            backAction = new NoOpAction();
+        }
+    }
+
+    protected virtual void InitializeSelector()
+    {
+        TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
+        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
+
+        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
     }
 
     public void SetPlayerControlActions(PlayerControlActions action)
@@ -108,14 +171,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public void SwitchNavigationActivationState()
     {
         acceptStickInputExternal = !acceptStickInputExternal;
-    }
-
-    protected virtual void InitializeSelector()
-    {
-        TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
-        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
-
-        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
     }
 
     protected virtual void HandleSelection()
@@ -134,9 +189,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected virtual void HandleBackSelection()
     {
-        GameObject g;
         menuInputHandler.HandleBackInput(() => {
-            // TODO Call back action
+            backAction.PerformAction<MonoBehaviour>(this);
         });
     }
 
@@ -167,21 +221,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
             menuInputHandler.HandleVerticalInput(previous, next);
     }
 
-    /// <summary>
-    /// Searches for all child objects and adds them to the dictionary. Uses the SelectionID of the NavigationInformation component as key for the dictionary
-    /// </summary>
-    protected virtual void InitializeDictionary()
-    {
-        foreach (Transform child in transform)
-        {
-            NavigationInformation ni = child.GetComponent<NavigationInformation>();
-            if (ni != null)
-                components.Add(ni.SelectionID, child.gameObject);
-            else
-                Debug.LogError("NavigationInformation component is missing!");
-        }
-    }
-
     #region IEnumerator methods
     protected IEnumerator StickInputCooldown()
     {
@@ -199,6 +238,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
         yield return new WaitForSeconds(buttonPressedWaitTime);
         PerformActionOnSelectedElement(selectedGameObject);
         acceptButtonInput = true;
+    }
+
+    /// <summary>
+    /// Handles the menu spawn tween.
+    /// The input is disabled during this spawn tween.
+    /// </summary>
+    protected IEnumerator TriggerMenuSpawnTween()
+    {
+        spawnHandler.HandleMenuSpawnTransition(MenuComponents, Selector);
+        SetMenuInputActive(false);
+        yield return new WaitForSeconds(menuSpawnTweenTime);
+        SetMenuInputActive(true);
     }
     #endregion
 

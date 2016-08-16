@@ -1330,6 +1330,7 @@ GameObject:
   - 224: {fileID: 1887416935}
   - 114: {fileID: 1887416937}
   - 114: {fileID: 1887416938}
+  - 114: {fileID: 1887416940}
   - 223: {fileID: 1887416936}
   - 114: {fileID: 1887416939}
   m_Layer: 0
@@ -1390,8 +1391,10 @@ MonoBehaviour:
   menuSelection: 0
   buttonPressedWaitTime: .200000003
   stickMovedWaitTime: .300000012
+  menuSpawnTweenTime: .200000003
   transitions: 0300000004000000
-  pressedHandler: 02000000
+  pressedHandlerEnum: 02000000
+  spawnHandlerEnum: 0
 --- !u!114 &1887416938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,6 +1432,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &1887416940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1887416934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7584998eb2d5ba2469de2923289271f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelName: MenuReloadedMainMenu
 --- !u!1 &1988827436
 GameObject:
   m_ObjectHideFlags: 0

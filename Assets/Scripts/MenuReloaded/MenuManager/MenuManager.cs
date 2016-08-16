@@ -1,15 +1,5 @@
 ﻿public class MenuManager : AbstractMenuManager
 {
-    public void DeactivateInput()
-    {
-        this.isInputActive = false;
-    }
-
-    public void ActivateInput()
-    {
-        this.isInputActive = true;
-    }
-
     public override void DestroyMenuManager()
     {
         // Destroy children

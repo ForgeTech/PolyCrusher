@@ -3,7 +3,15 @@
 public class CharacterMenuManager : MenuManager
 {
     [SerializeField]
+    private PlayerSlot playerSlot;
+
+    [SerializeField]
     private CharacterSelectionHelper selectionHelper;
+
+    public PlayerSlot PlayerSlot
+    {
+        get { return this.playerSlot; }
+    }
 
     protected override void Start()
     {
@@ -20,11 +28,11 @@ public class CharacterMenuManager : MenuManager
     {
         if (playerAction.IsNullAction())
         {
-            // TODO: 
+            // TODO: Don't show menu -> Controller not registered
         }
         else
         {
-            // TODO: 
+            // TODO: Fade in menu -> Controller registered
         }
     }
 
@@ -37,21 +45,15 @@ public class CharacterMenuManager : MenuManager
         }
     }
 
-    public override void InitializeMenuManager()
+    protected override void InitializePlayerControlActions()
     {
-        // TODO: Only for testing 
-        base.InitializeMenuManager();
-
-        //InitializeDictionary();
-        //InitializeSelector();
-        //// Create initial null binding -> The control binding is set by another script
-        //SetPlayerControlActions(PlayerControlActions.CreateNullBinding());
+        SetPlayerControlActions(PlayerControlActions.CreateNullBinding());
     }
 
     protected override void InitializeSelector()
     {
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
-        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
+        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
         selector = new CharacterSelector(startIndex, components, pickedTransitions, pickedPressedHandler, selectionHelper, this);
     }

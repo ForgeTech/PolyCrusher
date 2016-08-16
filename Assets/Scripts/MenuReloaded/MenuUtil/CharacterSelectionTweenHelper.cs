@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AbstractMenuManager))]
 public class CharacterSelectionTweenHelper : MonoBehaviour
@@ -9,10 +9,19 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
     private float tweenTime = 0.35f;
 
     [SerializeField]
+    private float textTweenTime = 0.25f;
+
+    [SerializeField]
     private LeanTweenType easeType = LeanTweenType.easeOutSine;
 
     [SerializeField]
     private float sideGap = 60f;
+
+    [SerializeField]
+    private CharacterSelectionHelper selectionHelper;
+
+    [SerializeField]
+    private MultiplayerManager multiplayerManager;
 
     #region Internal Members
     private AbstractMenuManager menuManager;
@@ -32,6 +41,11 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         menuManager.NavigationNext += HandleNextChange;
         menuManager.NavigationPrevious += HandlePreviousChange;
 
+        // TODO: Get somehow the multiplayer manager
+        //multiplayerManager = FindObjectOfType<MultiplayerManager>();
+        //multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
+        //multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
+
         characters = new ImageData[menuManager.MenuComponents.Count];
         for (int i = 0; i < characters.Length; i++)
         {
@@ -39,6 +53,44 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             menuManager.MenuComponents.TryGetValue(i, out tmp);
             characters[i] = new ImageData(tmp.GetComponent<RectTransform>());
         }
+
+        if (selectionHelper == null)
+            Debug.LogError("Selection helper is not assigned!");
+
+        selectionHelper.OnCharacterSelected += HandleCharacterSelected;
+        selectionHelper.OnCharacterDeselected += HandleCharacterDeselected;
+    }
+
+    private void HandleCharacterSelected(int index)
+    {
+        Text selectedText = FindSelectedText(index);
+        LeanTween.rotateZ(selectedText.gameObject, 15f, textTweenTime).setEase(easeType);
+        LeanTween.scale(selectedText.rectTransform, Vector3.one, textTweenTime).setEase(easeType);
+    }
+
+    private void HandleCharacterDeselected(int index)
+    {
+        Text selectedText = FindSelectedText(index);
+        LeanTween.rotateZ(selectedText.gameObject, 0f, textTweenTime).setEase(easeType);
+        LeanTween.scale(selectedText.rectTransform, Vector3.zero, textTweenTime).setEase(easeType);
+    }
+
+    private Text FindSelectedText(int index)
+    {
+        GameObject g;
+        menuManager.MenuComponents.TryGetValue(index, out g);
+
+        Text selectedText = null;
+        foreach (Transform child in g.transform)
+        {
+            if (child.tag == "Pie")
+                selectedText = child.GetComponent<Text>();
+        }
+
+        if (selectedText == null)
+            Debug.LogError("'Selected' Text not found!");
+
+        return selectedText;
     }
 
     private void HandleNextChange()
@@ -66,6 +118,23 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             newCurrent.originalPosition + new Vector2(sideGap, 0f),
             newCurrent.originalPosition);
     }
+
+    private void HandleFinalSelectionStart()
+    {
+        //TODO: final selection screen in animation
+        Debug.Log("final selection started");
+    }
+
+
+    private void HandleFinalSelectionStop()
+    {
+        //TODO: final selection screen out animation
+        Debug.Log("final selection stopped");
+
+    }
+
+
+
 
     private void TweenElement(RectTransform rect, Vector2 from, Vector2 to)
     {

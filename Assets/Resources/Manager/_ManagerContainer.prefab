@@ -677,7 +677,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.05941617, y: 6.30673504, z: 5.92782307}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 466142}
@@ -1169,7 +1169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chosenPlayerIndices: 01000000
-  controllerNumber: 00000000
+  controllerNumber: 01000000
   playerPrefabs:
   - {fileID: 134618, guid: 575a9c71ee4c8e24e8acf93a1aa0bf22, type: 2}
   - {fileID: 151210, guid: 8527a4d37ed862c42ac85c98c16d691f, type: 2}
@@ -1657,7 +1657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657a270f534e5b948b5adf57b121adac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 1
+  gameMode: 0
   spawnInfo:
   - enemy: {fileID: 161998, guid: a48ab7787af39a34d8b542d2ce05e9f6, type: 2}
     spawnProbability: .5
@@ -1708,10 +1708,10 @@ MonoBehaviour:
     boss: {fileID: 141898, guid: 5bd4ed5448a5b7f488c8aed92d5cc3a9, type: 2}
     enemyRessourceValue: 1
     enemyName: B055
-    spawnEveryXWave: 7000
+    spawnEveryXWave: 7
     waveSpawnVariation: 2
   specialWaveModeEnabled: 1
-  specialWaveProbablity: .0500000007
+  specialWaveProbablity: .5
   enemyRessourcePool: 30
   currentEnemyRessourceValue: 0
   maxEnemyActiveCount: 20
@@ -2136,6 +2136,7 @@ MonoBehaviour:
   waveRoundText: {fileID: 0}
   waveTextPermanent: {fileID: 0}
   bossText: {fileID: 0}
+  specialWaveText: {fileID: 0}
   playTime: {fileID: 0}
 --- !u!114 &11490592
 MonoBehaviour:

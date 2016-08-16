@@ -437,8 +437,11 @@ public class GameManager : MonoBehaviour
         }
 
         //Debug.
-        Debug.Log("GameManager: Wave " + wave + " start!");
+        Debug.Log("GameManager: <b>Wave " + wave + " start!</b>");
 
+        // Calculate boss wave
+        if (this.wave % bossSpawnWaves == 0)
+            isBossWave = true;
 
         // If the wave is beyond 1, increase the settings to make the game harder.
         if (Wave > 1)
@@ -447,11 +450,8 @@ public class GameManager : MonoBehaviour
         }
 
         // Check if it is a boss wave.
-        if (this.wave % bossSpawnWaves == 0)
-        {
-            isBossWave = true;
+        if (isBossWave)
             bossSpawnInfo.enemyRessourceValue = EnemyRessourcePool;
-        }
 
         CurrentEnemyRessourceValue = EnemyRessourcePool;
         WaveActive = true;

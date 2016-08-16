@@ -289,7 +289,7 @@ public class AbilityCharge : Ability {
         friends = new Rigidbody[3];
         currentFriend = 0;
 
-        
+        inputDevice.Vibrate(0.0f, 0.0f);
         StartCoroutine(ExplosionTimer());        
     }
 
