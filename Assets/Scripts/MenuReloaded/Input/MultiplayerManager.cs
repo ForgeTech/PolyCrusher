@@ -93,7 +93,10 @@ public class MultiplayerManager : MonoBehaviour
             playerSelectionInstance = ((GameObject) Instantiate(playerSelectionContainer, Vector3.zero, Quaternion.identity) ).GetComponent<PlayerSelectionContainer>();           
         }
 
-        characterSelectionHelper = GameObject.FindObjectOfType<CharacterSelectionHelper>();
+        playerCount = 0;
+        playerReadyCount = 0;
+
+    characterSelectionHelper = GameObject.FindObjectOfType<CharacterSelectionHelper>();
         if (characterSelectionHelper == null)
         {
             Debug.LogError("Chracter Selection Helper is null!");
