@@ -35,8 +35,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public ElementPressedEnum[] pressedHandler;
     #endregion
 
+    #region Internal Fields
     protected SelectorInterface selector;
     protected MenuInputHandler menuInputHandler;
+    protected ActionHandlerInterface backAction;
 
     protected bool acceptButtonInput = true;
     protected bool acceptStickInputInternal = true;
@@ -46,6 +48,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     // Map for all interactive components
     protected readonly Dictionary<int, GameObject> components = new Dictionary<int, GameObject>();
+    #endregion
 
     #region Delegates and Events
     public delegate void SelectedEventHandler(AbstractMenuManager triggerManager, GameObject selectedComponent);
@@ -97,7 +100,43 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         InitializeDictionary();
         InitializeSelector();
+        InitializeBackAction();
         SetPlayerControlActions(PlayerControlActions.CreateWithGamePadBindings());
+    }
+
+    /// <summary>
+    /// Searches for all child objects and adds them to the dictionary. Uses the SelectionID of the NavigationInformation component as key for the dictionary
+    /// </summary>
+    protected virtual void InitializeDictionary()
+    {
+        foreach (Transform child in transform)
+        {
+            NavigationInformation ni = child.GetComponent<NavigationInformation>();
+            if (ni != null)
+                components.Add(ni.SelectionID, child.gameObject);
+            else
+                Debug.LogError("NavigationInformation component is missing!");
+        }
+    }
+
+    protected virtual void InitializeBackAction()
+    {
+        backAction = GetComponent<ActionHandlerInterface>();
+        if (backAction == null)
+        {
+            Debug.Log("<color=#ff0000ff><b>No Action Handler for the back action was found at the MenuManage GameObject."
+                + " Using NoOp Action instead.</b></color>");
+            
+            backAction = new NoOpAction();
+        }
+    }
+
+    protected virtual void InitializeSelector()
+    {
+        TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
+        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
+
+        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
     }
 
     public void SetPlayerControlActions(PlayerControlActions action)
@@ -112,14 +151,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public void SwitchNavigationActivationState()
     {
         acceptStickInputExternal = !acceptStickInputExternal;
-    }
-
-    protected virtual void InitializeSelector()
-    {
-        TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
-        ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandler);
-
-        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
     }
 
     protected virtual void HandleSelection()
@@ -138,9 +169,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected virtual void HandleBackSelection()
     {
-        GameObject g;
         menuInputHandler.HandleBackInput(() => {
-            // TODO Call back action
+            backAction.PerformAction<MonoBehaviour>(this);
         });
     }
 
@@ -169,21 +199,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
             menuInputHandler.HandleHorizontalInput(previous, next);
         else if (menuSelection == MenuSelection.VerticalSelection)
             menuInputHandler.HandleVerticalInput(previous, next);
-    }
-
-    /// <summary>
-    /// Searches for all child objects and adds them to the dictionary. Uses the SelectionID of the NavigationInformation component as key for the dictionary
-    /// </summary>
-    protected virtual void InitializeDictionary()
-    {
-        foreach (Transform child in transform)
-        {
-            NavigationInformation ni = child.GetComponent<NavigationInformation>();
-            if (ni != null)
-                components.Add(ni.SelectionID, child.gameObject);
-            else
-                Debug.LogError("NavigationInformation component is missing!");
-        }
     }
 
     #region IEnumerator methods
