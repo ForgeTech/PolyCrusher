@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: fatman_material
-  m_Shader: {fileID: 4800000, guid: 41a9cdc4fe7a5cd4285cbe74106e3e03, type: 3}
+  m_Shader: {fileID: 4800000, guid: 076a6c9c19c7eeb4eabe4c3afcfa3138, type: 3}
   m_ShaderKeywords: _SPECGLOSSMAP
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -38,9 +38,9 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _MetallicGlossMap
+          name: _MetallicTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 02727a4fb387a9d47929bc615ba9e762, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -80,9 +80,9 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _SpecGlossMap
+          name: _MetallicGlossMap
         second:
-          m_Texture: {fileID: 2800000, guid: 38b214edb37d95b44aa9eeff2d22b4d3, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -97,6 +97,13 @@ Material:
           name: _Occlusion
         second:
           m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 38b214edb37d95b44aa9eeff2d22b4d3, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -122,7 +129,11 @@ Material:
       data:
         first:
           name: _Smoothness
-        second: .5
+        second: 1
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
       data:
         first:
           name: _ZWrite
@@ -130,19 +141,11 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .5
-      data:
-        first:
-          name: _Metallic
-        second: 0
+        second: .319999993
       data:
         first:
           name: _BumpScale
         second: 1
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
       data:
         first:
           name: _OcclusionStrength
@@ -159,6 +162,10 @@ Material:
         first:
           name: _Mode
         second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 1
       data:
         first:
           name: _EmissionMult
