@@ -5,9 +5,9 @@
 		_EmissionColor ("EmissionColor", Color) = (1,1,1,1)
 		_EmissionMult ("Emission Multiplicator", Float) = 1
 		_Emission ("Emission", 2D) = "white" {}
-		_Smoothness ("Smoothness", Range(0,1)) = 1.0
+		_Smoothness ("Smoothness", Range(0,2)) = 1.0
 		_MetallicTex ("Metallic (R), Smoothness (G)", 2D) = "black" {}
-		_Metallic ("Metallic", Range(0, 1)) = 1.0
+		_Metallic ("Metallic", Range(0, 2)) = 1.0
 		_Occlusion ("Occlusion", 2D) = "white" {}
 		_FillColor ("FillColor", Color) = (0,0,0,1)
 		_FillEmission ("FillEmission", Color) = (1,1,1,1)
@@ -77,8 +77,8 @@
 
 			// Metallic is channel R and Smoothness is channel G
 			half3 metallic = tex2D (_MetallicTex, IN.uv_MainTex).rgb;
-			o.Metallic = metallic.r;
-			o.Smoothness = metallic.g;
+			o.Metallic = metallic.r * _Metallic;
+			o.Smoothness = metallic.g * _Smoothness;
 
 			o.Albedo = c.rgb;
 			o.Occlusion = tex2D (_Occlusion, IN.uv_MainTex);
