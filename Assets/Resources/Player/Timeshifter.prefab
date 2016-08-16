@@ -1394,7 +1394,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149956}
-  m_LocalRotation: {x: .673879266, y: -.65256834, z: -.071979031, w: -.338910758}
+  m_LocalRotation: {x: .673879206, y: -.652568281, z: -.0719790235, w: -.338910729}
   m_LocalPosition: {x: .0117888842, y: 1.67970443, z: -.105552927}
   m_LocalScale: {x: .999999523, y: 1, z: .99999994}
   m_Children:
@@ -2691,7 +2691,6 @@ MonoBehaviour:
   energyIncrement: 1
   playerName: Timeshifter
   playerIdentifier: 2
-  playerPrefix: P1_
   deathTime: 3.29999995
   movementSpeed: 20
   analogStickTolerance: .100000001
@@ -2703,6 +2702,7 @@ MonoBehaviour:
   innerEnergyCircle: {fileID: 11451088}
   cameraEdgeDetectionOffset: -.100000001
   bloodParticles: {fileID: 111576, guid: 564306a11f0347c4b9061a07d9e1de3e, type: 2}
+  deathParticles: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
   characterVoice: {fileID: 152332}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
 --- !u!114 &11447024
@@ -3109,6 +3109,10 @@ Prefab:
       propertyPath: cameraEdgeDetectionOffset
       value: -.100000001
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathParticles
+      value: 
+      objectReference: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 183964}

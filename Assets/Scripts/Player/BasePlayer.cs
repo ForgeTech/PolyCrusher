@@ -176,6 +176,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected GameObject bloodParticles;
 
+    [Space(10)]
+    [Header("Death particle prefab")]
+    [Tooltip("Prefab of the death particles.")]
+    [SerializeField]
+    protected GameObject deathParticles;
+
     // Specifies if the object can shoot or not.
     protected bool canShoot;
 
@@ -711,6 +717,13 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                 if (damageDealer is BaseEnemy)
                 {
                     enemyName = ((BaseEnemy)damageDealer).EnemyName;
+                }
+
+                // Instantiate particles if the prefab reference isn't null.
+                if (deathParticles != null)
+                {
+                    GameObject deathParticle = Instantiate(deathParticles);
+                    deathParticle.transform.position = transform.position;
                 }
 
                 new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();
