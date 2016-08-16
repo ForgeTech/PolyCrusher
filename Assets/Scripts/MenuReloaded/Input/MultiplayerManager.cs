@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using InControl;
-using System;
 
-public class MultiplayerManager : MonoBehaviour {
+public enum PlayerSlot
+{
+    Player1 = 0,
+    Player2 = 1,
+    Player3 = 2,
+    Player4 = 3
+}
 
-
+public class MultiplayerManager : MonoBehaviour
+{
     //----------public
 
     [Header("Player Selection Container Prefab goes here")]
