@@ -82,6 +82,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void Start ()
     {
         InitializeMenuManager();
+        InitializePlayerControlActions();
         StartCoroutine(TriggerMenuSpawnTween());
     }
 
@@ -111,6 +112,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
         InitializeSpawnHandler();
         InitializeSelector();
         InitializeBackAction();
+    }
+
+    protected virtual void InitializePlayerControlActions()
+    {
         SetPlayerControlActions(PlayerControlActions.CreateWithGamePadBindings());
     }
 

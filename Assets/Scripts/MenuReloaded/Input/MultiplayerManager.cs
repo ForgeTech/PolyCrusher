@@ -234,7 +234,8 @@ public class MultiplayerManager : MonoBehaviour
         if(playerCount == playerReadyCount && !finalSelection)
         {
             finalSelection = true;
-            FinalSelectionExecuted();
+            if(FinalSelectionExecuted != null)
+                FinalSelectionExecuted();
         }
     }
 
@@ -243,7 +244,8 @@ public class MultiplayerManager : MonoBehaviour
         if(playerReadyCount == playerCount && finalSelection)
         {
             finalSelection = false;
-            FinalSelectionStoped();
+            if(FinalSelectionStoped != null)
+                FinalSelectionStoped();
         }
     }
 }

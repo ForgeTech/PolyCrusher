@@ -41,9 +41,10 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         menuManager.NavigationNext += HandleNextChange;
         menuManager.NavigationPrevious += HandlePreviousChange;
 
-        multiplayerManager = FindObjectOfType<MultiplayerManager>();
-        multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
-        multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
+        // TODO: Get somehow the multiplayer manager
+        //multiplayerManager = FindObjectOfType<MultiplayerManager>();
+        //multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
+        //multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
 
         characters = new ImageData[menuManager.MenuComponents.Count];
         for (int i = 0; i < characters.Length; i++)
