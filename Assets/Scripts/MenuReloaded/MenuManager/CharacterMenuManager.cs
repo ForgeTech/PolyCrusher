@@ -3,7 +3,15 @@
 public class CharacterMenuManager : MenuManager
 {
     [SerializeField]
+    private PlayerSlot playerSlot;
+
+    [SerializeField]
     private CharacterSelectionHelper selectionHelper;
+
+    public PlayerSlot PlayerSlot
+    {
+        get { return this.playerSlot; }
+    }
 
     protected override void Start()
     {
