@@ -9,7 +9,6 @@ public class ParticleWrapper : MonoBehaviour
     [Header("Particle System")]
     [SerializeField]
     protected ParticleSystem particles;
-
     protected ParticleSystem p;
 
     protected virtual void Awake()
@@ -18,7 +17,6 @@ public class ParticleWrapper : MonoBehaviour
         {
             p = Instantiate(particles) as ParticleSystem;
             p.transform.position = transform.position;
-            p.transform.rotation = transform.rotation;
             p.transform.parent = this.transform;
 
 
