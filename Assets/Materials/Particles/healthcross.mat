@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: healthcross
-  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -86,6 +86,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -146,7 +153,7 @@ Material:
       data:
         first:
           name: _InvFade
-        second: .300000012
+        second: 3
       data:
         first:
           name: _Amplitude
@@ -175,7 +182,11 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0, g: 1, b: .337931156, a: .678431392}
+        second: {r: .95588237, g: .0281142145, b: .0281142145, a: .678431392}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
       data:
         first:
           name: _EmissionColorUI
@@ -183,7 +194,11 @@ Material:
       data:
         first:
           name: _TintColor
-        second: {r: 0, g: .117647052, b: .00567952311, a: 1}
+        second: {r: .845588207, g: .155439004, b: .155439004, a: 1}
+      data:
+        first:
+          name: _EmisColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 0}
       data:
         first:
           name: _FillColor
