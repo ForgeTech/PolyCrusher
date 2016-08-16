@@ -22,6 +22,7 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
 
     #region Internal Members
     private AbstractMenuManager menuManager;
+    private MultiplayerManager multiplayerManager;
     private ImageData[] characters;
     private Vector2 destinationPosition;
     #endregion
@@ -37,6 +38,10 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         menuManager = GetComponent<AbstractMenuManager>();
         menuManager.NavigationNext += HandleNextChange;
         menuManager.NavigationPrevious += HandlePreviousChange;
+
+        multiplayerManager = FindObjectOfType<MultiplayerManager>();
+        multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
+        multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
 
         characters = new ImageData[menuManager.MenuComponents.Count];
         for (int i = 0; i < characters.Length; i++)
@@ -110,6 +115,23 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             newCurrent.originalPosition + new Vector2(sideGap, 0f),
             newCurrent.originalPosition);
     }
+
+    private void HandleFinalSelectionStart()
+    {
+        //TODO: final selection screen in animation
+        Debug.Log("final selection started");
+    }
+
+
+    private void HandleFinalSelectionStop()
+    {
+        //TODO: final selection screen out animation
+        Debug.Log("final selection stopped");
+
+    }
+
+
+
 
     private void TweenElement(RectTransform rect, Vector2 from, Vector2 to)
     {
