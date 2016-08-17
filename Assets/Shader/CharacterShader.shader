@@ -6,7 +6,7 @@
 		_EmissionMult ("Emission Multiplicator", Float) = 1
 		_Emission ("Emission", 2D) = "white" {}
 		_Smoothness ("Smoothness", Range(0,2)) = 1.0
-		_MetallicTex ("Metallic (R), Smoothness (G)", 2D) = "black" {}
+		_MetallicTex ("Metallic (R), Smoothness (G)", 2D) = "white" {}
 		_Metallic ("Metallic", Range(0, 2)) = 1.0
 		_Occlusion ("Occlusion", 2D) = "white" {}
 		_FillColor ("FillColor", Color) = (0,0,0,1)
