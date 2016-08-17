@@ -11,8 +11,13 @@ public class PlayerSelectionContainer : MonoBehaviour
     public readonly InputDevice[] playerInputDevices = new InputDevice[4];
     public readonly bool[] playerActive = new bool[4];
     public readonly int[] playerPrefabIndices = new int[4];
+
+    [Header("Level information")]
     public string levelName;
 
+    [Header("Beware of the order of the prefabs! Should be the same like in character menu.")]
+    [Tooltip("The order of the character prefabs should be the same order like in the character menu."
+        + " If wrong characters are spawned, check this order first!")]
     public GameObject[] playerPrefabs;
 
     void Awake()
