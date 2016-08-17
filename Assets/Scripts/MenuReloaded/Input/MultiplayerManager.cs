@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using InControl;
+using System.Collections;
+using System;
 
 public enum PlayerSlot
 {
@@ -13,52 +15,72 @@ public enum PlayerSlot
 
 public class MultiplayerManager : MonoBehaviour
 {
+    #region variables
+
     //----------public
 
-    [Header("Player Selection Container Prefab goes here")]
-    public GameObject playerSelectionContainer;
-
-
-    public delegate void FinalSelectionHandler();
+    public delegate void FinalSelectionHandler(float tweentime);
     public event FinalSelectionHandler FinalSelectionExecuted;
     public event FinalSelectionHandler FinalSelectionStoped;
 
     //----------private
 
+    //maximum amount of players
     private static int MAX_PLAYER_COUNT = 4;
 
-    private PlayerSelectionContainer playerSelectionInstance;
-    private AbstractMenuManager[] menuManagers;
-    private List<InputDevice> usedInputDevices = new List<InputDevice>();
-  
-    private PlayerControlActions gamepadListener;
-    private CharacterSelectionHelper characterSelectionHelper;
+    //final screen tween time
+    private static float TWEEN_TIME = 0.3f;
 
-    private List<SlotContainer> slots = new List<SlotContainer>(MAX_PLAYER_COUNT);
+    //WaitforSeconds
+    private WaitForSeconds waitTime;
 
-    private int index = 0;
-
+    //current player count
     private int playerCount = 0;
+
+    //current amount of players that finished selecting a character
     private int playerReadyCount = 0;
 
-    private bool finalSelection = false;
+    //character menus can select
+    private bool singleControls = true;
 
+    //global selection using all devices in usedInputDevices
+    private bool globalControls = false;
 
+    //inputListener
+    private PlayerControlActions gamepadListener;
+    private PlayerControlActions specificGamepadListener;
+
+    //InputDevices that are assigned to a specific slot already are stored here
+    private List<InputDevice> usedInputDevices = new List<InputDevice>(MAX_PLAYER_COUNT);
+    
+    //The SlotContainer objects are stored here
+    private List<SlotContainer> slots = new List<SlotContainer>(MAX_PLAYER_COUNT);
+    
+    //needed references
+    private PlayerSelectionContainer playerSelectionContainer;
+    private CharacterSelectionHelper characterSelectionHelper;
+
+    #endregion
+
+    #region SlotContainer class
+
+    //holds information of the slots charactermenumanager and its inputdevice
     private class SlotContainer
     {
-        public SlotContainer(AbstractMenuManager menuManager, InputDevice inputDevice)
+        public SlotContainer(CharacterMenuManager menuManager, InputDevice inputDevice)
         {
             this.menuManager = menuManager;
             this.inputDevice = inputDevice;
         }
 
-        private AbstractMenuManager menuManager;
-        private InputDevice inputDevice;    
+        private CharacterMenuManager menuManager;
+        private InputDevice inputDevice;
 
         public InputDevice InputDevice
         {
             get { return inputDevice; }
-            set {
+            set
+            {
                 inputDevice = value;
                 PlayerControlActions playerActions = PlayerControlActions.CreateWithGamePadBindings();
                 playerActions.Device = value;
@@ -66,52 +88,129 @@ public class MultiplayerManager : MonoBehaviour
             }
         }
 
-        public bool isFree()
+        public bool IsFree()
         {
             return inputDevice == null ? true : false;
         }
+
+        public PlayerSlot GetPlayerSlot()
+        {
+            return menuManager.PlayerSlot;
+        }
+
+        public void SetMenuInputActive(bool status)
+        {
+            menuManager.SetMenuInputActive(status);
+        }
+
+        public void Deselect()
+        {
+            //TODO
+        }
     }
+
+    #endregion
+
+    #region methods
 
     void OnEnable()
     {
+        playerCount = 0;
+        playerReadyCount = 0;
+        waitTime = new WaitForSeconds(TWEEN_TIME);
+
         slots.Clear();
-        AbstractMenuManager[] menuManagers = FindObjectsOfType<AbstractMenuManager>();
-        foreach(AbstractMenuManager menuManager in menuManagers)
-        {
-            menuManager.SetMenuInputActive(false);
-            slots.Add(new SlotContainer(menuManager, null));
-        }
+        usedInputDevices.Clear();
+
+
+        GatherNeededReferences();
 
         InputManager.OnDeviceDetached += OnDeviceDetached;
         gamepadListener = PlayerControlActions.CreateWithGamePadBindings();
-
-        usedInputDevices.Clear();
-
-        playerSelectionInstance = GameObject.FindObjectOfType<PlayerSelectionContainer>();
-        if (playerSelectionInstance == null)
-        {
-            playerSelectionInstance = ((GameObject) Instantiate(playerSelectionContainer, Vector3.zero, Quaternion.identity) ).GetComponent<PlayerSelectionContainer>();           
-        }
-
-        playerCount = 0;
-        playerReadyCount = 0;
-
-    characterSelectionHelper = GameObject.FindObjectOfType<CharacterSelectionHelper>();
-        if (characterSelectionHelper == null)
-        {
-            Debug.LogError("Chracter Selection Helper is null!");
-        }
+        specificGamepadListener = PlayerControlActions.CreateWithGamePadBindings();
+      
 
         characterSelectionHelper.OnCharacterSelected += IncreasePlayerReadyCount;
         characterSelectionHelper.OnCharacterDeselected += DecreasePlayerReadyCount;
+    }
 
-        menuManagers = FindObjectsOfType<AbstractMenuManager>();
+
+    private void GatherNeededReferences()
+    {
+        //getting all the character menu manager scripts
+        GameObject[] go = GameObject.FindGameObjectsWithTag("CharacterMenuManager");
+        CharacterMenuManager characterMenuManager;
+        if (go != null)
+        {
+            for (int i = 0; i < go.Length; i++)
+            {
+                characterMenuManager = go[i].GetComponent<CharacterMenuManager>();
+                characterMenuManager.SetMenuInputActive(false);
+                slots.Add(new SlotContainer(characterMenuManager, null));
+            }
+            SortSlots();
+        }
+        else
+        {
+            Debug.LogError("No CharacterMenuManager found!");
+        }
+
+
+        //getting the player selection container
+        GameObject g1 = GameObject.FindGameObjectWithTag("GlobalScripts");
+        if (g1 != null)
+        {
+            playerSelectionContainer = g1.GetComponent<PlayerSelectionContainer>();
+            if (playerSelectionContainer == null)
+            {
+                Debug.LogError("No PlayerSelectionContainer found!");
+            }
+        }
+        else
+        {
+            Debug.LogError("No Global Scripts GameObject found!");
+        }
+
+        //getting the character selection helper
+        GameObject g2 = GameObject.FindGameObjectWithTag("CharacterMenuHelper");
+        if (g2 != null)
+        {
+            characterSelectionHelper = g2.GetComponent<CharacterSelectionHelper>();
+            if (characterSelectionHelper == null)
+            {
+                Debug.LogError("Chracter Selection Helper is null!");
+            }
+        }
+        else
+        {
+            Debug.LogError("No Character Selection GameObject found!");
+        }
+    }
+
+    private void SortSlots()
+    {
+        SlotContainer temp;
+        for(int i = 0; i < slots.Count; i++)
+        {
+            for(int j = 1; j < slots.Count; j++)
+            {
+                if(slots[j-1].GetPlayerSlot() > slots[j].GetPlayerSlot())
+                {
+                    temp = slots[j];
+                    slots[j] = slots[j - 1];
+                    slots[j - 1] = temp;
+                }
+            }
+        }
     }
 
     void OnDisable()
     {
-        InputManager.OnDeviceDetached -= OnDeviceDetached;       
-        gamepadListener.Destroy();        
+        InputManager.OnDeviceDetached -= OnDeviceDetached;
+        characterSelectionHelper.OnCharacterSelected -= IncreasePlayerReadyCount;
+        characterSelectionHelper.OnCharacterDeselected -= DecreasePlayerReadyCount;
+        gamepadListener.Destroy();
+        specificGamepadListener.Destroy();
     }
 
     void OnDeviceDetached(InputDevice inputDevice)
@@ -128,28 +227,71 @@ public class MultiplayerManager : MonoBehaviour
         slot.InputDevice = null;
     }
 
-    void Start()
-    {
-        InputManager.OnDeviceDetached += OnDeviceDetached;    
-    }
-
     void Update()
     {
-        if (playerCount < MAX_PLAYER_COUNT)
+        if (singleControls && playerCount < MAX_PLAYER_COUNT && JoinButtonWasPressedOnListener(gamepadListener))
         {
-            if (JoinButtonWasPressedOnListener(gamepadListener))
-            {
-                InputDevice inputDevice = InputManager.ActiveDevice;
+            InputDevice inputDevice = InputManager.ActiveDevice;
 
-                if (ThereIsNoPlayerUsingThisGamePad(inputDevice))
-                {
-                    AssignInputDevice(inputDevice);
-                }
+            if (ThereIsNoPlayerUsingThisGamePad(inputDevice))
+            {
+                AssignInputDevice(inputDevice);
             }
-        }       
+        }
+
+        if (globalControls)
+        {
+            if (specificGamepadListener.Join)
+            {
+                SaveSelectionInformationToContainer();
+                ChangeScene();
+            }
+
+            if (specificGamepadListener.Back)
+            {               
+                SlotContainer slot = FindSlotContainer(InputManager.ActiveDevice);
+                if (slot != null)
+                {
+                    slot.Deselect();
+                }
+                CheckFinalSelectionStop();
+                playerReadyCount--;
+            }
+        }
     }
 
+    private SlotContainer FindSlotContainer(InputDevice activeDevice)
+    {
+        for(int i = 0; i < slots.Count; i++)
+        {
+            if(slots[i].InputDevice == activeDevice)
+            {
+                return slots[i];
+            }
+        }
+        return null;
+    }
 
+    private void ChangeScene()
+    {
+        //TODO add Application.LoadLevel stuff
+       
+    }
+
+    private void SaveSelectionInformationToContainer()
+    {
+        int index = 0;
+        for(int i = 0; i < characterSelectionHelper.SelectionMap.Count; i++)
+        {
+            if (characterSelectionHelper.SelectionMap[i].selected)
+            {
+                index = (int)characterSelectionHelper.SelectionMap[i].selectedBySlot;
+                playerSelectionContainer.playerActive[index] = true;
+                playerSelectionContainer.playerPrefabIndices[index] = i;
+                playerSelectionContainer.playerInputDevices[index] = slots[index].InputDevice;
+            }
+        }
+    }
 
     private void AssignInputDevice(InputDevice inputDevice)
     {
@@ -159,24 +301,23 @@ public class MultiplayerManager : MonoBehaviour
         {
             slots[freeslot].InputDevice = inputDevice;
             usedInputDevices.Add(inputDevice);
+            specificGamepadListener.IncludeDevices.Add(inputDevice);
             playerCount++;
         }
     }
-
-
-
+    
     private int GetFirstFreeSlot()
     {
-        for(int i = 0; i < slots.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
-            if (slots[i].isFree())
+            if (slots[i].IsFree())
             {
                 return i;
             }
         }
         return -1;
     }
-   
+
     private bool JoinButtonWasPressedOnListener(PlayerControlActions actions)
     {
         return actions.Join;
@@ -200,21 +341,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         return FindPlayersUsingGamePad(inputDevice) == null;
     }
-  
-    void OnGUI()
-    {
-        const float h = 22.0f;
-        var y = 10.0f;
 
-        GUI.Label(new Rect(10, y, 300, y + h), "Active players: " + playerCount + "/" + MAX_PLAYER_COUNT);
-        y += h;
-
-        if (playerCount < MAX_PLAYER_COUNT)
-        {
-            GUI.Label(new Rect(10, y, 300, y + h), "Press a button to join!");
-            y += h;
-        }
-    }
 
     private void IncreasePlayerReadyCount(int index)
     {
@@ -225,27 +352,58 @@ public class MultiplayerManager : MonoBehaviour
     private void DecreasePlayerReadyCount(int index)
     {
         CheckFinalSelectionStop();
-        playerReadyCount--;        
+        playerReadyCount--;
     }
 
 
     private void CheckAllPlayersReady()
     {
-        if(playerCount == playerReadyCount && !finalSelection)
+        if (playerCount == playerReadyCount)
         {
-            finalSelection = true;
-            if(FinalSelectionExecuted != null)
-                FinalSelectionExecuted();
+            singleControls = false;            
+            if (FinalSelectionExecuted != null)
+            {
+                FinalSelectionExecuted(TWEEN_TIME);
+            }
+            SetMenuInputActive(false);
+            StartCoroutine(ActivateGlobalControls());
         }
     }
 
     private void CheckFinalSelectionStop()
     {
-        if(playerReadyCount == playerCount && finalSelection)
+        if (playerReadyCount == playerCount)
         {
-            finalSelection = false;
-            if(FinalSelectionStoped != null)
-                FinalSelectionStoped();
+            globalControls = false;           
+            if (FinalSelectionStoped != null)
+            {
+                FinalSelectionStoped(TWEEN_TIME);
+            }
+            StartCoroutine(ActivateSingleControls());
         }
     }
+
+    private IEnumerator ActivateSingleControls()
+    {
+        yield return waitTime;
+        singleControls = true;
+        SetMenuInputActive(true);
+    }
+
+
+    private IEnumerator ActivateGlobalControls()
+    {
+        yield return waitTime;
+        globalControls = true;
+    }
+
+    private void SetMenuInputActive(bool status)
+    {
+        for(int i = 0; i < slots.Count; i++)
+        {
+            slots[i].SetMenuInputActive(status);
+        }
+    }
+
+    #endregion
 }

@@ -41,11 +41,26 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         menuManager.NavigationNext += HandleNextChange;
         menuManager.NavigationPrevious += HandlePreviousChange;
 
-        // TODO: Get somehow the multiplayer manager
-        //multiplayerManager = FindObjectOfType<MultiplayerManager>();
-        //multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
-        //multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
-
+        
+        GameObject g = GameObject.FindGameObjectWithTag("MultiplayerManager");
+        if (g != null)
+        {
+            multiplayerManager = g.GetComponent<MultiplayerManager>();
+            if (multiplayerManager != null)
+            {
+                multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
+                multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
+            }
+            else
+            {
+                Debug.LogError("No Multiplayer Manager Component found!");
+            }
+        }
+        else
+        {
+            Debug.LogError("No Multiplayer Manager GameObject found!");
+        }
+   
         characters = new ImageData[menuManager.MenuComponents.Count];
         for (int i = 0; i < characters.Length; i++)
         {
@@ -119,14 +134,14 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             newCurrent.originalPosition);
     }
 
-    private void HandleFinalSelectionStart()
+    private void HandleFinalSelectionStart(float tweenTime)
     {
         //TODO: final selection screen in animation
         Debug.Log("final selection started");
     }
 
 
-    private void HandleFinalSelectionStop()
+    private void HandleFinalSelectionStop(float tweenTime)
     {
         //TODO: final selection screen out animation
         Debug.Log("final selection stopped");
