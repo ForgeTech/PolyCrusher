@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 /// <summary>
 /// The selector is used to handle the menu element selection.
@@ -16,14 +15,19 @@ public abstract class AbstractSelector : SelectorInterface
     protected readonly TransitionHandlerInterface[] transitionHandler;
     protected readonly ElementPressedHandler[] elementPressedHandler;
 
-    public AbstractSelector(int startIndex, Dictionary<int, GameObject> components, TransitionHandlerInterface[] transitions, ElementPressedHandler[] pressedHandler)
+    public AbstractSelector(int startIndex,
+        Dictionary<int, GameObject> components,
+        TransitionHandlerInterface[] transitions,
+        ElementPressedHandler[] pressedHandler,
+        bool initialFocus)
     {
         this.currentSelectionIndex = startIndex;
         this.components = components;
         this.transitionHandler = transitions;
         this.elementPressedHandler = pressedHandler;
 
-        SetInitialFocus();
+        if(initialFocus)
+            SetInitialFocus();
     }
 
     public int Current

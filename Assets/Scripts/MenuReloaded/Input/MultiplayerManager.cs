@@ -62,7 +62,6 @@ public class MultiplayerManager : MonoBehaviour
                 PlayerControlActions playerActions = PlayerControlActions.CreateWithGamePadBindings();
                 playerActions.Device = value;
                 menuManager.SetPlayerControlActions(playerActions);
-                menuManager.SetMenuInputActive(true);
             }
         }
 

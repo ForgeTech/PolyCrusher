@@ -34,12 +34,11 @@ public class PlayerControlActions : PlayerActionSet
         RightRight = CreatePlayerAction("RightRight");
         RightUp = CreatePlayerAction("RightUp");
         RightDown = CreatePlayerAction("RightDown");
-        NullAction = CreatePlayerAction("Null");
+        //NullAction = CreatePlayerAction("Null");
         LeftHorizontal = CreateOneAxisPlayerAction(LeftLeft, LeftRight);
         LeftVertical = CreateOneAxisPlayerAction(LeftUp, LeftDown);
         RightHorizontal = CreateOneAxisPlayerAction(RightLeft, RightRight);
         RightVertical = CreateOneAxisPlayerAction(RightUp, RightDown);
-
     }
 
     public bool IsNullAction()
@@ -51,10 +50,10 @@ public class PlayerControlActions : PlayerActionSet
     public static PlayerControlActions CreateNullBinding()
     {
         PlayerControlActions p = new PlayerControlActions();
+        p.NullAction = p.CreatePlayerAction("Null");
         p.NullAction.AddDefaultBinding(InputControlType.None);
         return p;
     }
-
 
     //GamePad Controls
     public static PlayerControlActions CreateWithGamePadBindings()

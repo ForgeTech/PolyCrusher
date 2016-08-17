@@ -15,13 +15,13 @@ public class CharacterMenuManager : MenuManager
 
     protected override void Start()
     {
-        base.Start();
-        PlayerActionChanged += HandlePlayerActionChanged;
 
-        InitializeComponentSize();
+        PlayerActionChanged += HandlePlayerActionChanged;
+        InitializeMenuManager();
+        InitializePlayerControlActions();
 
         if (selectionHelper == null)
-            Debug.LogError("Selection helper is not assigned!");
+            Debug.LogError("<b>Selection helper is not assigned!</b>");
     }
 
     private void HandlePlayerActionChanged(PlayerControlActions playerAction)
@@ -29,10 +29,21 @@ public class CharacterMenuManager : MenuManager
         if (playerAction.IsNullAction())
         {
             // TODO: Don't show menu -> Controller not registered
+            foreach (var pair in MenuComponents)
+            {
+                RectTransform r = pair.Value.GetComponent<RectTransform>();
+                r.localScale = Vector3.zero;
+            }
+            Debug.Log("<b>Null action!</b>");
         }
         else
         {
             // TODO: Fade in menu -> Controller registered
+            StartCoroutine(TriggerMenuSpawnTween(() => {
+                InitializeComponentSize();
+            }));
+
+            Debug.Log("<b>No Null action!</b>");
         }
     }
 
@@ -40,8 +51,12 @@ public class CharacterMenuManager : MenuManager
     {
         foreach (var pair in components)
         {
+            NavigationInformation info = pair.Value.GetComponent<NavigationInformation>();
+            RectTransform rect = pair.Value.GetComponent<RectTransform>();
             if (pair.Key != Selector.Current)
-                pair.Value.GetComponent<RectTransform>().localScale = Vector3.zero;
+                rect.localScale = Vector3.zero;
+            else
+                LeanTween.scale(rect, info.OriginalScale, menuSpawnTweenTime);
         }
     }
 
@@ -55,6 +70,6 @@ public class CharacterMenuManager : MenuManager
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
         ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
-        selector = new CharacterSelector(startIndex, components, pickedTransitions, pickedPressedHandler, selectionHelper, this);
+        selector = new CharacterSelector(startIndex, components, pickedTransitions, pickedPressedHandler, selectionHelper, this, false);
     }
 }

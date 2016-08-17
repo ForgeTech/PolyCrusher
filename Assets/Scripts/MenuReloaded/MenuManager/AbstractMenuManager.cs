@@ -28,7 +28,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     private float stickMovedWaitTime = 0.3f;
 
     [SerializeField]
-    private float menuSpawnTweenTime = 0.2f;
+    protected float menuSpawnTweenTime = 0.2f;
 
     [Header("Transitions")]
     [SerializeField]
@@ -56,6 +56,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected readonly Dictionary<int, GameObject> components = new Dictionary<int, GameObject>();
 
     protected MenuSpawnTransitionHandler spawnHandler;
+
+    protected WaitForSeconds buttonPressedWait;
+    protected WaitForSeconds stickMovedWait;
+    protected WaitForSeconds menuSpawnWait;
     #endregion
 
     #region Delegates and Events
@@ -83,7 +87,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         InitializeMenuManager();
         InitializePlayerControlActions();
-        StartCoroutine(TriggerMenuSpawnTween());
+        StartCoroutine(TriggerMenuSpawnTween(() => {
+            spawnHandler.HandleMenuSpawnTransition(MenuComponents, Selector);
+        }));
     }
 
     protected virtual void Update ()
@@ -108,10 +114,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     public virtual void InitializeMenuManager()
     {
+        InitializeCoroutineHelper();
         InitializeDictionary();
         InitializeSpawnHandler();
         InitializeSelector();
         InitializeBackAction();
+    }
+
+    protected void InitializeCoroutineHelper()
+    {
+        buttonPressedWait = new WaitForSeconds(buttonPressedWaitTime);
+        stickMovedWait = new WaitForSeconds(stickMovedWaitTime);
+        menuSpawnWait = new WaitForSeconds(menuSpawnTweenTime);
     }
 
     protected virtual void InitializePlayerControlActions()
@@ -156,7 +170,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
         ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
-        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler);
+        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler, true);
     }
 
     public void SetPlayerControlActions(PlayerControlActions action)
@@ -226,7 +240,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         acceptStickInputInternal = false;
         acceptButtonInput = false;  // Also deactivate buttons so during the tween nothing can be pressed
-        yield return new WaitForSeconds(stickMovedWaitTime);
+        yield return stickMovedWait;
         acceptButtonInput = true;
         acceptStickInputInternal = true;
     }
@@ -235,7 +249,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         acceptButtonInput = false;
         selector.HandleSelectedElement();
-        yield return new WaitForSeconds(buttonPressedWaitTime);
+        yield return buttonPressedWait;
         PerformActionOnSelectedElement(selectedGameObject);
         acceptButtonInput = true;
     }
@@ -244,11 +258,11 @@ public abstract class AbstractMenuManager : MonoBehaviour
     /// Handles the menu spawn tween.
     /// The input is disabled during this spawn tween.
     /// </summary>
-    protected IEnumerator TriggerMenuSpawnTween()
+    protected IEnumerator TriggerMenuSpawnTween(Action spawnTweenAction)
     {
-        spawnHandler.HandleMenuSpawnTransition(MenuComponents, Selector);
+        spawnTweenAction();
         SetMenuInputActive(false);
-        yield return new WaitForSeconds(menuSpawnTweenTime);
+        yield return menuSpawnWait;
         SetMenuInputActive(true);
     }
     #endregion

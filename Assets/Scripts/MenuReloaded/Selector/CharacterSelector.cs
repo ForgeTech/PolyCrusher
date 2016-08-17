@@ -14,8 +14,8 @@ public class CharacterSelector : Selector
     public CharacterSelector(int startIndex, Dictionary<int, GameObject> components,
         TransitionHandlerInterface[] transitionHandlers,
         ElementPressedHandler[] pressedHandler,
-        CharacterSelectionHelper selectionHelper, AbstractMenuManager menuManager) 
-        : base(startIndex, components, transitionHandlers, pressedHandler)
+        CharacterSelectionHelper selectionHelper, AbstractMenuManager menuManager, bool initialFocus) 
+        : base(startIndex, components, transitionHandlers, pressedHandler, initialFocus)
     {
         this.selectionHelper = selectionHelper;
         this.menuManager = menuManager;
