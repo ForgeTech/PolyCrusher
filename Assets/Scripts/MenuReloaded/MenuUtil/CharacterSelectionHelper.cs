@@ -15,7 +15,7 @@ public class CharacterSelectionHelper : MonoBehaviour
     private int characterCount = 6;
 
     // Key: Selection index of character, Value: Selected or not.
-    private Dictionary<int, bool> selectionMap;
+    private Dictionary<int, SelectionData> selectionMap;
 
     private int characterSelectedCount = 0;
 
@@ -26,7 +26,7 @@ public class CharacterSelectionHelper : MonoBehaviour
     #endregion
 
     #region Properties
-    public Dictionary<int, bool> SelectionMap
+    public Dictionary<int, SelectionData> SelectionMap
     {
         get { return this.selectionMap; }
     }
@@ -44,18 +44,19 @@ public class CharacterSelectionHelper : MonoBehaviour
 
     private void Initialize()
     {
-        selectionMap = new Dictionary<int, bool>(characterCount);
+        selectionMap = new Dictionary<int, SelectionData>(characterCount);
         for (int i = 0; i < characterCount; i++)
-            selectionMap.Add(i, false);
+            selectionMap.Add(i, new SelectionData());
     }
 
-    public void SelectAt(int index)
+    public void SelectAt(int index, PlayerSlot playerSlot)
     {
-        if (selectionMap[index])
+        if (selectionMap[index].selected)
             Debug.LogError("Index " + index + " already selected!");
         else
         {
-            selectionMap[index] = true;
+            selectionMap[index].selected = true;
+            selectionMap[index].selectedBySlot = playerSlot;
             characterSelectedCount++;
             OnSelected(index);
         }
@@ -63,11 +64,12 @@ public class CharacterSelectionHelper : MonoBehaviour
 
     public void DeselectAt(int index)
     {
-        if (!selectionMap[index])
+        if (!selectionMap[index].selected)
             Debug.LogError("Index " + index + " already deselected!");
         else
         {
-            selectionMap[index] = false;
+            selectionMap[index].selected = false;
+            selectionMap[index].selectedBySlot = PlayerSlot.None;
             characterSelectedCount--;
             OnDeselected(index);
         }
@@ -86,4 +88,10 @@ public class CharacterSelectionHelper : MonoBehaviour
             OnCharacterDeselected(index);
     }
     #endregion
+
+    public class SelectionData
+    {
+        public bool selected = false;
+        public PlayerSlot selectedBySlot = PlayerSlot.None;
+    }
 }

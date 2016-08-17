@@ -4,6 +4,7 @@ using InControl;
 
 public enum PlayerSlot
 {
+    None = -1,
     Player1 = 0,
     Player2 = 1,
     Player3 = 2,

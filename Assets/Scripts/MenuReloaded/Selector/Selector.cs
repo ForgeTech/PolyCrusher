@@ -36,4 +36,17 @@ public class Selector : AbstractSelector
         if (!CheckIndex(--Current))
             Current = maxValue;
     }
+
+
+    #region Helper methods
+    private int CalculateIndex(int index)
+    {
+        return CalculatePositiveMod(index, maxValue);
+    }
+
+    private int CalculatePositiveMod(int a, int n)
+    {
+        return ((a % n) + n) % n;
+    }
+    #endregion
 }

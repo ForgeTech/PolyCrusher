@@ -8,13 +8,13 @@ public class CharacterSelector : Selector
 {
     private static int NULL_SELECTION = -1;
     private CharacterSelectionHelper selectionHelper;
-    private AbstractMenuManager menuManager;
+    private CharacterMenuManager menuManager;
     private int selectedIndex = NULL_SELECTION;
 
     public CharacterSelector(int startIndex, Dictionary<int, GameObject> components,
         TransitionHandlerInterface[] transitionHandlers,
         ElementPressedHandler[] pressedHandler,
-        CharacterSelectionHelper selectionHelper, AbstractMenuManager menuManager, bool initialFocus) 
+        CharacterSelectionHelper selectionHelper, CharacterMenuManager menuManager, bool initialFocus) 
         : base(startIndex, components, transitionHandlers, pressedHandler, initialFocus)
     {
         this.selectionHelper = selectionHelper;
@@ -23,12 +23,12 @@ public class CharacterSelector : Selector
 
     public override void HandleSelectedElement()
     {
-        bool isAlreadySelected = selectionHelper.SelectionMap[Current];
+        bool isAlreadySelected = selectionHelper.SelectionMap[Current].selected;
 
         if (!isAlreadySelected)             // Normal selection case
         {
             HandleCharacterSelected(Current);
-            selectionHelper.SelectAt(Current);
+            selectionHelper.SelectAt(Current, menuManager.PlayerSlot);
         }
         else if (selectedIndex == Current)  // Deselection case
         {
@@ -39,23 +39,36 @@ public class CharacterSelector : Selector
 
     protected override void OnNext()
     {
-        if (!selectionHelper.SelectionMap[Current])
+        CharacterSelectionHelper.SelectionData slot = selectionHelper.SelectionMap[Current];
+        if (!slot.selected || slot.selectedBySlot != menuManager.PlayerSlot)
             base.OnNext();
-
-        //// Backup routine which fixes a timing issue bug. (It may be that when the player selects often and then navigates, the count is not decremented since the deselection is not registered).
-        //int lastIndex = Current;
-        //base.OnNext();
-        //if (selectionHelper.SelectionMap[lastIndex])
-        //    selectionHelper.DeselectAt(lastIndex);
     }
 
     protected override void OnPrevious()
     {
-        if (!selectionHelper.SelectionMap[Current])
+        CharacterSelectionHelper.SelectionData slot = selectionHelper.SelectionMap[Current];
+        if (!slot.selected || slot.selectedBySlot != menuManager.PlayerSlot)
             base.OnPrevious();
     }
 
     private void HandleCharacterSelected(int selectedIndex)
+    {
+        // Deselection
+        if (selectedIndex == NULL_SELECTION)
+        {
+            DoSelectionRoutine(selectedIndex);
+        }
+        else
+        {
+            PlayerSlot slot = selectionHelper.SelectionMap[selectedIndex].selectedBySlot;
+            
+            // Only handle selection if the same menu is accesing it (if already selected) or if nothing at all is selected.
+            if (slot == menuManager.PlayerSlot || slot == PlayerSlot.None)
+                DoSelectionRoutine(selectedIndex);
+        }
+    }
+
+    private void DoSelectionRoutine(int selectedIndex)
     {
         menuManager.SwitchNavigationActivationState();
         this.selectedIndex = selectedIndex;
