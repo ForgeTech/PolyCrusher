@@ -4,8 +4,8 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 /// <summary>
-/// Object which should be filled with relevant game data
-/// an event must have one of the listed enum types
+/// Object which should be filled with relevant game data.
+/// An event must have one of the listed enum types
 /// </summary>
 public class Event{
     public enum TYPE : byte

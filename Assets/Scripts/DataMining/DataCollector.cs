@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
+using UnityEngine.Events;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -14,7 +15,7 @@ using System.IO;
 using System.Linq;
 using System;
 
-public delegate void RankReceivedDelegate(int rank);
+
 
 /// <summary>
 /// This class uploads game meta data to our mongoDB server.
@@ -45,6 +46,8 @@ public class DataCollector : MonoBehaviour
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
 
+
+
     // VERSION NUMBER
     private string buildVersion = "0.3";
 
@@ -71,8 +74,35 @@ public class DataCollector : MonoBehaviour
     private IDictionary<string, int> kills; 
     private IDictionary<string, int> deathtime;
 
-    public static event RankReceivedDelegate RankReceived;
+    // leaderboard score
+    /// <summary>
+    /// Gets or sets the actual health value.
+    /// </summary>
+    public int Score
+    {
+        get
+        {
+            return this.score;
+        }
+        private set
+        {
+            this.score = value;
+            Debug.Log(score);
+        }
+    }
+    private int score;
 
+    /// <summary>
+    ///  for assigning callback, called when downloaded rank is received
+    /// </summary>
+    public static event RankReceivedDelegate RankReceived;
+    public delegate void RankReceivedDelegate(int rank);
+    /// <summary>
+    /// for assigning callback, called when new event has been registered
+    /// </summary>
+    public static event EventRegisteredDelegate EventRegistered;
+    public delegate void EventRegisteredDelegate(Event e);
+    
     // singleton instance
     private static DataCollector _instance;
     public static DataCollector instance
@@ -174,6 +204,7 @@ public class DataCollector : MonoBehaviour
         localEvents = new List<Event>();
         kills = new Dictionary<string, int>();
         deathtime = new Dictionary<string, int>();
+        EventRegistered += calculateScore;
 
         if (DataCollector.instance.enabled)
         {
@@ -278,6 +309,9 @@ public class DataCollector : MonoBehaviour
                     uploadThread.Start();
                     break;
             }
+
+            // reset score
+            score = 0;
         }
     }
 
@@ -325,6 +359,8 @@ public class DataCollector : MonoBehaviour
         {
             addToSendQueue(e);
         }
+
+        OnEventRegistered(e);
     }
 
     /// <summary>
@@ -547,7 +583,7 @@ public class DataCollector : MonoBehaviour
             Debug.Log("[DataCollector] WWW Error: " + www.error);
         }
     }
-
+    
     public IEnumerator DownlaodHighscoreRank()
     {
         WWWForm form = new WWWForm();
@@ -596,7 +632,7 @@ public class DataCollector : MonoBehaviour
         }
 
         OnRankReceived(rank);
-        ResetValues();
+        ClearRankReceivedDelegate();
     }
 
 
@@ -606,11 +642,27 @@ public class DataCollector : MonoBehaviour
         {
             RankReceived(rank);
         }
+
+        ClearRankReceivedDelegate();
     }
 
-    public void ResetValues()
+
+    public void ClearRankReceivedDelegate()
     {
         RankReceived = null;
+    }
+
+    public void OnEventRegistered(Event e)
+    {
+        if (EventRegistered != null)
+        {
+            EventRegistered(e);
+        }
+    }
+
+    public void ClearEventRegisteredDelegate()
+    {
+        EventRegistered = null;
     }
 
     public static string encode(string plainText)
@@ -658,6 +710,49 @@ public class DataCollector : MonoBehaviour
         return "NO ONE";
     }
 
+
+    int playerDeathsInWave = 0;
+    private void calculateScore(Event e)
+    {
+        switch (e.type)
+        {
+            case Event.TYPE.kill:
+                if(e.enemy == "B055")
+                {
+                    Score += 2500;
+                }
+
+                if(e.character == "_LineManager") // || e.character == "laser_trap"
+                {
+                    Score += 100;
+                }
+                break;
+
+            case Event.TYPE.superAbility:
+                int n = 0;
+
+                if(e.kills != null)
+                {
+                    n += (int)e.kills * 100;
+                }
+
+                Score += 1000 + n;
+                break;
+
+            case Event.TYPE.death:
+                playerDeathsInWave++;
+                break;
+
+            case Event.TYPE.powerup:
+                Score += 100;
+                break;
+
+            case Event.TYPE.waveUp:
+                Score -= 1000 * playerDeathsInWave;
+                playerDeathsInWave = 0;
+                break;
+        }
+    }
 
 }
 
