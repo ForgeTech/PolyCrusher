@@ -28,22 +28,21 @@ public class CharacterMenuManager : MenuManager
     {
         if (playerAction.IsNullAction())
         {
-            // TODO: Don't show menu -> Controller not registered
             foreach (var pair in MenuComponents)
             {
                 RectTransform r = pair.Value.GetComponent<RectTransform>();
                 r.localScale = Vector3.zero;
             }
-            Debug.Log("<b>Null action!</b>");
+            Debug.Log("<b>No Player registered! Hide Menu.</b>");
         }
         else
         {
-            // TODO: Fade in menu -> Controller registered
+            // Fade in Menu -> Controller registered
             StartCoroutine(TriggerMenuSpawnTween(() => {
                 InitializeComponentSize();
             }));
 
-            Debug.Log("<b>No Null action!</b>");
+            Debug.Log("<b>" + PlayerSlot + " registered!</b>");
         }
     }
 
@@ -71,5 +70,14 @@ public class CharacterMenuManager : MenuManager
         ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
         selector = new CharacterSelector(startIndex, components, pickedTransitions, pickedPressedHandler, selectionHelper, this, false);
+    }
+
+    /// <summary>
+    /// Deselects if possible.
+    /// </summary>
+    public void Deselect()
+    {
+        // Selector must be a 'CharacterSelector' therefore this cast should be safe
+        ((CharacterSelector)selector).Deselect();
     }
 }

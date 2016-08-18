@@ -7,8 +7,6 @@ public class LevelLoadByNameWithPlayerContainer : LevelLoadByName
 
     public override void PerformAction<T>(T triggerInstance)
     {
-        // TODO: Implement logic to set the level data in the PlayerSelectionContainer!
-        // Maybe give the conainer a tag to find it faster.
         SaveLevelIntoSelectionContainer();
         base.PerformAction<T>(triggerInstance);
     }

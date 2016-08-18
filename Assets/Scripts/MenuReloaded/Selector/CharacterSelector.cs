@@ -74,4 +74,19 @@ public class CharacterSelector : Selector
         this.selectedIndex = selectedIndex;
         base.HandleSelectedElement();
     }
+
+    /// <summary>
+    /// Deselects if possible.
+    /// </summary>
+    public void Deselect()
+    {
+        CharacterSelectionHelper.SelectionData slot = selectionHelper.SelectionMap[Current];
+
+        // Only deselect if the current index is selected
+        if (slot.selected)
+        {
+            HandleCharacterSelected(Current);
+            selectionHelper.DeselectAt(Current);
+        }
+    }
 }

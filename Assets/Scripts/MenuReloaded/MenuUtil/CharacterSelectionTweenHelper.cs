@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AbstractMenuManager))]
@@ -41,25 +42,7 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         menuManager.NavigationNext += HandleNextChange;
         menuManager.NavigationPrevious += HandlePreviousChange;
 
-        
-        GameObject g = GameObject.FindGameObjectWithTag("MultiplayerManager");
-        if (g != null)
-        {
-            multiplayerManager = g.GetComponent<MultiplayerManager>();
-            if (multiplayerManager != null)
-            {
-                multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
-                multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
-            }
-            else
-            {
-                Debug.LogError("No Multiplayer Manager Component found!");
-            }
-        }
-        else
-        {
-            Debug.LogError("No Multiplayer Manager GameObject found!");
-        }
+        FindMultiplayerManager();
    
         characters = new ImageData[menuManager.MenuComponents.Count];
         for (int i = 0; i < characters.Length; i++)
@@ -74,6 +57,24 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
 
         selectionHelper.OnCharacterSelected += HandleCharacterSelected;
         selectionHelper.OnCharacterDeselected += HandleCharacterDeselected;
+    }
+
+    private void FindMultiplayerManager()
+    {
+        GameObject g = GameObject.FindGameObjectWithTag("MultiplayerManager");
+        if (g != null)
+        {
+            multiplayerManager = g.GetComponent<MultiplayerManager>();
+            if (multiplayerManager != null)
+            {
+                multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
+                multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
+            }
+            else
+                Debug.LogError("No Multiplayer Manager Component found!");
+        }
+        else
+            Debug.LogError("No Multiplayer Manager GameObject found!");
     }
 
     private void HandleCharacterSelected(int index)
@@ -140,16 +141,11 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         Debug.Log("final selection started");
     }
 
-
     private void HandleFinalSelectionStop(float tweenTime)
     {
         //TODO: final selection screen out animation
         Debug.Log("final selection stopped");
-
     }
-
-
-
 
     private void TweenElement(RectTransform rect, Vector2 from, Vector2 to)
     {
