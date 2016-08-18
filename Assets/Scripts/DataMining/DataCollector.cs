@@ -87,7 +87,7 @@ public class DataCollector : MonoBehaviour
         private set
         {
             this.score = value;
-            Debug.Log(score);
+            Debug.Log("score:"+score);
         }
     }
     private int score;
@@ -309,6 +309,9 @@ public class DataCollector : MonoBehaviour
                     uploadThread.Start();
                     break;
             }
+
+            GameManager.WaveStarted += () => { new Event(Event.TYPE.waveUp).addWave().send(); };
+            PlayerManager.AllPlayersDeadEventHandler += () => { DataCollector.instance.endSession("Heinzi"); };
 
             // reset score
             score = 0;
@@ -748,8 +751,22 @@ public class DataCollector : MonoBehaviour
                 break;
 
             case Event.TYPE.waveUp:
-                Score -= 1000 * playerDeathsInWave;
+                if(e.wave != 1)
+                {
+                    if (playerDeathsInWave != 0)
+                    {
+                        Score -= 1000 * playerDeathsInWave;
+                    }
+
+                    Score += 10000;
+                }
+
                 playerDeathsInWave = 0;
+                break;
+            case Event.TYPE.sessionEnd:
+                float wave = Event.getWave();
+                int s = (int)((wave - (int)wave) * 10000);
+                Score += s;
                 break;
         }
     }
