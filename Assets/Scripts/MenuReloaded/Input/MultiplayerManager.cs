@@ -254,9 +254,7 @@ public class MultiplayerManager : MonoBehaviour
                 if (slot != null)
                 {
                     slot.Deselect();
-                }
-                CheckFinalSelectionStop();
-                playerReadyCount--;
+                }          
             }
         }
     }
