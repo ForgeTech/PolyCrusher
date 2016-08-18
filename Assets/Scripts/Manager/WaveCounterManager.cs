@@ -34,6 +34,17 @@ public class WaveCounterManager : MonoBehaviour
     [SerializeField]
     protected UnityEngine.UI.Text playTime;
 
+    // Reference to the permanent scoreNumber;
+    [SerializeField]
+    protected UnityEngine.UI.Text scoreTextPermanent;
+
+    //[SerializeField]
+    //[Range(0f, 1f)]
+    protected float scoreDamp = 0.9f;
+    private int displayScore = 0;
+    private float nextActionTime = 0f;
+    private float sampleRate = 32;
+
     public WaveCounterManager WaveCounterManagerInstance
     {
         get 
@@ -59,6 +70,19 @@ public class WaveCounterManager : MonoBehaviour
     {
         if(GameManager.GameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
             FillTimeLabel();
+
+        // calculate display score
+        if (Time.time > nextActionTime)
+        {
+            displayScore += (int)Mathf.Ceil((DataCollector.instance.intermediateScore - displayScore) * (1f - scoreDamp));
+            nextActionTime = (float)(Time.time + (1.0 / sampleRate) - (Time.time - nextActionTime));
+
+            if(scoreTextPermanent != null)
+            {
+                scoreTextPermanent.text = displayScore.ToString("N0");
+            }
+        }
+
     }
 
     /// <summary>

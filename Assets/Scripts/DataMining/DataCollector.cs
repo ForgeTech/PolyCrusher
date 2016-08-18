@@ -91,6 +91,7 @@ public class DataCollector : MonoBehaviour
         }
     }
     private int score;
+    public int intermediateScore;
 
     /// <summary>
     ///  for assigning callback, called when downloaded rank is received
@@ -635,7 +636,6 @@ public class DataCollector : MonoBehaviour
         }
 
         OnRankReceived(rank);
-        ClearRankReceivedDelegate();
     }
 
 
@@ -646,13 +646,8 @@ public class DataCollector : MonoBehaviour
             RankReceived(rank);
         }
 
-        ClearRankReceivedDelegate();
-    }
-
-
-    public void ClearRankReceivedDelegate()
-    {
-        RankReceived = null;
+        // Watch out! also event registered is reset
+        ResetDelegates();
     }
 
     public void OnEventRegistered(Event e)
@@ -663,8 +658,13 @@ public class DataCollector : MonoBehaviour
         }
     }
 
-    public void ClearEventRegisteredDelegate()
+
+    /// <summary>
+    /// Resets all delegates
+    /// </summary>
+    protected void ResetDelegates()
     {
+        RankReceived = null;
         EventRegistered = null;
     }
 
@@ -715,8 +715,11 @@ public class DataCollector : MonoBehaviour
 
 
     int playerDeathsInWave = 0;
+    int resourceValueBefore = 0;
     private void calculateScore(Event e)
     {
+        int scoreBefore = Score;
+
         switch (e.type)
         {
             case Event.TYPE.kill:
@@ -729,6 +732,11 @@ public class DataCollector : MonoBehaviour
                 {
                     Score += 100;
                 }
+
+                // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
+                intermediateScore += (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
+
+                resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 break;
 
             case Event.TYPE.superAbility:
@@ -761,6 +769,7 @@ public class DataCollector : MonoBehaviour
                     Score += 10000;
                 }
 
+                intermediateScore = Score;
                 playerDeathsInWave = 0;
                 break;
             case Event.TYPE.sessionEnd:
@@ -769,6 +778,8 @@ public class DataCollector : MonoBehaviour
                 Score += s;
                 break;
         }
+
+        intermediateScore += Score - scoreBefore;
     }
 
 }

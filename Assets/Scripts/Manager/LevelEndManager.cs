@@ -132,7 +132,7 @@ public class LevelEndManager : MonoBehaviour {
             t6 = im.GetComponentsInChildren<Text>();
 				
 			//GameObject.Find ("JoinText").GetComponent<Text> ().enabled = false;
-			GameObject.Find ("GameName").GetComponent<Text> ().enabled = false;
+			//GameObject.Find ("GameName").GetComponent<Text> ().enabled = false;
             GameObject waveRessourceBar = GameObject.Find("WaveRessourceBar");
             if (waveRessourceBar != null)
                 waveRessourceBar.GetComponent<Image>().enabled = false;
@@ -353,8 +353,6 @@ public class LevelEndManager : MonoBehaviour {
 		} else {
 			playerGameName = GameObject.FindObjectOfType<PlayerNetCommunicate>().gameName;
 		}
-
-		DataCollector.instance.endSession (playerGameName);
 
 		t1.enabled = false;
 		t2.enabled = false;
