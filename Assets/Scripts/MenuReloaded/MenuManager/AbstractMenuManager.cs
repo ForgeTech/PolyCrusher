@@ -40,6 +40,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     [SerializeField]
     public SpawnTransitionEnum spawnHandlerEnum;
+
+    [Header("Sub selector transitions")]
+    [Tooltip("The transition of the sub selector when the main selector changes, not the overall sub selector transitions!")]
+    public TransitionEnum[] subSelectorTransition;
     #endregion
 
     #region Internal Fields
@@ -61,6 +65,11 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected WaitForSeconds buttonPressedWait;
     protected WaitForSeconds stickMovedWait;
     protected WaitForSeconds menuSpawnWait;
+
+    private Action navigationNextAction;
+    private Action navigationPreviousAction;
+    private Action subNavigationNextAction;
+    private Action subNavigationPreviousAction;
     #endregion
 
     #region Delegates and Events
@@ -98,7 +107,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
         if (isInputActive)
         {
             if (acceptStickInputInternal && acceptStickInputExternal)
-                HandleNavigation();
+            {
+                if (menuSelection != MenuSelection.SubSelection)
+                    HandleNavigation();
+                else
+                    HandleSubNavigation();
+            }
 
             if (acceptButtonInput)
             {
@@ -116,10 +130,38 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public virtual void InitializeMenuManager()
     {
         InitializeCoroutineHelper();
+        InitializeActions();
         InitializeDictionary();
         InitializeSpawnHandler();
         InitializeSelector();
         InitializeBackAction();
+    }
+
+    protected void InitializeActions()
+    {
+        // Next & Previous Action callbacks
+        navigationNextAction = () => {
+            selector.Next();
+            OnNextSelection();
+            StartCoroutine(StickInputCooldown());
+        };
+        navigationPreviousAction = () => {
+            selector.Previous();
+            OnPreviousSelection();
+            StartCoroutine(StickInputCooldown());
+        };
+
+        // Sub navigation actions
+        subNavigationNextAction = () => {
+            ((SelectorWithSubSelector)selector).SubSelectorNext();
+            OnNextSelection();
+            StartCoroutine(StickInputCooldown());
+        };
+        subNavigationPreviousAction = () => {
+            ((SelectorWithSubSelector)selector).SubSelectorPrevious();
+            OnPreviousSelection();
+            StartCoroutine(StickInputCooldown());
+        };
     }
 
     protected void InitializeCoroutineHelper()
@@ -171,7 +213,10 @@ public abstract class AbstractMenuManager : MonoBehaviour
         TransitionHandlerInterface[] pickedTransitions = MenuReloadedUtil.MapTransitionEnumToHandler(transitions);
         ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
-        selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler, true);
+        if (menuSelection != MenuSelection.SubSelection)
+            selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler, true);
+        else
+            selector = new SelectorWithSubSelector(startIndex, components, pickedTransitions, pickedPressedHandler, true, MenuReloadedUtil.MapTransitionEnumToHandler(subSelectorTransition));
     }
 
     public void SetPlayerControlActions(PlayerControlActions action)
@@ -215,25 +260,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
         OnComponentSelected(selectedElement);
     }
 
+    protected virtual void HandleSubNavigation()
+    {
+        menuInputHandler.HandleVerticalInput(navigationPreviousAction, navigationNextAction);
+        menuInputHandler.HandleHorizontalInput(subNavigationPreviousAction, subNavigationNextAction);
+    }
+
     protected virtual void HandleNavigation()
     {
-        // Action callbacks
-        Action next = () => {
-            selector.Next();
-            OnNextSelection();
-            StartCoroutine(StickInputCooldown());
-
-        };
-        Action previous = () => {
-            selector.Previous();
-            OnPreviousSelection();
-            StartCoroutine(StickInputCooldown());
-        };
-
         if (menuSelection == MenuSelection.HorizontalSelection)
-            menuInputHandler.HandleHorizontalInput(previous, next);
+            menuInputHandler.HandleHorizontalInput(navigationPreviousAction, navigationNextAction);
         else if (menuSelection == MenuSelection.VerticalSelection)
-            menuInputHandler.HandleVerticalInput(previous, next);
+            menuInputHandler.HandleVerticalInput(navigationPreviousAction, navigationNextAction);
     }
 
     #region IEnumerator methods

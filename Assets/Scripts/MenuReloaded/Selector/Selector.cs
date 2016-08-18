@@ -7,8 +7,8 @@ using System;
 /// </summary>
 public class Selector : AbstractSelector
 {
-    private int minValue;
-    private int maxValue;
+    protected int minValue;
+    protected int maxValue;
 
     public Selector(int startIndex, Dictionary<int, GameObject> components, TransitionHandlerInterface[] transitionHandlers, ElementPressedHandler[] pressedHandler, bool initialFocus) 
         : base(startIndex, components, transitionHandlers, pressedHandler, initialFocus)
@@ -36,17 +36,4 @@ public class Selector : AbstractSelector
         if (!CheckIndex(--Current))
             Current = maxValue;
     }
-
-
-    #region Helper methods
-    private int CalculateIndex(int index)
-    {
-        return CalculatePositiveMod(index, maxValue);
-    }
-
-    private int CalculatePositiveMod(int a, int n)
-    {
-        return ((a % n) + n) % n;
-    }
-    #endregion
 }

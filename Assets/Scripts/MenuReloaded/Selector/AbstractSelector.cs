@@ -15,6 +15,9 @@ public abstract class AbstractSelector : SelectorInterface
     protected readonly TransitionHandlerInterface[] transitionHandler;
     protected readonly ElementPressedHandler[] elementPressedHandler;
 
+    public Dictionary<int, GameObject> Components
+    { get { return this.components; } }
+
     public AbstractSelector(int startIndex,
         Dictionary<int, GameObject> components,
         TransitionHandlerInterface[] transitions,
@@ -98,13 +101,13 @@ public abstract class AbstractSelector : SelectorInterface
         InvokeTransitionFocus(currentElement);
     }
 
-    private void InvokeTransitionFocus(GameObject currentElement)
+    internal virtual void InvokeTransitionFocus(GameObject currentElement)
     {
         foreach (TransitionHandlerInterface transition in transitionHandler)
             transition.OnFocus(currentElement);
     }
 
-    private void InvokeTransitionDeFocus(GameObject currentElement)
+    internal virtual void InvokeTransitionDeFocus(GameObject currentElement)
     {
         foreach (TransitionHandlerInterface transition in transitionHandler)
             transition.OnDefocus(currentElement);
