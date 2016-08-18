@@ -18,12 +18,17 @@ public class MultiplayerManager : MonoBehaviour
     #region variables
 
     //----------public
+       
 
     public delegate void FinalSelectionHandler(float tweentime);
     public event FinalSelectionHandler FinalSelectionExecuted;
     public event FinalSelectionHandler FinalSelectionStoped;
 
     //----------private
+
+    //level name
+    [SerializeField]
+    private string levelName;
 
     //maximum amount of players
     private static int MAX_PLAYER_COUNT = 4;
@@ -105,7 +110,7 @@ public class MultiplayerManager : MonoBehaviour
 
         public void Deselect()
         {
-            //TODO
+            menuManager.Deselect();
         }
     }
 
@@ -274,8 +279,7 @@ public class MultiplayerManager : MonoBehaviour
 
     private void ChangeScene()
     {
-        //TODO add Application.LoadLevel stuff
-       
+        Application.LoadLevel(levelName);
     }
 
     private void SaveSelectionInformationToContainer()
