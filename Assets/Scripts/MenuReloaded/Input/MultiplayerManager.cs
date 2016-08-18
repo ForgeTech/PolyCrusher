@@ -26,10 +26,6 @@ public class MultiplayerManager : MonoBehaviour
 
     //----------private
 
-    //level name
-    [SerializeField]
-    private string levelName;
-
     //maximum amount of players
     private static int MAX_PLAYER_COUNT = 4;
 
@@ -279,7 +275,7 @@ public class MultiplayerManager : MonoBehaviour
 
     private void ChangeScene()
     {
-        Application.LoadLevel(levelName);
+        Application.LoadLevel(playerSelectionContainer.levelName);
     }
 
     private void SaveSelectionInformationToContainer()
