@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// This script cooperates with the CharacterSelectionManager.
@@ -14,10 +15,18 @@ public class CharacterSelectionHelper : MonoBehaviour
     [SerializeField]
     private int characterCount = 6;
 
+    [Header("End Screen elements")]
+    [SerializeField]
+    private Image overlayBackground;
+
+    [SerializeField]
+    private RectTransform infoBar;
+
     // Key: Selection index of character, Value: Selected or not.
     private Dictionary<int, SelectionData> selectionMap;
 
     private int characterSelectedCount = 0;
+    private MultiplayerManager multiplayerManager;
 
     #region Delegates & Events
     public delegate void CharacterSelectedHandler(int index);
@@ -47,6 +56,50 @@ public class CharacterSelectionHelper : MonoBehaviour
         selectionMap = new Dictionary<int, SelectionData>(characterCount);
         for (int i = 0; i < characterCount; i++)
             selectionMap.Add(i, new SelectionData());
+
+        FindMultiplayerManager();
+    }
+
+    private void FindMultiplayerManager()
+    {
+        GameObject g = GameObject.FindGameObjectWithTag("MultiplayerManager");
+        if (g != null)
+        {
+            multiplayerManager = g.GetComponent<MultiplayerManager>();
+            if (multiplayerManager != null)
+            {
+                multiplayerManager.FinalSelectionExecuted += HandleFinalSelectionStart;
+                multiplayerManager.FinalSelectionStoped += HandleFinalSelectionStop;
+            }
+            else
+                Debug.LogError("No Multiplayer Manager Component found!");
+        }
+        else
+            Debug.LogError("No Multiplayer Manager GameObject found!");
+    }
+
+    private void HandleFinalSelectionStart(float tweenTime)
+    {
+        NavigationInformation navInfo = overlayBackground.gameObject.GetComponent<NavigationInformation>();
+
+        LeanTween.moveX(infoBar, 0f, tweenTime).setEase(LeanTweenType.easeOutSine);
+        LeanTween.value(navInfo.gameObject, navInfo.NormalColor, navInfo.HighlightedColor, tweenTime)
+            .setEase(LeanTweenType.easeOutSine)
+            .setOnUpdate((Color val) => {
+                overlayBackground.color = val;
+            });
+    }
+
+    private void HandleFinalSelectionStop(float tweenTime)
+    {
+        NavigationInformation navInfo = overlayBackground.gameObject.GetComponent<NavigationInformation>();
+
+        LeanTween.moveX(infoBar, infoBar.sizeDelta.x, tweenTime).setEase(LeanTweenType.easeOutSine);
+        LeanTween.value(navInfo.gameObject, navInfo.HighlightedColor, navInfo.NormalColor, tweenTime)
+            .setEase(LeanTweenType.easeOutSine)
+            .setOnUpdate((Color val) => {
+                overlayBackground.color = val;
+            });
     }
 
     public void SelectAt(int index, PlayerSlot playerSlot)

@@ -6,7 +6,8 @@ using System;
 public enum MenuSelection
 {
     HorizontalSelection = 0,
-    VerticalSelection = 1
+    VerticalSelection = 1,
+    SubSelection = 2
 }
 
 public abstract class AbstractMenuManager : MonoBehaviour
