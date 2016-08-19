@@ -4,6 +4,10 @@ using System.Collections.Generic;
 public class SelectorWithSubSelector : Selector
 {
     private readonly Dictionary<GameObject, SubSelector> subSelectionEntries = new Dictionary<GameObject, SubSelector>();
+    public Dictionary<GameObject, SubSelector> SubSelectionEntries
+    {
+        get { return this.subSelectionEntries; }
+    }
 
     /// <summary>
     /// Gets the Sub selector of the current selected menu element.

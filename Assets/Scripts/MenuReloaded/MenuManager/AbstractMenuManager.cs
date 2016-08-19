@@ -80,6 +80,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
     public event NavigationHandler NavigationNext;
     public event NavigationHandler NavigationPrevious;
 
+    public event NavigationHandler SubNavigationNext;
+    public event NavigationHandler SubNavigationPrevious;
+
     public delegate void PlayerActionControlChangedHandler(PlayerControlActions playerAction);
     public event PlayerActionControlChangedHandler PlayerActionChanged;
     #endregion
@@ -154,12 +157,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
         // Sub navigation actions
         subNavigationNextAction = () => {
             ((SelectorWithSubSelector)selector).SubSelectorNext();
-            OnNextSelection();
+            OnSubNavigationNext();
             StartCoroutine(StickInputCooldown());
         };
         subNavigationPreviousAction = () => {
             ((SelectorWithSubSelector)selector).SubSelectorPrevious();
-            OnPreviousSelection();
+            OnSubNavigationPrevious();
             StartCoroutine(StickInputCooldown());
         };
     }
@@ -216,7 +219,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
         if (menuSelection != MenuSelection.SubSelection)
             selector = new Selector(startIndex, components, pickedTransitions, pickedPressedHandler, true);
         else
-            selector = new SelectorWithSubSelector(startIndex, components, pickedTransitions, pickedPressedHandler, true, MenuReloadedUtil.MapTransitionEnumToHandler(subSelectorTransition));
+            selector = new SelectorWithSubSelector(startIndex, components, pickedTransitions, pickedPressedHandler, false, MenuReloadedUtil.MapTransitionEnumToHandler(subSelectorTransition));
     }
 
     public void SetPlayerControlActions(PlayerControlActions action)
@@ -333,6 +336,18 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         if (PlayerActionChanged != null)
             PlayerActionChanged(playerAction);
+    }
+
+    protected void OnSubNavigationNext()
+    {
+        if (SubNavigationNext != null)
+            SubNavigationNext();
+    }
+
+    protected void OnSubNavigationPrevious()
+    {
+        if (SubNavigationPrevious != null)
+            SubNavigationPrevious();
     }
     #endregion
 }
