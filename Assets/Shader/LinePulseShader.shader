@@ -58,13 +58,12 @@
             fixed4 frag (vertOutput input) : COLOR
             {
 				half x = input.texcoord.x + _Time[0] * _Speed;
-				half sine = _Amplitude * sin(x * _Frequency) / 2.0 + 0.5;
-
-				//half value = pow(1.0 - sqrt(abs(input.texcoord.y - sine)), _Smoothing);
+				half sine = _Amplitude * sin(x * _Frequency) * 0.5 + 0.5;
 
 				half absolute = abs(input.texcoord.y - sine);
-				half4 c = _Color.rgba * (1.0 - smoothstep(0.0, _Smoothing, absolute) * _ColorStrength);
-                return fixed4(c.r, c.g, c.b, c.a);
+				half alpha = 1.0 - smoothstep(0.0, _Smoothing, absolute);
+				half3 resultColor = _Color.rgb * _ColorStrength;
+                return fixed4(resultColor.r, resultColor.g, resultColor.b, alpha);
             }
             ENDCG
         }
