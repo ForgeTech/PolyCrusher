@@ -1,0 +1,36 @@
+﻿using UnityEngine;
+
+public class LineShaderUtility : MonoBehaviour
+{
+    [SerializeField]
+    public Vector3 startPosition;
+
+    [SerializeField]
+    public Vector3 endPosition;
+
+    [SerializeField]
+    public float width;
+
+    [SerializeField]
+    private Material lineMaterial;
+
+    private LineRenderer lineRenderer;
+
+	void Start ()
+    {
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineMaterial.CopyPropertiesFromMaterial(lineMaterial);
+        lineRenderer.material = lineMaterial;
+        lineRenderer.SetWidth(width, width);
+        lineRenderer.useWorldSpace = true;
+
+        lineRenderer.SetVertexCount(2);
+        lineRenderer.SetPosition(0, startPosition);
+        lineRenderer.SetPosition(1, endPosition);
+    }
+	
+	void Update ()
+    {
+        lineMaterial.SetFloat("_LineLength", Vector3.Distance(startPosition, endPosition));
+	}
+}
