@@ -13,7 +13,7 @@ public class ElementPressedTextColor : ElementPressedHandler
         if (text != null)
         {
             Color originalColor = new Color(text.color.r, text.color.g, text.color.b);
-            LeanTween.value(pressedGameObject, originalColor, navigationInfo.PressedColor, LERP_TIME)
+            LeanTween.value(pressedGameObject, originalColor, navigationInfo.PressedColor, LERP_TIME * 0.5f)
                 .setEase(LeanTweenType.easeOutSine)
                 .setOnUpdate((Color val) => {
                     text.color = val;
@@ -21,7 +21,7 @@ public class ElementPressedTextColor : ElementPressedHandler
                 .setOnComplete(
                 () => {
                     Color c = new Color(text.color.r, text.color.g, text.color.b);
-                    LeanTween.value(pressedGameObject, c, navigationInfo.HighlightedColor, LERP_TIME)
+                    LeanTween.value(pressedGameObject, c, navigationInfo.HighlightedColor, LERP_TIME * 0.5f)
                     .setEase(LeanTweenType.easeOutSine)
                     .setOnUpdate((Color val) => {
                         text.color = val;

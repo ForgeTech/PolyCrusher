@@ -28,6 +28,9 @@ public class NavigationInformation : MonoBehaviour
     private Vector3 deselectedScale = Vector3.one * 0.9f;
 
     [SerializeField]
+    private Vector3 pressedScale = Vector3.one;
+
+    [SerializeField]
     private LeanTweenType easeType = LeanTweenType.easeOutSine;
     #endregion
 
@@ -64,6 +67,11 @@ public class NavigationInformation : MonoBehaviour
     public Vector3 DeselectedScale
     {
         get { return this.deselectedScale; }
+    }
+
+    public Vector3 PressedScale
+    {
+        get { return this.pressedScale; }
     }
 
     public LeanTweenType EaseType
