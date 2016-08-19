@@ -30,13 +30,12 @@ GameObject:
   - 92: {fileID: 9272578}
   - 124: {fileID: 12402604}
   - 81: {fileID: 8110002}
-  - 114: {fileID: 11488842}
+  - 114: {fileID: 11437974}
   - 114: {fileID: 11433574}
   - 114: {fileID: 11472022}
   - 114: {fileID: 11405072}
   - 114: {fileID: 11410944}
   - 114: {fileID: 11485904}
-  - 114: {fileID: 11437974}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -409,26 +408,6 @@ MonoBehaviour:
     type: 3}
   colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
     type: 3}
---- !u!114 &11488842
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197368}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Radius: .280000001
-  m_SampleCount: 1
-  m_OcclusionIntensity: .800000012
-  m_Blur: 2
-  m_Downsampling: 3
-  m_OcclusionAttenuation: 1
-  m_MinZ: .100000001
-  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
-  m_RandomTexture: {fileID: 2800000, guid: a181ca8e3c62f3e4b8f183f6c586b032, type: 3}
 --- !u!114 &11493282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,7 +433,6 @@ MonoBehaviour:
   cameraAdaptSpeed: 10
   cameraAdaptDampingTime: 1
   middlePointOffset: {x: 0, y: -1.39999998}
-  motionVectorShift: 1.39999998
   shakeTime: .300000012
   shakeStrength: 6
   shakeDamping: .300000012
