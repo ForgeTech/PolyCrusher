@@ -421,6 +421,9 @@ public class GameManager : MonoBehaviour
 
         // Init variables
         accumulatedRessourceValue = 0;
+
+        // fire game start event
+        new Event(Event.TYPE.gameStart).addPlayerCount().addPlayerCharacters().send();
 	}
 
     /// <summary>
