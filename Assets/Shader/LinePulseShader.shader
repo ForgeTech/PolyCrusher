@@ -46,8 +46,7 @@
 				half2 texcoord : TEXCOORD0;
             };
 
-            vertOutput vert (vertInput input)
-            {
+            vertOutput vert (vertInput input) {
                 vertOutput o;
                 o.pos = mul (UNITY_MATRIX_MVP, input.pos);
 				o.texcoord = input.texcoord;
@@ -55,31 +54,31 @@
                 return o;
             }
 
-			half sineFunction(half frequency, half amplitude, half shift) {
-				return amplitude * sin(shift * frequency * _LineLength) * 0.5 + 0.5;
+			half sineFunction(half frequency, half amplitude, half x, half shift) {
+				return amplitude * sin(shift + x * frequency * _LineLength) * 0.5 + 0.5;
 			}
 
-			half strangeSineFunction(half frequency, half amplitude, half shift) {
-				return amplitude * pow(sin(shift * frequency * _LineLength), 5.0) * 0.5 + 0.5;
+			half strangeSineFunction(half frequency, half amplitude, half x, half shift) {
+				return amplitude * pow(sin(shift + x * frequency * _LineLength), 5.0) * 0.5 + 0.5;
 			}
 
-			half sawtoothFunction(half frequency, half amplitude, half shift) {
-				return (amplitude * fmod(shift * frequency * _LineLength, 2.0) - amplitude) * 0.5 + 0.5;
+			half sawtoothFunction(half frequency, half amplitude, half x, half shift) {
+				return (amplitude * fmod(shift + x * frequency * _LineLength, 2.0) - amplitude) * 0.5 + 0.5;
 			}
 
-			half otherHalfCircleFunction(half frequency, half amplitude, half shift) {
+			half otherHalfCircleFunction(half frequency, half amplitude, half x, half shift) {
 				half exponent = 0.5;
-				half result = amplitude * pow(clamp(sin(shift * frequency * _LineLength), 0.0, 1.0), exponent);
-				half result2 = -amplitude * pow(clamp(sin(3.14 + shift * frequency * _LineLength), 0.0, 1.0), exponent);
+				half sinCoefficient = x * frequency * _LineLength;
+				half result = amplitude * pow(clamp(sin(shift + sinCoefficient), 0.0, 1.0), exponent);
+				half result2 = -amplitude * pow(clamp(sin(3.14 + shift + sinCoefficient), 0.0, 1.0), exponent);
 
 				return (result + result2) * 0.5 + 0.5;
 			}
 
             fixed4 frag (vertOutput input) : COLOR
             {
-				// TODO: Fix -> Line moves faster when line length gets bigger
-				fixed x = input.texcoord.x + _Time[0] * _Speed;
-				half function = strangeSineFunction(_Frequency, _Amplitude, x);
+				fixed shift = _Time[0] * _Speed;
+				half function = sineFunction(_Frequency, _Amplitude, input.texcoord.x, shift);
 
 				half absolute = abs(input.texcoord.y - function);
 				half alpha = 1.0 - smoothstep(0.0, _Smoothing, absolute);

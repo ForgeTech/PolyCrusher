@@ -18,9 +18,9 @@ public class LineShaderUtility : MonoBehaviour
 
 	void Start ()
     {
+        
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineMaterial.CopyPropertiesFromMaterial(lineMaterial);
-        lineRenderer.material = lineMaterial;
+        lineRenderer.material = new Material(lineMaterial);
         lineRenderer.SetWidth(width, width);
         lineRenderer.useWorldSpace = true;
 
@@ -31,6 +31,6 @@ public class LineShaderUtility : MonoBehaviour
 	
 	void Update ()
     {
-        lineMaterial.SetFloat("_LineLength", Vector3.Distance(startPosition, endPosition));
-	}
+        lineRenderer.material.SetFloat("_LineLength", Vector3.Distance(startPosition, endPosition));
+    }
 }
