@@ -272,6 +272,7 @@ class SteamManager : ISteamManager
             SteamUserStats.SetStat("EnemiesKilled", enemiesKilled);
             SteamUserStats.SetStat("EnemiesCut", enemiesCut);
             SteamUserStats.SetStat("BulletsShot", bulletsShot);
+            SteamUserStats.SetStat("CharactersPlayed", charactersPlayed);
 
             bool success = SteamUserStats.StoreStats();
             // If this failed, we never sent anything to the server, try again later.
@@ -381,6 +382,7 @@ class SteamManager : ISteamManager
             SteamUserStats.GetStat("EnemiesKilled", out enemiesKilled);
             SteamUserStats.GetStat("EnemiesCut", out enemiesCut);
             SteamUserStats.GetStat("BulletsShot", out bulletsShot);
+            SteamUserStats.GetStat("CharactersPlayed", out charactersPlayed);
         }
         else
         {
