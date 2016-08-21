@@ -55,13 +55,33 @@
                 return o;
             }
 
+			half sineFunction(half frequency, half amplitude, half shift) {
+				return amplitude * sin(shift * frequency * _LineLength) * 0.5 + 0.5;
+			}
+
+			half strangeSineFunction(half frequency, half amplitude, half shift) {
+				return amplitude * pow(sin(shift * frequency * _LineLength), 5.0) * 0.5 + 0.5;
+			}
+
+			half sawtoothFunction(half frequency, half amplitude, half shift) {
+				return (amplitude * fmod(shift * frequency * _LineLength, 2.0) - amplitude) * 0.5 + 0.5;
+			}
+
+			half otherHalfCircleFunction(half frequency, half amplitude, half shift) {
+				half exponent = 0.5;
+				half result = amplitude * pow(clamp(sin(shift * frequency * _LineLength), 0.0, 1.0), exponent);
+				half result2 = -amplitude * pow(clamp(sin(3.14 + shift * frequency * _LineLength), 0.0, 1.0), exponent);
+
+				return (result + result2) * 0.5 + 0.5;
+			}
+
             fixed4 frag (vertOutput input) : COLOR
             {
 				// TODO: Fix -> Line moves faster when line length gets bigger
-				fixed x = input.texcoord.x + _Time[1] * _Speed;
-				half sine = _Amplitude * sin(x * _Frequency * _LineLength) * 0.5 + 0.5;
+				fixed x = input.texcoord.x + _Time[0] * _Speed;
+				half function = strangeSineFunction(_Frequency, _Amplitude, x);
 
-				half absolute = abs(input.texcoord.y - sine);
+				half absolute = abs(input.texcoord.y - function);
 				half alpha = 1.0 - smoothstep(0.0, _Smoothing, absolute);
 				half3 resultColor = _Color.rgb * _ColorStrength;
                 return fixed4(resultColor.r, resultColor.g, resultColor.b, alpha);
