@@ -18,12 +18,11 @@ Shader "Hidden/Gradient"
 			uniform half _Blend;
 			uniform half _GreenBlend;
 
-		 	half3 colorYellow = float3(1.0, 1.0, 0.0);
-			half3 colorGreen = float3(0.4745098039, 0.6392156863, 0.3882352941);
-
 			fixed4 frag(v2f_img i) : COLOR {
 				fixed4 c = tex2D(_MainTex, i.uv);
     			half luma = 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b;
+				half3 colorYellow = float3(1.0, 1.0, 0.0);
+				half3 colorGreen = float3(0.4745098039, 0.6392156863, 0.3882352941);
 
     			// Blend yellow to green
 				colorYellow.rgb += _GreenBlend * (colorGreen - colorYellow);
