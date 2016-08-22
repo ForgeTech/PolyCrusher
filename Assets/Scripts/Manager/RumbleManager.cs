@@ -82,7 +82,7 @@ public class RumbleManager : MonoBehaviour
 
     public void Rumble(InputDevice inputDevice, RumbleType rumbleType)
     {
-        if (rumbleEnabled)
+        if (rumbleEnabled && inputDevice != null)
         {
             StartCoroutine(rumbleMethodNames[rumbleType], inputDevice);
         }
