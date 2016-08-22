@@ -61,6 +61,8 @@ public class LevelEndManager : MonoBehaviour
 
     protected void TweenEndScreenImage()
     {
+        DisableCanvasChildObjects();
+
         GameObject endScreen = Instantiate(endScreenImage);
         endScreen.transform.SetParent(ingameCanvas.gameObject.transform, false);
         Debug.Log("<b>Instantiated end image!</b>");
@@ -76,6 +78,12 @@ public class LevelEndManager : MonoBehaviour
         TweenCameraEffect();
 
         StartCoroutine(LoadNextScene());
+    }
+
+    protected void DisableCanvasChildObjects()
+    {
+        foreach (Transform child in ingameCanvas.transform)
+            child.gameObject.SetActive(false);
     }
 
     protected void TweenCameraEffect()
