@@ -82,7 +82,6 @@
 
 				half absolute = abs(input.texcoord.y - function);
 				half alpha = 1.0 - smoothstep(0.0, _Smoothing, absolute);
-
 				half3 resultColor = _Color.rgb * _ColorStrength;
                 return fixed4(resultColor.r, resultColor.g, resultColor.b, alpha);
             }
