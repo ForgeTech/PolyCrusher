@@ -215,6 +215,12 @@ public class BossEnemy : BaseEnemy
     [Tooltip("The spawn height of the meteorits.")]
     protected float meteorSpawnHeight = 10f;
 
+    // Gravestone model
+    [Space(4)]
+    [SerializeField]
+    [Tooltip("Gravestone")]
+    protected GameObject gravestone;
+
     [Space(5)]
     [SerializeField]
     [Header("Boss UI")]
@@ -494,6 +500,9 @@ public class BossEnemy : BaseEnemy
         GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
 
+        //Create Gravestone
+        GameObject instantiatedGrave = Instantiate(gravestone, transform.position, gravestone.transform.rotation) as GameObject;
+
         //Animation
         if (anim != null)
             anim.SetBool("Death", true);
@@ -515,6 +524,7 @@ public class BossEnemy : BaseEnemy
     {
         if (BossKilled != null)
             BossKilled(this);
+
     }
 
     /// <summary>
