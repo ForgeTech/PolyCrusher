@@ -123,6 +123,11 @@ class SteamManager : ISteamManager
         everInitialized = true;
     }
 
+    void Start ()
+    {
+        DataCollector.EventRegistered += LogAchievementEvent;
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -139,27 +144,27 @@ class SteamManager : ISteamManager
         gameID = new CGameID(SteamUtils.GetAppID());
 
         // add achievements
-        achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games."));
-        achievements.Add(AchievementID.ACH_PLAY_42_GAMES, new Achievement("The truth - but what was the question?", "Play 42 games."));
-        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Kill 1000 asses."));
-        achievements.Add(AchievementID.ACH_CURRENT_HIGHSCORE, new Achievement("15 minutes of fame", "Rank one on any leaderboard!"));
-        achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters."));
-        achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));
-        achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone."));
-        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game."));
-        achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup."));
-        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credits."));
-        achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));
-        achievements.Add(AchievementID.ACH_A_MILLION_SHOTS, new Achievement("A million shots", "Fire a million bullets."));
-        achievements.Add(AchievementID.ACH_KILL_TWO_ENEMIES, new Achievement("Second blood", "Kill two enemies."));
-        achievements.Add(AchievementID.ACH_DIED_IN_W1, new Achievement("Sean Beaned", "Die in the very first wave."));
-        achievements.Add(AchievementID.ACH_STARTED_GAME_ONCE, new Achievement("Bronze Medal", "Start game once."));
-        achievements.Add(AchievementID.ACH_STARTED_GAME_THRICE, new Achievement("Silver Medal", "Start game thrice."));
-        achievements.Add(AchievementID.ACH_STARTED_GAME_TEN_TIMES, new Achievement("Gold Medal", "Start game ten times."));
-        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone."));
-        achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10."));
-        achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20."));
-        achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));
+        achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games.")); // Die halbe Wahrheit.
+        achievements.Add(AchievementID.ACH_PLAY_42_GAMES, new Achievement("The truth - but what was the question?", "Play 42 games.")); // Die Wahrheit - aber was war die Frage?
+        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Kill 1000 asses.")); // J'adore derriere
+        achievements.Add(AchievementID.ACH_CURRENT_HIGHSCORE, new Achievement("15 minutes of fame", "Rank one on any leaderboard!")); // 15 Minuten Ruhm
+        achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters.")); // Schizophrenie
+        achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));  // Polyparty
+        achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone.")); // Einsamer Wolf
+        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game.")); //  Ich drinke deinen Milchshake!
+        achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup.")); // 
+        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credits.")); // Unstillbare Neugier.
+        achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));  // die große spülung
+        achievements.Add(AchievementID.ACH_A_MILLION_SHOTS, new Achievement("A million shots", "Fire a million bullets.")); // Eine Million Schüsse
+        achievements.Add(AchievementID.ACH_KILL_TWO_ENEMIES, new Achievement("Second blood", "Kill two enemies.")); // Zweiter Treffer
+        achievements.Add(AchievementID.ACH_DIED_IN_W1, new Achievement("Sean Beaned", "Die in the very first wave.")); // Sean Beaned
+        achievements.Add(AchievementID.ACH_STARTED_GAME_ONCE, new Achievement("Bronze Medal", "Start game once.")); // Bronze Medaille
+        achievements.Add(AchievementID.ACH_STARTED_GAME_THRICE, new Achievement("Silver Medal", "Start game thrice.")); // Silber Medaille
+        achievements.Add(AchievementID.ACH_STARTED_GAME_TEN_TIMES, new Achievement("Gold Medal", "Start game ten times.")); // Goldene Medaille
+        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone.")); // Kabelloser Killer
+        achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10.")); // Neuling
+        achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20.")); // Professioneller Polycrusher
+        achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));   // 
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CHICKEN, new Achievement("Parricide", "Kill B055 with a chicken."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CUTTING, new Achievement("Chicken Chop Suey", "Kill B055 with the cutting powerup."));
         achievements.Add(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 40 enemies with one poly."));
