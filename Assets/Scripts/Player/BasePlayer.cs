@@ -40,6 +40,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected int maxHealth = 100;
 
+    //The low health line
+    [SerializeField]
+    protected int lowHealth = 25;
+
     // Specifies if the player is invincible.
     protected bool invincible = false;
 
@@ -97,6 +101,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     //Player Actions for accessing this players input
     protected PlayerControlActions playerActions;
 
+
+    protected RumbleManager rumbleManager;
+
+    protected bool lowHealthRumbleActive = false;
 
 
     // Initial death time.
@@ -344,6 +352,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         set
         {
             inputDevice = value;
+            playerActions.Device = value;
             ability.InputDevice = inputDevice;
         }
     }
@@ -360,6 +369,17 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             ability.PlayerActions = playerActions;
         }
     }   
+
+
+    public RumbleManager RumbleManager
+    {
+        get { return rumbleManager; }
+        set
+        {
+            rumbleManager = value;
+            ability.RumbleManager = rumbleManager;
+        }
+    }
 
 
     /// <summary>
@@ -453,6 +473,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
+
+        playerActions = PlayerControlActions.CreateWithGamePadBindings();
+        if (inputDevice != null)
+        {
+            playerActions.Device = inputDevice;
+        }
     }
 
     // Use this for initialization
@@ -483,27 +509,23 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         if (weapon != null)
             weapon.OwnerScript = this;
 
+       
+
+        //Set original health level.
+        originalHealthLevelScale = healthLevel.transform.localScale;
+
+        // Fire spawn event.
+        OnPlayerSpawn();
+
+       
+
         if (ability != null)
         {
             ability.OwnerScript = this;
             ability.InputDevice = inputDevice;
             ability.PlayerActions = playerActions;
         }
-
-        //Set original health level.
-        originalHealthLevelScale = healthLevel.transform.localScale;
-
-        //Debug.Log(playerPrefix + "Player added!");
-
-        // Fire spawn event.
-        OnPlayerSpawn();
-
-        playerActions = PlayerControlActions.CreateWithGamePadBindings();
-        if (inputDevice != null)
-        {           
-            playerActions.Device = inputDevice;      
-        }
-	}
+    }
 
     void OnEnable()
     {
@@ -524,11 +546,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             // Refill Energy
             RefillEnergy(energyIncrement);
 
-			//if (phonePlayerSlot == -1) {
-				HandleAbilityInput();
-			//} else {
-			//	HandleAbilityInputPhone();
-			//}
+			HandleAbilityInput();
         }
 
         // HUD Elements
@@ -704,6 +722,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Only take damage if the player is not invincible.
         if (!Invincible)
         {
+
+            if(damageDealer is BaseEnemy)
+            {
+                DamageTakenRumble();
+            }
+
             // Health Level tween.
             Vector3 originalScale = originalHealthLevelScale;
             healthLevel.transform.localScale = Vector3.zero;
@@ -712,6 +736,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             // send event if player will be dead
             if (Health - damage <= 0 && !IsDead)
             {
+                CancelInvoke();
+
                 string enemyName = "undefined";
 
                 if (damageDealer is BaseEnemy)
@@ -741,6 +767,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                 hurtCharacterSound.PlayRandomClip();
             
             this.Health -= damage;
+
+            if(this.health < lowHealth && !lowHealthRumbleActive)
+            {
+                lowHealthRumbleActive = true;
+                InvokeRepeating("LowHealthRumble", 0.0f, 10.0f);
+            }
         }
     }
 
@@ -774,6 +806,39 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
             allowEnergyRefill = false;
             StartCoroutine(WaitForEnergyRefill());
+        }
+    }
+
+
+    public void PowerUpPickUpRumble()
+    {
+        if (rumbleManager != null)
+        {
+            rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
+        }
+    }
+
+    private void DamageTakenRumble()
+    {
+        if (rumbleManager != null)
+        {
+            rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleExtraShort);
+        }
+    }
+
+    private void LowHealthRumble()
+    {
+        if (rumbleManager != null)
+        {
+            if (this.health < lowHealth)
+            {
+                rumbleManager.Rumble(inputDevice, RumbleType.LowHealth);
+            }
+            else
+            {
+                CancelInvoke();
+                lowHealthRumbleActive = false;
+            }
         }
     }
 
@@ -873,6 +938,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         if (PlayerSpawned != null)
         {
             PlayerSpawned(this);
+            if (rumbleManager != null)
+            {
+                rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleLong);
+            }
             Debug.Log("Player Spawned!!!");
         }
     }
@@ -998,5 +1067,14 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         PlayerSpawned = null;
         AbilityUseable = null;
     }
+
+
+    void OnDisable()
+    {
+        playerActions.Destroy();
+
+
+    }
+
     #endregion
 }

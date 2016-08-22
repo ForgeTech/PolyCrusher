@@ -24,25 +24,10 @@ public class Pool : MonoBehaviour {
     {
         current = this;
 
+        StartCoroutine(InitializePool());
     }
 
 
-	// Use this for initialization
-	void Start () {
-
-
-        pool = new List<GameObject>();
-
-        for(int i = 0; i < amount; i++)
-        {
-            GameObject go = (GameObject) Instantiate(objectToPool);
-            go.transform.SetParent(this.transform);           
-            go.SetActive(false);
-            pool.Add(go);
-            
-        }
-	}
-	
 
 
     public GameObject getPooledObject()
@@ -62,6 +47,24 @@ public class Pool : MonoBehaviour {
     }
 
     
+    private IEnumerator InitializePool()
+    {
+        yield return new WaitForSeconds(2.5f);
+      
+
+        pool = new List<GameObject>();
+
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject go = (GameObject)Instantiate(objectToPool);
+            go.transform.SetParent(this.transform);
+            go.SetActive(false);
+            pool.Add(go);
+
+        }
+
+
+    }
 
 
 	

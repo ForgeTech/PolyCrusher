@@ -39,6 +39,7 @@ public class PolygonSystem : MonoBehaviour
     [Header("Damage the boss takes when the polygon hits")]
     public int[] bossDamage;
 
+    private RumbleManager rumbleManager;
 
     private GameObject[] players;
     private bool loadingSoundPlaying;
@@ -126,6 +127,7 @@ public class PolygonSystem : MonoBehaviour
         BasePlayer.PlayerSpawned += UpdatePlayerStatus;
         LevelEndManager.levelExitEvent += ResetValues;
 
+        rumbleManager = RumbleManager.Instance;
         screenFade = new GameObject("Canvas Container");
         Canvas canvas = screenFade.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -223,7 +225,15 @@ public class PolygonSystem : MonoBehaviour
     /// every listed normal enemy is killed, a boss enemy takes damage 
     /// </summary>
     private void ChainExplosion()
-    {        
+    {
+        ExplosionRumble();
+
+        CameraSystem cameraSystem = CameraManager.CameraReference;
+        float tmpDamping = cameraSystem.shakeStrength;
+        cameraSystem.shakeStrength = 20.0f;
+        CameraManager.CameraReference.ShakeOnce();
+        cameraSystem.shakeStrength = tmpDamping;
+
         SoundManager.SoundManagerInstance.Play(polyExplosion, Vector3.zero);
         new Event(Event.TYPE.superAbility).addPlayerCount().addWave().addLevel().addPos(this.middlePoint.x, this.middlePoint.z).addKills(enemies.Count).send();
 
@@ -324,6 +334,11 @@ public class PolygonSystem : MonoBehaviour
     {
         if (players.Length > 1)
         {
+
+            if (polyStart)
+            {
+                DistanceRumble();
+            }
 
             GetAlignment(2);
             if (players.Length == 4)
@@ -431,10 +446,12 @@ public class PolygonSystem : MonoBehaviour
             if (polyIsEnding && !polyIsStarting && !polyIsFailing)
             {
                 PolyEndAnimation();
+                StopRumble();
             }
             if (polyIsFailing && !polyIsEnding && !polyIsStarting)
             {
                 PolyFailAnimation();
+                StopRumble();
             }           
 
 
@@ -1138,10 +1155,7 @@ public class PolygonSystem : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             playerScripts[i] = players[i].GetComponent<BasePlayer>();
-            
-
         }
-
       
         oldPlayerPosition = new Vector3[players.Length];              
         angles = new float[players.Length];
@@ -1153,6 +1167,50 @@ public class PolygonSystem : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             oldPlayerPosition[i] = players[i].transform.position;
+        }
+    }
+
+    /// <summary>
+    /// Setting the rumble according to the poly status 
+    /// </summary>
+    private void DistanceRumble()
+    {
+        if (rumbleManager != null)
+        {
+            float distance = Mathf.Clamp01(polyLerpDistance)/2.0f;
+            for(int i = 0; i < playerScripts.Length; i++)
+            {
+                Debug.Log("distance: " + distance);
+                playerScripts[i].InputDevice.Vibrate(0.0f, distance);                
+            }
+        }
+    }
+
+    /// <summary>
+    /// stopping the rumble for all players
+    /// </summary>
+    private void StopRumble()
+    {
+        if (rumbleManager != null)
+        {
+            for (int i = 0; i < playerScripts.Length; i++)
+            {
+                playerScripts[i].InputDevice.StopVibration();
+            }
+        }
+    }
+
+    /// <summary>
+    /// explosion rumble
+    /// </summary>
+    private void ExplosionRumble()
+    {
+        if (rumbleManager != null)
+        {
+            for (int i = 0; i < playerScripts.Length; i++)
+            {
+                rumbleManager.Rumble(playerScripts[i].InputDevice, RumbleType.PolygonExplosion);
+            }
         }
     }
 

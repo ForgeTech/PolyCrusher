@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using InControl;
 using System.Collections;
-using System;
+using Prime31.TransitionKit;
 
 public enum PlayerSlot
 {
@@ -25,6 +25,7 @@ public class MultiplayerManager : MonoBehaviour
     public event FinalSelectionHandler FinalSelectionStoped;
 
     //----------private
+
 
     //maximum amount of players
     private static int MAX_PLAYER_COUNT = 4;
@@ -273,7 +274,7 @@ public class MultiplayerManager : MonoBehaviour
 
     private void ChangeScene()
     {
-        Application.LoadLevel(playerSelectionContainer.levelName);
+        Application.LoadLevel(Application.loadedLevel+1);       
     }
 
     private void SaveSelectionInformationToContainer()

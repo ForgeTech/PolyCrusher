@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class TimeSphereScript : MonoBehaviour
 {
@@ -12,15 +13,32 @@ public class TimeSphereScript : MonoBehaviour
     [SerializeField]
     private float fadeOutTweenTime = 0.3f;
 
+    private RumbleManager rumbleManager;
+
+    private string methodname = "Rumble";
+
+    private float repeatTime = 2.0f;
+
+    private float sphereRadius;
+
+    public RumbleManager RumbleManager
+    {
+        set { rumbleManager = value; }
+    }
+
+
 	void Start()
     {
 		StartCoroutine(WaitForDestroy());
-		
 
-        Vector3 originalScale = transform.localScale;
+        sphereRadius = GetComponent<SphereCollider>().radius;
+
+        Vector3 originalScale = transform.localScale;        
         transform.localScale = Vector3.zero;
 
         LeanTween.scale(gameObject, originalScale, 0.9f).setEase(AnimCurveContainer.AnimCurve.pingPong);
+
+        InvokeRepeating(methodname, 0, repeatTime);
 	}
 	
 	void OnTriggerEnter(Collider collider){
@@ -40,6 +58,9 @@ public class TimeSphereScript : MonoBehaviour
 			enemyBullet.Sensitivity /= slowFactor;
 		}
 	}
+
+
+
 
 	void OnTriggerExit(Collider collider){
 		if(collider.tag == "Enemy"){
@@ -64,6 +85,20 @@ public class TimeSphereScript : MonoBehaviour
 		}
 	}
 
+    private void Rumble()
+    {
+        if (rumbleManager != null)
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, sphereRadius, 1 << 8);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.Timesphere);
+            }
+        }
+    }
+
+
 	// Wait for activeTime seconds
 	protected IEnumerator WaitForDestroy()
 	{
@@ -80,6 +115,8 @@ public class TimeSphereScript : MonoBehaviour
         LeanTween.scale(gameObject, Vector3.zero, fadeOutTweenTime).setEase(LeanTweenType.easeOutSine);
         yield return new WaitForSeconds(fadeOutTweenTime);
 
+
+        CancelInvoke();
         Destroy(gameObject);
     }
 }

@@ -54,6 +54,9 @@ public class ChickenBehaviour : MonoBehaviour
     // The owner of the projectile.
     protected MonoBehaviour ownerScript;
 
+    protected RumbleManager rumbleManager;
+
+
     /// <summary>
     /// Gets the target position.
     /// </summary>
@@ -80,8 +83,16 @@ public class ChickenBehaviour : MonoBehaviour
         set { this.ownerScript = value; }
     }
 
-	// Use this for initialization
-	void Start () 
+    /// <summary>
+    /// Sets the rumble manager for accessing rumble functions
+    /// </summary>
+    public RumbleManager RumbleManager
+    {
+        set { rumbleManager = value; }
+    }
+
+    // Use this for initialization
+    void Start () 
     {
         // Animator
         anim = GetComponent<Animator>();
@@ -172,7 +183,23 @@ public class ChickenBehaviour : MonoBehaviour
         anim.SetBool("Death", true);
 
         yield return new WaitForSeconds(waitForExplosion);
+
+        Rumble();
         PerformExplosionProcedure();
+    }
+
+
+    protected void Rumble()
+    {
+        if (rumbleManager != null)
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, attackRadius, 1 << 8);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.BasicRumbleLong);
+            }
+        }
     }
 
     /// <summary>

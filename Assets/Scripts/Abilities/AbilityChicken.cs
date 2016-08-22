@@ -20,9 +20,14 @@ public class AbilityChicken : Ability
         {
             base.Use();
 
+            Rumble();
+
+
             GameObject obj = Instantiate(chickenPrefab);
 
-            obj.GetComponent<ChickenBehaviour>().OwnerScript = this.OwnerScript;
+            ChickenBehaviour chi = obj.GetComponent<ChickenBehaviour>();
+            chi.OwnerScript = this.OwnerScript;
+            chi.RumbleManager = this.rumbleManager;
             obj.SetActive(false);
 
             NavMeshHit hit;
@@ -43,5 +48,10 @@ public class AbilityChicken : Ability
 
             StartCoroutine(WaitForNextAbility());
         }
+    }
+
+    protected void Rumble()
+    {
+        rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
     }
 }

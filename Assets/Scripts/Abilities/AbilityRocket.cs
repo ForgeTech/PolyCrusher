@@ -59,6 +59,9 @@ public class AbilityRocket : Ability {
             // Access to the Use() of the derived class with base, calls Use()
             base.Use();
 
+            Rumble();
+
+
 			// Assign the actual transform to make it editable (Unity.Engine.transform is read only)
 			Transform spawn = gameObject.transform;
 
@@ -83,6 +86,24 @@ public class AbilityRocket : Ability {
 			StartCoroutine(WaitForNextAbility());
 		}
 	}
+
+    protected void Rumble()
+    {
+        if (rumbleManager != null)
+        {
+            rumbleManager.Rumble(inputDevice, RumbleType.FatmanSpecial);
+            Collider[] hits = Physics.OverlapSphere(transform.position, range, 1 << 8);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if(hits[i].transform != this.transform)
+                {
+                    rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.ChargerSpecialFriends);
+                }
+            }
+        }
+    }
+
 
     /// <summary>
     /// Method for spawning the rockets.

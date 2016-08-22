@@ -20,6 +20,9 @@ public class AbilityPie : Ability
             {
                 base.Use();
 
+
+                Rumble();
+
                 GameObject obj = Instantiate(piePrefab);
 
                 BasePlayer p = OwnerScript.GetComponent<BasePlayer>();
@@ -27,6 +30,7 @@ public class AbilityPie : Ability
 
                 pie.OwnerScript = this.OwnerScript;
                 pie.PlayerActions = p.PlayerActions;
+                pie.RumbleManager = p.RumbleManager;
 
                 obj.transform.position = transform.position - transform.forward * 1.5f;
                 obj.transform.rotation = transform.rotation;
@@ -43,5 +47,10 @@ public class AbilityPie : Ability
                     player.Energy += EnergyCost;
             }
         }
+    }
+
+    protected void Rumble()
+    {
+        rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
     }
 }

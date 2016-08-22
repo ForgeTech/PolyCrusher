@@ -336,7 +336,7 @@ public class LevelEndManager : MonoBehaviour {
 
 
 
-		network.CreateGameName ();
+		//network.CreateGameName ();
 
 		String enteredName = "";
 		GameObject textInput = GameObject.Find ("TextInput");
@@ -351,7 +351,7 @@ public class LevelEndManager : MonoBehaviour {
 		if (!enteredName.Trim ().Equals ("")) {
 			playerGameName = enteredName;
 		} else {
-			playerGameName = GameObject.FindObjectOfType<PlayerNetCommunicate>().gameName;
+            playerGameName = "Dope";// GameObject.FindObjectOfType<PlayerNetCommunicate>().gameName;
 		}
 
 		t1.enabled = false;

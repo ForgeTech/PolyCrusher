@@ -78,17 +78,12 @@ public class AbilityCharge : Ability {
     protected GameObject chargeParticle;
 
     // Instantiatet charge particles
-    private GameObject instantiatedChargeParticle;   
+    private GameObject instantiatedChargeParticle;
+
+    //rumble manager instance for gamepad  rumble
+    //private RumbleManager rumbleManager;
 
     //---VARIABLES END
-
-   public InputDevice InputDevice
-    {
-        set
-        {
-            inputDevice = value;
-        }
-    }
 
 
 
@@ -190,8 +185,32 @@ public class AbilityCharge : Ability {
                 instantiatedChargeParticle = Instantiate(chargeParticle, transform.position, chargeParticle.transform.rotation) as GameObject;
                 instantiatedChargeParticle.transform.parent = transform;
             }
+
+
+            Rumble();
             
+
+
+
+
             StartCoroutine(ChargerTimer());            
+        }
+    }
+
+
+    private void Rumble()
+    {
+        if (rumbleManager != null)
+        {
+            rumbleManager.Rumble(inputDevice, RumbleType.ChargerSpecial);
+
+            for (int i = 0; i < friends.Length; i++)
+            {
+                if (friends[i] != null)
+                {
+                    rumbleManager.Rumble(friends[i].GetComponent<BasePlayer>().InputDevice, RumbleType.ChargerSpecialFriends);
+                }
+            }
         }
     }
 
@@ -226,22 +245,11 @@ public class AbilityCharge : Ability {
     //limits the charging duration
     private IEnumerator ChargerTimer()
     {
-        //rumble
-        inputDevice.Vibrate(0.3f, 0.5f);
-
-
         //if the charged distance is smaller than the max allowed distance, continue to apply force 
         if (Vector3.Distance(transform.position, oldPosition) < chargeDistance)
         {
             //calculate new speed
             chargeSpeed += chargeAcceleration;
-
-            //add force to charger and all allies stored in the friends array
-
-
-            //while charging the mass is increased, for a better overal experience^^
-            //player.mass = 10.0f;
-
 
             player.AddForce(chargeDirection * chargeSpeed);
 
@@ -249,7 +257,6 @@ public class AbilityCharge : Ability {
             {
                 if (friends[i] != null)
                 {
-
                     friends[i].AddForce(chargeDirection * chargeSpeed);
                 }
             }
@@ -270,6 +277,10 @@ public class AbilityCharge : Ability {
         charging = true;
 
         yield return new WaitForSeconds(0.2f);
+
+
+
+
         charging = false;
         chargingEnded = true;
 
@@ -289,15 +300,15 @@ public class AbilityCharge : Ability {
         friends = new Rigidbody[3];
         currentFriend = 0;
 
-        inputDevice.Vibrate(0.0f, 0.0f);
-        StartCoroutine(ExplosionTimer());        
+        StartCoroutine(ExplosionTimer());
     }
 
     //executes the explosion
     private IEnumerator ExplosionTimer()
     {
-        yield return new WaitForSeconds(0.2f);               
-        
+        yield return new WaitForSeconds(0.2f);
+        //inputDevice.StopVibration();
+
         chargeSpeed = 0.0f;      
 
        
@@ -328,7 +339,7 @@ public class AbilityCharge : Ability {
 
         // Camera shake
         CameraManager.CameraReference.ShakeOnce();
-       
+
         StartCoroutine(CleanUp());
     }
 

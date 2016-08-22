@@ -70,6 +70,7 @@ public class PowerUpItem : BaseItem {
 		if (collider.tag == "Player"){
 			// Get the BasePlayer of the Game Object
 			BasePlayer player = collider.GetComponent<BasePlayer>();
+            player.PowerUpPickUpRumble();
 
             //==========================SETTING_PLAYERVALUES_TO_MAX_POWERUPS_START=======================
             // Check if the colliding object is a PowerUpEnam.addHealth
@@ -236,6 +237,7 @@ public class PowerUpItem : BaseItem {
 		}
 	}
 
+ 
 	protected void CollectingPowerUp()
 	{
 		if (PowerUpCollected != null)

@@ -30,6 +30,7 @@ public abstract class Ability : MonoBehaviour, IUsable
     // the playeractions of the inputDevice;
     protected PlayerControlActions playerActions;
 
+    protected RumbleManager rumbleManager;
     #region Properties
     
 
@@ -89,6 +90,14 @@ public abstract class Ability : MonoBehaviour, IUsable
         set
         {
             playerActions = value;
+        }
+    }
+
+    public RumbleManager RumbleManager
+    {
+        set
+        {
+            rumbleManager = value;
         }
     }
 

@@ -33,6 +33,9 @@ public class PieBehaviour : MonoBehaviour
     // The owner of the projectile.
     protected MonoBehaviour ownerScript;
 
+   
+    protected RumbleManager rumbleManager;
+
     /// <summary>
     /// Gets or sets the player actions
     /// </summary>
@@ -49,6 +52,14 @@ public class PieBehaviour : MonoBehaviour
     {
         get { return this.ownerScript; }
         set { this.ownerScript = value; }
+    }
+
+    /// <summary>
+    /// Sets the rumble manager
+    /// </summary>
+    public RumbleManager RumbleManager
+    {
+        set { rumbleManager = value; }
     }
 
     void Start()
@@ -87,7 +98,10 @@ public class PieBehaviour : MonoBehaviour
     /// </summary>
     protected void PerformExplosionProcedure()
     {
+        Rumble();
+
         Transform[] enemies = GetAllEnemiesInRange(damageRadius);
+
 
         // Loop through all enemies.
         foreach (Transform enemy in enemies)
@@ -99,6 +113,7 @@ public class PieBehaviour : MonoBehaviour
                 // Deal damage to the enemy
                 e.TakeDamage(explosionDamage, this, transform.position);
             }
+
         }
 
         // Explosion
@@ -131,6 +146,20 @@ public class PieBehaviour : MonoBehaviour
 
         return enemies;
     }
+
+    protected void Rumble()
+    {
+        if (rumbleManager != null)
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, damageRadius, 1 << 8);
+
+            for(int i = 0; i < hits.Length; i++)
+            {
+                rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.BasicRumbleLong);
+            }
+        }
+    }
+
 
     /// <summary>
     /// Waits for the trigger time.

@@ -18,6 +18,8 @@ public class AbilityPantomime : Ability
         {
             base.Use();
 
+            Rumble();
+
             GameObject wall = Instantiate(wallPrefab);
             BasePlayer p = OwnerScript.GetComponent<BasePlayer>();
             p.name = "PantomimeWall";
@@ -28,5 +30,10 @@ public class AbilityPantomime : Ability
             useIsAllowed = false;
             StartCoroutine(WaitForNextAbility());
         }
+    }
+
+    protected void Rumble()
+    {
+        rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
     }
 }

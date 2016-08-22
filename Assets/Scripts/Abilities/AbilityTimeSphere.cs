@@ -20,10 +20,18 @@ public class AbilityTimeSphere : Ability
         {
             base.Use();
 
-			Instantiate(timeSphere, transform.position, transform.rotation);
+            Rumble();
+
+			GameObject g = Instantiate(timeSphere, transform.position, transform.rotation) as GameObject;
+            g.GetComponent<TimeSphereScript>().RumbleManager = rumbleManager;
 
 			useIsAllowed = false;
 			StartCoroutine(WaitForNextAbility());
 		}
 	}
+
+    protected void Rumble()
+    {
+        rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
+    }
 }
