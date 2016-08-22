@@ -68,7 +68,9 @@ public class LineSystem : MonoBehaviour {
     [SerializeField]
     private bool activateCutting;
 
-   
+    [SerializeField]
+    private int bossCuttingDamage = 5;
+
 
     private float timeActive;
 
@@ -212,6 +214,7 @@ public class LineSystem : MonoBehaviour {
                         if (gotHit is BossEnemy)
                         {
                             Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
+                            enemy.TakeDamage(bossCuttingDamage, this);
                         }
                         else
                         {
