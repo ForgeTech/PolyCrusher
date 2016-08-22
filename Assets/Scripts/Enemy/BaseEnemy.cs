@@ -367,7 +367,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
                 }
                 else
                 {
-                    character = damageDealer.name;
+                    character = damageDealer.GetType().Name;
                 }
             }
 
