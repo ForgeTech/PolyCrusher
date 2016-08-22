@@ -118,7 +118,7 @@ public abstract class Weapon : MonoBehaviour, IUsable
     {
         gunSound.Play();
         StartCoroutine(HandleMuzzleFlash());
-        ISteamManager.Instance.LogAchievementData(AchievementID.ACH_A_MILLION_SHOTS);
+        BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_A_MILLION_SHOTS);
     }
 
     /// <summary>

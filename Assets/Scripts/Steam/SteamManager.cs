@@ -9,7 +9,7 @@ using Steamworks;
 // and handles the basics of starting up and shutting down the SteamAPI for use.
 //
 [DisallowMultipleComponent]
-class SteamManager : ISteamManager
+class SteamManager : BaseSteamManager
 {
     private SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
     private static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText)
@@ -181,6 +181,7 @@ class SteamManager : ISteamManager
         statsValid = false;
 
         Debug.Log("SteamStats enabled by " + SteamFriends.GetPersonaName() + " with AppID " + gameID);
+        SteamUserStats.ResetAllStats(true); ///REMOOOOVE THIS!///
     }
 
     /// <summary>

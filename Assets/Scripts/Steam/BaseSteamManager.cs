@@ -7,10 +7,10 @@ using System.Collections;
 // If testing the SteamManager, please enable your Steam Standalone and comment lines 17 and 19-21.
 //
 [DisallowMultipleComponent]
-public class ISteamManager : MonoBehaviour {
+public class BaseSteamManager : MonoBehaviour {
 
-    protected static ISteamManager instance;
-    public static ISteamManager Instance
+    protected static BaseSteamManager instance;
+    public static BaseSteamManager Instance
     {
         get
         {
@@ -87,7 +87,7 @@ public class ISteamManager : MonoBehaviour {
 // This is the SteamManagerDummy class, used in editor mode.
 //
 [DisallowMultipleComponent]
-class SteamManagerDummy : ISteamManager
+class SteamManagerDummy : BaseSteamManager
 {
     protected override void Awake()
     {

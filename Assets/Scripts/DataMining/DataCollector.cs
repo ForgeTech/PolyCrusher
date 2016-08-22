@@ -206,7 +206,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     void Start () {
         EventRegistered += calculateScore;
-        DataCollector.EventRegistered += ISteamManager.Instance.LogAchievementEvent;
+        DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
 
         if (DataCollector.instance.enabled)
         {
