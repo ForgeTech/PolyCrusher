@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using InControl;
 
+#if UNITY_EDITOR
 //this class is pure nonsense, it will only be used for easy testing and stuff
 public class PlayerSpawner : MonoBehaviour {
 
@@ -219,3 +220,4 @@ public class PlayerSpawner : MonoBehaviour {
 
 
 }
+#endif
