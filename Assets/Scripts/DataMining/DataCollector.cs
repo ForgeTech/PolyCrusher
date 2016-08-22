@@ -205,8 +205,8 @@ public class DataCollector : MonoBehaviour
     /// Initializes connection to database
     /// </summary>
     void Start () {
-
         EventRegistered += calculateScore;
+        DataCollector.EventRegistered += ISteamManager.Instance.LogAchievementEvent;
 
         if (DataCollector.instance.enabled)
         {
