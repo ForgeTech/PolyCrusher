@@ -34,6 +34,9 @@ public class AbilityPantomime : Ability
 
     protected void Rumble()
     {
-        rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
+        if (rumbleManager != null)
+        {
+            rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
+        }
     }
 }

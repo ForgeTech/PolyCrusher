@@ -96,6 +96,8 @@ public class PlayerSpawner : MonoBehaviour {
                     amount = maxPlayers;
                 }
 
+
+                RumbleManager rumbleManager = RumbleManager.Instance;
                 basePlayers = new BasePlayer[amount];
                 for (int i = 0; i < amount; i++)
                 {
@@ -103,6 +105,7 @@ public class PlayerSpawner : MonoBehaviour {
                     prefab.GetComponent<NavMeshAgent>().enabled = false;
                     prefab.transform.position = spawnPosition.position;
                     basePlayers[i] = prefab.GetComponent<BasePlayer>();
+                    basePlayers[i].RumbleManager = rumbleManager;
                     prefab.GetComponent<NavMeshAgent>().enabled = true;
                 }
             }

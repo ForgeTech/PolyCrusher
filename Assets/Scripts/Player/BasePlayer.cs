@@ -938,7 +938,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         if (PlayerSpawned != null)
         {
             PlayerSpawned(this);
-            if (rumbleManager != null)
+            if (rumbleManager != null && inputDevice !=null)
             {
                 rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleLong);
             }
