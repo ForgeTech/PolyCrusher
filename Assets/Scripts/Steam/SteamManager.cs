@@ -148,7 +148,7 @@ class SteamManager : ISteamManager
         achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone.")); // Einsamer Wolf
         achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game.")); //  Ich drinke deinen Milchshake!
         achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup.")); // 
-        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credits.")); // Unstillbare Neugier.
+        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credit screen.")); // Unstillbare Neugier.
         achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));  // die große spülung
         achievements.Add(AchievementID.ACH_A_MILLION_SHOTS, new Achievement("A million shots", "Fire a million bullets.")); // Eine Million Schüsse
         achievements.Add(AchievementID.ACH_KILL_TWO_ENEMIES, new Achievement("Second blood", "Kill two enemies.")); // Zweiter Treffer
@@ -156,7 +156,7 @@ class SteamManager : ISteamManager
         achievements.Add(AchievementID.ACH_STARTED_GAME_ONCE, new Achievement("Bronze Medal", "Start game once.")); // Bronze Medaille
         achievements.Add(AchievementID.ACH_STARTED_GAME_THRICE, new Achievement("Silver Medal", "Start game thrice.")); // Silber Medaille
         achievements.Add(AchievementID.ACH_STARTED_GAME_TEN_TIMES, new Achievement("Gold Medal", "Start game ten times.")); // Goldene Medaille
-        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone.")); // Kabelloser Killer
+        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone as gamepad.")); // Kabelloser Killer
         achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10.")); // Neuling
         achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20.")); // Professioneller Polycrusher
         achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));   // 
@@ -165,7 +165,7 @@ class SteamManager : ISteamManager
         achievements.Add(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 40 enemies with one poly."));
         achievements.Add(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU, new Achievement("Menu Whizz Kid", "Smart enough for the menu!"));
         achievements.Add(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES, new Achievement("Survival Camp", "Survive yolo-mode for longer than 5 minutes."));
-        achievements.Add(AchievementID.ACH_LAST_MAN_STANDING, new Achievement("Last Man Standing", "In a 4 player game just one survives the wave with 10% health."));
+        achievements.Add(AchievementID.ACH_LAST_MAN_STANDING, new Achievement("Last Man Standing", "In a multiplayer game just one survives the wave with less than 10% health."));
         achievements.Add(AchievementID.ACH_DIED_IN_TRAP, new Achievement("Captain Obvious", "Die in a trap."));
         achievements.Add(AchievementID.ACH_NO_DAMAGE_UNTIL_W10, new Achievement("Halfgodlike", "Don't take any damage until wave 10."));
 
@@ -436,12 +436,8 @@ class SteamManager : ISteamManager
             case Event.TYPE.death:
                 if (e.wave >= 1 && e.wave < 2)
                     UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
-                if (e.enemy.Equals("laser_trap"))
+                if (e.enemy.Equals("Laser") || e.enemy.Equals("DeathTrap"))
                     UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
-                break;
-            case Event.TYPE.join:
-                if (e.cause.Equals("smartphone"))
-                    UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
                 break;
             case Event.TYPE.kill:
                 enemiesKilled++;
@@ -449,12 +445,12 @@ class SteamManager : ISteamManager
                     assesKilled++;
                 if (e.enemy.Equals("B055"))
                 {
-                    if (e.cause.Equals("ChickenAbility"))
+                    if (e.cause.Equals("ChickenBehaviour"))
                         UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CHICKEN);
-                    else if (e.character.Equals("_LineManager"))
+                    else if (e.character.Equals("LineSystem"))
                         UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CUTTING);
                 }
-                if (e.character.Equals("_LineManager"))
+                if (e.character.Equals("LineSystem"))
                     enemiesCut++;
                 break;
             case Event.TYPE.powerup:
@@ -512,6 +508,9 @@ class SteamManager : ISteamManager
         else if (e.playerCount == 4)
             UnlockAchievement(AchievementID.ACH_PLAY_WITH_FOUR);
 
+        if (e.mobilePlayers > 0)
+            UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
+
         //smart enough = game started
         UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
 
@@ -566,7 +565,7 @@ class SteamManager : ISteamManager
             UnlockAchievement(AchievementID.ACH_REACH_W30);
 
         //save leaderboard entry
-        SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.mode + " - " + e.playerCount + " players");
+        SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
         LeaderboardFindResult.Set(handle);
         int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
         if (e.mode.Equals("normal"))
