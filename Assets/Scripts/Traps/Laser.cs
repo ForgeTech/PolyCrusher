@@ -52,7 +52,6 @@ public class Laser : MonoBehaviour
                                 addScript = false;
                             }
                             player.InstantKill(this);
-                            Debug.Log("HHULLLAAAHUPP");
 
                             //create playerMesh to destroy it without destroying the real player
                             GameObject destroyMesh = null;
@@ -100,9 +99,13 @@ public class Laser : MonoBehaviour
                         {
                             if (trap.bossDamage != 0)
                             {
-                               //enemy.TakeDamage(trap.bossDamage, this);
+                                if(trap.bossCuttingParticles != null)
+                                {
+                                    Destroy(Instantiate(trap.bossCuttingParticles, hit.point, hit.transform.rotation), 2);
+                                    
+                                }
+                                enemy.TakeDamage(trap.bossDamage, this);
                             }
-
                         }
                         else
                         {
