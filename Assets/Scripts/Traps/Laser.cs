@@ -3,113 +3,105 @@ using System.Collections;
 
 public class Laser : MonoBehaviour
 {
+    [SerializeField]
+    protected LineShaderUtility lineShader;
+    protected GameObject lineShaderGameObject;
 
     private Vector3 AntiRotation = Vector3.zero;
+    private LaserTrap trap;
 
     //when instantiated, destroy the laser script after trapActiveTime
     void Awake()
     {
+        trap = GetComponent<LaserTrap>();
+        lineShaderGameObject = Instantiate(trap.lineShader.gameObject);
+        lineShader = lineShaderGameObject.GetComponent<LineShaderUtility>();
+
         StartCoroutine(DestroyAfterTime());
     }
 
     //laser update
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        LaserTrap trap = gameObject.GetComponent<LaserTrap>();
+        lineShader.startPosition = trap.startPos.transform.position;
+        lineShader.endPosition = trap.endPos.transform.position;
 
-        if (trap)
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(new Ray(trap.startPos.position, Vector3.Normalize(trap.endPos.position - trap.startPos.position)), Vector3.Distance(trap.startPos.position, trap.endPos.position), (1 << 8) | (1 << 9));
+        for (int i = 0; i < hits.Length; i++)
         {
-            trap.line.GetComponent<Transform>().position = trap.startPos.position;         
-            trap.line.SetPosition(1, trap.endPos.position - trap.startPos.position);
-            AntiRotation.Set(trap.line.transform.rotation.eulerAngles.x, -transform.rotation.eulerAngles.y, trap.line.transform.rotation.eulerAngles.z);
-            trap.line.transform.localEulerAngles =AntiRotation;
+            RaycastHit hit = hits[i];
 
-            RaycastHit[] hits;
-            hits = Physics.RaycastAll(new Ray(trap.startPos.position, Vector3.Normalize(trap.endPos.position - trap.startPos.position)), Vector3.Distance(trap.startPos.position, trap.endPos.position), (1 << 8) | (1 << 9));
-            for (int i = 0; i < hits.Length; i++)
+            Debug.DrawLine(trap.startPos.position, hit.point, Color.magenta, 2f);
+
+            if (hit.transform.GetComponent<MonoBehaviour>())
             {
-                RaycastHit hit = hits[i];
+                MonoBehaviour gotHit = hit.transform.GetComponent<MonoBehaviour>();
 
-                Debug.DrawLine(trap.startPos.position, hit.point, Color.magenta, 2f);
-
-                if (hit.transform.GetComponent<MonoBehaviour>())
+                if (gotHit is BasePlayer)
                 {
-                    MonoBehaviour gotHit = hit.transform.GetComponent<MonoBehaviour>();
+                    bool addScript = true;
+                    // get the BasePlayer of the Game Object
+                    BasePlayer player = hit.transform.GetComponent<BasePlayer>();
 
-                    if (gotHit is BasePlayer)
+                    if (!player.IsDead)
                     {
-                        bool addScript = true;
-                        // get the BasePlayer of the Game Object
-                        BasePlayer player = hit.transform.GetComponent<BasePlayer>();
+                        Vector3 tmpPosition = player.GetComponent<Transform>().position;
+                        Quaternion tmpRotation = player.GetComponent<Transform>().rotation;
+                        player.CurrentDeathTime = 0.0f;
+                        if (player.Health == 0)
+                            addScript = false;
 
-                        if (!player.IsDead)
+                        player.InstantKill(this);
+
+                        //create playerMesh to destroy it without destroying the real player
+                        GameObject destroyMesh = null;
+                        switch (player.name)
                         {
-                            Vector3 tmpPosition = player.GetComponent<Transform>().position;
-                            Quaternion tmpRotation = player.GetComponent<Transform>().rotation;
-                            player.CurrentDeathTime = 0.0f;
-                            if (player.Health == 0)
-                            {
-                                addScript = false;
-                            }
-                            player.InstantKill(this);
-                            Debug.Log("HHULLLAAAHUPP");
-
-                            //create playerMesh to destroy it without destroying the real player
-                            GameObject destroyMesh = null;
-                            switch (player.name)
-                            {
-                                case "Birdman":
-                                    destroyMesh = trap.playerMeshes[0];
-                                    break;
-                                case "Charger":
-                                    destroyMesh = trap.playerMeshes[1];
-                                    break;
-                                case "Fatman":
-                                    destroyMesh = trap.playerMeshes[2];
-                                    break;
-                                case "Timeshifter":
-                                    destroyMesh = trap.playerMeshes[3];
-                                    break;
-                                case "Babuschka":
-                                    destroyMesh = trap.playerMeshes[4];
-                                    break;
-                                case "Pantomime":
-                                    destroyMesh = trap.playerMeshes[5];
-                                    break;
-                            }
-                            if (destroyMesh != null)
-                            {
-
-                                //toDestroy.gameObject.AddComponent<PolyExplosion>();
-
-                                if (addScript)
-                                {
-                                    GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
-                                    toDestroy.gameObject.AddComponent<CutUpMesh>();
-                                }
-                            }
+                            case "Birdman":
+                                destroyMesh = trap.playerMeshes[0];
+                                break;
+                            case "Charger":
+                                destroyMesh = trap.playerMeshes[1];
+                                break;
+                            case "Fatman":
+                                destroyMesh = trap.playerMeshes[2];
+                                break;
+                            case "Timeshifter":
+                                destroyMesh = trap.playerMeshes[3];
+                                break;
+                            case "Babuschka":
+                                destroyMesh = trap.playerMeshes[4];
+                                break;
+                            case "Pantomime":
+                                destroyMesh = trap.playerMeshes[5];
+                                break;
                         }
-                        
+                        if (destroyMesh != null && addScript)
+                        {
+                            GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
+                            toDestroy.gameObject.AddComponent<CutUpMesh>();
+                        }
                     }
+                }
 
-                    if (gotHit is BaseEnemy)
+                if (gotHit is BaseEnemy)
+                {
+                    BaseEnemy enemy = hit.transform.GetComponent<BaseEnemy>();
+                    if (gotHit is BossEnemy)
                     {
-                        BaseEnemy enemy = hit.transform.GetComponent<BaseEnemy>();
-
-                        if (gotHit is BossEnemy)
+                        if (trap.bossDamage != 0)
                         {
-                            if (trap.bossDamage != 0)
-                            {
-                               //enemy.TakeDamage(trap.bossDamage, this);
-                            }
-                        }
-                        else
-                        {
-                            enemy.InstantKill(this);
-                            //enemy.gameObject.AddComponent<PolyExplosion>();
+                            if (trap.bossCuttingParticles != null)
+                                Destroy(Instantiate(trap.bossCuttingParticles, hit.point, hit.transform.rotation), 2);
 
-                            enemy.gameObject.AddComponent<CutUpMesh>();
+                            enemy.TakeDamage(trap.bossDamage, this);
                         }
+                    }
+                    else
+                    {
+                        enemy.InstantKill(this);
+                        enemy.gameObject.AddComponent<CutUpMesh>();
                     }
                 }
             }
@@ -124,11 +116,8 @@ public class Laser : MonoBehaviour
         if (trap)
         {
             yield return new WaitForSeconds(trap.trapActiveTime);
-            trap.line.GetComponent<Transform>().position = trap.startPos.position;
-            trap.line.SetPosition(1, new Vector3(0, 0, 0));
+            Destroy(lineShaderGameObject);
             Destroy(this, 0);
         }
     }
-
-
 }

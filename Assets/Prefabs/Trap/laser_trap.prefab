@@ -117,22 +117,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &138796
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 414136}
-  - 120: {fileID: 12077582}
-  m_Layer: 0
-  m_Name: line
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &139796
 GameObject:
   m_ObjectHideFlags: 1
@@ -268,26 +252,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &414136
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138796}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.10000002, z: 1.13399994}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 451790}
-  m_RootOrder: 0
 --- !u!4 &430800
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188408}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: 0, y: 0, z: 10.4700003}
+  m_LocalRotation: {x: 0, y: .784164846, z: 0, w: -.620552599}
+  m_LocalPosition: {x: 9.00049686, y: 0, z: 3.08259606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 495396}
@@ -295,7 +267,7 @@ Transform:
   - {fileID: 459742}
   - {fileID: 22482160}
   m_Father: {fileID: 451790}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &435016
 Transform:
   m_ObjectHideFlags: 1
@@ -363,8 +335,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113770}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: .552878439, z: 0, w: .833261967}
+  m_LocalPosition: {x: -2.21801782, y: 0, z: .607612193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 436416}
@@ -372,18 +344,17 @@ Transform:
   - {fileID: 438306}
   - {fileID: 22475054}
   m_Father: {fileID: 451790}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &451790
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -.2290667, z: 0, w: .973410785}
+  m_LocalPosition: {x: 77.8442688, y: -.502264142, z: -50.7460861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 414136}
   - {fileID: 448416}
   - {fileID: 430800}
   m_Father: {fileID: 0}
@@ -715,7 +686,7 @@ MonoBehaviour:
   - {fileID: 11483662}
   playerMeshes:
   - {fileID: 132876, guid: f174494b6c1822b4780603315d7658e0, type: 2}
-  - {fileID: 102280, guid: 4d1aa4a6ba1928646971cfc84dc45f16, type: 2}
+  - {fileID: 168896, guid: 4d1aa4a6ba1928646971cfc84dc45f16, type: 2}
   - {fileID: 182604, guid: 26ba4dccf77ebfd44a59195180869816, type: 2}
   - {fileID: 107882, guid: 99f6d82c461e6e44b9499132d297925e, type: 2}
   - {fileID: 186878, guid: 507b232a3f99dac49bda44a289df4b11, type: 2}
@@ -727,7 +698,7 @@ MonoBehaviour:
   - {fileID: 11437068}
   startPos: {fileID: 438306}
   endPos: {fileID: 459742}
-  line: {fileID: 12077582}
+  lineShader: {fileID: 11416624, guid: e25e8bd50dda82a41b528fb4b7bf7afe, type: 2}
 --- !u!114 &11467884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -831,43 +802,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!120 &12077582
-LineRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138796}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: a8a2d68559f8ab541a16efb29a45c20f, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  m_Parameters:
-    startWidth: .100000001
-    endWidth: .100000001
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 4294967295
-  m_UseWorldSpace: 0
 --- !u!222 &22220736
 CanvasRenderer:
   m_ObjectHideFlags: 1

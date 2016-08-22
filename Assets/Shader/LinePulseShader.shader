@@ -8,6 +8,7 @@
 		_Speed ("Speed", Float) = 0.5
 		_ColorStrength ("ColorStrength", Float) = 1.0
 		_LineLength ("LineLength", Float) = 1.0
+		_FunctionType ("Function Type", Int) = 0	// 0 = Sine, 1 = Sawtooth
     }
 
     SubShader {
@@ -31,6 +32,7 @@
 			half _Speed;
 			half _ColorStrength;
 			fixed _LineLength;
+			int _FunctionType;
 
 			/* Input struct for the vertex SubShader
 			 * Unity fills the variables according to the binding semantic (e.g. 'POSITION')
@@ -58,27 +60,19 @@
 				return amplitude * sin(shift + x * frequency * _LineLength) * 0.5 + 0.5;
 			}
 
-			half strangeSineFunction(half frequency, half amplitude, half x, half shift) {
-				return amplitude * pow(sin(shift + x * frequency * _LineLength), 5.0) * 0.5 + 0.5;
-			}
-
 			half sawtoothFunction(half frequency, half amplitude, half x, half shift) {
 				return (amplitude * fmod(shift + x * frequency * _LineLength, 2.0) - amplitude) * 0.5 + 0.5;
-			}
-
-			half otherHalfCircleFunction(half frequency, half amplitude, half x, half shift) {
-				half exponent = 0.5;
-				half sinCoefficient = x * frequency * _LineLength;
-				half result = amplitude * pow(clamp(sin(shift + sinCoefficient), 0.0, 1.0), exponent);
-				half result2 = -amplitude * pow(clamp(sin(3.14 + shift + sinCoefficient), 0.0, 1.0), exponent);
-
-				return (result + result2) * 0.5 + 0.5;
 			}
 
             fixed4 frag (vertOutput input) : COLOR
             {
 				fixed shift = _Time[0] * _Speed;
-				half function = sineFunction(_Frequency, _Amplitude, input.texcoord.x, shift);
+
+				half function;
+				if (_FunctionType == 0)
+					function = sineFunction(_Frequency, _Amplitude, input.texcoord.x, shift);
+				else if (_FunctionType == 1)
+					function = sawtoothFunction(_Frequency, _Amplitude, input.texcoord.x, shift);
 
 				half absolute = abs(input.texcoord.y - function);
 				half alpha = 1.0 - smoothstep(0.0, _Smoothing, absolute);

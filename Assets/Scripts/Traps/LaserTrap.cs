@@ -12,8 +12,11 @@ public class LaserTrap : Trap, ITriggerable
     public Transform endPos;
 
     //the line renderer in use
+    //[SerializeField]
+    //public LineRenderer line;
+
     [SerializeField]
-    public LineRenderer line;
+    public LineShaderUtility lineShader;
     
     public override void Trigger(Collider other)
     {
@@ -24,7 +27,6 @@ public class LaserTrap : Trap, ITriggerable
                 //sound event
                 OnTrapTriggered();
             }
-
             gameObject.AddComponent<Laser>();
         }
     }
