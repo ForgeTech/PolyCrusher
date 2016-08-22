@@ -41,53 +41,55 @@ public class Laser : MonoBehaviour
                         bool addScript = true;
                         // get the BasePlayer of the Game Object
                         BasePlayer player = hit.transform.GetComponent<BasePlayer>();
-                        Vector3 tmpPosition = player.GetComponent<Transform>().position;
-                        Quaternion tmpRotation = player.GetComponent<Transform>().rotation;
-                        player.CurrentDeathTime = 0.0f;
-                        if (player.Health == 0)
-                        {
-                            addScript = false;
-                        }
-                        player.InstantKill(this);
 
-                        //create playerMesh to destroy it without destroying the real player
-                        GameObject destroyMesh = null;
-                        switch (player.name)
+                        if (!player.IsDead)
                         {
-                            case "Birdman":
-                                destroyMesh = trap.playerMeshes[0];
-                                break;
-                            case "Charger":
-                                destroyMesh = trap.playerMeshes[1];
-                                break;
-                            case "Fatman":
-                                destroyMesh = trap.playerMeshes[2];
-                                break;
-                            case "Timeshifter":
-                                destroyMesh = trap.playerMeshes[3];
-                                break;
-                            case "Babuschka":
-                                destroyMesh = trap.playerMeshes[4];
-                                break;
-                            case "Pantomime":
-                                destroyMesh = trap.playerMeshes[5];
-                                break;
-                        }
-                        if (destroyMesh != null)
-                        {
-
-                            //toDestroy.gameObject.AddComponent<PolyExplosion>();
-
-                            if (addScript)
+                            Vector3 tmpPosition = player.GetComponent<Transform>().position;
+                            Quaternion tmpRotation = player.GetComponent<Transform>().rotation;
+                            player.CurrentDeathTime = 0.0f;
+                            if (player.Health == 0)
                             {
-                                GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
-                                toDestroy.gameObject.AddComponent<CutUpMesh>();
+                                addScript = false;
                             }
+                            player.InstantKill(this);
+                            Debug.Log("HHULLLAAAHUPP");
 
+                            //create playerMesh to destroy it without destroying the real player
+                            GameObject destroyMesh = null;
+                            switch (player.name)
+                            {
+                                case "Birdman":
+                                    destroyMesh = trap.playerMeshes[0];
+                                    break;
+                                case "Charger":
+                                    destroyMesh = trap.playerMeshes[1];
+                                    break;
+                                case "Fatman":
+                                    destroyMesh = trap.playerMeshes[2];
+                                    break;
+                                case "Timeshifter":
+                                    destroyMesh = trap.playerMeshes[3];
+                                    break;
+                                case "Babuschka":
+                                    destroyMesh = trap.playerMeshes[4];
+                                    break;
+                                case "Pantomime":
+                                    destroyMesh = trap.playerMeshes[5];
+                                    break;
+                            }
+                            if (destroyMesh != null)
+                            {
 
+                                //toDestroy.gameObject.AddComponent<PolyExplosion>();
 
-
+                                if (addScript)
+                                {
+                                    GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
+                                    toDestroy.gameObject.AddComponent<CutUpMesh>();
+                                }
+                            }
                         }
+                        
                     }
 
                     if (gotHit is BaseEnemy)
