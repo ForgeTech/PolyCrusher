@@ -182,6 +182,15 @@ public class Event{
         return this;
     }
 
+    /// <summary>
+    /// the count of mobile players
+    /// </summary>
+    public Event addMobilePlayers(int count)
+    {
+        this.mobilePlayers = count;
+        return this;
+    }
+
     #endregion
 
     /// <summary>
@@ -221,6 +230,8 @@ public class Event{
     public float[] pos { get; set; }
     [BsonIgnoreIfNull]
     public int? playerCount { get; set; }    // ? to make variable nullable
+    [BsonIgnoreIfNull]
+    public int? mobilePlayers { get; set; }
     [BsonIgnoreIfNull]
     public string device { get; set; }
     [BsonIgnoreIfNull]
