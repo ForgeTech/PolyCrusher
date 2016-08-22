@@ -16,7 +16,7 @@ public class LineShaderUtility : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
-	void Start ()
+	private void Start ()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(lineMaterial);
@@ -27,12 +27,13 @@ public class LineShaderUtility : MonoBehaviour
         lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
         lineRenderer.SetVertexCount(2);
-        lineRenderer.SetPosition(0, startPosition);
-        lineRenderer.SetPosition(1, endPosition);
+        
     }
 	
-	void Update ()
+	private void Update ()
     {
         lineRenderer.material.SetFloat("_LineLength", Vector3.Distance(startPosition, endPosition));
+        lineRenderer.SetPosition(0, startPosition);
+        lineRenderer.SetPosition(1, endPosition);
     }
 }
