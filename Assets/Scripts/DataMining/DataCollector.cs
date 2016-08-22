@@ -195,16 +195,17 @@ public class DataCollector : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        eventQueue = new Queue();
+        localEvents = new List<Event>();
+        kills = new Dictionary<string, int>();
+        deathtime = new Dictionary<string, int>();
     }
 
     /// <summary>
     /// Initializes connection to database
     /// </summary>
     void Start () {
-        eventQueue = new Queue();
-        localEvents = new List<Event>();
-        kills = new Dictionary<string, int>();
-        deathtime = new Dictionary<string, int>();
+
         EventRegistered += calculateScore;
 
         if (DataCollector.instance.enabled)
