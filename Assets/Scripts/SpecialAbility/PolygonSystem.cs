@@ -1180,8 +1180,10 @@ public class PolygonSystem : MonoBehaviour
             float distance = Mathf.Clamp01(polyLerpDistance)/2.0f;
             for(int i = 0; i < playerScripts.Length; i++)
             {
-                Debug.Log("distance: " + distance);
-                playerScripts[i].InputDevice.Vibrate(0.0f, distance);                
+                if (playerScripts[i].InputDevice != null)
+                {
+                    playerScripts[i].InputDevice.Vibrate(0.0f, distance);
+                }
             }
         }
     }
@@ -1195,7 +1197,10 @@ public class PolygonSystem : MonoBehaviour
         {
             for (int i = 0; i < playerScripts.Length; i++)
             {
-                playerScripts[i].InputDevice.StopVibration();
+                if (playerScripts[i].InputDevice != null)
+                {
+                    playerScripts[i].InputDevice.StopVibration();
+                }
             }
         }
     }
@@ -1209,7 +1214,10 @@ public class PolygonSystem : MonoBehaviour
         {
             for (int i = 0; i < playerScripts.Length; i++)
             {
-                rumbleManager.Rumble(playerScripts[i].InputDevice, RumbleType.PolygonExplosion);
+                if (playerScripts[i].InputDevice != null)
+                {
+                    rumbleManager.Rumble(playerScripts[i].InputDevice, RumbleType.PolygonExplosion);
+                }
             }
         }
     }
