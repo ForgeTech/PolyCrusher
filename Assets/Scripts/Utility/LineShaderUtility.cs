@@ -18,11 +18,13 @@ public class LineShaderUtility : MonoBehaviour
 
 	void Start ()
     {
-        
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(lineMaterial);
         lineRenderer.SetWidth(width, width);
         lineRenderer.useWorldSpace = true;
+        lineRenderer.receiveShadows = false;
+        lineRenderer.useLightProbes = false;
+        lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
         lineRenderer.SetVertexCount(2);
         lineRenderer.SetPosition(0, startPosition);

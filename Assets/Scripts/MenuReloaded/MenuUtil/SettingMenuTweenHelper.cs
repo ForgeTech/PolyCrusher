@@ -41,8 +41,11 @@ public class SettingMenuTweenHelper : MonoBehaviour
     private void RepositionArrows()
     {
         SubSelector subSelectorOfCurrentObject = selector.SubSelectionEntries[selector.Components[selector.Current]];
+        NavigationInformation arrowInfo = leftArrow.gameObject.GetComponent<NavigationInformation>();
         if (subSelectorOfCurrentObject.Components.Count > 0)
         {
+            TweenArrowColor(leftArrow, arrowInfo.HighlightedColor);
+            TweenArrowColor(rightArrow, arrowInfo.HighlightedColor);
 
             RectTransform currentSelection = subSelectorOfCurrentObject.Components[subSelectorOfCurrentObject.Current].GetComponent<RectTransform>();
             float currentSelectionHalfWidth = currentSelection.sizeDelta.x * 0.5f;
@@ -57,6 +60,20 @@ public class SettingMenuTweenHelper : MonoBehaviour
             LeanTween.move(leftArrow.rectTransform, leftArrowPosition, tweenTime).setEase(easeType);
             LeanTween.move(rightArrow.rectTransform, rightArrowPosition, tweenTime).setEase(easeType);
         }
+        else
+        {
+            TweenArrowColor(leftArrow, arrowInfo.NormalColor);
+            TweenArrowColor(rightArrow, arrowInfo.NormalColor);
+        }
+    }
+
+    private void TweenArrowColor(Image arrow, Color c)
+    {
+        Color currentColor = new Color(arrow.color.r, arrow.color.g, arrow.color.b);
+        LeanTween.value(arrow.gameObject, currentColor, c, tweenTime).setEase(easeType)
+            .setOnUpdate((Color val) => {
+                arrow.color = val;
+            });
     }
 
     private void DoLeftArrowSizeTween()
