@@ -43,7 +43,7 @@ class SteamManager : BaseSteamManager
     private SteamLeaderboard_t currSteamLeaderboard;
 
     //persisted stats
-    public int totalGamesPlayed = 0;
+    private int totalGamesPlayed = 0;
     private int totalGameStarts = 0;
 
     private int charactersPlayed = 0;
