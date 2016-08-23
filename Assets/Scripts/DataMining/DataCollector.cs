@@ -92,7 +92,9 @@ public class DataCollector : MonoBehaviour
     }
     [SerializeField]
     private int score;
-    public int intermediateScore;
+    public int intermediateScore; // score to be viewed in the UI
+
+    private ScoreContainer scoreContainer;
 
     /// <summary>
     ///  for assigning callback, called when downloaded rank is received
@@ -202,6 +204,7 @@ public class DataCollector : MonoBehaviour
         localEvents = new List<Event>();
         kills = new Dictionary<string, int>();
         deathtime = new Dictionary<string, int>();
+        scoreContainer = new ScoreContainer();
     }
 
     /// <summary>
@@ -793,7 +796,11 @@ public class DataCollector : MonoBehaviour
         //Debug.Log("[Score]" + (Score - scoreBefore));
         intermediateScore += Score - scoreBefore;
     }
-
+    
+    public ScoreContainer getScoreContainer()
+    {
+        return scoreContainer;
+    }
 }
 
 /*
