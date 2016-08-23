@@ -82,6 +82,8 @@ public class ScoreContainer
         return wave;
     }
 
+    //------score getter------
+
     public int getBossKillsScore()
     {
         return bossKills * 2500;
@@ -112,10 +114,14 @@ public class ScoreContainer
         return playerRevivals * -1000;
     }
 
-    public float getWaveScore()
+    public int getWaveScore()
     {
-        return wave * 10000;
+        return (int) wave * 10000;
     }
 
+    public int getScoreSum()
+    {
+        return getBossKillsScore() + getPolysTriggeredScore() + getPolyKillsScore() + getCutKillsScore() + getPowerupsCollectedScore() + getPlayerRevivalsScore() + getWaveScore();
+    }
 }
 
