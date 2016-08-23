@@ -81,6 +81,10 @@ public class BaseSteamManager : MonoBehaviour {
     public virtual void LogAchievementEvent (Event e) {}
 	
 	public virtual void LogAchievementData (AchievementID id) {}
+
+    public virtual string GetSteamName(){ return ""; }
+
+    public virtual string GetSteamID() { return ""; }
 }
 
 //

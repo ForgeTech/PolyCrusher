@@ -65,6 +65,8 @@ class SteamManager : BaseSteamManager
     private IDictionary<string, int> characterPowerups = new Dictionary<string, int>();
     private int totalPowerups;
 
+    private int COUNTER;
+
     protected override void Awake()
     {
         base.Awake();
@@ -442,6 +444,7 @@ class SteamManager : BaseSteamManager
                 PerformGameStartActions(e);
                 break;
             case Event.TYPE.death:
+                COUNTER -= 1000;
                 if (e.wave >= 1 && e.wave < 2)
                     UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
                 if (e.enemy.Equals("Laser") || e.enemy.Equals("DeathTrap"))
@@ -453,15 +456,21 @@ class SteamManager : BaseSteamManager
                     assesKilled++;
                 if (e.enemy.Equals("B055"))
                 {
+                    COUNTER += 2500;
+
                     if (e.cause.Equals("ChickenBehaviour"))
                         UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CHICKEN);
                     else if (e.character.Equals("LineSystem"))
                         UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CUTTING);
                 }
                 if (e.character.Equals("LineSystem"))
+                {
                     enemiesCut++;
+                    COUNTER += 100;
+                }
                 break;
             case Event.TYPE.powerup:
+                COUNTER += 100;
                 foreach (KeyValuePair<string, int> entry in characterPowerups)
                 {
                     if (e.character.Equals(entry.Key))
@@ -470,6 +479,7 @@ class SteamManager : BaseSteamManager
                 totalPowerups++;
                 break;
             case Event.TYPE.superAbility:
+                COUNTER += (1000 + 100 * (int)e.kills);
                 if (e.kills >= 40)
                     UnlockAchievement(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY);
                 break;
@@ -572,19 +582,23 @@ class SteamManager : BaseSteamManager
         if (e.wave >= 30)
             UnlockAchievement(AchievementID.ACH_REACH_W30);
 
-        //save leaderboard entry
-        SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
-        LeaderboardFindResult.Set(handle);
-        int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
-        if (e.mode.Equals("normal"))
+        COUNTER += (int)(10000f * (float)e.wave);
+        if (COUNTER == DataCollector.instance.Score)
         {
-            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)e.wave, additionalInfo, additionalInfo.Length);
-        }
-        if (e.mode.Equals("yolo"))
-        {
-            SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
-            if (e.time / 60000f >= 5f)
-                UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
+            //save leaderboard entry
+            SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
+            LeaderboardFindResult.Set(handle);
+            int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
+            if (e.mode.Equals("normal"))
+            {
+                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, COUNTER, additionalInfo, additionalInfo.Length);
+            }
+            if (e.mode.Equals("yolo"))
+            {
+                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
+                if (e.time / 60000f >= 5f)
+                    UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
+            }
         }
 
         //powerup achievement
@@ -602,12 +616,12 @@ class SteamManager : BaseSteamManager
 
     #endregion
 
-    public string GetSteamName()
+    public override string GetSteamName()
     {
         return SteamFriends.GetPersonaName();
     }
 
-    public string GetSteamID()
+    public override string GetSteamID()
     {
         return SteamUser.GetSteamID().ToString();
     }
