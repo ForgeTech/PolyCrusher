@@ -10,7 +10,43 @@ public class ScoreContainer
     private int polyKills = 0;
     private int cutKills = 0;
     private int powerupsCollected = 0;
+    private int playerRevivals = 0;
     private float wave = 0;
+
+    public void addBossKills(int x)
+    {
+        bossKills += x;
+    }
+
+    public void addPolysTriggered(int x)
+    {
+        polysTriggered += x;
+    }
+
+    public void addPolyKills(int x)
+    {
+        polyKills += x;
+    }
+
+    public void addCutKills(int x)
+    {
+        cutKills += x;
+    }
+
+    public void addPowerupsCollected(int x)
+    {
+        powerupsCollected += x;
+    }
+
+    public void addPlayerRevials(int x)
+    {
+        playerRevivals += x;
+    }
+
+    public void setWave(float x)
+    {
+        wave = x;
+    }
 
     public int getBossKills()
     {
@@ -34,6 +70,11 @@ public class ScoreContainer
     public int getPowerupsCollected()
     {
         return powerupsCollected;
+    }
+
+    public int getPlayerRevivals()
+    {
+        return playerRevivals;
     }
 
     public float getWave()
@@ -66,9 +107,15 @@ public class ScoreContainer
         return powerupsCollected * 100;
     }
 
+    public int getPlayerRevivalsScore()
+    {
+        return playerRevivals * -1000;
+    }
+
     public float getWaveScore()
     {
         return wave * 10000;
     }
+
 }
 

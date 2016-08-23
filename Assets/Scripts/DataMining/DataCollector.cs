@@ -732,14 +732,18 @@ public class DataCollector : MonoBehaviour
         switch (e.type)
         {
             case Event.TYPE.kill:
+                
+
                 if(e.enemy == "B055")
                 {
+                    scoreContainer.addBossKills(1);
                     Score += 2500;
                 }
 
                 if(e.character == "_LineManager") // || e.character == "laser_trap"
                 {
                     Score += 100;
+                    scoreContainer.addCutKills(1);
                 }
 
                 // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
@@ -756,8 +760,9 @@ public class DataCollector : MonoBehaviour
                 if(e.kills != null)
                 {
                     n += (int)e.kills * 100;
+                    scoreContainer.addPolyKills((int)e.kills);
                 }
-
+                scoreContainer.addPolysTriggered(1);
                 Score += 1000 + n;
                 break;
 
@@ -767,6 +772,7 @@ public class DataCollector : MonoBehaviour
 
             case Event.TYPE.powerup:
                 Score += 100;
+                scoreContainer.addPowerupsCollected(1);
                 break;
 
             case Event.TYPE.waveUp:
@@ -775,6 +781,7 @@ public class DataCollector : MonoBehaviour
                     if (playerDeathsInWave != 0)
                     {
                         Score -= 1000 * playerDeathsInWave;
+                        scoreContainer.addPlayerRevials(playerDeathsInWave);
                     }
 
                     Score += 10000;
@@ -790,6 +797,8 @@ public class DataCollector : MonoBehaviour
                 float wave = Event.getWave();
                 int s = (int)((wave - (int)wave) * 10000);
                 Score += s;
+
+                scoreContainer.setWave(wave);
 
                 break;
         }
