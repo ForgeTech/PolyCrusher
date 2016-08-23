@@ -41,6 +41,7 @@ class SteamManager : BaseSteamManager
 
     //current leaderboard handle
     private SteamLeaderboard_t currSteamLeaderboard;
+    private int rank;
 
     //persisted stats
     private int totalGamesPlayed = 0;
@@ -422,6 +423,8 @@ class SteamManager : BaseSteamManager
     {
         Debug.Log("[" + LeaderboardScoreUploaded_t.k_iCallback + " - LeaderboardScoreUploaded] - " + pCallback.m_bSuccess + " -- " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_nScore + " -- " + pCallback.m_bScoreChanged + " -- " + pCallback.m_nGlobalRankNew + " -- " + pCallback.m_nGlobalRankPrevious);
 
+        rank = pCallback.m_nGlobalRankNew;
+
         if (pCallback.m_nGlobalRankNew == 1) //still to test - is 1 the top rank?
             UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
     }
@@ -580,6 +583,7 @@ class SteamManager : BaseSteamManager
         if (e.wave >= 30)
             UnlockAchievement(AchievementID.ACH_REACH_W30);
 
+        rank = 0;
         COUNTER += (int)(10000f * (float)e.wave);
         if (COUNTER == DataCollector.instance.Score)
         {
@@ -623,6 +627,11 @@ class SteamManager : BaseSteamManager
     public override string GetSteamID()
     {
         return SteamUser.GetSteamID().ToString();
+    }
+
+    public override int GetRank()
+    {
+        return rank;
     }
 
     /// <summary>
