@@ -117,6 +117,44 @@ public class DataCollector : MonoBehaviour
         }
     }
 
+    public class Session
+    {
+        public Session(string mode)
+        {
+            macAddress = getMAC();
+            version = DataCollector.instance.buildVersion;
+            inEditor = Application.isEditor;
+            this.mode = mode;
+
+            PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
+            if (playerManagerReference != null)
+            {
+                players = playerManagerReference.PlayerCountInGameSession;
+            }
+
+            time = (int)(Time.time * 1000);
+        }
+
+        //public ObjectId _id { get; set; }
+        [BsonIgnore]
+        public string _id { get; set; }
+        public string macAddress { get; set; }
+        public string steamId { get; set; }
+        public string steamName { get; set; }
+        public string version { get; set; }
+        public bool inEditor { get; set; }
+        public string mode { get; set; }
+        [BsonIgnoreIfNull]
+        public int players { get; set; }
+
+        //public DateTime Timestamp { get; set; }
+
+        /// <summary>
+        /// start time of session
+        /// </summary>
+        [BsonIgnore]
+        public int time { get; set; }
+    }
 
     /// <summary>
     /// Return character name of player with the most kills
@@ -154,43 +192,7 @@ public class DataCollector : MonoBehaviour
         return character;
     }
 
-    public class Session
-    {
-        public Session(string mode)
-        {
-            macAddress = getMAC();
-            version = DataCollector.instance.buildVersion;
-            inEditor = Application.isEditor;
-            this.mode = mode;
 
-            PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
-            if (playerManagerReference != null)
-            {
-                players = playerManagerReference.PlayerCountInGameSession;
-            }
-            
-            time = (int)(Time.time * 1000);
-        }
-
-        //public ObjectId _id { get; set; }
-        [BsonIgnore]
-        public string _id { get; set; }
-        public string macAddress { get; set; }
-        public string steamId { get; set; }
-		public string version { get; set; }
-        public bool inEditor { get; set; }
-        public string mode { get; set; }
-        [BsonIgnoreIfNull]
-        public int players { get; set; }
-
-        //public DateTime Timestamp { get; set; }
-
-        /// <summary>
-        /// start time of session
-        /// </summary>
-        [BsonIgnore]
-        public int time { get; set; }
-    }
 
 
     void Awake()
@@ -277,6 +279,8 @@ public class DataCollector : MonoBehaviour
 
             // create new session
             currentSession = new Session(mode);
+            currentSession.steamId = SteamManager.Instance.GetSteamID();
+            currentSession.steamName = SteamManager.Instance.GetSteamName();
             sessionRunning = true;
 
             switch (GameManager.GameManagerInstance.CurrentGameMode)
