@@ -96,6 +96,8 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
+
+            Debug.Log("playerCount @ PlayersInGameSession" + PlayerCountInGameSession);
             BasePlayer[] currPlayers = new BasePlayer[PlayerCountInGameSession];
             for (int i = 0, j = 0; i < playerReferences.Length && j < currPlayers.Length; i++)
             {
@@ -109,8 +111,8 @@ public class PlayerManager : MonoBehaviour
                         j++;
                     }
                 }
+                
             }
-
             return currPlayers;
         }
     }
@@ -254,7 +256,9 @@ public class PlayerManager : MonoBehaviour
 
         // start session
         DataCollector.instance.startSession();
-	}
+
+    }
+
 
     // Update is called once per frame
     void Update() 
@@ -400,6 +404,7 @@ public class PlayerManager : MonoBehaviour
             if (playerReferences[i] == null)
             {
                 playerReferences[i] = p.gameObject;
+                Debug.Log("baseplayer added");
                 break;
             }
 
@@ -455,304 +460,3 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 }
-
-/*
- * 	
-			if (Input.GetAxis("P2_Join") > 0 && !playerSlot[1])
-			{
-				Debug.Log("Player " + (playerCount + 1) + " joined! (Controller)");
-				playerSlot[1] = true;
-
-				string takeCharacter = "Birdman";
-				
-				if (levelInfo != null) {
-					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if(levelInfo.playerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if(levelInfo.phonePlayerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					int ix;
-					
-					for (ix = 0; ix < characterTaken.Length; ix++) {
-						if (characterTaken[ix] == false) {
-							takeCharacter = characterArray[ix];
-						}
-					}
-					
-					for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-						if (levelInfo.playerSlotTaken[j] == false) {
-							levelInfo.playerSlot[j] = takeCharacter;
-							levelInfo.playerSlotTaken[j] = true;
-						}
-					}
-				}
-				
-				prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
-                prefab.GetComponent<NavMeshAgent>().enabled = false;
-                prefab.transform.position = GetPositionOfRandomPlayer(true);
-				prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer>().PlayerPrefix = "P2_";
-                prefab.GetComponent<NavMeshAgent>().enabled = true;
-
-                OnPlayerJoined();
-			}
-			*/
-
-/*	/// <summary>
-	/// Adds a new phone player to the game.
-	/// </summary>
-	public void HandlePhonePlayerJoin(int slot)
-	{
-		GameObject prefab;
-		bool joined = false;
-
-		string[] characterArray = new string[4] {"Timeshifter", "Charger", "Fatman", "Birdman"};
-		bool[] characterTaken = new bool[4] {false, false, false, false};
-
-		if (playerCount < 4) {
-			if (!joined && !playerSlotPhone[0])
-			{
-				Debug.Log("Player " + (playerCount + 1)  + " joined! (Phone)");
-				playerSlotPhone[0] = true;
-				joined = true;
-
-				string takeCharacter = "Birdman";
-
-				if (levelInfo != null) {
-					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if(levelInfo.playerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if(levelInfo.phonePlayerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					int ix;
-					
-					for (ix = 0; ix < characterTaken.Length; ix++) {
-						if (characterTaken[ix] == false) {
-							takeCharacter = characterArray[ix];
-						}
-					}
-					
-					for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-						if (levelInfo.phonePlayerSlotTaken[j] == false) {
-							levelInfo.phonePlayerSlot[j] = takeCharacter;
-							levelInfo.phonePlayerSlotTaken[j] = true;
-						}
-					}
-				}
-				
-				prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
-                prefab.GetComponent<NavMeshAgent>().enabled = false;
-                prefab.transform.position = GetPositionOfRandomPlayer(true);
-                prefab.GetComponent<NavMeshAgent>().enabled = true;
-                prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer>().PhonePlayerSlot = slot;
-				
-
-				OnPlayerJoined();
-			}
-			
-			if (!joined && !playerSlotPhone[1])
-			{
-				Debug.Log("Player " + (playerCount + 1) + " joined! (Phone)");
-				playerSlotPhone[1] = true;
-				joined = true;
-
-				string takeCharacter = "Birdman";
-				
-				if (levelInfo != null) {
-					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if(levelInfo.playerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if(levelInfo.phonePlayerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					int ix;
-					
-					for (ix = 0; ix < characterTaken.Length; ix++) {
-						if (characterTaken[ix] == false) {
-							takeCharacter = characterArray[ix];
-						}
-					}
-					
-					for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-						if (levelInfo.phonePlayerSlotTaken[j] == false) {
-							levelInfo.phonePlayerSlot[j] = takeCharacter;
-							levelInfo.phonePlayerSlotTaken[j] = true;
-						}
-					}
-				}
-				
-				prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
-                prefab.GetComponent<NavMeshAgent>().enabled = false;
-                prefab.transform.position = GetPositionOfRandomPlayer(true);
-                prefab.GetComponent<NavMeshAgent>().enabled = true;
-                prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer>().PhonePlayerSlot = slot;
-				
-				OnPlayerJoined();
-			}
-			
-			if (!joined && !playerSlotPhone[2])
-			{
-				Debug.Log("Player " + (playerCount + 1) + " joined! (Phone)");
-				playerSlotPhone[2] = true;
-				joined = true;
-
-				string takeCharacter = "Birdman";
-				
-				if (levelInfo != null) {
-					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if(levelInfo.playerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if(levelInfo.phonePlayerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					int ix;
-					
-					for (ix = 0; ix < characterTaken.Length; ix++) {
-						if (characterTaken[ix] == false) {
-							takeCharacter = characterArray[ix];
-						}
-					}
-					
-					for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-						if (levelInfo.phonePlayerSlotTaken[j] == false) {
-							levelInfo.phonePlayerSlot[j] = takeCharacter;
-							levelInfo.phonePlayerSlotTaken[j] = true;
-						}
-					}
-				}
-				
-				prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
-                prefab.GetComponent<NavMeshAgent>().enabled = false;
-                prefab.transform.position = GetPositionOfRandomPlayer(true);
-                prefab.GetComponent<NavMeshAgent>().enabled = true;
-                prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer>().PhonePlayerSlot = slot;
-				
-				OnPlayerJoined();
-			}
-			
-			if (!joined && !playerSlotPhone[3])
-			{
-				Debug.Log("Player " + (playerCount + 1) + " joined! (Phone)");
-				playerSlotPhone[3] = true;
-				joined = true;
-
-				string takeCharacter = "Birdman";
-				
-				if (levelInfo != null) {
-					
-					for (int i = 0; i < levelInfo.playerSlot.Length; i++) {
-						if(levelInfo.playerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.playerSlot.Length; j++) {
-								if (levelInfo.playerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					for (int i = 0; i < levelInfo.phonePlayerSlot.Length; i++) {
-						if(levelInfo.phonePlayerSlot[i] != null) {
-							for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-								if (levelInfo.phonePlayerSlot[i].Equals(characterArray[j])) {
-									characterTaken[j] = true;
-								}
-							}
-						}
-					}
-					
-					int ix;
-					
-					for (ix = 0; ix < characterTaken.Length; ix++) {
-						if (characterTaken[ix] == false) {
-							takeCharacter = characterArray[ix];
-						}
-					}
-					
-					for (int j = 0; j < levelInfo.phonePlayerSlot.Length; j++) {
-						if (levelInfo.phonePlayerSlotTaken[j] == false) {
-							levelInfo.phonePlayerSlot[j] = takeCharacter;
-							levelInfo.phonePlayerSlotTaken[j] = true;
-						}
-					}
-				}
-				
-				prefab = Instantiate(Resources.Load<GameObject>("Player/" + takeCharacter)) as GameObject;       //TODO: Prefab selection
-                prefab.GetComponent<NavMeshAgent>().enabled = false;
-                prefab.transform.position = GetPositionOfRandomPlayer(true);
-                prefab.GetComponent<NavMeshAgent>().enabled = true;
-                prefab.gameObject.name = "Player" + (playerCount + 1);
-				prefab.GetComponent<BasePlayer>().PhonePlayerSlot = slot;
-				
-				OnPlayerJoined();
-
-			}
-		}
-		
-
-	}
- */
