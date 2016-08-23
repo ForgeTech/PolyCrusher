@@ -85,6 +85,8 @@ public class BaseSteamManager : MonoBehaviour {
     public virtual string GetSteamName(){ return ""; }
 
     public virtual string GetSteamID() { return ""; }
+
+    public virtual int GetRank() { return 0; }
 }
 
 //
