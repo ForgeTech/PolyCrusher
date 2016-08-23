@@ -40,7 +40,7 @@ class SteamManager : BaseSteamManager
     private int achievementCounter = 0;
 
     //current leaderboard handle
-    private SteamLeaderboard_t currSteamLeaderboard;
+    private SteamLeaderboard_t m_SteamLeaderboard;
     private int rank;
 
     //persisted stats
@@ -63,10 +63,11 @@ class SteamManager : BaseSteamManager
     private bool bulletsShotAchieved = false;
 
     //current stats
-    private IDictionary<string, int> characterPowerups = new Dictionary<string, int>();
+    private readonly IDictionary<string, int> characterPowerups = new Dictionary<string, int>();
     private int totalPowerups = 0;
 
     private int COUNTER = 0;
+    private int playerDeath = 0;
 
     protected override void Awake()
     {
@@ -150,7 +151,7 @@ class SteamManager : BaseSteamManager
         achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters."));
         achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));
         achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone."));
-        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game."));
+        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up 20 powerups in a coop game before anyone else picks up one."));
         achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup."));
         achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credit screen."));
         achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));
@@ -172,7 +173,7 @@ class SteamManager : BaseSteamManager
         achievements.Add(AchievementID.ACH_LAST_MAN_STANDING, new Achievement("Last Man Standing", "In a multiplayer game just one survives the wave with less than 10% health."));
         achievements.Add(AchievementID.ACH_DIED_IN_TRAP, new Achievement("Captain Obvious", "Die in a trap."));
         achievements.Add(AchievementID.ACH_NO_DAMAGE_UNTIL_W10, new Achievement("Halfgodlike", "Don't take any damage until wave 10."));
-        achievements.Add(AchievementID.ACH_HALF_OF_ALL_ACHIEVEMENTS, new Achievement("Halfway there", "Achieve 50% of all achievements!"));
+        achievements.Add(AchievementID.ACH_HALF_OF_ALL_ACHIEVEMENTS, new Achievement("Compulsive achievement horder", "Achieve 50% of all achievements!"));
 
         // register callbacks
         GameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
@@ -413,9 +414,11 @@ class SteamManager : BaseSteamManager
 
     private void OnLeaderboardFindResult(LeaderboardFindResult_t pCallback, bool bIOFailure)
     {
+        Debug.Log("[" + LeaderboardFindResult_t.k_iCallback + " - LeaderboardFindResult] - " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_bLeaderboardFound);
+
         if (pCallback.m_bLeaderboardFound != 0)
         {
-            currSteamLeaderboard = pCallback.m_hSteamLeaderboard;
+            m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
         }
     }
 
@@ -444,8 +447,12 @@ class SteamManager : BaseSteamManager
             case Event.TYPE.gameStart:
                 PerformGameStartActions(e);
                 break;
+            case Event.TYPE.waveUp:
+                COUNTER -= (1000 * playerDeath);
+                playerDeath = 0;
+                break;
             case Event.TYPE.death:
-                COUNTER -= 1000;
+                playerDeath++;
                 if (e.wave >= 1 && e.wave < 2)
                     UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
                 if (e.enemy.Equals("Laser") || e.enemy.Equals("DeathTrap"))
@@ -472,12 +479,21 @@ class SteamManager : BaseSteamManager
                 break;
             case Event.TYPE.powerup:
                 COUNTER += 100;
-                foreach (KeyValuePair<string, int> entry in characterPowerups)
+                Dictionary<string, int> currentPowerups = new Dictionary<string, int>(characterPowerups);
+                foreach (KeyValuePair<string, int> entry in currentPowerups) //WTF - iterate through copy and save in true dictionary to avoid out of sync exception
                 {
                     if (e.character.Equals(entry.Key))
                         characterPowerups[entry.Key]++;
                 }
                 totalPowerups++;
+                
+                //powerup achievement
+                foreach (KeyValuePair<string, int> entry in characterPowerups)
+                {
+                    if (entry.Value == totalPowerups && characterPowerups.Count > 1 && totalPowerups > 20)
+                        UnlockAchievement(AchievementID.ACH_GET_ALL_POWERUPS);
+                }
+
                 break;
             case Event.TYPE.superAbility:
                 COUNTER += (1000 + 100 * (int)e.kills);
@@ -533,6 +549,10 @@ class SteamManager : BaseSteamManager
         if (e.mobilePlayers > 0)
             UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
 
+        //reset powerups
+        characterPowerups.Clear();
+        totalPowerups = 0;
+
         foreach (string character in e.characters)
         {
             switch (character) //fill bitwise to save info in just one int
@@ -584,34 +604,29 @@ class SteamManager : BaseSteamManager
             UnlockAchievement(AchievementID.ACH_REACH_W30);
 
         rank = 0;
-        COUNTER += (int)(10000f * (float)e.wave);
+        COUNTER += (int)(10000f * (float)e.wave) - 10000;
         if (COUNTER == DataCollector.instance.Score)
         {
             //save leaderboard entry
-            SteamAPICall_t handle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
-            LeaderboardFindResult.Set(handle);
+            SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
+            Debug.Log(e.level + " - " + e.playerCount);
+            LeaderboardFindResult.Set(findHandle);
             int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
+            SteamAPICall_t uploadHandle = new SteamAPICall_t();
             if (e.mode.Equals("normal"))
             {
-                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, DataCollector.instance.Score, additionalInfo, additionalInfo.Length);
+                uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, DataCollector.instance.Score, additionalInfo, additionalInfo.Length);
             }
             if (e.mode.Equals("yolo"))
             {
-                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
+                uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
                 if (e.time / 60000f >= 5f)
                     UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
             }
+
+            LeaderboardScoreUploaded.Set(uploadHandle);
         }
         COUNTER = 0;
-
-        //powerup achievement
-        foreach (KeyValuePair<string, int> entry in characterPowerups)
-        {
-            if (entry.Value == totalPowerups && characterPowerups.Count > 1)
-                UnlockAchievement(AchievementID.ACH_GET_ALL_POWERUPS);
-        }
-        characterPowerups.Clear();
-        totalPowerups = 0;
 
         //store new persisted stats next frame
         storeStats = true;
