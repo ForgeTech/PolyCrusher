@@ -91,13 +91,25 @@ public class Event{
         return this;
     }
 
+    public static int lastPlayerCount = 0;
+
     public Event addPlayerCount()
     {
+        
         PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
         
         if(playerManagerReference != null)
         {
-            this.playerCount = playerManagerReference.PlayerCountInGameSession;
+            int count = playerManagerReference.PlayerCountInGameSession;
+            if(count != 0)
+            {
+                this.playerCount = count;
+                lastPlayerCount = count;
+            }
+            else
+            {
+                this.playerCount = lastPlayerCount;
+            }
         }
 
         return this;
