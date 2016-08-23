@@ -494,6 +494,9 @@ class SteamManager : BaseSteamManager
             case AchievementID.ACH_NO_DAMAGE_UNTIL_W10:
                 UnlockAchievement(AchievementID.ACH_NO_DAMAGE_UNTIL_W10);
                 break;
+            case AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU:
+                UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
+                break;
         }
     }
 
@@ -511,9 +514,6 @@ class SteamManager : BaseSteamManager
 
         if (e.mobilePlayers > 0)
             UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
-
-        //smart enough = game started
-        UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
 
         foreach (string character in e.characters)
         {
