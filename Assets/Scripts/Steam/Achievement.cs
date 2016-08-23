@@ -48,4 +48,5 @@ public enum AchievementID : int
         ACH_LAST_MAN_STANDING,
         ACH_DIED_IN_TRAP,
         ACH_NO_DAMAGE_UNTIL_W10,
+        ACH_HALF_OF_ALL_ACHIEVEMENTS,
 };

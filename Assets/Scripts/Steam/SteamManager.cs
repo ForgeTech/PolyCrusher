@@ -37,6 +37,7 @@ class SteamManager : BaseSteamManager
 
     //achievements
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
+    private int achievementCounter;
 
     //current leaderboard handle
     private SteamLeaderboard_t currSteamLeaderboard;
@@ -139,27 +140,27 @@ class SteamManager : BaseSteamManager
         gameID = new CGameID(SteamUtils.GetAppID());
 
         // add achievements
-        achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games.")); // Die halbe Wahrheit.
-        achievements.Add(AchievementID.ACH_PLAY_42_GAMES, new Achievement("The truth - but what was the question?", "Play 42 games.")); // Die Wahrheit - aber was war die Frage?
-        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Kill 1000 asses.")); // J'adore derriere
-        achievements.Add(AchievementID.ACH_CURRENT_HIGHSCORE, new Achievement("15 minutes of fame", "Rank one on any leaderboard!")); // 15 Minuten Ruhm
-        achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters.")); // Schizophrenie
-        achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));  // Polyparty
-        achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone.")); // Einsamer Wolf
-        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game.")); //  Ich drinke deinen Milchshake!
-        achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup.")); // 
-        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credit screen.")); // Unstillbare Neugier.
-        achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));  // die große spülung
-        achievements.Add(AchievementID.ACH_A_MILLION_SHOTS, new Achievement("A million shots", "Fire a million bullets.")); // Eine Million Schüsse
-        achievements.Add(AchievementID.ACH_KILL_TWO_ENEMIES, new Achievement("Second blood", "Kill two enemies.")); // Zweiter Treffer
-        achievements.Add(AchievementID.ACH_DIED_IN_W1, new Achievement("Sean Beaned", "Die in the very first wave.")); // Sean Beaned
-        achievements.Add(AchievementID.ACH_STARTED_GAME_ONCE, new Achievement("Bronze Medal", "Start game once.")); // Bronze Medaille
-        achievements.Add(AchievementID.ACH_STARTED_GAME_THRICE, new Achievement("Silver Medal", "Start game thrice.")); // Silber Medaille
-        achievements.Add(AchievementID.ACH_STARTED_GAME_TEN_TIMES, new Achievement("Gold Medal", "Start game ten times.")); // Goldene Medaille
-        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone as gamepad.")); // Kabelloser Killer
-        achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10.")); // Neuling
-        achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20.")); // Professioneller Polycrusher
-        achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));   // 
+        achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games."));
+        achievements.Add(AchievementID.ACH_PLAY_42_GAMES, new Achievement("The truth - but what was the question?", "Play 42 games."));
+        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Kill 1000 asses."));
+        achievements.Add(AchievementID.ACH_CURRENT_HIGHSCORE, new Achievement("15 minutes of fame", "Rank one on any leaderboard!"));
+        achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters."));
+        achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));
+        achievements.Add(AchievementID.ACH_PLAY_ALONE, new Achievement("Lone Wolf", "Play a game alone."));
+        achievements.Add(AchievementID.ACH_GET_ALL_POWERUPS, new Achievement("I drink your milkshake", "Pick up all powerups in a coop game."));
+        achievements.Add(AchievementID.ACH_CUT_100_ENEMIES, new Achievement("Cutting Edge", "Cut 100 enemies with the cutting powerup."));
+        achievements.Add(AchievementID.ACH_CREDITS_VIEWED, new Achievement("Ultimate curiosity", "View the credit screen."));
+        achievements.Add(AchievementID.ACH_PICK_SPACETIME_MANGO, new Achievement("The great flush", "Pick the arcane Space-Time-Mango in tutorial."));
+        achievements.Add(AchievementID.ACH_A_MILLION_SHOTS, new Achievement("A million shots", "Fire a million bullets."));
+        achievements.Add(AchievementID.ACH_KILL_TWO_ENEMIES, new Achievement("Second blood", "Kill two enemies."));
+        achievements.Add(AchievementID.ACH_DIED_IN_W1, new Achievement("Sean Beaned", "Die in the very first wave."));
+        achievements.Add(AchievementID.ACH_STARTED_GAME_ONCE, new Achievement("Support the developers!", "You bought the game - thanks buddy!"));
+        achievements.Add(AchievementID.ACH_STARTED_GAME_THRICE, new Achievement("Plutonium Medal", "Start game thrice."));
+        achievements.Add(AchievementID.ACH_STARTED_GAME_TEN_TIMES, new Achievement("Uranium Medal", "Start game ten times."));
+        achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone as gamepad."));
+        achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10."));
+        achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20."));
+        achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CHICKEN, new Achievement("Parricide", "Kill B055 with a chicken."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CUTTING, new Achievement("Chicken Chop Suey", "Kill B055 with the cutting powerup."));
         achievements.Add(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 40 enemies with one poly."));
@@ -168,6 +169,7 @@ class SteamManager : BaseSteamManager
         achievements.Add(AchievementID.ACH_LAST_MAN_STANDING, new Achievement("Last Man Standing", "In a multiplayer game just one survives the wave with less than 10% health."));
         achievements.Add(AchievementID.ACH_DIED_IN_TRAP, new Achievement("Captain Obvious", "Die in a trap."));
         achievements.Add(AchievementID.ACH_NO_DAMAGE_UNTIL_W10, new Achievement("Halfgodlike", "Don't take any damage until wave 10."));
+        achievements.Add(AchievementID.ACH_HALF_OF_ALL_ACHIEVEMENTS, new Achievement("Halfway there", "Achieve 50% of all achievements!"));
 
         // register callbacks
         GameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
@@ -180,7 +182,7 @@ class SteamManager : BaseSteamManager
         requestedStats = false;
         statsValid = false;
 
-        Debug.Log("SteamStats enabled by " + SteamFriends.GetPersonaName() + " with AppID " + gameID);
+        Debug.Log("SteamManager enabled by " + SteamFriends.GetPersonaName());
         SteamUserStats.ResetAllStats(true); ///REMOOOOVE THIS!///
     }
 
@@ -215,7 +217,7 @@ class SteamManager : BaseSteamManager
         if (!statsValid)
             return;
 
-#region unlock persisted achievements
+        #region unlock persisted achievements
 
         //games played
         if (totalGamesPlayed == 21)
@@ -262,7 +264,7 @@ class SteamManager : BaseSteamManager
             bulletsShotAchieved = true;
         }
 
-#endregion
+        #endregion
 
         //Store stats in the Steam database if necessary
         if (storeStats)
@@ -295,12 +297,14 @@ class SteamManager : BaseSteamManager
         {
             ach.achieved = true;
 
-            // the icon may change once it's unlocked
-            //achievement.iconImage = 0;
-
             // mark it down
             SteamUserStats.SetAchievement(id.ToString());
             Debug.Log("Achievement with ID " + id.ToString() + " unlocked");
+            achievementCounter++;
+
+            //unlock meta-achievement
+            if (achievementCounter == 15)
+                UnlockAchievement(AchievementID.ACH_HALF_OF_ALL_ACHIEVEMENTS);
 
             // store stats
             storeStats = true;
@@ -311,7 +315,7 @@ class SteamManager : BaseSteamManager
         }
     }
 
-#region SteamAPI callbacks
+    #region SteamAPI callbacks
 
     private void OnAchievementStored(UserAchievementStored_t pCallback)
     {
@@ -369,6 +373,9 @@ class SteamManager : BaseSteamManager
                 {
                     entry.Value.name = SteamUserStats.GetAchievementDisplayAttribute(entry.Key.ToString(), "name");
                     entry.Value.desc = SteamUserStats.GetAchievementDisplayAttribute(entry.Key.ToString(), "desc");
+
+                    if (entry.Value.achieved)
+                        achievementCounter++;
                 }
                 else
                 {
@@ -419,9 +426,9 @@ class SteamManager : BaseSteamManager
             UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
     }
 
-#endregion
+    #endregion
 
-#region log and unlock current achievements
+    #region log and unlock current achievements
 
     /// <summary>
     /// This method can be used by the DataCollector to send Data to the SteamManager.
@@ -476,22 +483,22 @@ class SteamManager : BaseSteamManager
     {
         switch (id)
         {
-            case AchievementID.ACH_STARTED_GAME_ONCE:
+            case AchievementID.ACH_STARTED_GAME_ONCE: //TODO
                 totalGameStarts++;
                 break;
-            case AchievementID.ACH_CREDITS_VIEWED:
+            case AchievementID.ACH_CREDITS_VIEWED: //TODO
                 UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
                 break;
-            case AchievementID.ACH_PICK_SPACETIME_MANGO:
+            case AchievementID.ACH_PICK_SPACETIME_MANGO: //TODO
                 UnlockAchievement(AchievementID.ACH_PICK_SPACETIME_MANGO);
                 break;
             case AchievementID.ACH_A_MILLION_SHOTS:
                 bulletsShot++;
                 break;
-            case AchievementID.ACH_LAST_MAN_STANDING:
+            case AchievementID.ACH_LAST_MAN_STANDING: //TODO
                 UnlockAchievement(AchievementID.ACH_LAST_MAN_STANDING);
                 break;
-            case AchievementID.ACH_NO_DAMAGE_UNTIL_W10:
+            case AchievementID.ACH_NO_DAMAGE_UNTIL_W10: //TODO
                 UnlockAchievement(AchievementID.ACH_NO_DAMAGE_UNTIL_W10);
                 break;
             case AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU:
@@ -556,7 +563,7 @@ class SteamManager : BaseSteamManager
     {
         //update played games
         totalGamesPlayed++;
-        
+
         //waves reached achievement
         if (e.wave >= 10)
             UnlockAchievement(AchievementID.ACH_REACH_W10);
@@ -592,8 +599,18 @@ class SteamManager : BaseSteamManager
         //store new persisted stats next frame
         storeStats = true;
     }
-    
-#endregion
+
+    #endregion
+
+    public string GetSteamName()
+    {
+        return SteamFriends.GetPersonaName();
+    }
+
+    public string GetSteamID()
+    {
+        return SteamUser.GetSteamID().ToString();
+    }
 
     /// <summary>
     // OnApplicationQuit gets called too early to shutdown the SteamAPI. Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
