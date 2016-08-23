@@ -76,7 +76,7 @@ public class DataCollector : MonoBehaviour
 
     // leaderboard score
     /// <summary>
-    /// Gets or sets the actual health value.
+    /// Gets or sets the score
     /// </summary>
     public int Score
     {
@@ -90,6 +90,7 @@ public class DataCollector : MonoBehaviour
             Debug.Log("score:"+score);
         }
     }
+    [SerializeField]
     private int score;
     public int intermediateScore;
 
@@ -735,7 +736,9 @@ public class DataCollector : MonoBehaviour
                 }
 
                 // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
-                intermediateScore += (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
+                int interpolationAddition = (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
+                Debug.Log("[Score]" + interpolationAddition);
+                intermediateScore += interpolationAddition;
 
                 resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 break;
@@ -769,17 +772,21 @@ public class DataCollector : MonoBehaviour
 
                     Score += 10000;
                 }
-
+                //intermediateScore -= entireInterpolationAddition;
+                scoreBefore = Score;
                 intermediateScore = Score;
+                resourceValueBefore = 0;
+
                 playerDeathsInWave = 0;
                 break;
             case Event.TYPE.sessionEnd:
                 float wave = Event.getWave();
                 int s = (int)((wave - (int)wave) * 10000);
                 Score += s;
+
                 break;
         }
-
+        Debug.Log("[Score]" + (Score - scoreBefore));
         intermediateScore += Score - scoreBefore;
     }
 
