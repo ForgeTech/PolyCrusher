@@ -37,35 +37,35 @@ class SteamManager : BaseSteamManager
 
     //achievements
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
-    private int achievementCounter;
+    private int achievementCounter = 0;
 
     //current leaderboard handle
     private SteamLeaderboard_t currSteamLeaderboard;
 
     //persisted stats
-    private int totalGamesPlayed;
-    private int totalGameStarts;
+    public int totalGamesPlayed = 0;
+    private int totalGameStarts = 0;
 
-    private int charactersPlayed;
+    private int charactersPlayed = 0;
     private bool charactersPlayedAchieved = false;
 
-    private int assesKilled;
+    private int assesKilled = 0;
     private bool assesKilledAchieved = false;
 
-    private int enemiesKilled;
+    private int enemiesKilled = 0;
     private bool enemiesKilledAchieved = false;
 
-    private int enemiesCut;
+    private int enemiesCut = 0;
     private bool enemiesCutAchieved = false;
 
-    private int bulletsShot;
+    private int bulletsShot = 0;
     private bool bulletsShotAchieved = false;
 
     //current stats
     private IDictionary<string, int> characterPowerups = new Dictionary<string, int>();
-    private int totalPowerups;
+    private int totalPowerups = 0;
 
-    private int COUNTER;
+    private int COUNTER = 0;
 
     protected override void Awake()
     {
@@ -185,7 +185,6 @@ class SteamManager : BaseSteamManager
         statsValid = false;
 
         Debug.Log("SteamManager enabled by " + SteamFriends.GetPersonaName());
-        SteamUserStats.ResetAllStats(true); ///REMOOOOVE THIS!///
     }
 
     /// <summary>
@@ -271,7 +270,7 @@ class SteamManager : BaseSteamManager
         //Store stats in the Steam database if necessary
         if (storeStats)
         {
-            SteamUserStats.SetStat("TotalGamesPlayed", totalGamesPlayed);
+            SteamUserStats.SetStat("GamesPlayed", totalGamesPlayed);
             SteamUserStats.SetStat("TotalGameStarts", totalGameStarts);
             SteamUserStats.SetStat("AssesKilled", assesKilled);
             SteamUserStats.SetStat("EnemiesKilled", enemiesKilled);
@@ -301,7 +300,6 @@ class SteamManager : BaseSteamManager
 
             // mark it down
             SteamUserStats.SetAchievement(id.ToString());
-            Debug.Log("Achievement with ID " + id.ToString() + " unlocked");
             achievementCounter++;
 
             //unlock meta-achievement
@@ -386,7 +384,7 @@ class SteamManager : BaseSteamManager
             }
 
             // load stats
-            SteamUserStats.GetStat("TotalGamesPlayed", out totalGamesPlayed);
+            SteamUserStats.GetStat("GamesPlayed", out totalGamesPlayed);
             SteamUserStats.GetStat("TotalGameStarts", out totalGameStarts);
             SteamUserStats.GetStat("AssesKilled", out assesKilled);
             SteamUserStats.GetStat("EnemiesKilled", out enemiesKilled);
@@ -591,7 +589,7 @@ class SteamManager : BaseSteamManager
             int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
             if (e.mode.Equals("normal"))
             {
-                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, COUNTER, additionalInfo, additionalInfo.Length);
+                SteamUserStats.UploadLeaderboardScore(currSteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, DataCollector.instance.Score, additionalInfo, additionalInfo.Length);
             }
             if (e.mode.Equals("yolo"))
             {
@@ -600,6 +598,7 @@ class SteamManager : BaseSteamManager
                     UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
             }
         }
+        COUNTER = 0;
 
         //powerup achievement
         foreach (KeyValuePair<string, int> entry in characterPowerups)
@@ -632,6 +631,8 @@ class SteamManager : BaseSteamManager
     /// </summary>
     protected override void OnDestroy()
     {
+        SteamUserStats.ResetAllStats(true); ///FOR TESTING - REMOOOOVE THIS IN BUILDS!///
+
         base.OnDestroy();
 
         SteamAPI.Shutdown();
