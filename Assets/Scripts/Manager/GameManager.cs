@@ -444,7 +444,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Debug.
-        Debug.Log("GameManager: <b>Wave " + wave + " start!</b>");
+        Debug.Log("GameManager: <b>Wave " + wave + " start!</b> [ " + System.DateTime.Now.ToString() + " ]");
 
         // Calculate boss wave
         if (this.wave % bossSpawnWaves == 0)
