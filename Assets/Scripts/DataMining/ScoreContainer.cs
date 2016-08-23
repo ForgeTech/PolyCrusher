@@ -116,7 +116,7 @@ public class ScoreContainer
 
     public int getWaveScore()
     {
-        return (int) wave * 10000;
+        return (int)(wave * 10000);
     }
 
     public int getScoreSum()
