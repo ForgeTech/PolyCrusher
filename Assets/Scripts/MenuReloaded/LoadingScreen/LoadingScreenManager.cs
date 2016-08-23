@@ -35,9 +35,15 @@ public class LoadingScreenManager : MonoBehaviour {
     void Start () {
         GetLevelName();
         SetHint();
+        UnlockAchievement();
         Fade();       
       
 	}
+
+    private void UnlockAchievement()
+    {
+        BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
+    }
 
     private void GetLevelName()
     {
