@@ -741,7 +741,7 @@ public class DataCollector : MonoBehaviour
 
                 // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
                 int interpolationAddition = (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
-                Debug.Log("[Score]" + interpolationAddition);
+                //Debug.Log("[Score]" + interpolationAddition);
                 intermediateScore += interpolationAddition;
 
                 resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
@@ -790,7 +790,7 @@ public class DataCollector : MonoBehaviour
 
                 break;
         }
-        Debug.Log("[Score]" + (Score - scoreBefore));
+        //Debug.Log("[Score]" + (Score - scoreBefore));
         intermediateScore += Score - scoreBefore;
     }
 
