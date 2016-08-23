@@ -422,8 +422,6 @@ public class GameManager : MonoBehaviour
         // Init variables
         accumulatedRessourceValue = 0;
 
-        // fire game start event
-        new Event(Event.TYPE.gameStart).addPlayerCount().addPlayerCharacters().addMobilePlayers(0).send();
 	}
 
     /// <summary>
@@ -432,6 +430,12 @@ public class GameManager : MonoBehaviour
     protected void StartNextWave()
     {
         this.wave++;
+
+        if (wave == 1)
+        {
+            //fire game start event
+            new Event(Event.TYPE.gameStart).addPlayerCount().addPlayerCharacters().addMobilePlayers(0).send();
+        }
 
         // Calculate the boss wave spawns at the start of the game.
         if (wave <= 1)
@@ -504,7 +508,6 @@ public class GameManager : MonoBehaviour
         {
             spawnInfo[i].ActualHealth = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MaxHealth;
             spawnInfo[i].ActualDamage = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MeleeAttackDamage;
-            //Debug.Log(spawnInfo[i].ActualDamage);
         }
 
         BossSpawnInfo.ActualHealth = BossSpawnInfo.boss.GetComponent<BaseEnemy>().MaxHealth;
