@@ -78,13 +78,7 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-            int count = 0;
-            for (int i = 0; i < playerSlot.Length; i++)
-            {
-                if (playerSlot[i])
-                    count++;
-            }
-            return count;
+            return GameObject.FindGameObjectsWithTag("Player").Length;
         }
     }
 
