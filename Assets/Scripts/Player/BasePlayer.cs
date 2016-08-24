@@ -251,7 +251,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             if (value <= 0)
             {
                 this.health = minHealth;
-                KillPlayer();
+                if(!IsDead)
+                    KillPlayer();
             }
         }
     }
@@ -508,8 +509,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Set the owner of the weapon and the ability.
         if (weapon != null)
             weapon.OwnerScript = this;
-
-       
 
         //Set original health level.
         originalHealthLevelScale = healthLevel.transform.localScale;
@@ -887,7 +886,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Play death sound.
         if (deathCharacterSound != null)
             deathCharacterSound.PlayRandomClip();
-        
+
+        // Tween HUD elements
+        LeanTween.scale(energyLevel.rectTransform, Vector3.zero, CurrentDeathTime * 0.5f).setEase(LeanTweenType.easeOutSine);
+        LeanTween.scale(healthLevel.rectTransform, Vector3.zero, CurrentDeathTime * 0.5f).setEase(LeanTweenType.easeOutSine);
+        LeanTween.scale(innerEnergyCircle.rectTransform, Vector3.zero, CurrentDeathTime * 0.5f).setEase(LeanTweenType.easeOutSine);
+
         // Start disabling routine
         StartCoroutine(WaitForDisable(CurrentDeathTime));
 
@@ -901,6 +905,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public virtual void RevivePlayer()
     {
+        // Tween HUD elements
+        LeanTween.scale(energyLevel.rectTransform, Vector3.one, CurrentDeathTime * 0.5f).setEase(LeanTweenType.easeOutSine);
+        LeanTween.scale(healthLevel.rectTransform, originalHealthLevelScale, CurrentDeathTime * 0.5f).setEase(LeanTweenType.easeOutSine);
+        LeanTween.scale(innerEnergyCircle.rectTransform, Vector3.one, CurrentDeathTime * 0.5f).setEase(LeanTweenType.easeOutSine);
+
         this.isDead = false;
 
         // Set isKinematic to false.
