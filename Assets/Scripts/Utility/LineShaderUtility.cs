@@ -43,6 +43,9 @@ public class LineShaderUtility : MonoBehaviour
     [SerializeField]
     public LineShaderType functionType = LineShaderType.SineWave;
 
+    [SerializeField]
+    public bool useWorldSpace = true;
+
     private LineRenderer lineRenderer;
 
 	void Start ()
@@ -54,6 +57,7 @@ public class LineShaderUtility : MonoBehaviour
         lineRenderer.receiveShadows = false;
         lineRenderer.useLightProbes = false;
         lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lineRenderer.useWorldSpace = useWorldSpace;
 
         lineRenderer.SetVertexCount(2);
         lineRenderer.SetPosition(0, startPosition);

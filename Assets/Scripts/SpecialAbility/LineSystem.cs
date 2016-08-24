@@ -60,7 +60,7 @@ public class LineSystem : MonoBehaviour {
    
     private bool[] energyFillUp;
 
-   
+    private bool sabreAnimationFinished;
 
     private int[] activeMaterial;
     private int lineRendererLength;
@@ -77,6 +77,17 @@ public class LineSystem : MonoBehaviour {
 
     private Vector3 bufferVectorA;
     private Vector3 bufferVectorB;
+
+    //single player light sabre power up variables
+    public GameObject lightSabrePrefab;
+    private GameObject lightSabreGameObject;
+
+    private Vector3 sabreStartPoint;
+    private Vector3 sabreEndPoint;
+
+    private float sabreLength = 5.0f;
+    private LineShaderUtility sabreLineShader;
+
 
     void Awake()
     {
@@ -105,12 +116,17 @@ public class LineSystem : MonoBehaviour {
         cuttingAnimation = new bool[6];
 
         activateCutting = false;
-        timeActive = 0.0f;
+        timeActive = -0.01f;
  
 
         bufferVectorA = new Vector3();
         bufferVectorB = new Vector3();
-      
+
+        sabreStartPoint = new Vector3();
+        sabreEndPoint = new Vector3();
+
+        sabreLineShader = GetComponent<LineShaderUtility>();
+
        
     }
 
@@ -125,36 +141,47 @@ public class LineSystem : MonoBehaviour {
             energyParticles[i].enableEmission = false;
         }
         UpdatePlayerStatus();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (activateCutting)
+        {
+            activateCutting = false;
+            timeActive = powerUpTime;
+        }
+
+        if (timeActive >= 0.0f)
+        {
+            timeActive -= Time.deltaTime;
+            if (players.Length > 1)
+            {
+                CuttingLinesPowerUp();
+                if (timeActive <= 0.0f)
+                {
+                    for (int i = 0; i < lineRenderer.Length; i++)
+                    {
+                        lineRenderer[i].material = mats[activeMaterial[i]];
+                    }
+                }
+            }
+            if(players.Length == 1)
+            {
+                PrepareLightSabre();
+            }
+        }
+
+       
+
+
         if (players.Length >1)
         {
             UpdateConnectionType();            
 
             UpdatePlayerPosition();
 
-            if (activateCutting)
-            {
-                activateCutting = false;
-                timeActive = powerUpTime;
-                
-            }
-
-            if(timeActive >= 0.0f)
-            {
-                timeActive -= Time.deltaTime;
-                CuttingLinesPowerUp();
-                if (timeActive < 0.0f)
-                {
-                    for(int i = 0; i < lineRenderer.Length; i++)
-                    {
-                        lineRenderer[i].material = mats[activeMaterial[i]];
-
-                    }
-                }
-            }
+           
 
             HandleHealthRecovery();
 
@@ -228,6 +255,19 @@ public class LineSystem : MonoBehaviour {
         }  
     }
 
+
+    private void PrepareLightSabre()
+    {
+        if (lightSabreGameObject == null)
+        {
+            lightSabreGameObject = Instantiate(lightSabrePrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            lightSabreGameObject.transform.parent = playerScripts[0].transform;
+            lightSabreGameObject.transform.position = Vector3.zero;
+            sabreLineShader = lightSabreGameObject.GetComponent<LineShaderUtility>();
+            sabreLineShader.useWorldSpace = false;
+        }
+      
+    }
 
     void UpdateConnectionType()
     {

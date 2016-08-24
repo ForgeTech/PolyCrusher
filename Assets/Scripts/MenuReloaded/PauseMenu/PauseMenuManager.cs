@@ -12,13 +12,13 @@ public class PauseMenuManager : MonoBehaviour {
     [SerializeField]
     private GameObject staticElements;
 
-    private Vector3 startPosition = new Vector3(960,0,0);
+    private Vector3 startPosition = new Vector3(1060,0,0);
     private float tweenTime = 0.5f;
 
     private bool pauseScreenActivated = false;
     private bool animationFinished = true;
 
-    private Camera camera;
+    //private Camera camera;
     private GradientImageEffect gradient;
 
 
@@ -38,10 +38,10 @@ public class PauseMenuManager : MonoBehaviour {
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
         gameObject.transform.position = startPosition;
 
-        camera =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        gradient = camera.GetComponent<GradientImageEffect>();
+        gradient = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().GetComponent<GradientImageEffect>();
 
         menuManager = GetComponentInChildren<AbstractMenuManager>();
+        menuManager.enabled = false;
         menuManager.SetMenuInputActive(false);
         
     }
@@ -74,6 +74,7 @@ public class PauseMenuManager : MonoBehaviour {
     private void SetMenuActive(bool setActive)
     {
         menuElements.SetActive(setActive);
+       
     }
 
     private void TimeTween(bool animateIn)
@@ -121,6 +122,8 @@ public class PauseMenuManager : MonoBehaviour {
     private void TweenCameraEffect(bool animateIn)
     {
         gradient.enabled = true;
+
+        menuManager.enabled = animateIn;
         SetMenuActive(animateIn);
 
         float first = 0.0f;
