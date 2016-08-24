@@ -14,7 +14,7 @@ public class DefaultColorTransition : TransitionHandlerInterface
 
         LeanTween.value(gameobject, startColor, info.NormalColor, LERP_TIME).setOnUpdate(
             (Color val) => { image.color = val; }
-        ).setEase(LeanTweenType.easeInQuad);
+        ).setEase(LeanTweenType.easeInQuad).setUseEstimatedTime(true);
     }
 
     public void OnFocus(GameObject gameobject)
@@ -25,6 +25,6 @@ public class DefaultColorTransition : TransitionHandlerInterface
 
         LeanTween.value(gameobject, startColor, info.HighlightedColor, LERP_TIME).setOnUpdate(
             (Color val) => { image.color = val; }
-        ).setEase(LeanTweenType.easeInQuad);
+        ).setEase(LeanTweenType.easeInQuad).setUseEstimatedTime(true);
     }
 }

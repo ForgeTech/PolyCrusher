@@ -14,7 +14,7 @@ public class ColorTextTransition : TransitionHandlerInterface
         
         LeanTween.value(gameobject, startColor, info.NormalColor, LERP_TIME).setOnUpdate(
             (Color val) => { text.color = val; }
-        ).setEase(LeanTweenType.easeInQuad);
+        ).setEase(LeanTweenType.easeInQuad).setUseEstimatedTime(true);
     }
 
     public void OnFocus(GameObject gameobject)
@@ -23,8 +23,9 @@ public class ColorTextTransition : TransitionHandlerInterface
         Text text = gameobject.GetComponent<Text>();
         Color startColor = new Color(text.color.r, text.color.g, text.color.b);
 
+
         LeanTween.value(gameobject, startColor, info.HighlightedColor, LERP_TIME).setOnUpdate(
             (Color val) => { text.color = val; }
-        ).setEase(LeanTweenType.easeInQuad);
+        ).setEase(LeanTweenType.easeInQuad).setUseEstimatedTime(true);
     }
 }

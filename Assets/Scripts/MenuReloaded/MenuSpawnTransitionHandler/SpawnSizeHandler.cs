@@ -22,9 +22,9 @@ public class SpawnSizeHandler : MenuSpawnTransitionHandler
             rect.localScale = Vector3.zero;
 
             if(pair.Key == selector.Current)
-                LeanTween.scale(rect, info.OriginalScale, tweenTime).setEase(easeType);
+                LeanTween.scale(rect, info.OriginalScale, tweenTime).setEase(easeType).setUseEstimatedTime(true);
             else
-                LeanTween.scale(rect, info.DeselectedScale, tweenTime).setEase(easeType);
+                LeanTween.scale(rect, info.DeselectedScale, tweenTime).setEase(easeType).setUseEstimatedTime(true);
         }
     }
 }

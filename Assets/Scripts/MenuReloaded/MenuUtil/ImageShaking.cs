@@ -25,6 +25,7 @@ public class ImageShaking : MonoBehaviour
 
         LeanTween.value(img.gameObject, Vector2.zero, randomDirection * shakeScale, speed)
             .setEase(LeanTweenType.easeShake)
+            .setUseEstimatedTime(true)
             .setOnUpdate((Vector2 val) => {
                 img.rectTransform.anchoredPosition += val;
             })

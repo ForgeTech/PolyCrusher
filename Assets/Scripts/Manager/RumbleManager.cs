@@ -16,7 +16,8 @@ public class RumbleManager : MonoBehaviour
     [SerializeField]
     private static RumbleManager instance;
 
-    private static bool rumbleEnabled = true;
+    [SerializeField]
+    private bool rumbleEnabled = true;
     
     private static WaitForSeconds[] waitTimes;
 

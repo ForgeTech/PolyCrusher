@@ -97,7 +97,6 @@ public class LoadingScreenManager : MonoBehaviour {
         audioSource = playerSelectionContainer.GetComponent<AudioSource>();       
         StartCoroutine(FadeAudio(audioSource));
         StartCoroutine(ChangeSceneAfterWaitTime());
-
     }
 
     private IEnumerator ChangeSceneAfterWaitTime()
@@ -105,7 +104,6 @@ public class LoadingScreenManager : MonoBehaviour {
         yield return waitTime;
         audioSource.volume = 0;
         ChangeScene();
-
     }
 
 

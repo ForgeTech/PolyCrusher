@@ -60,7 +60,7 @@ public class PlayerSpawner : MonoBehaviour {
     
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         if (FindObjectOfType<PlayerSelectionContainer>() == null)
         {
@@ -108,6 +108,7 @@ public class PlayerSpawner : MonoBehaviour {
                     basePlayers[i] = prefab.GetComponent<BasePlayer>();
                     basePlayers[i].RumbleManager = rumbleManager;
                     prefab.GetComponent<NavMeshAgent>().enabled = true;
+                 
                 }
             }
         }

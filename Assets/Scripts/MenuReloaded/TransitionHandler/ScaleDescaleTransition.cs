@@ -13,13 +13,13 @@ public class ScaleDescaleTransition : TransitionHandlerInterface
     {
         RectTransform rect = gameobject.GetComponent<RectTransform>();
         NavigationInformation info = gameobject.GetComponent<NavigationInformation>();
-        LeanTween.scale(rect, info.DeselectedScale, LERP_TIME).setEase(info.EaseType);
+        LeanTween.scale(rect, info.DeselectedScale, LERP_TIME).setEase(info.EaseType).setUseEstimatedTime(true);
     }
 
     public void OnFocus(GameObject gameobject)
     {
         RectTransform rect = gameobject.GetComponent<RectTransform>();
         NavigationInformation info = gameobject.GetComponent<NavigationInformation>();
-        LeanTween.scale(rect, info.OriginalScale, LERP_TIME).setEase(info.EaseType);
+        LeanTween.scale(rect, info.OriginalScale, LERP_TIME).setEase(info.EaseType).setUseEstimatedTime(true);
     }
 }

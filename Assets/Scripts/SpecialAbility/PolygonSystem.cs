@@ -9,6 +9,9 @@ public delegate void PolyFailEventHandler();
 
 public class PolygonSystem : MonoBehaviour
 {
+
+
+
     [HideInInspector]
     public List<GameObject> enemies;
 
@@ -28,7 +31,7 @@ public class PolygonSystem : MonoBehaviour
     [Header("Materials for the polygon")]
     public Material[] mats;
 
-    [Header("polygon setup")]
+    [Header("Polygon setup")]
     public float heightOffset;
     public float polyStartHeight;
     public float polyStartSpeed;
@@ -36,8 +39,17 @@ public class PolygonSystem : MonoBehaviour
     public float requiredPolyDistance;
     public float transitionCooldown;
 
+    [Header("Hint arrow")]
+    public GameObject hintArrow;
+
+    [SerializeField]
+    private float hintOffset;
+
+
     [Header("Damage the boss takes when the polygon hits")]
     public int[] bossDamage;
+
+
 
     private RumbleManager rumbleManager;
 
@@ -114,8 +126,17 @@ public class PolygonSystem : MonoBehaviour
 
     private Vector3[] cornerPoints;
 
+    private GameObject[] hints;
+    private Vector3[] hintDirections;
+    private bool hintsShown = false;
+
+
     [HideInInspector]
     public int currentBossDamage;
+
+
+    private static int MAX_PLAYERS = 4;
+
 
     // Polygon events
     public static PolyExecuteEventHandler PolyExecuted;
@@ -187,6 +208,8 @@ public class PolygonSystem : MonoBehaviour
 
         colliderFrameTime = 2;
         detonate = false;
+
+        PrepareHintArrows();
         UpdatePlayerStatus();
     }
 
@@ -227,6 +250,7 @@ public class PolygonSystem : MonoBehaviour
     private void ChainExplosion()
     {
         ExplosionRumble();
+        HideHintArrows();
 
         CameraSystem cameraSystem = CameraManager.CameraReference;
         float tmpDamping = cameraSystem.shakeStrength;
@@ -256,8 +280,15 @@ public class PolygonSystem : MonoBehaviour
 
         enemies = new List<GameObject>();    
         RestorePlayerPowers();
+
+        PreparePolyForNextUse();
     }
 
+
+    private void PreparePolyForNextUse()
+    {
+
+    }
 
 
     /// <summary>
@@ -292,8 +323,6 @@ public class PolygonSystem : MonoBehaviour
                     colliders[i].sharedMesh = polys[i];
                 }
             }
-
-           
 
             if (colliderFrameTime <= 0)
             {
@@ -338,6 +367,7 @@ public class PolygonSystem : MonoBehaviour
             if (polyStart)
             {
                 DistanceRumble();
+                UpdateHintArrows();
             }
 
             GetAlignment(2);
@@ -442,15 +472,31 @@ public class PolygonSystem : MonoBehaviour
             if (polyIsStarting && !polyIsEnding && !polyIsFailing)
             {
                 PolyStartAnimation();
+                if (!hintsShown)
+                {
+                    hintsShown = true;
+                    ShowHintArrows();
+                }
             }
             if (polyIsEnding && !polyIsStarting && !polyIsFailing)
             {
                 PolyEndAnimation();
+                if (hintsShown)
+                {
+                    hintsShown = false;
+                    HideHintArrows();
+                }
+               
                 StopRumble();
             }
             if (polyIsFailing && !polyIsEnding && !polyIsStarting)
             {
                 PolyFailAnimation();
+                if (hintsShown)
+                {
+                    hintsShown = false;
+                    HideHintArrows();
+                }
                 StopRumble();
             }           
 
@@ -491,8 +537,6 @@ public class PolygonSystem : MonoBehaviour
                 renderers[i].material = mats[1];
             }
         }    
-
-
 
         if (oldDonkey != donkey)
         {            
@@ -579,6 +623,56 @@ public class PolygonSystem : MonoBehaviour
         }
     }
 
+    private void PrepareHintArrows()
+    {
+        hints = new GameObject[MAX_PLAYERS];
+        hintDirections = new Vector3[MAX_PLAYERS];
+        for(int i = 0; i < MAX_PLAYERS; i++)
+        {
+            hints[i] = Instantiate(hintArrow) as GameObject;
+            hints[i].SetActive(false);
+            hints[i].transform.SetParent(transform);
+            hintDirections[i] = new Vector3();
+        }
+    }
+
+    private void ShowHintArrows()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (!hints[i].activeInHierarchy)
+            {
+                hints[i].SetActive(true);
+            }
+        }
+    }
+
+    private void HideHintArrows()
+    {
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            if (hints[i].activeInHierarchy)
+            {
+                hints[i].SetActive(false);
+            }
+        }
+
+    }
+
+    private void UpdateHintArrows()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (hints[i].activeInHierarchy)
+            {
+                hintDirections[i] = Vector3.Normalize(players[i].transform.position - middlePoint) * hintOffset + players[i].transform.position;
+                hintDirections[i].y = middlePoint.y; ;
+                hints[i].transform.position = hintDirections[i];
+                hints[i].transform.LookAt(middlePoint);
+            }
+        }
+    }
+
 
     private bool PlayersStandStill(int index)
     {
@@ -615,10 +709,6 @@ public class PolygonSystem : MonoBehaviour
                 if (polyStartAnimLerpTimes[i] <= 0.0f && !polyTweens[i])
                 {
                     polyTweens[i] = true;
-                   // Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
-                   // polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
-
-                    //StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.grow.Evaluate));
                 }
 
                 if (polyStartAnimLerpTimes[i] <= 1.0f)
@@ -635,10 +725,6 @@ public class PolygonSystem : MonoBehaviour
                     if (polyStartAnimLerpTimes[i] <= 0.0f && !polyTweens[i])
                     {
                         polyTweens[i] = true;
-                        //Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
-                       // polyParts[i].transform.localScale = new Vector3(0.8f, 0.0f, 0.8f);
-
-                        //StartCoroutine(polyParts[i].transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.grow.Evaluate));
                     }
                     polyStartAnimLerpTimes[i] += Time.deltaTime;
                     polyOffsets[i] = Mathf.Lerp(polyStartHeight, 0.0f, polyStartAnimLerpTimes[i] * polyStartSpeed);
@@ -921,18 +1007,15 @@ public class PolygonSystem : MonoBehaviour
             {
                 middlePoint = intersectPosition;
 
-
                 Vector3[] vbot = new Vector3[players.Length + 1];
                 Vector3[] vtop = new Vector3[players.Length + 1];
                 for (int i = 0; i < players.Length; i++)
                 {
-
                     vbot[i] = players[i].transform.position;
                     vbot[i].y += heightOffset;
 
                     vtop[i] = players[i].transform.position;
                     vtop[i].y += heightOffset + 0.1f;
-
                 }
                 vbot[players.Length] = middlePoint;
 
@@ -944,16 +1027,12 @@ public class PolygonSystem : MonoBehaviour
                     polys[i].vertices = new Vector3[] { new Vector3(vbot[i].x, vbot[i].y + polyOffsets[i], vbot[i].z), new Vector3(vbot[(i + 1) % 4].x, vbot[(i + 1) % 4].y + polyOffsets[i], vbot[(i + 1) % 4].z), new Vector3(vbot[4].x, vbot[4].y + polyOffsets[i], vbot[4].z), new Vector3(vtop[i].x, vtop[i].y + polyOffsets[i], vtop[i].z), new Vector3(vtop[(i + 1) % 4].x, vtop[(i + 1) % 4].y + polyOffsets[i], vtop[(i + 1) % 4].z), new Vector3(vtop[4].x, vtop[4].y + polyOffsets[i], vtop[4].z) };
                     polys[i].normals = new Vector3[] { Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up };
                     polys[i].uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1), new Vector2(1, 0.5f), new Vector2(1, 1) };
-                    //polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
                     polys[i].SetTriangles(polyIndices, 0);
                     polys[i].Optimize();
                     polys[i].RecalculateBounds();
                     filters[i].sharedMesh = polys[i];
                     cornerPoints[i] = vbot[i];
-                    
                 }
-
-
             }
             else if (donkey != -1)
             {
@@ -1023,7 +1102,7 @@ public class PolygonSystem : MonoBehaviour
 
             middlePoint /= 3;
 
-
+            Debug.Log("middle point: " + middlePoint);
             vbot[players.Length] = middlePoint;
 
             vtop[players.Length] = middlePoint;
@@ -1123,7 +1202,6 @@ public class PolygonSystem : MonoBehaviour
                 polys[i].vertices = new Vector3[] { new Vector3(vbot[i].x, vbot[i].y + polyOffsets[i], vbot[i].z), new Vector3(vbot[(i + 1) % 4].x, vbot[(i + 1) % 4].y + polyOffsets[i], vbot[(i + 1) % 4].z), new Vector3(vbot[4].x, vbot[4].y + polyOffsets[i], vbot[4].z), new Vector3(vtop[i].x, vtop[i].y + polyOffsets[i], vtop[i].z), new Vector3(vtop[(i + 1) % 4].x, vtop[(i + 1) % 4].y + polyOffsets[i], vtop[(i + 1) % 4].z), new Vector3(vtop[4].x, vtop[4].y + polyOffsets[i], vtop[4].z) };
                 polys[i].normals = new Vector3[] { Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up, Vector3.up };
                 polys[i].uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1), new Vector2(1, 0.5f), new Vector2(1, 1) };
-                //polys[i].triangles = new int[] { 0, 1, 2, 2, 1, 0, 0, 1, 4, 4, 1, 0, 0, 3, 4, 4, 3, 0, 0, 2, 5, 5, 2, 0, 1, 4, 5, 5, 4, 1, 3, 4, 5, 5, 4, 3, 0, 3, 5, 5, 3, 0, 1, 2, 5, 5, 2, 1 };
                 polys[i].SetTriangles(polyIndices, 0);
                 polys[i].Optimize();
                 polys[i].RecalculateBounds();

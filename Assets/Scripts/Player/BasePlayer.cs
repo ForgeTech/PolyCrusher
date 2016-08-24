@@ -1068,13 +1068,5 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         AbilityUseable = null;
     }
 
-
-    void OnDisable()
-    {
-        playerActions.Destroy();
-
-
-    }
-
     #endregion
 }

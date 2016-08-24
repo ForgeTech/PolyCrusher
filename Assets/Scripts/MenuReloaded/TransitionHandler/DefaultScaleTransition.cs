@@ -21,6 +21,6 @@ public class DefaultScaleTransition : TransitionHandlerInterface
         LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), halfLerpTime)
             .setOnComplete(() => {
                 LeanTween.scale(rect, Vector2.one, halfLerpTime);
-            });
+            }).setUseEstimatedTime(true);
     }
 }

@@ -132,7 +132,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     public virtual void InitializeMenuManager()
     {
-        InitializeCoroutineHelper();
+       // InitializeCoroutineHelper();
         InitializeActions();
         InitializeDictionary();
         InitializeSpawnHandler();
@@ -167,12 +167,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
         };
     }
 
-    protected void InitializeCoroutineHelper()
-    {
-        buttonPressedWait = new WaitForSeconds(buttonPressedWaitTime);
-        stickMovedWait = new WaitForSeconds(stickMovedWaitTime);
-        menuSpawnWait = new WaitForSeconds(menuSpawnTweenTime);
-    }
+    //protected void InitializeCoroutineHelper()
+    //{
+    //    buttonPressedWait = new WaitForSeconds(buttonPressedWaitTime);
+    //    stickMovedWait = new WaitForSeconds(stickMovedWaitTime);
+    //    menuSpawnWait = new WaitForSeconds(menuSpawnTweenTime);
+    //}
 
     protected virtual void InitializePlayerControlActions()
     {
@@ -282,7 +282,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         acceptStickInputInternal = false;
         acceptButtonInput = false;  // Also deactivate buttons so during the tween nothing can be pressed
-        yield return stickMovedWait;
+        //yield return stickMovedWait;
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(stickMovedWaitTime));
         acceptButtonInput = true;
         acceptStickInputInternal = true;
     }
@@ -291,7 +292,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         acceptButtonInput = false;
         selector.HandleSelectedElement();
-        yield return buttonPressedWait;
+        //yield return buttonPressedWait;
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
         PerformActionOnSelectedElement(selectedGameObject);
         acceptButtonInput = true;
     }
@@ -304,7 +306,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         spawnTweenAction();
         SetMenuInputActive(false);
-        yield return menuSpawnWait;
+        //yield return menuSpawnWait;
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(menuSpawnTweenTime));
         SetMenuInputActive(true);
     }
     #endregion

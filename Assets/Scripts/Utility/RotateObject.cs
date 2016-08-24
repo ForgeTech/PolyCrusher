@@ -5,7 +5,7 @@ using System.Collections;
 /// Rotates the gameobject with the sinus and cosinus function.
 /// </summary>
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class RotateObject : MonoBehaviour 
 {
     public float rotationSpeedX = 3f;
@@ -17,6 +17,6 @@ public class RotateObject : MonoBehaviour
     {
         gameObject.transform.Rotate(new Vector3(Mathf.Sin(Time.deltaTime) * rotationSpeedX,
             Mathf.Cos(Time.deltaTime) * rotationSpeedY,
-            -Mathf.Sin(Time.deltaTime) * rotationSpeedZ));
+            -Mathf.Sin(Time.deltaTime) * rotationSpeedZ)*Time.timeScale);
 	}
 }

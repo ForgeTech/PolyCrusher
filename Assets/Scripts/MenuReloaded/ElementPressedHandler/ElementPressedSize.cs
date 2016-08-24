@@ -12,9 +12,9 @@ public class ElementPressedSize : ElementPressedHandler
 
         float halfLerpTime = LERP_TIME * 0.5f;
 
-        LeanTween.scale(rect, info.PressedScale, halfLerpTime).setEase(LeanTweenType.easeOutSine)
+        LeanTween.scale(rect, info.PressedScale, halfLerpTime).setUseEstimatedTime(true).setEase(LeanTweenType.easeOutSine)
             .setOnComplete(() => {
-                LeanTween.scale(rect, Vector2.one, halfLerpTime).setEase(LeanTweenType.easeOutSine);
+                LeanTween.scale(rect, Vector2.one, halfLerpTime).setUseEstimatedTime(true).setEase(LeanTweenType.easeOutSine);
             });
     }
 }
