@@ -40,6 +40,8 @@ public class EnemySpawn : MonoBehaviour
 
     private static bool eventAlreadyAdded = false;
 
+    private WaitForSeconds waitForNextSpawn;
+
     // Event handler for the enemy spawn.
     public static event EnemySpawnedEventHandler EnemySpawned;
 
@@ -66,6 +68,7 @@ public class EnemySpawn : MonoBehaviour
 
     void Start()
     {
+        waitForNextSpawn = new WaitForSeconds(spawnInterval);
         // Start invoke call for the distance calculation.
         InvokeRepeating("CalcDistanceToPlayer", 0f, calculateDistanceInterval);
     }
@@ -122,17 +125,20 @@ public class EnemySpawn : MonoBehaviour
     /// </summary>
     protected void SpawnEnemy()
     {
+        GameManager game = GameManager.GameManagerInstance;
+
         // Check the checkpoint is allowed to spawn.
-        if ( GameManager.GameManagerInstance.WaveActive && spawnAllowed && CheckEnemyCount() )
+        if (game.WaveActive && spawnAllowed && CheckEnemyCount() 
+            && game.CurrentEnemyRessourceValue > 0)
         {
             // Check the deactivation distance and the minimum distance.
-            if ( curentDistanceToPlayer > deactivationDistance && curentDistanceToPlayer < minDistanceToPlayer )
+            if (curentDistanceToPlayer > deactivationDistance && curentDistanceToPlayer < minDistanceToPlayer)
             {
                 // Draw active spawn points (Debug)
                 Debug.DrawLine(new Vector3(transform.position.x, 0.5f, transform.position.z), CameraSystem.playerBounds.center, Color.cyan);
 
                 int index = -1;
-                if (GameManager.GameManagerInstance.IsCurrentlySpecialWave)
+                if (game.IsCurrentlySpecialWave)
                     index = specialWaveEnemyIndex;
                 else
                     index = ChooseEnemy();
@@ -142,34 +148,36 @@ public class EnemySpawn : MonoBehaviour
                 int ressourceCompensationValue = 0;
 
                 // Compensation value check
-                if (GameManager.GameManagerInstance.CurrentEnemyRessourceValue != 0 
-                    && GameManager.GameManagerInstance.CurrentEnemyRessourceValue - GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue < 0)
+                if (game.SpawnInfo[index].minWave <= game.Wave && game.CurrentEnemyRessourceValue > 0 
+                    && game.CurrentEnemyRessourceValue - game.SpawnInfo[index].enemyRessourceValue < 0)
                 {
-                    ressourceCompensationValue = GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue - GameManager.GameManagerInstance.CurrentEnemyRessourceValue;
+                    ressourceCompensationValue = game.SpawnInfo[index].enemyRessourceValue - game.CurrentEnemyRessourceValue;
+                    Debug.Log("<b>[EnemySpawn]:</b> Ressource compensation was calculated. (Special wave: " 
+                        + game.IsCurrentlySpecialWave + ", Boss wave: " + game.IsBossWave + ")");
                 }
 
                 //Check Ressources and wave
-                if ((GameManager.GameManagerInstance.CurrentEnemyRessourceValue + ressourceCompensationValue) - GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue >= 0
-                    && GameManager.GameManagerInstance.SpawnInfo[index].minWave <= GameManager.GameManagerInstance.Wave)
+                if ((game.CurrentEnemyRessourceValue + ressourceCompensationValue) - game.SpawnInfo[index].enemyRessourceValue >= 0
+                    && game.SpawnInfo[index].minWave <= game.Wave)
                 {
                     // Instantiate enemy.
-                    GameObject enemy = Instantiate(GameManager.GameManagerInstance.SpawnInfo[index].enemy, transform.position,
-                        GameManager.GameManagerInstance.SpawnInfo[index].enemy.transform.rotation) as GameObject;
+                    GameObject enemy = Instantiate(game.SpawnInfo[index].enemy, transform.position,
+                        game.SpawnInfo[index].enemy.transform.rotation) as GameObject;
 
                     enemy.SetActive(false);
-                    enemy.name = GameManager.GameManagerInstance.SpawnInfo[index].enemyName;
+                    enemy.name = game.SpawnInfo[index].enemyName;
 
                     enemy.transform.position = transform.position;
                     enemy.SetActive(true);
 
                     // Set increased health and attack
                     BaseEnemy e = enemy.GetComponent<MonoBehaviour>() as BaseEnemy;
-                    e.MeleeAttackDamage = GameManager.GameManagerInstance.SpawnInfo[index].ActualDamage;
-                    e.MaxHealth = GameManager.GameManagerInstance.SpawnInfo[index].ActualHealth;
-                    e.Health = GameManager.GameManagerInstance.SpawnInfo[index].ActualHealth;
+                    e.MeleeAttackDamage = game.SpawnInfo[index].ActualDamage;
+                    e.MaxHealth = game.SpawnInfo[index].ActualHealth;
+                    e.Health = game.SpawnInfo[index].ActualHealth;
 
                     //Decrease ressource pool
-                    GameManager.GameManagerInstance.CurrentEnemyRessourceValue -= GameManager.GameManagerInstance.SpawnInfo[index].enemyRessourceValue;
+                    game.CurrentEnemyRessourceValue -= game.SpawnInfo[index].enemyRessourceValue;
 
                     // Trigger event.
                     OnEnemySpawn();
@@ -196,7 +204,7 @@ public class EnemySpawn : MonoBehaviour
     /// <returns></returns>
     public IEnumerator WaitForNextSpawn()
     {
-        yield return new WaitForSeconds(spawnInterval);
+        yield return waitForNextSpawn;
         spawnAllowed = true;
     }
 
@@ -228,7 +236,7 @@ public class EnemySpawn : MonoBehaviour
         }
         
         specialWaveEnemyIndex = (int) allowedEnemiesForWave[Random.Range(0, allowedEnemiesForWave.Count - 1)];
-        Debug.Log("[EnemySpawn]: Single enemy index calculated for special wave.");
+        Debug.Log("<b>[EnemySpawn]:</b> Single enemy index calculated for special wave.");
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 /// <summary>
 /// Eventhandler for the wave start.
@@ -443,18 +444,19 @@ public class GameManager : MonoBehaviour
             bossSpawnWaves = Random.Range(BossSpawnInfo.spawnEveryXWave, BossSpawnInfo.spawnEveryXWave + BossSpawnInfo.waveSpawnVariation + 1);
         }
 
-        //Debug.
-        Debug.Log("GameManager: <b>Wave " + wave + " start!</b> [ " + System.DateTime.Now.ToString() + " ]");
-
         // Calculate boss wave
         if (this.wave % bossSpawnWaves == 0)
             isBossWave = true;
 
         // If the wave is beyond 1, increase the settings to make the game harder.
         if (Wave > 1)
-        {
             CalculateNextWaveValues();
-        }
+
+        //Debug
+        StringBuilder debugMessage = new StringBuilder("[GameManager]: <b>Wave ");
+        debugMessage.Append(wave).Append(" start!</b> [ ").Append(System.DateTime.Now.ToString())
+            .Append("]").Append(" Boss: ").Append(IsBossWave).Append(", Special: ").Append(IsCurrentlySpecialWave);
+        Debug.Log(debugMessage.ToString());
 
         // Check if it is a boss wave.
         if (isBossWave)
@@ -558,7 +560,6 @@ public class GameManager : MonoBehaviour
     protected void EnemyDied(BaseEnemy enemy)
     {
         this.CurrentEnemyCount--;
-
         // Add the ressource value
         for (int i = 0; i < spawnInfo.Length; i++)
         {
