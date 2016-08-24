@@ -113,9 +113,16 @@ public class DataCollector : MonoBehaviour
     {
         get
         {
+            // New singleton :)s
+            _instance = GameObject.FindObjectOfType<DataCollector>();
             if (_instance == null)
-                _instance = GameObject.FindObjectOfType<DataCollector>();
+                _instance = new GameObject("_DataCollector").AddComponent<DataCollector>();
             return _instance;
+
+            // Bad singleton :( -> No singleton at all, because it creates no Object when nothing was found
+            //if (_instance == null)
+            //    _instance = GameObject.FindObjectOfType<DataCollector>();
+            //return _instance;
         }
     }
 
