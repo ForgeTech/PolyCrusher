@@ -13,7 +13,8 @@ public class TutorialManager : MonoBehaviour {
 	[Header("Tutorial object values")]
 	[SerializeField]
 	private Vector3 tutorialAddToPositionVector = new Vector3(0,0,6);
-
+	[SerializeField]
+	private GameObject tutorialExplosion;
 
 	[Space(5)]
 	[Header("Text button values")]
@@ -24,9 +25,9 @@ public class TutorialManager : MonoBehaviour {
 	[SerializeField]
 	private GameObject[] tutorialPrefabs;							// Prefabs of the tutorials.
 	[SerializeField]
-	private const int ButtonFontSize = 50;							// Size of the Button.
+	private int ButtonFontSize = 50;							// Size of the Button.
 	[SerializeField]
-	private const int ButtonAllignementDistance = 4;				// Distance between the several buttons.
+	private int ButtonAllignementDistance = 4;				// Distance between the several buttons.
 	[SerializeField]
 	private Vector3 textRotationVector = new Vector3(90,0,0);		// Rotationvector of the text button objects.
 	[SerializeField]
@@ -75,6 +76,9 @@ public class TutorialManager : MonoBehaviour {
 			if (!prefab.GetComponent<TextButtonScript>().IsActive) {
 				prefab.GetComponentInChildren<Text>().color = Color.red;
 			} else {
+				CameraManager.CameraReference.ShakeOnce();						// Maybe more fancy explosions?
+				TutorialExplosion(tutorialPrefabs[i].transform.position);
+
 				tutorialBorder.transform.position = tutorialPrefabs[i].transform.position;
 				tutorialBorder.GetComponentInChildren<Image>().enabled = true;
 				tutorialBorder.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
@@ -82,6 +86,7 @@ public class TutorialManager : MonoBehaviour {
 				LeanTween.value(tutorialBorder.transform.GetChild(0).gameObject, tutorialBorder.GetComponentInChildren<Image>().color.g, 0, 0.5f).setOnUpdate((float val) => {
 					tutorialBorder.GetComponentInChildren<Image>().color = new Color(val, 1f, val, 1 + (-1*val));
 				});
+				//LeanTween.scale(tutorialBorder, tutorialBorder.GetComponent<RectTransform>().localScale, 0.5f).setLoopPingPong()));
 			}
 			i++;
 		}
@@ -101,6 +106,15 @@ public class TutorialManager : MonoBehaviour {
 				//tutorialBorder.GetComponentInChildren<Image>().enabled = false;
 				prefab.GetComponent<TextButtonScript>().IsActive = false;
 			}
+		}
+	}
+
+	void TutorialExplosion(Vector3 position) {
+		if (tutorialExplosion != null) {
+			GameObject particle = Instantiate(tutorialExplosion) as GameObject;
+			particle.transform.position = position;
+		} else {
+			Debug.LogWarning("TutorialManager: tutorialExplosion gameobject not found!");
 		}
 	}
 
