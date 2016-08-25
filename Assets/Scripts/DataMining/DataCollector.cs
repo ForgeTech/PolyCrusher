@@ -67,7 +67,7 @@ public class DataCollector : MonoBehaviour
     private Session currentSession;
 
     // list of all events of all local sessions
-    private List<Event> localEvents;
+    //private List<Event> localEvents;
 
     // for tracking
     private IDictionary<string, int> kills; 
@@ -125,12 +125,17 @@ public class DataCollector : MonoBehaviour
 
     public class Session
     {
-        public Session(string mode)
+        public Session(GameMode gameMode)
         {
             macAddress = getMAC();
             version = DataCollector.instance.buildVersion;
             inEditor = Application.isEditor;
-            this.mode = mode;
+            switch (gameMode)
+            {
+                case GameMode.NormalMode: this.mode = "normal"; break;
+                case GameMode.YOLOMode: this.mode = "yolo"; break;
+                default: this.mode = gameMode.ToString(); break;
+            }
 
             PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
             if (playerManagerReference != null)
@@ -205,7 +210,7 @@ public class DataCollector : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         eventQueue = new Queue();
-        localEvents = new List<Event>();
+        //localEvents = new List<Event>();
         kills = new Dictionary<string, int>();
         deathtime = new Dictionary<string, int>();
         scoreContainer = new ScoreContainer();
@@ -267,8 +272,6 @@ public class DataCollector : MonoBehaviour
                     }
                     break;
             }
-            
-            //startSession();
         }
 	}
 
@@ -277,7 +280,8 @@ public class DataCollector : MonoBehaviour
     /// creates a new session, notifies server and retrieves session id
     /// * should be called at the beginning of game session (before level starts)
     /// </summary>
-    public void startSession(string mode){
+    public void startSession(GameMode mode)
+    {
         if (DataCollector.instance.enabled)
         {
             // if a session is still running, end it
@@ -330,12 +334,14 @@ public class DataCollector : MonoBehaviour
 
             // reset score
             score = 0;
+            intermediateScore = 0;
+            scoreContainer = new ScoreContainer();
         }
     }
 
     public void startSession()
     {
-        startSession("normal");
+        startSession(GameMode.NormalMode);
     }
 
     /// <summary>
@@ -357,7 +363,6 @@ public class DataCollector : MonoBehaviour
 
         // is the hound burried here?
         eventQueue.Clear();
-
         kills.Clear();
         deathtime.Clear();
     }
@@ -688,6 +693,7 @@ public class DataCollector : MonoBehaviour
         return System.Convert.ToBase64String(plainTextBytes);
     }
 
+    /*
     /// <summary>
     /// Loads all locally saved events (main purpose: local highscore)
     /// </summary>
@@ -703,12 +709,13 @@ public class DataCollector : MonoBehaviour
     public void SaveEvents()
     {
        // iterate through all not saved events
+       
        foreach (Event e in localEvents.Where(e => (e.isSaved == false)))
        {
-            // save e
        }
        // TODO
     }
+    */
 
     /// <summary>
     /// returns a "no one" string in the current active language
