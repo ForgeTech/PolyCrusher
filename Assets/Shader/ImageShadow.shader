@@ -1,10 +1,9 @@
-﻿Shader "POLYCRUSHER/TextGLowAndShadow"
+﻿Shader "POLYCRUSHER/ImageShadow"
 {
     Properties
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
-        _Color ("Color", Color) = (1,1,1,1)
-		_GlowColor ("Glow Color", Color) = (0,0,0,0.2)
+		_ShadowColor ("Shadow Color", Color) = (0,0,0,0.2)
         
         _StencilComp ("Stencil Comparison", Float) = 8
         _Stencil ("Stencil ID", Float) = 0
@@ -79,9 +78,7 @@
 
 ;
             sampler2D _MainTex;
-            fixed4 _Color;
-			fixed4 _GlowColor;
-            float _GlowSize;
+			fixed4 _ShadowColor;
             float _ShadowShiftX;
             float _ShadowShiftY;
 			float _Quality;
@@ -116,7 +113,7 @@
                 OUT.vertex = mul(UNITY_MATRIX_MVP, pos);
                 OUT.texcoord = IN.texcoord;
                 OUT.uvRect = IN.uvRect;
-                OUT.color = IN.color * _Color;
+                OUT.color = IN.color;
                 return OUT;
             }
 
@@ -125,8 +122,8 @@
             fixed4 ui_frag(v2f IN) : SV_Target
             {
                 fixed4 color = blur(_MainTex, IN.texcoord, IN.uvRect);
-				color.rgb = _GlowColor.rgb;
-				color.a *= _GlowColor.a;
+				color.rgb = _ShadowColor.rgb;
+				color.a *= _ShadowColor.a;
 				return color;
             }
 
@@ -163,7 +160,6 @@
 
 ;
             sampler2D _MainTex;
-            fixed4 _Color;
             v2f ui_vert(appdata_t IN)
             {
                 v2f OUT;
@@ -171,7 +167,7 @@
                 OUT.vertex = mul(UNITY_MATRIX_MVP, pos);
                 OUT.texcoord = IN.texcoord;
                 OUT.uvRect = IN.uvRect;
-                OUT.color = IN.color * _Color;
+                OUT.color = IN.color;
                 return OUT;
             }
 
@@ -180,8 +176,8 @@
             fixed4 ui_frag(v2f IN) : SV_Target
             {
                 fixed4 color;
-                color.rgb = IN.color.rgb;
-                color.a = tex2D(_MainTex, IN.texcoord).a * IN.color.a;
+                color.rgb = tex2D(_MainTex, IN.texcoord).rgb;
+                color.a = tex2D(_MainTex, IN.texcoord).a;
                 half2 tc = IN.texcoord;
                 float uvClip = UnityGet2DClipping(tc, IN.uvRect);
                 color.a *= uvClip;
