@@ -1,29 +1,27 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-[ExecuteInEditMode]
+
 public class MeshModText : BaseMeshEffect
 {
-    [Range(0,10)]
-    public float m_size = 3.0f;
-    // defines the glow color + opacity
-    public Color m_glowColor;
-    // use temporary list to prevent allocations
+    [Range(0,50)]
+    public float size = 30.0f;
+    
     private static readonly List<UIVertex> s_tempVertices = new List<UIVertex>();
+
     public override void ModifyMesh(Mesh mesh)
     {
         using (VertexHelper vertexHelper = new VertexHelper(mesh))
         {
             vertexHelper.GetUIVertexStream(s_tempVertices);
         }
-
-        // for every triangle...
+        
         for (var i = 0; i <= s_tempVertices.Count - 3; i += 3)
         {
             UIVertex v0 = s_tempVertices[i + 0];
             UIVertex v1 = s_tempVertices[i + 1];
             UIVertex v2 = s_tempVertices[i + 2];
-            // 2D points please
+            
             var xy0 = new Vector2(v0.position.x, v0.position.y);
             var xy1 = new Vector2(v1.position.x, v1.position.y);
             var xy2 = new Vector2(v2.position.x, v2.position.y);
@@ -74,13 +72,13 @@ public class MeshModText : BaseMeshEffect
                 // we need the extrude to create more space for the glow
                 var posOld = new Vector2(vertex.position.x, vertex.position.y);
                 Vector2 posNew = posOld;
-                float addX = (vertex.position.x > xyCenter.x) ? m_size : -m_size;
-                float addY = (vertex.position.y > xyCenter.y) ? m_size : -m_size;
+                float addX = (vertex.position.x > xyCenter.x) ? size : -size;
+                float addY = (vertex.position.y > xyCenter.y) ? size : -size;
                 float signX = Vector2.Dot(vecX, Vector2.right) > 0 ? 1 : -1;
                 float signY = Vector2.Dot(vecY, Vector2.up) > 0 ? 1 : -1;
                 posNew.x += addX;
                 posNew.y += addY;
-                vertex.position = new Vector3(posNew.x, posNew.y, m_glowColor.a);
+                vertex.position = new Vector3(posNew.x, posNew.y, 0);
                 // re-calculate UVs accordingly to prevent scaled texts
                 Vector2 uvOld = vertex.uv0;
                 vertex.uv0 += vecUvX / vecXLen * addX * signX;
@@ -88,10 +86,6 @@ public class MeshModText : BaseMeshEffect
                 // set the tangent so we know the UV boundaries. We use this to
                 // prevent smearing into other characters in the texture atlas
                 vertex.tangent = tangent;
-                // normal is used as glow color
-                vertex.normal.x = m_glowColor.r;
-                vertex.normal.y = m_glowColor.g;
-                vertex.normal.z = m_glowColor.b;
                 // uv1 is glow size
                 vertex.uv1 = vertex.uv0 - uvOld;
                 // needs to be positive
@@ -106,6 +100,7 @@ public class MeshModText : BaseMeshEffect
             vertexHelper2.FillMesh(mesh);
         }
     }
+
 #if UNITY_EDITOR
     protected override void OnValidate()
     {
@@ -113,6 +108,7 @@ public class MeshModText : BaseMeshEffect
         graphic.SetVerticesDirty();
     }
 #endif
+
     private static float Min(float _a, float _b, float _c)
     {
         return Mathf.Min(_a, Mathf.Min(_b, _c));
