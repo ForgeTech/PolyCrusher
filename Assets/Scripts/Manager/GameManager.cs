@@ -435,7 +435,7 @@ public class GameManager : MonoBehaviour
         if (wave == 1)
         {
             //fire game start event
-            new Event(Event.TYPE.gameStart).addPlayerCount().addPlayerCharacters().addMobilePlayers(0).send();
+            new Event(Event.TYPE.gameStart).addPlayerCount().addPlayerCharacters().addMobilePlayers(0).addLevel().send();
         }
 
         // Calculate the boss wave spawns at the start of the game.

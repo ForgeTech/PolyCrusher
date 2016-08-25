@@ -34,6 +34,7 @@ class SteamManager : BaseSteamManager
     protected Callback<UserAchievementStored_t> UserAchievementStored;
     private CallResult<LeaderboardFindResult_t> LeaderboardFindResult;
     private CallResult<LeaderboardScoreUploaded_t> LeaderboardScoreUploaded;
+    private CallResult<LeaderboardScoresDownloaded_t> LeaderboardScoresDownloaded;
 
     //achievements
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
@@ -41,7 +42,10 @@ class SteamManager : BaseSteamManager
 
     //current leaderboard handle
     private SteamLeaderboard_t m_SteamLeaderboard;
+    private SteamLeaderboardEntries_t m_SteamLeaderboardEntries;
     private int rank;
+    private bool downloadEntries = false;
+    private Vector2 downloadRange = Vector2.zero;
 
     //persisted stats
     private int totalGamesPlayed = 0;
@@ -182,6 +186,7 @@ class SteamManager : BaseSteamManager
         UserAchievementStored = Callback<UserAchievementStored_t>.Create(OnAchievementStored);
         LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(OnLeaderboardFindResult);
         LeaderboardScoreUploaded = CallResult<LeaderboardScoreUploaded_t>.Create(OnLeaderboardScoreUploaded);
+        LeaderboardScoresDownloaded = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloaded);
 
         requestedStats = false;
         statsValid = false;
@@ -420,6 +425,13 @@ class SteamManager : BaseSteamManager
         {
             m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
         }
+
+        if (downloadEntries)
+        {
+            SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, (int)downloadRange.x, (int)downloadRange.y);
+            LeaderboardScoresDownloaded.Set(downloadHandle, OnLeaderboardScoresDownloaded);
+            downloadEntries = false;
+        }
     }
 
     private void OnLeaderboardScoreUploaded(LeaderboardScoreUploaded_t pCallback, bool bIOFailure)
@@ -432,14 +444,19 @@ class SteamManager : BaseSteamManager
             UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
     }
 
+    private void OnLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
+    {
+        //TODO: Send some stuff over to LeaderboardMenu
+    }
+
     #endregion
 
-    #region log and unlock current achievements
+        #region log and unlock current achievements
 
-    /// <summary>
-    /// This method can be used by the DataCollector to send Data to the SteamManager.
-    /// </summary>
-    /// <param name="e">The Event that is sent by the DataCollector.</param>
+        /// <summary>
+        /// This method can be used by the DataCollector to send Data to the SteamManager.
+        /// </summary>
+        /// <param name="e">The Event that is sent by the DataCollector.</param>
     public override void LogAchievementEvent(Event e)
     {
         switch (e.type)
@@ -540,6 +557,10 @@ class SteamManager : BaseSteamManager
     /// <param name="e">The game start event.</param>
     private void PerformGameStartActions(Event e)
     {
+        //find leaderboard
+        SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
+        LeaderboardFindResult.Set(findHandle, OnLeaderboardFindResult);
+
         //playercount achievements
         if (e.playerCount == 1)
             UnlockAchievement(AchievementID.ACH_PLAY_ALONE);
@@ -608,9 +629,6 @@ class SteamManager : BaseSteamManager
         if (COUNTER == DataCollector.instance.Score)
         {
             //save leaderboard entry
-            SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
-            Debug.Log(e.level + " - " + e.playerCount);
-            LeaderboardFindResult.Set(findHandle);
             int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
             SteamAPICall_t uploadHandle = new SteamAPICall_t();
             if (e.mode.Equals("normal"))
@@ -624,7 +642,7 @@ class SteamManager : BaseSteamManager
                     UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
             }
 
-            LeaderboardScoreUploaded.Set(uploadHandle);
+            LeaderboardScoreUploaded.Set(uploadHandle, OnLeaderboardScoreUploaded);
         }
         COUNTER = 0;
 
@@ -647,6 +665,15 @@ class SteamManager : BaseSteamManager
     public override int GetRank()
     {
         return rank;
+    }
+
+    public override void RequestLeaderboardEntries(string level, int playerCount, int from, int to)
+    {
+        downloadRange = new Vector2(from, to);
+        downloadEntries = true;
+
+        SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(level + " - " + playerCount);
+        LeaderboardFindResult.Set(findHandle, OnLeaderboardFindResult);
     }
 
     /// <summary>

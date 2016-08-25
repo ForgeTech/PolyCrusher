@@ -78,15 +78,17 @@ public class BaseSteamManager : MonoBehaviour {
         }
     }
 
-    public virtual void LogAchievementEvent (Event e) {}
+    public virtual void LogAchievementEvent (Event e) { }
 	
-	public virtual void LogAchievementData (AchievementID id) {}
+	public virtual void LogAchievementData (AchievementID id) { }
 
     public virtual string GetSteamName(){ return ""; }
 
     public virtual string GetSteamID() { return ""; }
 
     public virtual int GetRank() { return 0; }
+
+    public virtual void RequestLeaderboardEntries(string level, int playerCount, int from, int to) { }
 }
 
 //
