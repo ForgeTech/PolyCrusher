@@ -2068,6 +2068,8 @@ MonoBehaviour:
   deselectedScale: {x: .800000012, y: .800000012, z: .800000012}
   pressedScale: {x: 1, y: 1, z: 1}
   easeType: 15
+  selectedImage: {fileID: 0}
+  deselectedImage: {fileID: 0}
 --- !u!114 &11442428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2541,7 +2543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7bcc6551a4e46a28ba558ab4a01a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelToLoad: MenuReloadedMainMenu
+  levelToLoad: MenuReloadedScore
   waitTimeBeforeLevelLoad: 5
   endScreenImage: {fileID: 197776, guid: a25d5c1a334fc7042b1b8d047c639ed9, type: 2}
   tweenTime: 1
@@ -2617,6 +2619,8 @@ MonoBehaviour:
   deselectedScale: {x: .800000012, y: .800000012, z: .800000012}
   pressedScale: {x: 1, y: 1, z: 1}
   easeType: 15
+  selectedImage: {fileID: 0}
+  deselectedImage: {fileID: 0}
 --- !u!114 &11481796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3434,6 +3438,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: levelToLoad
+      value: MenuReloadedScore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
