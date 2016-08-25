@@ -33,7 +33,7 @@ public class CharacterSelector : Selector
         else if (selectedIndex == Current)  // Deselection case
         {
             HandleCharacterSelected(NULL_SELECTION);
-            selectionHelper.DeselectAt(Current);
+            selectionHelper.DeselectAt(Current, menuManager.PlayerSlot);
         }
     }
 
@@ -86,7 +86,7 @@ public class CharacterSelector : Selector
         if (slot.selected)
         {
             HandleCharacterSelected(Current);
-            selectionHelper.DeselectAt(Current);
+            selectionHelper.DeselectAt(Current, menuManager.PlayerSlot);
         }
     }
 }

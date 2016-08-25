@@ -29,7 +29,7 @@ public class CharacterSelectionHelper : MonoBehaviour
     private MultiplayerManager multiplayerManager;
 
     #region Delegates & Events
-    public delegate void CharacterSelectedHandler(int index);
+    public delegate void CharacterSelectedHandler(int index, PlayerSlot player);
     public event CharacterSelectedHandler OnCharacterSelected;
     public event CharacterSelectedHandler OnCharacterDeselected;
     #endregion
@@ -111,11 +111,11 @@ public class CharacterSelectionHelper : MonoBehaviour
             selectionMap[index].selected = true;
             selectionMap[index].selectedBySlot = playerSlot;
             characterSelectedCount++;
-            OnSelected(index);
+            OnSelected(index, playerSlot);
         }
     }
 
-    public void DeselectAt(int index)
+    public void DeselectAt(int index, PlayerSlot playerSlot)
     {
         if (!selectionMap[index].selected)
             Debug.LogError("Index " + index + " already deselected!");
@@ -124,21 +124,21 @@ public class CharacterSelectionHelper : MonoBehaviour
             selectionMap[index].selected = false;
             selectionMap[index].selectedBySlot = PlayerSlot.None;
             characterSelectedCount--;
-            OnDeselected(index);
+            OnDeselected(index, playerSlot);
         }
     }
 
     #region Event methods
-    private void OnSelected(int index)
+    private void OnSelected(int index, PlayerSlot player)
     {
         if (OnCharacterSelected != null)
-            OnCharacterSelected(index);
+            OnCharacterSelected(index, player);
     }
 
-    private void OnDeselected(int index)
+    private void OnDeselected(int index, PlayerSlot player)
     {
         if (OnCharacterDeselected != null)
-            OnCharacterDeselected(index);
+            OnCharacterDeselected(index, player);
     }
     #endregion
 

@@ -48,6 +48,12 @@ public class MenuReloadedUtil
                 case ElementPressedEnum.SizeHandler:
                     pickedPressedHandler[i] = new ElementPressedSize();
                     break;
+                case ElementPressedEnum.ImageChangeHandler:
+                    pickedPressedHandler[i] = new ElementPressedImageHandler();
+                    break;
+                case ElementPressedEnum.CharacterSize:
+                    pickedPressedHandler[i] = new CharacterSizePressed();
+                    break;
                 case ElementPressedEnum.NoOp:
                     pickedPressedHandler[i] = new ElementPressedNoOp();
                     break;

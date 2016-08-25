@@ -32,6 +32,12 @@ public class NavigationInformation : MonoBehaviour
 
     [SerializeField]
     private LeanTweenType easeType = LeanTweenType.easeOutSine;
+
+    [SerializeField]
+    private Sprite selectedImage;
+
+    [SerializeField]
+    private Sprite deselectedImage;
     #endregion
 
     #region Properties
@@ -77,6 +83,16 @@ public class NavigationInformation : MonoBehaviour
     public LeanTweenType EaseType
     {
         get { return this.easeType; }
+    }
+
+    public Sprite SelectedImage
+    {
+        get { return this.selectedImage; }
+    }
+
+    public Sprite DeselectedImage
+    {
+        get { return this.deselectedImage; }
     }
     #endregion
 }

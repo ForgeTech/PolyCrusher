@@ -5,7 +5,9 @@ public enum ElementPressedEnum
     TextColorHandler = 0,
     ImageColorHandler = 1,
     SizeHandler = 2,
-    NoOp = 3
+    NoOp = 3,
+    ImageChangeHandler = 4,
+    CharacterSize = 5
 }
 
 /// <summary>

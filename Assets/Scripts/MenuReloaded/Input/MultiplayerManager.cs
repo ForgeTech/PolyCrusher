@@ -342,13 +342,13 @@ public class MultiplayerManager : MonoBehaviour
     }
 
 
-    private void IncreasePlayerReadyCount(int index)
+    private void IncreasePlayerReadyCount(int index, PlayerSlot player)
     {
         playerReadyCount++;
         CheckAllPlayersReady();
     }
 
-    private void DecreasePlayerReadyCount(int index)
+    private void DecreasePlayerReadyCount(int index, PlayerSlot player)
     {
         CheckFinalSelectionStop();
         playerReadyCount--;

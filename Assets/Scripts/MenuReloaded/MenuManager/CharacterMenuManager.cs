@@ -8,6 +8,11 @@ public class CharacterMenuManager : MenuManager
     [SerializeField]
     private CharacterSelectionHelper selectionHelper;
 
+    #region Delegates & Events
+    public delegate void PlayerRegisteredHandler();
+    public event PlayerRegisteredHandler PlayerRegistered;
+    #endregion
+
     public PlayerSlot PlayerSlot
     {
         get { return this.playerSlot; }
@@ -42,6 +47,7 @@ public class CharacterMenuManager : MenuManager
                 InitializeComponentSize();
             }));
 
+            OnPlayerRegistered();
             Debug.Log("<b>" + PlayerSlot + " registered!</b>");
         }
     }
@@ -79,5 +85,11 @@ public class CharacterMenuManager : MenuManager
     {
         // Selector must be a 'CharacterSelector' therefore this cast should be safe
         ((CharacterSelector)selector).Deselect();
+    }
+
+    protected void OnPlayerRegistered()
+    {
+        if (PlayerRegistered != null)
+            PlayerRegistered();
     }
 }
