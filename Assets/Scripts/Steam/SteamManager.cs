@@ -446,6 +446,9 @@ class SteamManager : BaseSteamManager
 
     private void OnLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
     {
+        Debug.Log("[" + LeaderboardScoresDownloaded_t.k_iCallback + " - LeaderboardScoresDownloaded] - " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_hSteamLeaderboardEntries + " -- " + pCallback.m_cEntryCount);
+        m_SteamLeaderboardEntries = pCallback.m_hSteamLeaderboardEntries;
+
         //TODO: Send some stuff over to LeaderboardMenu
     }
 
