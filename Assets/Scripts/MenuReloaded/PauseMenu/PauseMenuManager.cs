@@ -12,7 +12,7 @@ public class PauseMenuManager : MonoBehaviour {
     [SerializeField]
     private GameObject staticElements;
 
-    private Vector3 startPosition = new Vector3(1060,0,0);
+    private Vector3 startPosition = new Vector3(2000, 0, 0);
     private float tweenTime = 0.5f;
 
     private bool pauseScreenActivated = false;
@@ -43,7 +43,6 @@ public class PauseMenuManager : MonoBehaviour {
         menuManager = GetComponentInChildren<AbstractMenuManager>();
         menuManager.enabled = false;
         menuManager.SetMenuInputActive(false);
-        
     }
 
     void OnDisable()
