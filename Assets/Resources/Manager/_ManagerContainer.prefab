@@ -271,22 +271,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &140624
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 461922}
-  - 114: {fileID: 11482812}
-  m_Layer: 0
-  m_Name: _DataCollector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &142014
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +780,7 @@ Transform:
   m_Children:
   - {fileID: 438714}
   m_Father: {fileID: 415424}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!4 &408004
 Transform:
   m_ObjectHideFlags: 1
@@ -808,7 +792,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415424}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!4 &408390
 Transform:
   m_ObjectHideFlags: 1
@@ -844,7 +828,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415424}
-  m_RootOrder: 17
+  m_RootOrder: 16
 --- !u!4 &414468
 Transform:
   m_ObjectHideFlags: 1
@@ -890,7 +874,6 @@ Transform:
   - {fileID: 413124}
   - {fileID: 458698}
   - {fileID: 446172}
-  - {fileID: 461922}
   - {fileID: 467442}
   - {fileID: 438972}
   - {fileID: 408004}
@@ -1020,7 +1003,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415424}
-  m_RootOrder: 13
+  m_RootOrder: 12
 --- !u!4 &446172
 Transform:
   m_ObjectHideFlags: 1
@@ -1105,18 +1088,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 482048}
   m_RootOrder: 0
---- !u!4 &461922
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 415424}
-  m_RootOrder: 11
 --- !u!4 &464314
 Transform:
   m_ObjectHideFlags: 1
@@ -1152,7 +1123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415424}
-  m_RootOrder: 12
+  m_RootOrder: 11
 --- !u!4 &473570
 Transform:
   m_ObjectHideFlags: 1
@@ -1176,7 +1147,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415424}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!4 &477280
 Transform:
   m_ObjectHideFlags: 1
@@ -1214,7 +1185,7 @@ Transform:
   - {fileID: 477280}
   - {fileID: 420426}
   m_Father: {fileID: 415424}
-  m_RootOrder: 15
+  m_RootOrder: 14
 --- !u!4 &486810
 Transform:
   m_ObjectHideFlags: 1
@@ -1240,7 +1211,7 @@ Transform:
   - {fileID: 22443434}
   - {fileID: 22420728}
   m_Father: {fileID: 415424}
-  m_RootOrder: 19
+  m_RootOrder: 18
 --- !u!4 &494476
 Transform:
   m_ObjectHideFlags: 1
@@ -2243,6 +2214,7 @@ MonoBehaviour:
   speed: 100
   colorStrength: 6.32999992
   functionType: 1
+  useWorldSpace: 1
 --- !u!114 &11449808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2666,26 +2638,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &11482812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a746ac36c3bc00842826dae55a5bd74c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  connectVia: 0
-  scriptsAddress: http://hal9000.schedar.uberspace.de/scripts/
-  serverIP: 185.26.156.41:61116
-  authenticate: 0
-  bundleSize: 50
-  log: 0
-  logEvents: 0
-  score: 0
-  intermediateScore: 0
 --- !u!114 &11484682
 MonoBehaviour:
   m_ObjectHideFlags: 1

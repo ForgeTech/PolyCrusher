@@ -42,10 +42,9 @@ public class DataCollector : MonoBehaviour
     [Header("Settings")]
         [Tooltip("Determines how many events should be uploaded at once.")]
         public int bundleSize = 10;
-        public bool log = true;
+        public bool log = false;
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
-
 
 
     // VERSION NUMBER
@@ -113,8 +112,6 @@ public class DataCollector : MonoBehaviour
     {
         get
         {
-            // New singleton :)s
-            _instance = GameObject.FindObjectOfType<DataCollector>();
             if (_instance == null)
                 _instance = new GameObject("_DataCollector").AddComponent<DataCollector>();
             return _instance;
@@ -218,9 +215,10 @@ public class DataCollector : MonoBehaviour
     /// Initializes connection to database
     /// </summary>
     void Start () {
+        Debug.Log("[DataCollector] Initializing...");
         EventRegistered += calculateScore;
         DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
-
+        
         if (DataCollector.instance.enabled)
         {
             switch (connectVia)
