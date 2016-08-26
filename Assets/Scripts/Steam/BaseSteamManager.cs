@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //
 // ISteamManager is the base class of SteamManager and SteamManagerDummy and regulates the initialization of those.
@@ -32,6 +33,8 @@ public class BaseSteamManager : MonoBehaviour {
             return Instance.initialized;
         }
     }
+
+    public delegate void LeaderboardAction(List<LeaderboardEntry> entries);
 
     protected virtual void Awake()
     {
@@ -88,7 +91,7 @@ public class BaseSteamManager : MonoBehaviour {
 
     public virtual int GetRank() { return 0; }
 
-    public virtual void RequestLeaderboardEntries(string level, int playerCount, int from, int to) { }
+    public virtual void RequestLeaderboardEntries(string level, int playerCount, int from, int to, LeaderboardAction action) { }
 }
 
 //

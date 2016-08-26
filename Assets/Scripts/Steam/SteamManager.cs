@@ -40,12 +40,13 @@ class SteamManager : BaseSteamManager
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
     private int achievementCounter = 0;
 
-    //current leaderboard handle
+    //leaderboards
     private SteamLeaderboard_t m_SteamLeaderboard;
-    private SteamLeaderboardEntries_t m_SteamLeaderboardEntries;
+    private List<LeaderboardEntry> currDownloadedEntries;
     private int rank;
     private bool downloadEntries = false;
     private Vector2 downloadRange = Vector2.zero;
+    private LeaderboardAction currAction;
 
     //persisted stats
     private int totalGamesPlayed = 0;
@@ -190,6 +191,7 @@ class SteamManager : BaseSteamManager
 
         requestedStats = false;
         statsValid = false;
+        currDownloadedEntries = new List<LeaderboardEntry>();
 
         Debug.Log("SteamManager enabled by " + SteamFriends.GetPersonaName());
     }
@@ -289,7 +291,6 @@ class SteamManager : BaseSteamManager
             // If this failed, we never sent anything to the server, try again later.
             storeStats = !success;
         }
-
     }
 
     /// <summary>
@@ -422,9 +423,7 @@ class SteamManager : BaseSteamManager
         Debug.Log("[" + LeaderboardFindResult_t.k_iCallback + " - LeaderboardFindResult] - " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_bLeaderboardFound);
 
         if (pCallback.m_bLeaderboardFound != 0)
-        {
             m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
-        }
 
         if (downloadEntries)
         {
@@ -440,26 +439,41 @@ class SteamManager : BaseSteamManager
 
         rank = pCallback.m_nGlobalRankNew;
 
-        if (pCallback.m_nGlobalRankNew == 1) //still to test - is 1 the top rank?
+        if (rank == 1) //still to test - is 1 the top rank?
             UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
     }
 
     private void OnLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
     {
         Debug.Log("[" + LeaderboardScoresDownloaded_t.k_iCallback + " - LeaderboardScoresDownloaded] - " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_hSteamLeaderboardEntries + " -- " + pCallback.m_cEntryCount);
-        m_SteamLeaderboardEntries = pCallback.m_hSteamLeaderboardEntries;
 
-        //TODO: Send some stuff over to LeaderboardMenu
+        for (int i = 0; i < pCallback.m_cEntryCount; i++)
+        {
+            LeaderboardEntry_t e;
+            int[] additionalInfo = new int[4];
+            SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, i, out e, additionalInfo, 4);
+
+            SteamFriends.RequestUserInformation(e.m_steamIDUser, true);
+            currDownloadedEntries.Add(new LeaderboardEntry("not loaded", e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
+        }
+
+        for (int i = 0; i < pCallback.m_cEntryCount; i++)
+        {
+            currDownloadedEntries[i].steamName = SteamFriends.GetFriendPersonaName(currDownloadedEntries[i].steamID);
+            Debug.Log("entry " + i + 1 + " with name " + currDownloadedEntries[i].steamName + " and rank " + currDownloadedEntries[i].rank + " and score " + currDownloadedEntries[i].score + " retrieved");
+        }
+
+        currAction(currDownloadedEntries);
     }
 
     #endregion
 
-        #region log and unlock current achievements
+    #region log and unlock current achievements
 
-        /// <summary>
-        /// This method can be used by the DataCollector to send Data to the SteamManager.
-        /// </summary>
-        /// <param name="e">The Event that is sent by the DataCollector.</param>
+    /// <summary>
+    /// This method can be used by the DataCollector to send Data to the SteamManager.
+    /// </summary>
+    /// <param name="e">The Event that is sent by the DataCollector.</param>
     public override void LogAchievementEvent(Event e)
     {
         switch (e.type)
@@ -506,7 +520,7 @@ class SteamManager : BaseSteamManager
                         characterPowerups[entry.Key]++;
                 }
                 totalPowerups++;
-                
+
                 //powerup achievement
                 foreach (KeyValuePair<string, int> entry in characterPowerups)
                 {
@@ -670,8 +684,10 @@ class SteamManager : BaseSteamManager
         return rank;
     }
 
-    public override void RequestLeaderboardEntries(string level, int playerCount, int from, int to)
+    public override void RequestLeaderboardEntries(string level, int playerCount, int from, int to, LeaderboardAction action)
     {
+        currDownloadedEntries.Clear();
+        currAction = action;
         downloadRange = new Vector2(from, to);
         downloadEntries = true;
 
