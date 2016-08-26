@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MeshModText : BaseMeshEffect
+public class MeshModifier : BaseMeshEffect
 {
     [Range(0,50)]
     public float size = 30.0f;

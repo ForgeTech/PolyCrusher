@@ -16,7 +16,7 @@
 		_ShadowShiftY ("Shadow Shift Y", Float) = 5
 
 		_Quality ("Blur Quality", Range(0,1)) = 0.05
-		_Radius ("Blur Radius", Range(0,1)) = 0.1
+		_Radius ("Blur Radius", Range(0.1,1)) = 0.1
     }
     SubShader
     {
