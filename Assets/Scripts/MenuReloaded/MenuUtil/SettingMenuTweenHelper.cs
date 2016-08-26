@@ -62,8 +62,8 @@ public class SettingMenuTweenHelper : MonoBehaviour
         }
         else
         {
-            TweenArrowColor(leftArrow, arrowInfo.NormalColor);
-            TweenArrowColor(rightArrow, arrowInfo.NormalColor);
+            TweenArrowColor(leftArrow, arrowInfo.PressedColor);
+            TweenArrowColor(rightArrow, arrowInfo.PressedColor);
         }
     }
 
@@ -98,18 +98,6 @@ public class SettingMenuTweenHelper : MonoBehaviour
             .setEase(easeType)
             .setOnComplete(() => {
                 LeanTween.scale(image.rectTransform, info.OriginalScale, tweenTime * 0.5f).setEase(easeType);
-            });
-
-        LeanTween.value(image.gameObject, info.NormalColor, info.PressedColor, tweenTime * 0.5f)
-            .setEase(easeType)
-            .setOnUpdate((Color val) => {
-                image.color = val;
-            })
-            .setOnComplete(() => {
-                LeanTween.value(image.gameObject, info.PressedColor, info.NormalColor, tweenTime * 0.5f).setEase(easeType)
-                .setOnUpdate((Color val) => {
-                    image.color = val;
-                });
             });
     }
 }
