@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(fileName = "Hint", menuName = "ScriptableObject/Hint", order = 1)]
 public class Hint : ScriptableObject {
 
     public Sprite hintImage;

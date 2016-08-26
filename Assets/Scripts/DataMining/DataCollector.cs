@@ -2,20 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-
-using UnityEngine.Events;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-using System.Text;
-using System.Net.NetworkInformation;
-using System.Net;
-using System.IO;
-using System.Linq;
 using System;
-
-
 
 /// <summary>
 /// This class uploads game meta data to our mongoDB server.
@@ -27,17 +16,9 @@ using System;
 /// </summary>
 public class DataCollector : MonoBehaviour
 {
-    public enum ConnectionType { HTTP = 0, MongoDB = 1 }
-    [Header("Database Connection")]
-        public ConnectionType connectVia = ConnectionType.HTTP;
-
     [Header("HTTP")]
         [Tooltip("Address where postEvents.php and postSessions.php are located.")]
         public string scriptsAddress = "http://hal9000.schedar.uberspace.de/scripts/";
-
-    [Header("MongoDB Driver")]
-        public string serverIP = "185.26.156.41:61116";
-        public bool authenticate = false;
 
     [Header("Settings")]
         [Tooltip("Determines how many events should be uploaded at once.")]
@@ -46,20 +27,8 @@ public class DataCollector : MonoBehaviour
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
 
-
     // VERSION NUMBER
-    private string buildVersion = "0.3";
-
-    // MongoDB fields
-    private MongoServer server;
-    private MongoCollection<Event> events;
-    private MongoCollection<Session> sessions;
-    private string databaseName = "polycrusher";
-    private string user = "polynaut";
-    private string password = "crushthempolys";
-
-    // HTTP fields
-    // ---
+    internal string buildVersion = "0.3";
 
     // general fields
     private bool sessionRunning = false;
@@ -115,58 +84,11 @@ public class DataCollector : MonoBehaviour
             if (_instance == null)
                 _instance = new GameObject("_DataCollector").AddComponent<DataCollector>();
             return _instance;
-
-            // Bad singleton :( -> No singleton at all, because it creates no Object when nothing was found
-            //if (_instance == null)
-            //    _instance = GameObject.FindObjectOfType<DataCollector>();
-            //return _instance;
         }
     }
 
-    public class Session
-    {
-        public Session(GameMode gameMode)
-        {
-            macAddress = getMAC();
-            version = DataCollector.instance.buildVersion;
-            inEditor = Application.isEditor;
-            switch (gameMode)
-            {
-                case GameMode.NormalMode: this.mode = "normal"; break;
-                case GameMode.YOLOMode: this.mode = "yolo"; break;
-                default: this.mode = gameMode.ToString(); break;
-            }
-
-            PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
-            if (playerManagerReference != null)
-            {
-                players = playerManagerReference.PlayerCountInGameSession;
-            }
-
-            time = (int)(Time.time * 1000);
-        }
-
-        //public ObjectId _id { get; set; }
-        [BsonIgnore]
-        public string _id { get; set; }
-        public string macAddress { get; set; }
-        public string steamId { get; set; }
-        public string steamName { get; set; }
-        public string version { get; set; }
-        public bool inEditor { get; set; }
-        public string mode { get; set; }
-        [BsonIgnoreIfNull]
-        public int players { get; set; }
-
-        //public DateTime Timestamp { get; set; }
-
-        /// <summary>
-        /// start time of session
-        /// </summary>
-        [BsonIgnore]
-        public int time { get; set; }
-    }
-
+    public static DataCollectorSettings settings;
+    
     /// <summary>
     /// Return character name of player with the most kills
     /// </summary>
@@ -203,75 +125,51 @@ public class DataCollector : MonoBehaviour
         return character;
     }
 
-
-
-
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
         eventQueue = new Queue();
-        //localEvents = new List<Event>();
         kills = new Dictionary<string, int>();
         deathtime = new Dictionary<string, int>();
         scoreContainer = new ScoreContainer();
+
+        // set settings
+        if(settings != null){
+            buildVersion = settings.buildVersion;
+            log = settings.log;
+            logEvents = settings.logEvents;
+            scriptsAddress = settings.scriptsAddress;
+            bundleSize = settings.bundleSize;
+        }
+        else
+            Debug.Log("[DataCollector] no settings loaded, using standard settings");
+    }
+
+    /// <summary>
+    /// To be called once at game start!
+    /// </summary>
+    public static void Initialize(DataCollectorSettings settings)
+    {
+        Debug.Log("[DataCollector] initializing");
+
+        if (_instance != null)
+        {
+            Debug.LogError("[DataCollector] already instantiated before initialization");
+        }
+        DataCollector.settings = settings;
+        instance.buildVersion = settings.buildVersion;
     }
 
     /// <summary>
     /// Initializes connection to database
     /// </summary>
     void Start () {
-        Debug.Log("[DataCollector] Initializing...");
         EventRegistered += calculateScore;
         DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
         
-        if (DataCollector.instance.enabled)
+        if (enabled)
         {
-            switch (connectVia)
-            {
-                // CONNECT VIA HTTP
-                case ConnectionType.HTTP:
-
-                    // TODO  Check if server is reachable
-
-                    break;
-
-                // CONNECT VIA MONGO DB DRIVER
-                case ConnectionType.MongoDB:
-                    string url = "mongodb://";
-
-                    if (authenticate)
-                    {
-                        url += user + ":" + password + "@";
-                    }
-
-                    url += serverIP;
-
-                    MongoClient client = new MongoClient(url);
-                    server = client.GetServer();
-
-                    // check if server can be reached
-                    try {
-                        server.Ping();
-                    } catch {
-                        server = null;
-                    }
-
-                    if (server!= null)
-                    {
-                        server.Connect();
-                        MongoDatabase db = server.GetDatabase(databaseName);
-                        events = db.GetCollection<Event>("events");
-                        sessions = db.GetCollection<Session>("sessions");
-                        if (log) { Debug.Log("[DataCollector] DataCollector: Connected to database."); }
-                    }
-                    else
-                    {
-                        // deactivate DataCollector if connection fails
-                        if (log) { Debug.Log("[DataCollector] DataCollector: Could not connect to database."); }
-                        DataCollector.instance.enabled = false;
-                    }
-                    break;
-            }
+            // TODO check if server is reachable
         }
 	}
 
@@ -282,7 +180,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     public void startSession(GameMode mode)
     {
-        if (DataCollector.instance.enabled)
+        if (enabled)
         {
             // if a session is still running, end it
             if (sessionRunning && currentSession != null){
@@ -306,31 +204,10 @@ public class DataCollector : MonoBehaviour
             }
 
             // upload session
-            switch (connectVia)
-            { 
-                case ConnectionType.HTTP:
-                    StartCoroutine(UploadSession());
-                    break;
-                case ConnectionType.MongoDB:
-                    Thread uploadThread = new Thread(delegate()
-                    {
-                        sessions.Insert(currentSession);
-
-                        // check if session id could be retrieved (needed for referencing session in events)
-                        if (currentSession._id == null)
-                        {
-                            if (log) { Debug.Log("[DataCollector] Could not retrieve session_id."); }
-                            currentSession = null;
-                            sessionRunning = false;
-                        }
-                    });
-
-                    uploadThread.Start();
-                    break;
-            }
+            StartCoroutine(UploadSession());
 
             GameManager.WaveStarted += () => { new Event(Event.TYPE.waveUp).addWave().send(); };
-            PlayerManager.AllPlayersDeadEventHandler += () => { DataCollector.instance.endSession("Heinzi"); };
+            PlayerManager.AllPlayersDeadEventHandler += () => { endSession("Heinzi"); };
 
             // reset score
             score = 0;
@@ -349,7 +226,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     public void endSession(string gameName)
     {
-        if (DataCollector.instance.enabled && sessionRunning)
+        if (enabled && sessionRunning)
         {
             Event endEvent = new Event(Event.TYPE.sessionEnd);
             endEvent.addPlayerCount().addWave().addLevel();
@@ -401,7 +278,7 @@ public class DataCollector : MonoBehaviour
         }
         else
         {
-            e.time = (int)(Time.time * 1000) - DataCollector.instance.currentSession.time;
+            e.time = (int)(Time.time * 1000) - currentSession.time;
         }
 
         // add event to queue for later upload
@@ -451,83 +328,14 @@ public class DataCollector : MonoBehaviour
         }
 
         // if event queue gets big enough upload data
-        if (DataCollector.instance.enabled) { 
-        if (eventQueue.Count >= bundleSize || e.type == Event.TYPE.sessionEnd)
-        {
-                switch (connectVia)
-                {
-                    // upload via HTTP
-                    case ConnectionType.HTTP:
-                        StartCoroutine(UploadEvents());
-                        break;
-                    // upload via MongoDB
-                    case ConnectionType.MongoDB:
-
-                        Thread uploadThread = new Thread(delegate()
-                        {
-                            bool connected = true;
-
-                            try {
-                                server.Ping();
-                            } catch {
-                                connected = false;
-                                if (log) { Debug.Log("[DataCollector] No connection. Retry with next event."); }
-                            }
-
-                            if (connected)
-                            {
-                                IEnumerable list = (IEnumerable)eventQueue.Clone();
-                                events.InsertBatch(typeof(Event), list);
-
-                                eventQueue.Clear(); // thread save?
-                            }
-                        });
-
-                        uploadThread.Start();
-                        break;
-                }
-            
-
-            
-        }
+        if (enabled) { 
+            if (eventQueue.Count >= bundleSize || e.type == Event.TYPE.sessionEnd)
+            {
+                    StartCoroutine(UploadEvents());
+            }
         }
     }
 
-
-    /// <summary>
-    /// retrieves mac address (get network interfaces)
-    /// </summary>
-    private static string getMAC()
-    {
-        //IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
-        NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
-        string info = "";
-
-        // only save address of first adapter
-        for (int n = 0; n< 1; n++)
-        {
-            if (n > 0)
-            {
-                 info += "\n";
-            }
-
-
-            PhysicalAddress address = nics[n].GetPhysicalAddress();
-            byte[] bytes = address.GetAddressBytes();
-            string mac = null;
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                mac = string.Concat(mac + (string.Format("{0}", bytes[i].ToString("X2"))));
-                if (i != bytes.Length - 1)
-                {
-                    mac = string.Concat(mac + "-");
-                }
-            }
-
-            info += mac;
-        }
-        return info;
-    }
 
 
     /// <summary>
