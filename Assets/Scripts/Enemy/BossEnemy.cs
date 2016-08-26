@@ -221,6 +221,10 @@ public class BossEnemy : BaseEnemy
     [Tooltip("Gravestone")]
     protected GameObject gravestone;
 
+    [SerializeField]
+    [Tooltip("Death Particle System")]
+    protected GameObject deathParticles;
+
     [Space(5)]
     [SerializeField]
     [Header("Boss UI")]
@@ -501,7 +505,10 @@ public class BossEnemy : BaseEnemy
         GetComponent<Rigidbody>().isKinematic = true;
 
         //Create Gravestone
-        GameObject instantiatedGrave = Instantiate(gravestone, transform.position, gravestone.transform.rotation) as GameObject;
+        Instantiate(gravestone, transform.position, gravestone.transform.rotation);
+
+        //Create Particles
+        Destroy(Instantiate(deathParticles, transform.position, gravestone.transform.rotation), 10);
 
         //Animation
         if (anim != null)
