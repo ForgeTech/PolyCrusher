@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +36,16 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
     [SerializeField]
     private Vector2 bottomAchoredPosition = new Vector2(0, 267);
 
+    [Header("Arrows")]
+    [SerializeField]
+    private Image leftArrow;
+
+    [SerializeField]
+    private Image rightArrow;
+
+    [SerializeField]
+    private float arrowOffset = 35f;
+
     #region Internal Members
     private CharacterMenuManager menuManager;
     private ImageData[] characters;
@@ -61,9 +72,9 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
     private void InitializeDynamicPlayerInfoElements()
     {
         // These elements use already set tags -> Don't want to create new tags only for this
-        joinInfoBox = FindGameObjectWithTag(dynamicPlayerInfos, "Enemy").GetComponent<RectTransform>();
-        selectInfoBox = FindGameObjectWithTag(dynamicPlayerInfos, "Bullet").GetComponent<RectTransform>();
-        readyInfoBox = FindGameObjectWithTag(dynamicPlayerInfos, "Boss").GetComponent<RectTransform>();
+        joinInfoBox = FindChildObjectWithTag(dynamicPlayerInfos, "Enemy").GetComponent<RectTransform>();
+        selectInfoBox = FindChildObjectWithTag(dynamicPlayerInfos, "Bullet").GetComponent<RectTransform>();
+        readyInfoBox = FindChildObjectWithTag(dynamicPlayerInfos, "Boss").GetComponent<RectTransform>();
     }
 
     private void InitializeStaticPlayerInfoElements()
@@ -100,48 +111,66 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         LeanTween.moveY(joinInfoBox, topAnchoredPosition.y, tweenTime).setEase(easeType);
         LeanTween.moveY(selectInfoBox, bottomAchoredPosition.y, tweenTime).setEase(easeType);
 
+        // Question mark scale
         LeanTween.scale(questionMark.rectTransform, Vector3.zero, tweenTime).setEase(easeType);
 
+        // Background circle color
         NavigationInformation info = GetInfoOfCurrentlySelected();
         characterBackgroundCircle.color = info.PressedColor;
+
+        // Arrow initial placement
+        leftArrow.gameObject.SetActive(true);
+        rightArrow.gameObject.SetActive(true);
+        TweenArrowAlpha(1f);
+    }
+
+    private void TweenArrowAlpha(float destinationAlpha)
+    {
+        LeanTween.alpha(leftArrow.rectTransform, destinationAlpha, tweenTime).setEase(easeType);
+        LeanTween.alpha(rightArrow.rectTransform, destinationAlpha, tweenTime).setEase(easeType);
     }
 
     private void HandleCharacterSelected(int index, PlayerSlot slot)
     {
+        // Info box tweens
         if (slot == menuManager.PlayerSlot)
         {
             LeanTween.moveY(selectInfoBox, topAnchoredPosition.y, tweenTime).setEase(easeType);
             LeanTween.scale(readyInfoBox, Vector3.one, tweenTime).setEase(easeType);
+            TweenArrowAlpha(0f);
         }
 
         // Selected overlay text
-        Text selectedText = FindSelectedText(index);
+        Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
         LeanTween.rotateZ(selectedText.gameObject, 15f, textTweenTime).setEase(easeType);
         LeanTween.scale(selectedText.rectTransform, Vector3.one, textTweenTime).setEase(easeType);
     }
 
     private void HandleCharacterDeselected(int index, PlayerSlot slot)
     {
+        // Info box tweens
         if (slot == menuManager.PlayerSlot)
         {
             LeanTween.moveY(selectInfoBox, bottomAchoredPosition.y, tweenTime).setEase(easeType);
             LeanTween.scale(readyInfoBox, Vector3.zero, tweenTime).setEase(easeType);
+
+            TweenArrowAlpha(1f);
         }
 
         // Selected overlay text
-        Text selectedText = FindSelectedText(index);
+        Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
         LeanTween.rotateZ(selectedText.gameObject, 0f, textTweenTime).setEase(easeType);
         LeanTween.scale(selectedText.rectTransform, Vector3.zero, textTweenTime).setEase(easeType);
     }
 
-    private Text FindSelectedText(int index)
+    private Text FindPlayerSubObjectTextByTag(int index, string tag)
     {
         GameObject g;
         menuManager.MenuComponents.TryGetValue(index, out g);
 
-        Text selectedText = FindGameObjectWithTag(g, "Pie").GetComponent<Text>();
+        Text selectedText = FindChildObjectWithTag(g, tag).GetComponent<Text>();
         if (selectedText == null)
-            Debug.LogError("'Selected' Text not found!");
+            Debug.LogError("Text with tag '" + tag + "' was not found!");
 
         return selectedText;
     }
@@ -156,6 +185,18 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
                 characterBackgroundCircle.color = val;
             });
 
+        // Right arrow size tween
+        NavigationInformation arrowInfo = rightArrow.GetComponent<NavigationInformation>();
+        LeanTween.scale(rightArrow.rectTransform, arrowInfo.PressedScale, tweenTime * 0.5f).setEase(easeType)
+            .setOnComplete(() => {
+                LeanTween.scale(rightArrow.rectTransform, arrowInfo.OriginalScale, tweenTime * 0.5f).setEase(easeType);
+            });
+        LeanTween.color(rightArrow.rectTransform, arrowInfo.PressedColor, tweenTime * 0.5f).setEase(easeType)
+            .setOnComplete(() => {
+                LeanTween.color(rightArrow.rectTransform, arrowInfo.NormalColor, tweenTime * 0.5f).setEase(easeType);
+            });
+
+        // Character tweens
         ImageData oldCurrent = characters[CalculateIndex(menuManager.Selector.Current - 1)];
         TweenElement(oldCurrent.rect,
             oldCurrent.originalPosition,
@@ -176,6 +217,18 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
                 characterBackgroundCircle.color = val;
             });
 
+        // Left arrow size & color tween
+        NavigationInformation arrowInfo = leftArrow.GetComponent<NavigationInformation>();
+        LeanTween.scale(leftArrow.rectTransform, arrowInfo.PressedScale, tweenTime).setEase(easeType)
+            .setOnComplete(() => {
+                LeanTween.scale(leftArrow.rectTransform, arrowInfo.OriginalScale, tweenTime * 0.5f).setEase(easeType);
+            }); ;
+        LeanTween.color(leftArrow.rectTransform, arrowInfo.PressedColor, tweenTime * 0.5f).setEase(easeType)
+            .setOnComplete(() => {
+                LeanTween.color(leftArrow.rectTransform, arrowInfo.NormalColor, tweenTime * 0.5f).setEase(easeType);
+            });
+
+        // Character tweens
         ImageData oldCurrent = characters[CalculateIndex(menuManager.Selector.Current + 1)];
         TweenElement(oldCurrent.rect,
             oldCurrent.originalPosition,
@@ -228,7 +281,7 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
         }
     }
 
-    private GameObject FindGameObjectWithTag(GameObject g, string tag)
+    private GameObject FindChildObjectWithTag(GameObject g, string tag)
     {
         foreach (Transform child in g.transform)
         {
