@@ -78,7 +78,13 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-            return GameObject.FindGameObjectsWithTag("Player").Length;
+            int count = 0;
+            for (int i = 0; i < playerSlot.Length; i++)
+            {
+                if (playerSlot[i])
+                    count++;
+            }
+            return count;
         }
     }
 
@@ -90,8 +96,6 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-
-            Debug.Log("playerCount @ PlayersInGameSession" + PlayerCountInGameSession);
             BasePlayer[] currPlayers = new BasePlayer[PlayerCountInGameSession];
             for (int i = 0, j = 0; i < playerReferences.Length && j < currPlayers.Length; i++)
             {
@@ -105,7 +109,6 @@ public class PlayerManager : MonoBehaviour
                         j++;
                     }
                 }
-                
             }
             return currPlayers;
         }
