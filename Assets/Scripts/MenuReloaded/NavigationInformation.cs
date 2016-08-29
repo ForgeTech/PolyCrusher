@@ -38,6 +38,9 @@ public class NavigationInformation : MonoBehaviour
 
     [SerializeField]
     private Sprite deselectedImage;
+
+    [SerializeField]
+    private float shadowAlphaSelected = 51f;
     #endregion
 
     #region Properties
@@ -93,6 +96,11 @@ public class NavigationInformation : MonoBehaviour
     public Sprite DeselectedImage
     {
         get { return this.deselectedImage; }
+    }
+
+    public float ShadowAlphaSelected
+    {
+        get { return this.shadowAlphaSelected; }
     }
     #endregion
 }

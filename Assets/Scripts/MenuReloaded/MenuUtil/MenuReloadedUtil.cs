@@ -23,6 +23,9 @@ public class MenuReloadedUtil
                 case TransitionEnum.ScaleDescale:
                     pickedTransitions[i] = new ScaleDescaleTransition();
                     break;
+                case TransitionEnum.ShadowChange:
+                    pickedTransitions[i] = new ShadowTransition();
+                    break;
                 case TransitionEnum.NoOp:
                     pickedTransitions[i] = new NoOpTransitionHandler();
                     break;

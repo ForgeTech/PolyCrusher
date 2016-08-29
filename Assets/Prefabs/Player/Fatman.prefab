@@ -1959,7 +1959,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199504}
   m_LocalRotation: {x: 0, y: .753667951, z: 0, w: .657255411}
-  m_LocalPosition: {x: 46.461792, y: .0403256863, z: -73.6780777}
+  m_LocalPosition: {x: -39.9300003, y: .0289698076, z: 25.7800007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400600}
@@ -2558,13 +2558,14 @@ MonoBehaviour:
   health: 100
   minHealth: 0
   maxHealth: 100
+  lowHealth: 25
   energy: 50
   minEnergy: 0
   maxEnergy: 100
   energyRefillRate: .280000001
   energyIncrement: 1
-  playerName: Fatman
   playerIdentifier: 3
+  playerColor: {r: 1, g: .729411781, b: 1, a: 1}
   deathTime: 3.29999995
   movementSpeed: 20
   analogStickTolerance: .100000001
@@ -2967,6 +2968,10 @@ Prefab:
       propertyPath: bloodParticles
       value: 
       objectReference: {fileID: 108694, guid: d9d4c1d7783e6ef4d9000d8748a07383, type: 2}
+    - target: {fileID: 0}
+      propertyPath: playerColor.g
+      value: .729411781
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 199504}

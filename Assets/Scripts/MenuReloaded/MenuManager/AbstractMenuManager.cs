@@ -167,13 +167,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
         };
     }
 
-    //protected void InitializeCoroutineHelper()
-    //{
-    //    buttonPressedWait = new WaitForSeconds(buttonPressedWaitTime);
-    //    stickMovedWait = new WaitForSeconds(stickMovedWaitTime);
-    //    menuSpawnWait = new WaitForSeconds(menuSpawnTweenTime);
-    //}
-
     protected virtual void InitializePlayerControlActions()
     {
         SetPlayerControlActions(PlayerControlActions.CreateWithGamePadBindings());

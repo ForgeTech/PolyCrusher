@@ -111,7 +111,6 @@
                 IN.vertex.x += _ShadowShiftX;
                 IN.vertex.y += _ShadowShiftY;
                 float4 pos = IN.vertex;
-                pos.z = 0.0f;
                 OUT.vertex = mul(UNITY_MATRIX_MVP, pos);
                 OUT.texcoord = IN.texcoord;
                 OUT.uvRect = IN.uvRect;

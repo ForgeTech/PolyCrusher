@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -11,6 +11,8 @@ Material:
   m_ShaderKeywords: _ALPHATEST_ON _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -80,16 +82,16 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Cutoff
-        second: .32100001
-      data:
-        first:
           name: _SrcBlend
         second: 1
       data:
         first:
           name: _DstBlend
         second: 0
+      data:
+        first:
+          name: _Cutoff
+        second: .32100001
       data:
         first:
           name: _Parallax
@@ -120,21 +122,21 @@ Material:
         second: 0
       data:
         first:
-          name: _EmissionScaleUI
-        second: 1.09000003
-      data:
-        first:
           name: _Mode
         second: 1
       data:
         first:
           name: _Metallic
         second: .163000003
+      data:
+        first:
+          name: _EmissionScaleUI
+        second: 1.09000003
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: .501886249, g: .480882376, b: 1.09000003, a: 0}
+        second: {r: .184635565, g: .462043792, b: 1.73000002, a: 1}
       data:
         first:
           name: _Color

@@ -6,15 +6,38 @@ public class MeshModifier : BaseMeshEffect
 {
     [Range(0,50)]
     public float size = 30.0f;
+
+    [SerializeField]
+    private Material imageMaterial;
+
+    [SerializeField]
+    private Material textMaterial;
     
     private static readonly List<UIVertex> s_tempVertices = new List<UIVertex>();
+
+    protected override void Start()
+    {
+        base.Start();
+        Image img = gameObject.GetComponent<Image>();
+        Text txt = gameObject.GetComponent<Text>();
+
+        if (img != null)
+        {
+            Material instancedImageMaterial = new Material(imageMaterial);
+            img.material = instancedImageMaterial;
+        }
+        else if (txt != null)
+        {
+            Material instancedTextMaterial = new Material(textMaterial);
+            txt.material = instancedTextMaterial;
+        }
+    }
 
     public override void ModifyMesh(Mesh mesh)
     {
         using (VertexHelper vertexHelper = new VertexHelper(mesh))
         {
             vertexHelper.GetUIVertexStream(s_tempVertices);
-        }
         
         for (var i = 0; i <= s_tempVertices.Count - 3; i += 3)
         {
@@ -86,18 +109,11 @@ public class MeshModifier : BaseMeshEffect
                 // set the tangent so we know the UV boundaries. We use this to
                 // prevent smearing into other characters in the texture atlas
                 vertex.tangent = tangent;
-                // uv1 is glow size
-                vertex.uv1 = vertex.uv0 - uvOld;
-                // needs to be positive
-                vertex.uv1.x = Mathf.Abs(vertex.uv1.x);
-                vertex.uv1.y = Mathf.Abs(vertex.uv1.y);
                 s_tempVertices[i + v] = vertex;
             }
         }
-        using (VertexHelper vertexHelper2 = new VertexHelper())
-        {
-            vertexHelper2.AddUIVertexTriangleStream(s_tempVertices);
-            vertexHelper2.FillMesh(mesh);
+            vertexHelper.AddUIVertexTriangleStream(s_tempVertices);
+            vertexHelper.FillMesh(mesh);
         }
     }
 
