@@ -122,6 +122,23 @@ public class WaveCounterManager : MonoBehaviour
         }
     }
 
+    public void ScorePopup(string score)
+    {
+        if (scorePopup != null && canvas != null)
+        {
+            GameObject popup = Instantiate(scorePopup);
+            UnityEngine.UI.Text text = popup.GetComponent<UnityEngine.UI.Text>();
+            if (text != null)
+            {
+                    text.text = score;
+            }
+            popup.transform.SetParent(canvas.transform, false);
+            RectTransform rectTrans = popup.GetComponent<RectTransform>();
+            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 2.2f).setEase(LeanTweenType.easeInQuad);
+            LeanTween.alphaText(rectTrans, 0, 2.2f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
+        }
+    }
+
     /// <summary>
     /// Fills the time label if available.
     /// </summary>
