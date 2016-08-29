@@ -74,6 +74,15 @@ public class WaveCounterManager : MonoBehaviour
             waveTextPermanent.text = "";
     }
 
+    private void Start()
+    {
+        if(canvas == null)
+        {
+            canvas = GameObject.FindGameObjectWithTag("IngameCanvas");
+        }
+        
+    }
+
     private void Update()
     {
         if(GameManager.GameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
