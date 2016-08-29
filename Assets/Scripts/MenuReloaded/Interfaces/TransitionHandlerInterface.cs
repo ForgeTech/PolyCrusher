@@ -7,7 +7,8 @@ public enum TransitionEnum
     SizeChange = 2,
     ImageColorChange = 3,
     ScaleDescale = 4,
-    NoOp = 5
+    NoOp = 5,
+    ShadowChange = 6
 }
 
 public interface TransitionHandlerInterface

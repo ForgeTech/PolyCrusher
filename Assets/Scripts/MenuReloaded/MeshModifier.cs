@@ -6,8 +6,32 @@ public class MeshModifier : BaseMeshEffect
 {
     [Range(0,50)]
     public float size = 30.0f;
+
+    [SerializeField]
+    private Material imageMaterial;
+
+    [SerializeField]
+    private Material textMaterial;
     
     private static readonly List<UIVertex> s_tempVertices = new List<UIVertex>();
+
+    protected override void Start()
+    {
+        base.Start();
+        Image img = gameObject.GetComponent<Image>();
+        Text txt = gameObject.GetComponent<Text>();
+
+        if (img != null)
+        {
+            Material instancedImageMaterial = new Material(imageMaterial);
+            img.material = instancedImageMaterial;
+        }
+        else if (txt != null)
+        {
+            Material instancedTextMaterial = new Material(textMaterial);
+            txt.material = instancedTextMaterial;
+        }
+    }
 
     public override void ModifyMesh(Mesh mesh)
     {
