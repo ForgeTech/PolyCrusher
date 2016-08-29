@@ -392,6 +392,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!1 &44367355
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,6 +610,7 @@ GameObject:
   - 224: {fileID: 93862403}
   - 222: {fileID: 93862405}
   - 114: {fileID: 93862404}
+  - 114: {fileID: 93862406}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -644,7 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -671,6 +673,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 93862402}
+--- !u!114 &93862406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 93862402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &174839502
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +901,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 35f4294f97baf014ca9a078a557c2405, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7f3487e2a87d229488f4486741d33c70, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &189816118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1072,6 +1089,7 @@ GameObject:
   - 224: {fileID: 253490218}
   - 222: {fileID: 253490220}
   - 114: {fileID: 253490219}
+  - 114: {fileID: 253490221}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -1107,7 +1125,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1134,6 +1152,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 253490217}
+--- !u!114 &253490221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 253490217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &256478247
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,6 +1222,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &256478250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1279,6 +1312,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &257799889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,6 +1416,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 73ef4cb24441a1e4ca26d7a39425e204, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7c560b0fb83011c44b920ef5bf600f6c, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &294130808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1507,6 +1542,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: b9dd2f7212d2b9445ae6efb3df000786, type: 3}
   deselectedImage: {fileID: 21300000, guid: e129bc77543a2e3418389433e499960b, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &305137692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,6 +1564,7 @@ GameObject:
   - 224: {fileID: 314813319}
   - 222: {fileID: 314813321}
   - 114: {fileID: 314813320}
+  - 114: {fileID: 314813322}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -1563,7 +1600,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1590,6 +1627,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 314813318}
+--- !u!114 &314813322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 314813318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &319051525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,6 +1865,7 @@ GameObject:
   - 224: {fileID: 423220776}
   - 222: {fileID: 423220778}
   - 114: {fileID: 423220777}
+  - 114: {fileID: 423220779}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -1849,7 +1901,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1876,6 +1928,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 423220775}
+--- !u!114 &423220779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 423220775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &426935139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,6 +1952,7 @@ GameObject:
   - 224: {fileID: 426935140}
   - 222: {fileID: 426935142}
   - 114: {fileID: 426935141}
+  - 114: {fileID: 426935143}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -1921,7 +1988,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1948,6 +2015,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 426935139}
+--- !u!114 &426935143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 426935139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &427061272
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,6 +2121,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: d990991ba6b4e4141825feb958b5e402, type: 3}
   deselectedImage: {fileID: 21300000, guid: da6581629be1acb478375876ea1afcd2, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &427061277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2177,6 +2259,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &477663781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2220,6 +2303,7 @@ GameObject:
   - 224: {fileID: 483429557}
   - 222: {fileID: 483429559}
   - 114: {fileID: 483429558}
+  - 114: {fileID: 483429560}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -2255,7 +2339,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -2284,6 +2368,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 483429556}
+--- !u!114 &483429560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 483429556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &504215662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,6 +2392,7 @@ GameObject:
   - 224: {fileID: 504215663}
   - 222: {fileID: 504215665}
   - 114: {fileID: 504215664}
+  - 114: {fileID: 504215666}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -2329,7 +2428,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -2358,6 +2457,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 504215662}
+--- !u!114 &504215666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 504215662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &521774153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,6 +2580,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 73ef4cb24441a1e4ca26d7a39425e204, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7c560b0fb83011c44b920ef5bf600f6c, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &524370779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,6 +2972,7 @@ GameObject:
   - 224: {fileID: 591281747}
   - 222: {fileID: 591281749}
   - 114: {fileID: 591281748}
+  - 114: {fileID: 591281750}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -2893,7 +3008,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -2920,6 +3035,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 591281746}
+--- !u!114 &591281750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 591281746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &645445283
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,6 +3100,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: b9dd2f7212d2b9445ae6efb3df000786, type: 3}
   deselectedImage: {fileID: 21300000, guid: e129bc77543a2e3418389433e499960b, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &645445286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3517,6 +3647,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &744114057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3970,6 +4101,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: d990991ba6b4e4141825feb958b5e402, type: 3}
   deselectedImage: {fileID: 21300000, guid: da6581629be1acb478375876ea1afcd2, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &815740801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4525,6 +4657,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 35f4294f97baf014ca9a078a557c2405, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7f3487e2a87d229488f4486741d33c70, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &938324816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4973,6 +5106,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 35f4294f97baf014ca9a078a557c2405, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7f3487e2a87d229488f4486741d33c70, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1001575071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5287,6 +5421,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 46c051ca673681b41b48c823e1ade6b2, type: 3}
   deselectedImage: {fileID: 21300000, guid: 4571ee2e5abc2c94781199ef37cf69cf, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1127818786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5412,6 +5547,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 73ef4cb24441a1e4ca26d7a39425e204, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7c560b0fb83011c44b920ef5bf600f6c, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1129964760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5507,6 +5643,7 @@ GameObject:
   - 224: {fileID: 1169987373}
   - 222: {fileID: 1169987375}
   - 114: {fileID: 1169987374}
+  - 114: {fileID: 1169987376}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -5542,7 +5679,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -5569,6 +5706,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1169987372}
+--- !u!114 &1169987376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1169987372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1174547879
 GameObject:
   m_ObjectHideFlags: 0
@@ -5579,6 +5730,7 @@ GameObject:
   - 224: {fileID: 1174547880}
   - 222: {fileID: 1174547882}
   - 114: {fileID: 1174547881}
+  - 114: {fileID: 1174547883}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -5614,7 +5766,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -5641,6 +5793,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1174547879}
+--- !u!114 &1174547883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1174547879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1184518867
 GameObject:
   m_ObjectHideFlags: 0
@@ -5865,6 +6031,7 @@ GameObject:
   - 224: {fileID: 1217385292}
   - 222: {fileID: 1217385294}
   - 114: {fileID: 1217385293}
+  - 114: {fileID: 1217385295}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -5900,7 +6067,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -5927,6 +6094,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1217385291}
+--- !u!114 &1217385295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1217385291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1239683337
 GameObject:
   m_ObjectHideFlags: 0
@@ -5983,6 +6164,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &1239683340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6072,6 +6254,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &1266524611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6539,6 +6722,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: d990991ba6b4e4141825feb958b5e402, type: 3}
   deselectedImage: {fileID: 21300000, guid: da6581629be1acb478375876ea1afcd2, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1288781913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6722,6 +6906,7 @@ GameObject:
   - 224: {fileID: 1307061134}
   - 222: {fileID: 1307061133}
   - 114: {fileID: 1307061132}
+  - 114: {fileID: 1307061135}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -6740,7 +6925,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -6784,6 +6969,20 @@ RectTransform:
   m_AnchoredPosition: {x: .000198364258, y: -439.549927}
   m_SizeDelta: {x: 286.200012, y: 80}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &1307061135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1307061131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1311551303
 GameObject:
   m_ObjectHideFlags: 0
@@ -6912,6 +7111,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &1314091847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7245,6 +7445,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 46c051ca673681b41b48c823e1ade6b2, type: 3}
   deselectedImage: {fileID: 21300000, guid: 4571ee2e5abc2c94781199ef37cf69cf, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1351094654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7266,6 +7467,7 @@ GameObject:
   - 224: {fileID: 1355065917}
   - 222: {fileID: 1355065919}
   - 114: {fileID: 1355065918}
+  - 114: {fileID: 1355065920}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -7301,7 +7503,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -7330,6 +7532,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1355065916}
+--- !u!114 &1355065920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1355065916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1360370345
 GameObject:
   m_ObjectHideFlags: 0
@@ -7481,6 +7697,7 @@ GameObject:
   - 224: {fileID: 1397506836}
   - 222: {fileID: 1397506838}
   - 114: {fileID: 1397506837}
+  - 114: {fileID: 1397506839}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -7516,7 +7733,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -7543,6 +7760,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1397506835}
+--- !u!114 &1397506839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1397506835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1402175395
 GameObject:
   m_ObjectHideFlags: 0
@@ -7757,6 +7988,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 4e0d6a8c233e42a40bf216eea55bcf81, type: 3}
   deselectedImage: {fileID: 21300000, guid: c90776cc0c137a9438fb07c22be77c39, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1432331802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7872,6 +8104,7 @@ GameObject:
   - 224: {fileID: 1448987216}
   - 222: {fileID: 1448987218}
   - 114: {fileID: 1448987217}
+  - 114: {fileID: 1448987219}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -7907,7 +8140,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -7934,6 +8167,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1448987215}
+--- !u!114 &1448987219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1448987215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1449372352
 GameObject:
   m_ObjectHideFlags: 0
@@ -8016,6 +8263,7 @@ GameObject:
   - 224: {fileID: 1450279489}
   - 222: {fileID: 1450279491}
   - 114: {fileID: 1450279490}
+  - 114: {fileID: 1450279492}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -8051,7 +8299,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -8078,6 +8326,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1450279488}
+--- !u!114 &1450279492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1450279488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1475093083
 GameObject:
   m_ObjectHideFlags: 0
@@ -8185,6 +8447,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 46c051ca673681b41b48c823e1ade6b2, type: 3}
   deselectedImage: {fileID: 21300000, guid: 4571ee2e5abc2c94781199ef37cf69cf, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1475995577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8501,6 +8764,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 46c051ca673681b41b48c823e1ade6b2, type: 3}
   deselectedImage: {fileID: 21300000, guid: 4571ee2e5abc2c94781199ef37cf69cf, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1506686203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8616,6 +8880,7 @@ GameObject:
   - 224: {fileID: 1537309416}
   - 222: {fileID: 1537309418}
   - 114: {fileID: 1537309417}
+  - 114: {fileID: 1537309419}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -8651,7 +8916,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -8678,6 +8943,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1537309415}
+--- !u!114 &1537309419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537309415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1541470349
 GameObject:
   m_ObjectHideFlags: 0
@@ -8755,6 +9034,7 @@ GameObject:
   - 224: {fileID: 1551656925}
   - 222: {fileID: 1551656927}
   - 114: {fileID: 1551656926}
+  - 114: {fileID: 1551656928}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -8790,7 +9070,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -8817,6 +9097,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1551656924}
+--- !u!114 &1551656928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1551656924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1571188348
 GameObject:
   m_ObjectHideFlags: 0
@@ -9173,6 +9467,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: d990991ba6b4e4141825feb958b5e402, type: 3}
   deselectedImage: {fileID: 21300000, guid: da6581629be1acb478375876ea1afcd2, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1681584947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9611,6 +9906,7 @@ GameObject:
   - 224: {fileID: 1748348454}
   - 222: {fileID: 1748348456}
   - 114: {fileID: 1748348455}
+  - 114: {fileID: 1748348457}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -9646,7 +9942,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -9673,6 +9969,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1748348453}
+--- !u!114 &1748348457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1748348453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1752361609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9901,6 +10211,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 4e0d6a8c233e42a40bf216eea55bcf81, type: 3}
   deselectedImage: {fileID: 21300000, guid: c90776cc0c137a9438fb07c22be77c39, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1770259246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9996,6 +10307,7 @@ GameObject:
   - 224: {fileID: 1788798267}
   - 222: {fileID: 1788798269}
   - 114: {fileID: 1788798268}
+  - 114: {fileID: 1788798270}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -10031,7 +10343,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -10060,6 +10372,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1788798266}
+--- !u!114 &1788798270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1788798266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1810798026
 GameObject:
   m_ObjectHideFlags: 0
@@ -10130,6 +10456,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 4e0d6a8c233e42a40bf216eea55bcf81, type: 3}
   deselectedImage: {fileID: 21300000, guid: c90776cc0c137a9438fb07c22be77c39, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1810798030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10431,6 +10758,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 0}
   deselectedImage: {fileID: 0}
+  shadowAlphaSelected: 51
 --- !u!114 &1873927841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10474,6 +10802,7 @@ GameObject:
   - 224: {fileID: 1877352225}
   - 222: {fileID: 1877352227}
   - 114: {fileID: 1877352226}
+  - 114: {fileID: 1877352228}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -10509,7 +10838,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -10536,6 +10865,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1877352224}
+--- !u!114 &1877352228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877352224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1877980945
 GameObject:
   m_ObjectHideFlags: 0
@@ -10606,6 +10949,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 73ef4cb24441a1e4ca26d7a39425e204, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7c560b0fb83011c44b920ef5bf600f6c, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1877980949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10919,6 +11263,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 4e0d6a8c233e42a40bf216eea55bcf81, type: 3}
   deselectedImage: {fileID: 21300000, guid: c90776cc0c137a9438fb07c22be77c39, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1898792887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11265,6 +11610,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: 35f4294f97baf014ca9a078a557c2405, type: 3}
   deselectedImage: {fileID: 21300000, guid: 7f3487e2a87d229488f4486741d33c70, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1945115617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11368,6 +11714,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: b9dd2f7212d2b9445ae6efb3df000786, type: 3}
   deselectedImage: {fileID: 21300000, guid: e129bc77543a2e3418389433e499960b, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &1952533760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11479,6 +11826,7 @@ GameObject:
   - 224: {fileID: 1965618697}
   - 222: {fileID: 1965618699}
   - 114: {fileID: 1965618698}
+  - 114: {fileID: 1965618700}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -11514,7 +11862,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -11541,6 +11889,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1965618696}
+--- !u!114 &1965618700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965618696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1965636944
 GameObject:
   m_ObjectHideFlags: 0
@@ -11551,6 +11913,7 @@ GameObject:
   - 224: {fileID: 1965636945}
   - 222: {fileID: 1965636947}
   - 114: {fileID: 1965636946}
+  - 114: {fileID: 1965636948}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -11586,7 +11949,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -11613,6 +11976,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1965636944}
+--- !u!114 &1965636948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965636944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1972858744
 GameObject:
   m_ObjectHideFlags: 0
@@ -11690,6 +12067,7 @@ GameObject:
   - 224: {fileID: 1974055763}
   - 222: {fileID: 1974055762}
   - 114: {fileID: 1974055761}
+  - 114: {fileID: 1974055764}
   m_Layer: 0
   m_Name: CharacterName
   m_TagString: Player
@@ -11708,7 +12086,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -11752,6 +12130,20 @@ RectTransform:
   m_AnchoredPosition: {x: .000198364258, y: -439.549927}
   m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &1974055764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1974055760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!1 &1988827436
 GameObject:
   m_ObjectHideFlags: 0
@@ -12221,6 +12613,7 @@ MonoBehaviour:
   easeType: 15
   selectedImage: {fileID: 21300000, guid: b9dd2f7212d2b9445ae6efb3df000786, type: 3}
   deselectedImage: {fileID: 21300000, guid: e129bc77543a2e3418389433e499960b, type: 3}
+  shadowAlphaSelected: 51
 --- !u!114 &2054345183
 MonoBehaviour:
   m_ObjectHideFlags: 0
