@@ -44,12 +44,12 @@ MonoBehaviour:
   endPosition: {x: 0, y: 0, z: 0}
   width: .699999988
   lineMaterial: {fileID: 2100000, guid: 51faca7a011a0c540a8892ef2921fd20, type: 2}
-  lineColor: {r: 1, g: .0156862736, b: .0156862736, a: 1}
+  lineColor: {r: 1, g: .484083802, b: .0156862736, a: 1}
   amplitude: .150000006
   frequeny: 25
   smoothing: .100000001
   speed: 1000
-  colorStrength: 5
+  colorStrength: 7.0999999
   functionType: 0
   useWorldSpace: 1
 --- !u!114 &11463096
@@ -63,11 +63,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2074000165286b7458d93df2d4f53378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sabreRadius: 4.5
+  sabreRadius: 3
   lineShader: {fileID: 11420920}
   sabreAnimationTime: 2
   heightOffset: .959999979
-  powerUpDuration: 15
+  powerUpDuration: 12
   bossCuttingDamage: 250
   laserParticles: {fileID: 103782, guid: 6c186ddd736f0194780b95a9f1c90977, type: 2}
 --- !u!1001 &100100000
@@ -79,7 +79,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: sabreRadius
-      value: 4.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: lineShader
@@ -107,7 +107,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: colorStrength
-      value: 5
+      value: 7.0999999
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: width
@@ -120,6 +120,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: smoothing
       value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lineColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lineColor.g
+      value: .484083802
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerUpDuration
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

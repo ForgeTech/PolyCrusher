@@ -47,6 +47,8 @@ public class GameManagerEditor : Editor
         EditorGUILayout.Space();
         DrawSpecialWaveProperties();
         EditorGUILayout.Space();
+        DrawCharacterCountSpecificSettings();
+        EditorGUILayout.Space();
         EditorGUIUtility.labelWidth = 0;
         DrawUtilities();
 
@@ -65,6 +67,16 @@ public class GameManagerEditor : Editor
         titleStyle.alignment = TextAnchor.MiddleCenter;
         titleStyle.fontSize = 15;
         titleStyle.fontStyle = FontStyle.Bold;
+    }
+
+    private void DrawCharacterCountSpecificSettings()
+    {
+        SerializedProperty characterWaveHealthInfo = serializedGameManager.FindProperty("playerCountHealthMultiplier");
+        //Draw GUI
+        EditorGUILayout.LabelField("Character specific settings", titleStyle);
+        EditorGUILayout.BeginVertical("box");
+        EditorGUILayout.PropertyField(characterWaveHealthInfo, true);
+        EditorGUILayout.EndVertical();
     }
 
     /// <summary>

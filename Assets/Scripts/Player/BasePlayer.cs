@@ -76,35 +76,27 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     [Space(10)]
     [Header("Misc")]
-    //Player name
-    [SerializeField]
-    protected string playerName;
-    [System.Obsolete("Use 'PlayerIdentifier' instead.")]
-    public string PlayerName{
-        get { return playerName; }
-    }
-
     [SerializeField]
     protected PlayerEnum playerIdentifier = PlayerEnum.Birdman;
     public PlayerEnum PlayerIdentifier {
         get { return this.playerIdentifier; }
     }
 
+    [SerializeField]
+    protected Color playerColor = Color.white;
+    public Color PlayerColor { get { return playerColor; } }
 
-    //Player prefix for the controller input.
-    //[SerializeField]
-    //protected string playerPrefix = "P1_";
-
+    #region Input
     //Input Device for accessing Rumble
     protected InputDevice inputDevice;
 
     //Player Actions for accessing this players input
     protected PlayerControlActions playerActions;
 
-
     protected RumbleManager rumbleManager;
 
     protected bool lowHealthRumbleActive = false;
+    #endregion
 
 
     // Initial death time.
@@ -236,10 +228,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public int Health
     {
-        get
-        {
-            return this.health;
-        }
+        get { return this.health; }
         set
         {
             if (value >= minHealth && value <= maxHealth)
@@ -290,14 +279,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public bool Invincible
     {
-        get
-        {
-            return this.invincible;
-        }
-        set
-        {
-            this.invincible = value;
-        }
+        get { return this.invincible; }
+        set { this.invincible = value; }
     }
 
     /// <summary>
@@ -313,14 +296,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public bool CanShoot
     {
-        get
-        {
-            return this.canShoot;
-        }
-        set
-        {
-            this.canShoot = value;
-        }
+        get { return this.canShoot; }
+        set { this.canShoot = value; }
     }
 
     /// <summary>
@@ -328,10 +305,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public Weapon PlayerWeapon
     {
-        get
-        {
-            return this.weapon;
-        }
+        get { return this.weapon; }
     }
 
     /// <summary>
@@ -471,22 +445,20 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
 
     #region Methods
-    void Awake()
+    private void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
 
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
         if (inputDevice != null)
-        {
             playerActions.Device = inputDevice;
-        }
     }
 
     // Use this for initialization
-	void Start () 
+	private void Start () 
     {
         // Set the gameobject name.
-        gameObject.name = this.playerName;
+        gameObject.name = PlayerIdentifier.ToString("g");
 
         // Set dead to default (false).
         this.isDead = false;
@@ -516,8 +488,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Fire spawn event.
         OnPlayerSpawn();
 
-       
-
         if (ability != null)
         {
             ability.OwnerScript = this;
@@ -537,17 +507,14 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             rigid.mass = 0.2f;
     }
 
-        // Update is called once per frame
-    void Update () 
+    private void Update () 
     {
         if (!IsDead)
         {
             // Refill Energy
             RefillEnergy(energyIncrement);
-
 			HandleAbilityInput();
         }
-
         // HUD Elements
         UpdateHUDElements();
 	}
@@ -569,10 +536,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     void CheckAbilityStatusReady()
     {
         if (!abilityUseable && phonePlayerSlot != -1 && CheckEnergyLevelWithoutSubtraction())
-        {
             abilityUseable = true;
-            //network.sendData("1002", phonePlayerSlot);
-        }
     }
 
     /// <summary>
@@ -582,13 +546,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     {
         //Handles the movement and rotation/shoot input.
         //playerAnimator.speed = 1f;
-
-		//if (phonePlayerSlot == -1) {
-			HandleMovement ();
-		//} else {
-		//	HandlePhoneMovement();
-		//}
-
+		HandleMovement ();
     }
 
     /// <summary>
@@ -597,19 +555,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     public virtual void Shoot()
     {
         if (weapon != null)
-        {
             weapon.Use();
-            //StartCoroutine(WaitForAnimator("Shoot"));
-        }
     }
 
-    /// <summary>
-    /// Handles the close quarter attack (if neccesary).
-    /// </summary>
-    public virtual void Attack()
-    {
-        
-    }
+    public virtual void Attack() { /*Nothing to do here*/ }
 
     /// <summary>
     /// Handles the input of the ability.
@@ -633,7 +582,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                         abilityCharacterSound.PlayRandomClip();
 
                     // save ability event
-                    new Event(Event.TYPE.ability).addPos(this.transform).addCharacter(playerName).addWave().send();
+                    new Event(Event.TYPE.ability).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().send();
                 }
             }
         }
@@ -708,7 +657,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// <param name="direction">Direction.</param>
     public virtual void ManipulateMovement(float speedFactor, Vector3 direction)
     {
-        //Debug.Log("SpeedFactor: " + speedFactor + ", Direction: " + direction);
         GetComponent<Rigidbody>().AddForce(direction * speedFactor);
     }
 
@@ -721,28 +669,22 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         // Only take damage if the player is not invincible.
         if (!Invincible)
         {
-
             if(damageDealer is BaseEnemy)
-            {
                 DamageTakenRumble();
-            }
 
             // Health Level tween.
             Vector3 originalScale = originalHealthLevelScale;
             healthLevel.transform.localScale = Vector3.zero;
             LeanTween.scale(healthLevel.rectTransform, originalScale, 0.5f).setEase(AnimCurveContainer.AnimCurve.pingPong);
 
-            // send event if player will be dead
+            // Send event if player will be dead
             if (Health - damage <= 0 && !IsDead)
             {
                 CancelInvoke();
 
                 string enemyName = "undefined";
-
                 if (damageDealer is BaseEnemy)
-                {
                     enemyName = ((BaseEnemy)damageDealer).EnemyName;
-                }
 
                 // Instantiate particles if the prefab reference isn't null.
                 if (deathParticles != null)
@@ -750,7 +692,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                     GameObject deathParticle = Instantiate(deathParticles);
                     deathParticle.transform.position = transform.position;
                 }
-
                 new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();
             }
 
@@ -812,17 +753,13 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     public void PowerUpPickUpRumble()
     {
         if (rumbleManager != null)
-        {
             rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleShort);
-        }
     }
 
     private void DamageTakenRumble()
     {
         if (rumbleManager != null)
-        {
             rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleExtraShort);
-        }
     }
 
     private void LowHealthRumble()
@@ -830,9 +767,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         if (rumbleManager != null)
         {
             if (this.health < lowHealth)
-            {
                 rumbleManager.Rumble(inputDevice, RumbleType.LowHealth);
-            }
             else
             {
                 CancelInvoke();
@@ -863,7 +798,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         playerAnimator.SetBool(animParam, false);
     }
 
-
     /// <summary>
     /// Kills the player.
     /// </summary>
@@ -871,11 +805,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     {
         if(!playerAnimator.GetBool("Dead"))
             playerAnimator.SetBool("Dead", true);
-
-		//Let mobile know you died
-		//if (phonePlayerSlot != -1 && !isDead) {
-		//	network.sendData("1003", phonePlayerSlot);
-		//}
 
         // Set RigidBody to isKinematic. (So the enemies does not move the player after death).
         GetComponent<Rigidbody>().isKinematic = true;
@@ -948,10 +877,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         {
             PlayerSpawned(this);
             if (rumbleManager != null && inputDevice !=null)
-            {
                 rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleLong);
-            }
-            Debug.Log("Player Spawned!!!");
+            Debug.Log("Player <b>" + PlayerIdentifier + "</b> spawned!");
         }
     }
 
@@ -1035,9 +962,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 		if ((Energy - ability.EnergyCost) < minEnergy)
 			return false;
 		else
-		{
 			return true;
-		}
 	}
 
     /// <summary>
@@ -1047,15 +972,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     {
         // Update Energy
         if (energyLevel != null)
-        {
             energyLevel.fillAmount = (float)Energy / (float)maxEnergy;
-        }
         
         // Update Health
         if (healthLevel != null)
-        {
             healthLevel.fillAmount = (float)Health / (float)maxHealth;
-        }
 
         // Set the inner energy circle to visible or not.
         if (innerEnergyCircle != null)
@@ -1076,6 +997,5 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         PlayerSpawned = null;
         AbilityUseable = null;
     }
-
     #endregion
 }

@@ -557,15 +557,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         if (damageDealer is BasePlayer && lightComponent != null)
         {
             BasePlayer p = damageDealer as BasePlayer;
-
-            if (p.name.ToLower() == "fatman")
-                lightComponent.color = new Color(215, 30, 218);
-            else if (p.name.ToLower() == "birdman")
-                lightComponent.color = new Color(30, 101, 218);
-            else if (p.name.ToLower() == "timeshifter")
-                lightComponent.color = new Color(30, 159, 177);
-            else if (p.name.ToLower() == "charger")
-                lightComponent.color = new Color(255, 111, 0);
+            if(p != null)
+                lightComponent.color = p.PlayerColor;
         }
     }
 

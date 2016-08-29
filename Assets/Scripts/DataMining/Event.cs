@@ -190,9 +190,7 @@ public class Event{
     {
         PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
         if(playerManagerReference != null)
-        {
             this.characters = playerManagerReference.PlayerNamesInGameSession;
-        }
         
         return this;
     }

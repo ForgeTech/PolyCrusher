@@ -18,9 +18,9 @@ public class DefaultScaleTransition : TransitionHandlerInterface
         RectTransform rect = gameobject.GetComponent<RectTransform>();
         float halfLerpTime = LERP_TIME * 0.5f;
 
-        LeanTween.scale(rect, new Vector2(SIZE_MULTIPLIER, SIZE_MULTIPLIER), halfLerpTime)
+        LeanTween.scale(rect, new Vector3(SIZE_MULTIPLIER, SIZE_MULTIPLIER, SIZE_MULTIPLIER), halfLerpTime)
             .setOnComplete(() => {
-                LeanTween.scale(rect, Vector2.one, halfLerpTime);
+                LeanTween.scale(rect, Vector3.one, halfLerpTime);
             }).setUseEstimatedTime(true);
     }
 }

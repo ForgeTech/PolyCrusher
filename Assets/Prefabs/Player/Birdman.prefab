@@ -2198,13 +2198,14 @@ MonoBehaviour:
   health: 100
   minHealth: 0
   maxHealth: 100
+  lowHealth: 25
   energy: 50
   minEnergy: 0
   maxEnergy: 100
   energyRefillRate: .25999999
   energyIncrement: 1
-  playerName: Birdman
   playerIdentifier: 0
+  playerColor: {r: .619607866, g: .741176486, b: 1, a: 1}
   deathTime: 3.29999995
   movementSpeed: 20
   analogStickTolerance: .100000001
@@ -2459,6 +2460,14 @@ Prefab:
       propertyPath: deathParticles
       value: 
       objectReference: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
+    - target: {fileID: 0}
+      propertyPath: playerColor.r
+      value: .619607866
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerColor.g
+      value: .741176486
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134618}
