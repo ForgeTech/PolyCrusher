@@ -14,7 +14,7 @@ public class ElementPressedSize : ElementPressedHandler
 
         LeanTween.scale(rect, info.PressedScale, halfLerpTime).setUseEstimatedTime(true).setEase(LeanTweenType.easeOutSine)
             .setOnComplete(() => {
-                LeanTween.scale(rect, Vector2.one, halfLerpTime).setUseEstimatedTime(true).setEase(LeanTweenType.easeOutSine);
+                LeanTween.scale(rect, Vector3.one, halfLerpTime).setUseEstimatedTime(true).setEase(LeanTweenType.easeOutSine);
             });
     }
 }

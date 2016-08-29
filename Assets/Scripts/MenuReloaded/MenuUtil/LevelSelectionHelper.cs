@@ -132,8 +132,14 @@ public class LevelSelectionHelper : MonoBehaviour
     /// </summary>
     private void HandleNextSelection()
     {
+        NavigationInformation info = levelIslands[CalculateIndex(selector.Current - 1)].GetComponent<NavigationInformation>();
+        DoTextShadowTween(GetLevelIslandText(levelIslands[CalculateIndex(selector.Current - 1)].gameObject), info.ShadowAlphaSelected, 0f);
+
         TweenArrow(rightArrow);
         RepositionElements();
+
+        info = levelIslands[selector.Current].GetComponent<NavigationInformation>();
+        DoTextShadowTween(GetLevelIslandText(levelIslands[selector.Current].gameObject), 0f, info.ShadowAlphaSelected);
     }
 
     /// <summary>
@@ -141,8 +147,48 @@ public class LevelSelectionHelper : MonoBehaviour
     /// </summary>
     private void HandlePreviousSelection()
     {
+        NavigationInformation info = levelIslands[CalculateIndex(selector.Current + 1)].GetComponent<NavigationInformation>();
+        DoTextShadowTween(GetLevelIslandText(levelIslands[CalculateIndex(selector.Current + 1)].gameObject), info.ShadowAlphaSelected, 0f);
+
         TweenArrow(leftArrow);
         RepositionElements();
+
+        info = levelIslands[selector.Current].GetComponent<NavigationInformation>();
+        DoTextShadowTween(GetLevelIslandText(levelIslands[selector.Current].gameObject), 0f, info.ShadowAlphaSelected);
+    }
+
+    private void DoTextShadowTween(Text text, float startAlpha, float endAlpha)
+    {
+        Material mat = GetMaterialFrom(text.gameObject);
+        Color shadowColor = mat.GetColor("_ShadowColor");
+
+        LeanTween.value(text.gameObject, startAlpha, endAlpha, tweenTime).setEase(easeType)
+            .setOnUpdate((float val) => {
+                shadowColor.a = val / 255f;
+                mat.SetColor("_ShadowColor", shadowColor);
+            });
+    }
+
+    private Text GetLevelIslandText(GameObject levelIsland)
+    {
+        Text text = null;
+        foreach (Transform child in levelIsland.transform)
+        {
+            if (child.tag == "Terrain")
+                text = child.GetComponent<Text>();
+        }
+        return text;
+    }
+
+    private Material GetMaterialFrom(GameObject g)
+    {
+        Material mat = null;
+        Text txt = g.GetComponent<Text>();
+
+        if (txt != null)
+            mat = txt.material;
+
+        return mat;
     }
 
     private void TweenArrow(Image arrow)
