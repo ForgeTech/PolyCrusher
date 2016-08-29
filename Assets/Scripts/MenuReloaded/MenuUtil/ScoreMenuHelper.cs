@@ -101,15 +101,6 @@ public class ScoreMenuHelper : MonoBehaviour
         ScoreContainer score = DataCollector.instance.getScoreContainer();
         Queue<ScoreData> animationWorkQueue = new Queue<ScoreData>();
 
-        // Test values -> Remove
-        //score.setWave(21);
-        //score.addPolysTriggered(13);
-        //score.addPolyKills(44);
-        //score.addCutKills(46);
-        //score.addBossKills(3);
-        //score.addPowerupsCollected(25);
-        //score.addPlayerRevials(12);
-
         RegisterAnimationQueue(animationWorkQueue, score);
 
         // Count up each high score category
