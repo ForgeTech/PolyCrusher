@@ -76,19 +76,15 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     [Space(10)]
     [Header("Misc")]
-    //Player name
-    [SerializeField]
-    protected string playerName;
-    [System.Obsolete("Use 'PlayerIdentifier' instead.")]
-    public string PlayerName{
-        get { return playerName; }
-    }
-
     [SerializeField]
     protected PlayerEnum playerIdentifier = PlayerEnum.Birdman;
     public PlayerEnum PlayerIdentifier {
         get { return this.playerIdentifier; }
     }
+
+    [SerializeField]
+    protected Color playerColor = Color.white;
+    public Color PlayerColor { get { return playerColor; } }
 
     #region Input
     //Input Device for accessing Rumble
@@ -462,7 +458,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 	private void Start () 
     {
         // Set the gameobject name.
-        gameObject.name = this.playerName;
+        gameObject.name = PlayerIdentifier.ToString("g");
 
         // Set dead to default (false).
         this.isDead = false;
@@ -586,7 +582,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                         abilityCharacterSound.PlayRandomClip();
 
                     // save ability event
-                    new Event(Event.TYPE.ability).addPos(this.transform).addCharacter(playerName).addWave().send();
+                    new Event(Event.TYPE.ability).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().send();
                 }
             }
         }
