@@ -156,7 +156,12 @@ public class ScoreMenuHelper : MonoBehaviour
     {
         ScoreContainer score = DataCollector.instance.getScoreContainer();
         Queue<ScoreData> animationWorkQueue = new Queue<ScoreData>();
-        int onlineRank = 122;
+
+        object onlineRank = null;
+        if (BaseSteamManager.Instance.GetRank() == 0)
+            onlineRank = "?";
+        else
+            onlineRank = BaseSteamManager.Instance.GetRank();
 
         RegisterAnimationQueue(animationWorkQueue, score);
 
