@@ -117,8 +117,8 @@ public class WaveCounterManager : MonoBehaviour
             }
             popup.transform.SetParent(canvas.transform, false);
             RectTransform rectTrans = popup.GetComponent<RectTransform>();
-            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 2.2f).setEase(LeanTweenType.easeInQuad);
-            LeanTween.alphaText(rectTrans, 0, 2.2f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
+            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 3.5f).setEase(LeanTweenType.easeInQuad);
+            LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
         }
     }
 
@@ -134,8 +134,8 @@ public class WaveCounterManager : MonoBehaviour
             }
             popup.transform.SetParent(canvas.transform, false);
             RectTransform rectTrans = popup.GetComponent<RectTransform>();
-            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 2.2f).setEase(LeanTweenType.easeInQuad);
-            LeanTween.alphaText(rectTrans, 0, 2.2f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
+            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 3.5f).setEase(LeanTweenType.easeInQuad);
+            LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
         }
     }
 
