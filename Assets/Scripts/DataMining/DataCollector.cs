@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using MongoDB.Driver;
 using MongoDB.Bson;
 using System;
 
@@ -549,6 +547,8 @@ public class DataCollector : MonoBehaviour
     {
         int scoreBefore = Score;
 
+       
+
         switch (e.type)
         {
             case Event.TYPE.kill:
@@ -558,12 +558,14 @@ public class DataCollector : MonoBehaviour
                 {
                     scoreContainer.addBossKills(1);
                     Score += 2500;
+                    WaveCounterManager.instance.ScorePopup(2500);
                 }
 
-                if(e.character == "_LineManager") // || e.character == "laser_trap"
+                if(e.character == "LineSystem") // || e.character == "laser_trap"
                 {
                     Score += 100;
                     scoreContainer.addCutKills(1);
+                    WaveCounterManager.instance.ScorePopup(100);
                 }
 
                 // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
@@ -584,6 +586,7 @@ public class DataCollector : MonoBehaviour
                 }
                 scoreContainer.addPolysTriggered(1);
                 Score += 1000 + n;
+                WaveCounterManager.instance.ScorePopup(1000 + n);
                 break;
 
             case Event.TYPE.death:
@@ -593,6 +596,7 @@ public class DataCollector : MonoBehaviour
             case Event.TYPE.powerup:
                 Score += 100;
                 scoreContainer.addPowerupsCollected(1);
+                WaveCounterManager.instance.ScorePopup(100);
                 break;
 
             case Event.TYPE.waveUp:
@@ -602,9 +606,11 @@ public class DataCollector : MonoBehaviour
                     {
                         Score -= 1000 * playerDeathsInWave;
                         scoreContainer.addPlayerRevials(playerDeathsInWave);
+                        WaveCounterManager.instance.ScorePopup(-1000*playerDeathsInWave);
                     }
 
                     Score += 10000;
+                    WaveCounterManager.instance.ScorePopup(10000);
                 }
                 //intermediateScore -= entireInterpolationAddition;
                 scoreBefore = Score;

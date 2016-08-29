@@ -7,9 +7,6 @@ using System.Collections;
 /// </summary>
 public class WaveCounterManager : MonoBehaviour 
 {
-    // Reference to the instance
-    private WaveCounterManager waveCounterManagerInstance;
-
     // Reference to the wave number.
     [SerializeField]
     protected UnityEngine.UI.Text waveNumber;
@@ -38,6 +35,14 @@ public class WaveCounterManager : MonoBehaviour
     [SerializeField]
     protected UnityEngine.UI.Text scoreTextPermanent;
 
+    // prefab for fading score number
+    [SerializeField]
+    protected GameObject scorePopup;
+
+    // canvas to spawn popup on
+    [SerializeField]
+    protected GameObject canvas;
+
     //[SerializeField]
     //[Range(0f, 1f)]
     protected float scoreDamp = 0.9f;
@@ -45,14 +50,17 @@ public class WaveCounterManager : MonoBehaviour
     private float nextActionTime = 0f;
     private float sampleRate = 32;
 
-    public WaveCounterManager WaveCounterManagerInstance
+
+    // Reference to the instance
+    private static WaveCounterManager _instance;
+    public static WaveCounterManager instance
     {
         get 
         {
-            if (waveCounterManagerInstance == null)
-                waveCounterManagerInstance = GameObject.FindObjectOfType<WaveCounterManager>();
+            if (_instance == null)
+                _instance = GameObject.FindObjectOfType<WaveCounterManager>();
 
-            return this.waveCounterManagerInstance;
+            return _instance;
         }
     }
 
@@ -83,6 +91,26 @@ public class WaveCounterManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void ScorePopup(int score)
+    {
+        if(scorePopup != null && canvas != null)
+        {
+            GameObject popup = Instantiate(scorePopup);
+            UnityEngine.UI.Text text = popup.GetComponent<UnityEngine.UI.Text>();
+            if (text != null)
+            {
+                if (score >= 0)
+                    text.text = "+" + score;
+                else
+                    text.text = score.ToString();
+            }
+            popup.transform.SetParent(canvas.transform, false);
+            RectTransform rectTrans = popup.GetComponent<RectTransform>();
+            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 1.5f).setEase(LeanTweenType.easeInQuad);
+            LeanTween.alphaText(rectTrans, 0, 1.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
+        }
     }
 
     /// <summary>
