@@ -343,8 +343,6 @@ public class CameraSystem : MonoBehaviour
     {
         //Find all players.
         players = GameObject.FindGameObjectsWithTag("Player");
-
-        Debug.Log("SimpleCamera: FindAllObjects()");
     }
 
     /// <summary>

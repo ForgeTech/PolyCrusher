@@ -395,13 +395,11 @@ public class PlayerManager : MonoBehaviour
         IncrementPlayerCount();
 
         // Fill the playerReferences array.
-
         for (int i = 0; i < playerReferences.Length; i++)
         {
             if (playerReferences[i] == null)
             {
                 playerReferences[i] = p.gameObject;
-                Debug.Log("baseplayer added");
                 break;
             }
 

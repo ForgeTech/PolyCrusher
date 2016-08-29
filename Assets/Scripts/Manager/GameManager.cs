@@ -218,6 +218,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("The increase factor of the enemy damage for every wave. Value should be between 0 and 1!")]
     [SerializeField]
     protected float enemyDamageIncreaseFactor = 0.1f;
+
+    [SerializeField]
+    protected float[] playerCountHealthMultiplier;
     #endregion
 
     #endregion
@@ -502,13 +505,24 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Modifies the enemy health based on the player count.
+    /// </summary>
+    private void ModifyEnemyHealthBasedOnPlayerCount(SpawnInformation spawnInfo)
+    {
+        PlayerManager playerManager = GameObject.FindObjectOfType<PlayerManager>();
+        if(playerManager.PlayerCountInGameSession > 0)
+            spawnInfo.ActualHealth = (int)(spawnInfo.ActualHealth * playerCountHealthMultiplier[playerManager.PlayerCountInGameSession - 1]);
+    }
+
+    /// <summary>
     /// Processes the enemy data and saves the initial health and damage values into the spawn information.
     /// </summary>
     protected void ProcessEnemyData()
     {
         for (int i = 0; i < spawnInfo.Length; i++)
         {
-            spawnInfo[i].ActualHealth = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MaxHealth;
+            spawnInfo[i].ActualHealth = spawnInfo[i].enemy.GetComponent<BaseEnemy>().Health;
+            ModifyEnemyHealthBasedOnPlayerCount(spawnInfo[i]);
             spawnInfo[i].ActualDamage = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MeleeAttackDamage;
         }
 
