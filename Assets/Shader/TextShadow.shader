@@ -179,5 +179,5 @@
             ENDCG
         }
     }
-	Fallback "UI/Default Font"
+	FallBack "UI/Default Font"
 }

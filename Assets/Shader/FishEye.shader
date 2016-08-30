@@ -1,4 +1,4 @@
-﻿Shader "prime[31]/Transitions/Fish Eye"
+﻿Shader "POLYCRUSHER/Transitions/Fish Eye"
 {
 	Properties
 	{

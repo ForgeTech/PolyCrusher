@@ -1,4 +1,4 @@
-﻿Shader "prime[31]/Transitions/Blur"
+﻿Shader "POLYCRUSHER/Transitions/Blur"
 {
 	Properties
 	{
