@@ -17,6 +17,7 @@ public class DataCollector : MonoBehaviour
     [Header("HTTP")]
         [Tooltip("Address where postEvents.php and postSessions.php are located.")]
         public string scriptsAddress = "http://hal9000.schedar.uberspace.de/scripts/";
+        public string serverIP = "185.26.156.41";
 
     [Header("Settings")]
         [Tooltip("Determines how many events should be uploaded at once.")]
@@ -24,6 +25,8 @@ public class DataCollector : MonoBehaviour
         public bool log = false;
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
+
+    private bool online = true;
 
     // VERSION NUMBER
     internal string buildVersion = "0.3";
@@ -166,12 +169,8 @@ public class DataCollector : MonoBehaviour
         //EventRegistered += calculateScore;
         EventRegistered += InvokeScoreCalcDelayed;
         DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
-        
-        if (enabled)
-        {
-            // TODO check if server is reachable
-        }
-	}
+        StartCoroutine(TestConnection());
+    }
 
 
     /// <summary>
@@ -186,6 +185,9 @@ public class DataCollector : MonoBehaviour
             if (sessionRunning && currentSession != null){
                 //endSession();
             }
+
+            
+            StartCoroutine(TestConnection());
 
             // create new session
             currentSession = new Session(mode);
@@ -343,45 +345,48 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     IEnumerator UploadEvents()
     {
-        // move all events to temporary array to reinsert data is upload fails
-        Event[] e = new Event[eventQueue.Count];
-        eventQueue.CopyTo(e,0);
-        eventQueue.Clear();
-        string serializedEvents = e.ToJson();
-
-        // encode serialized events
-        serializedEvents = encode(serializedEvents);
-
-        if (log) { Debug.Log("[DataCollector] uploading " + e.Length + " events"); }
-
-        WWWForm form = new WWWForm();
-        form.AddField("data", serializedEvents);
-        WWW www = new WWW(scriptsAddress + "postEvents.php", form);
-        yield return www;
-        if (www.error == null)
+        if (online)
         {
-            string response = www.text;
-            if (response == "success")
+            // move all events to temporary array to reinsert data is upload fails
+            Event[] e = new Event[eventQueue.Count];
+            eventQueue.CopyTo(e,0);
+            eventQueue.Clear();
+            string serializedEvents = e.ToJson();
+
+            // encode serialized events
+            serializedEvents = encode(serializedEvents);
+
+            if (log) { Debug.Log("[DataCollector] uploading " + e.Length + " events"); }
+
+            WWWForm form = new WWWForm();
+            form.AddField("data", serializedEvents);
+            WWW www = new WWW(scriptsAddress + "postEvents.php", form);
+            yield return www;
+            if (www.error == null)
             {
-                if (log) { Debug.Log("[DataCollector] event upload successful"); }
+                string response = www.text;
+                if (response == "success")
+                {
+                    if (log) { Debug.Log("[DataCollector] event upload successful"); }
+                }
+                else
+                {
+                    if (log) { Debug.Log("[DataCollector] unexpected response: " + response); }
+                    for (int i = 0; i < e.Length; i++)
+                    {
+                        eventQueue.Enqueue(e[i]);  // reinsert
+                    }
+                }
             }
             else
             {
-                if (log) { Debug.Log("[DataCollector] unexpected response: " + response); }
                 for (int i = 0; i < e.Length; i++)
                 {
                     eventQueue.Enqueue(e[i]);  // reinsert
                 }
+                //if (log) 
+                Debug.Log("[DataCollector] WWW Error: " + www.error);
             }
-        }
-        else
-        {
-            for (int i = 0; i < e.Length; i++)
-            {
-                eventQueue.Enqueue(e[i]);  // reinsert
-            }
-            //if (log) 
-            Debug.Log("[DataCollector] WWW Error: " + www.error);
         }
     }
 
@@ -648,6 +653,41 @@ public class DataCollector : MonoBehaviour
 
         calculateScore(e);
     }
+
+    // check if server is reachable
+    IEnumerator TestConnection()
+    {
+        float timeTaken = 0.0F;
+        float maxTime = 2.0F;
+        
+        Ping testPing = new Ping(serverIP);
+
+        timeTaken = 0.0F;
+
+        while (!testPing.isDone)
+        {
+
+            timeTaken += Time.deltaTime;
+                
+            if (timeTaken > maxTime)
+            {
+                // if time has exceeded the max
+                // time, break out and return false
+                online = false;
+                Debug.Log("[DataCollector] OFFLINE");
+                break;
+            }
+
+            yield return null;
+        }
+        if (timeTaken <= maxTime) {
+            online = true;
+            Debug.Log("[DataCollector] ONLINE");
+        }
+        yield return null;
+        
+    }
+
 
     public void InvokeScoreCalcDelayed(Event e)
     {
