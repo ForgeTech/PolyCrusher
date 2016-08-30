@@ -21,6 +21,7 @@ class SteamManager : BaseSteamManager
     private CGameID gameID;
 
     // could the stats be retrieved from steam?
+    private bool resetStats;
     private bool requestedStats;
     private bool statsValid;
 
@@ -291,6 +292,18 @@ class SteamManager : BaseSteamManager
             // If this failed, we never sent anything to the server, try again later.
             storeStats = !success;
         }
+
+        //TODO: REMOVE THIS IN BUILDS + SET STAT VALIDATIONS @ STEAMWORKS
+
+        if (Input.GetKeyDown(KeyCode.F1))
+            resetStats = SteamUserStats.ResetAllStats(true);
+        if (resetStats)
+        {
+            SteamUserStats.RequestCurrentStats();
+            resetStats = false;
+        }
+
+        //ENDTODO
     }
 
     /// <summary>
@@ -399,6 +412,8 @@ class SteamManager : BaseSteamManager
             SteamUserStats.GetStat("EnemiesCut", out enemiesCut);
             SteamUserStats.GetStat("BulletsShot", out bulletsShot);
             SteamUserStats.GetStat("CharactersPlayed", out charactersPlayed);
+
+            storeStats = true;
         }
         else
         {
@@ -701,8 +716,6 @@ class SteamManager : BaseSteamManager
     /// </summary>
     protected override void OnDestroy()
     {
-        SteamUserStats.ResetAllStats(true); ///FOR TESTING - REMOOOOVE THIS IN BUILDS!///
-
         base.OnDestroy();
 
         SteamAPI.Shutdown();
