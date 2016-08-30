@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 public class CharacterSelector : Selector
 {
-    private static int NULL_SELECTION = -1;
+    public static int NULL_SELECTION = -1;
     private CharacterSelectionHelper selectionHelper;
     private CharacterMenuManager menuManager;
     private int selectedIndex = NULL_SELECTION;
@@ -78,7 +78,7 @@ public class CharacterSelector : Selector
     /// <summary>
     /// Deselects if possible.
     /// </summary>
-    public void Deselect()
+    public bool Deselect()
     {
         CharacterSelectionHelper.SelectionData slot = selectionHelper.SelectionMap[Current];
 
@@ -87,6 +87,8 @@ public class CharacterSelector : Selector
         {
             HandleCharacterSelected(Current);
             selectionHelper.DeselectAt(Current, menuManager.PlayerSlot);
+            return true;
         }
+        return false;   // Nothing was selected
     }
 }

@@ -246,7 +246,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected virtual void HandleBackSelection()
     {
         menuInputHandler.HandleBackInput(() => {
-            backAction.PerformAction<MonoBehaviour>(this);
+            StartCoroutine(WaitBeforeTriggerBackAction(() => {
+                backAction.PerformAction<MonoBehaviour>(this);
+            }));
         });
     }
 
@@ -285,9 +287,16 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         acceptButtonInput = false;
         selector.HandleSelectedElement();
-        //yield return buttonPressedWait;
         yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
         PerformActionOnSelectedElement(selectedGameObject);
+        acceptButtonInput = true;
+    }
+
+    protected IEnumerator WaitBeforeTriggerBackAction(Action action)
+    {
+        acceptButtonInput = false;
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
+        action();
         acceptButtonInput = true;
     }
 
