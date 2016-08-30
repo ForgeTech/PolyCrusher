@@ -84,7 +84,7 @@ public class ScoreMenuHelper : MonoBehaviour
         LeanTween.scale(scoreText.rectTransform, Vector3.one, startUpScaleTweenTime).setEase(easeType);
         LeanTween.scale(scoreContainer, Vector3.one, startUpScaleTweenTime).setEase(easeType);
 
-        scoreText.text = CreateHighscoreString("42", "?", "?");
+        scoreText.text = CreateHighscoreString("?", "?", "?");
         yield return waitForPhase01;
 
         yield return waitForNextPhase;
