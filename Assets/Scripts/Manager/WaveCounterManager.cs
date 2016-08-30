@@ -104,7 +104,7 @@ public class WaveCounterManager : MonoBehaviour
 
     public void ScorePopup(int score)
     {
-        if(scorePopup != null && canvas != null)
+        if(GameManager.gameManagerInstance.CurrentGameMode == GameMode.NormalMode && scorePopup != null && canvas != null)
         {
             GameObject popup = Instantiate(scorePopup);
             UnityEngine.UI.Text text = popup.GetComponent<UnityEngine.UI.Text>();
