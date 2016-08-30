@@ -111,13 +111,13 @@ public class WaveCounterManager : MonoBehaviour
             if (text != null)
             {
                 if (score >= 0)
-                    text.text = "+" + score;
+                    text.text = "+" + score.ToString("N0");
                 else
                     text.text = score.ToString();
             }
             popup.transform.SetParent(canvas.transform, false);
             RectTransform rectTrans = popup.GetComponent<RectTransform>();
-            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 3.5f).setEase(LeanTweenType.easeInQuad);
+            LeanTween.moveY(rectTrans, rectTrans.position.y + 120, 3.5f).setEase(LeanTweenType.easeOutQuad);
             LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
         }
     }

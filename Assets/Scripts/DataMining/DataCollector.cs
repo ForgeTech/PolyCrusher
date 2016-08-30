@@ -162,7 +162,9 @@ public class DataCollector : MonoBehaviour
     /// Initializes connection to database
     /// </summary>
     void Start () {
-        EventRegistered += calculateScore;
+        //EventRegistered += (Event e) => { Invoke(calculateScore(e), 10); };
+        //EventRegistered += calculateScore;
+        EventRegistered += InvokeScoreCalcDelayed;
         DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
         
         if (enabled)
@@ -547,8 +549,6 @@ public class DataCollector : MonoBehaviour
     {
         int scoreBefore = Score;
 
-       
-
         switch (e.type)
         {
             case Event.TYPE.kill:
@@ -572,6 +572,11 @@ public class DataCollector : MonoBehaviour
                 int interpolationAddition = (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
                 //Debug.Log("[Score]" + interpolationAddition);
                 intermediateScore += interpolationAddition;
+
+                if(interpolationAddition != 0)
+                {
+                    WaveCounterManager.instance.ScorePopup(interpolationAddition);
+                }
 
                 resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 break;
@@ -608,15 +613,12 @@ public class DataCollector : MonoBehaviour
                         scoreContainer.addPlayerRevials(playerDeathsInWave);
                         WaveCounterManager.instance.ScorePopup(-1000*playerDeathsInWave);
                     }
-
                     Score += 10000;
-                    WaveCounterManager.instance.ScorePopup(10000);
                 }
                 //intermediateScore -= entireInterpolationAddition;
                 scoreBefore = Score;
                 intermediateScore = Score;
                 resourceValueBefore = 0;
-
                 playerDeathsInWave = 0;
                 break;
             case Event.TYPE.sessionEnd:
@@ -625,6 +627,8 @@ public class DataCollector : MonoBehaviour
                 Score += s;
 
                 scoreContainer.setWave(wave);
+
+                //Debug.Log("[DataCollector] Wave: " + wave);
 
                 break;
         }
@@ -636,6 +640,20 @@ public class DataCollector : MonoBehaviour
     {
         return scoreContainer;
     }
+
+    // wicked workaround for 1 frame delayed score calc (problem with AccumulatedRessourceValue)
+    public IEnumerator ScoreCalcCoroutine(Event e)
+    {
+        yield return null;
+
+        calculateScore(e);
+    }
+
+    public void InvokeScoreCalcDelayed(Event e)
+    {
+        StartCoroutine(ScoreCalcCoroutine(e));
+    }
+ 
 }
 
 /*
