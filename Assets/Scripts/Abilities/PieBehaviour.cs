@@ -152,10 +152,14 @@ public class PieBehaviour : MonoBehaviour
         if (rumbleManager != null)
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, damageRadius, 1 << 8);
-
+            BasePlayer basePlayer;
             for(int i = 0; i < hits.Length; i++)
             {
-                rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.BasicRumbleLong);
+                basePlayer = hits[i].GetComponent<BasePlayer>();
+                if (basePlayer != null)
+                {
+                    rumbleManager.Rumble(basePlayer.InputDevice, RumbleType.BasicRumbleLong);
+                }
             }
         }
     }

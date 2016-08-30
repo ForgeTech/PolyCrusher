@@ -93,12 +93,16 @@ public class AbilityRocket : Ability {
         {
             rumbleManager.Rumble(inputDevice, RumbleType.FatmanSpecial);
             Collider[] hits = Physics.OverlapSphere(transform.position, range, 1 << 8);
-
+            BasePlayer basePlayer;
             for (int i = 0; i < hits.Length; i++)
             {
                 if(hits[i].transform != this.transform)
                 {
-                    rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.ChargerSpecialFriends);
+                    basePlayer = hits[i].GetComponent<BasePlayer>();
+                    if (basePlayer != null)
+                    {
+                        rumbleManager.Rumble(basePlayer.InputDevice, RumbleType.FatmanSpecialNearby);
+                    }
                 }
             }
         }

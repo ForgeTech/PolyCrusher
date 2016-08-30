@@ -204,11 +204,16 @@ public class AbilityCharge : Ability {
         {
             rumbleManager.Rumble(inputDevice, RumbleType.ChargerSpecial);
 
+            BasePlayer basePlayer;
             for (int i = 0; i < friends.Length; i++)
-            {
+            {               
                 if (friends[i] != null)
                 {
-                    rumbleManager.Rumble(friends[i].GetComponent<BasePlayer>().InputDevice, RumbleType.ChargerSpecialFriends);
+                    basePlayer = friends[i].GetComponent<BasePlayer>();
+                    if (basePlayer != null)
+                    {
+                        rumbleManager.Rumble(basePlayer.InputDevice, RumbleType.ChargerSpecialFriends);
+                    }
                 }
             }
         }
