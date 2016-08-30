@@ -12,6 +12,8 @@ public class LevelLoadByName : AbstractActionHandler
 
     public override void PerformAction<T>(T triggerInstance)
     {
+        Time.timeScale = 1f;
+
         if (levelName != null)
             Application.LoadLevel(levelName);
         else
