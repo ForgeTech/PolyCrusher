@@ -316,9 +316,6 @@ class SteamManager : BaseSteamManager
 
             // store stats
             storeStats = true;
-
-            // ein jux
-            WaveCounterManager.instance.ScorePopup(id.ToString());
         }
         else if (!found)
         {
