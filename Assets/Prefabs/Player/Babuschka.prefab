@@ -1393,9 +1393,11 @@ MonoBehaviour:
   playerIdentifier: 5
   playerColor: {r: .24313727, g: 1, b: .113725498, a: 1}
   deathTime: 3.29999995
-  movementSpeed: 20
-  analogStickTolerance: .100000001
-  rotationSpeed: 6
+  playerInput:
+    movementSpeed: 20
+    analogStickTolerance: .100000001
+    rotationSpeed: 6
+    rightAnalogStickIsUsed: 0
   weapon: {fileID: 11450990}
   ability: {fileID: 11442186}
   energyLevel: {fileID: 11467908}
@@ -1897,6 +1899,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: playerColor.b
       value: .113725498
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.movementSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.analogStickTolerance
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.rotationSpeed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

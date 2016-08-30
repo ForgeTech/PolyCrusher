@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using InControl;
+using System;
 
 /// <summary>
 /// Eventhandler for player deaths.
@@ -26,7 +27,6 @@ public delegate void AbilityUseableEventHandler(BasePlayer player);
 public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 {
     #region Class Members
-
     [Header("Health Values")]
     //The actual health value.
     [SerializeField]
@@ -78,9 +78,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [Header("Misc")]
     [SerializeField]
     protected PlayerEnum playerIdentifier = PlayerEnum.Birdman;
-    public PlayerEnum PlayerIdentifier {
-        get { return this.playerIdentifier; }
-    }
+    public PlayerEnum PlayerIdentifier { get { return this.playerIdentifier; } }
 
     [SerializeField]
     protected Color playerColor = Color.white;
@@ -98,7 +96,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     protected bool lowHealthRumbleActive = false;
     #endregion
 
-
     // Initial death time.
     [Tooltip("The time the player stays on screen after he dies.")]
     [SerializeField]
@@ -111,23 +108,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 	//[SerializeField]
 	protected int phonePlayerSlot = -1;
 
-	
     [Space(10)]
     [Header("Movement")]
-    //The movement speed of the player.
     [SerializeField]
-    protected float movementSpeed;
-
-    //Tolerance of the analog stick.
-    [SerializeField]
-    private float analogStickTolerance = 0.2f;
-    
-    //The rotation speed of the character.
-    [SerializeField]
-    protected float rotationSpeed = 1.7f;
-
-    //Determines if the right stick is used or not.
-    protected bool rightAnalogStickIsUsed = false;
+    protected PlayerInputHandler playerInput;
 
     // Determines if the player is dead or not.
     protected bool isDead;
@@ -141,7 +125,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     
     // Ability of the player.
     [SerializeField]
-    protected Ability ability;
+    public Ability ability;
     //======================================
 
 
@@ -200,7 +184,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected GameObject characterVoice;
 
-    protected MultipleAudioclips abilityCharacterSound;
+    public MultipleAudioclips abilityCharacterSound;
     protected MultipleAudioclips hurtCharacterSound;
     protected MultipleAudioclips deathCharacterSound;
     protected MultipleAudioclips spawnCharacterSound;
@@ -407,8 +391,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public float MovementSpeed
     {
-        get { return this.movementSpeed; }
-        set { this.movementSpeed = value; }
+        get { return playerInput.movementSpeed; }
+        set { playerInput.movementSpeed = value; }
     }
 
     /// <summary>
@@ -416,21 +400,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public bool IsMoving
     {
-        get 
-        {
-            float leftStickHorizontal = playerActions.LeftHorizontal;
-            float leftStickVertical = playerActions.LeftVertical;
-
-            // Horizontal check
-            if (leftStickHorizontal < analogStickTolerance && leftStickHorizontal > -analogStickTolerance)
-            {
-                // Verticals check
-                if (leftStickVertical < analogStickTolerance && leftStickVertical > -analogStickTolerance)
-                    return false;   // Player is not moving.
-            }
-            // Player is moving.
-            return true;
-        }
+        get { return playerInput.IsMoving; }
     }
 
     /// <summary>
@@ -454,7 +424,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             playerActions.Device = inputDevice;
     }
 
-    // Use this for initialization
 	private void Start () 
     {
         // Set the gameobject name.
@@ -494,6 +463,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             ability.InputDevice = inputDevice;
             ability.PlayerActions = playerActions;
         }
+
+        playerInput = new PlayerInputHandler(this, playerAnimator, playerActions);
     }
 
     void OnEnable()
@@ -565,99 +536,17 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public virtual void HandleAbilityInput()
     {
-        // Player presses ability button.
-        if (playerActions.Ability)
-        {           
-            if ( ability != null)
-            {
-                if (ability.UseIsAllowed && CheckEnergyLevel())
-                {
-                    playerAnimator.SetTrigger("Ability");
-                    ability.Use();
-
-                    //inputDevice.Vibrate(0.5f, 0.4f);
-
-                    // Play ability sound
-                    if (abilityCharacterSound != null)
-                        abilityCharacterSound.PlayRandomClip();
-
-                    // save ability event
-                    new Event(Event.TYPE.ability).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().send();
-                }
-            }
-        }
+        playerInput.HandleAbilityInput();
     }
 
-    /// <summary>
-    /// Handles when the object should move (for example when there is user input).
-    /// </summary>
-    public virtual void HandleMovement()
-    {       
-        float leftStickHorizontal = playerActions.LeftHorizontal;       
-        float leftStickVertical = playerActions.LeftVertical;
-        float verticalRotation = playerActions.RightVertical;
-        float horizontalRotation = playerActions.RightHorizontal;
-
-        // Set animator value
-        float magnitude = new Vector2(leftStickHorizontal, leftStickVertical).magnitude;
-        //playerAnimator.speed = magnitude;
-        playerAnimator.SetFloat("MoveValue", magnitude);
-
-        //==============Movement====================
-        if (leftStickHorizontal > analogStickTolerance)
-            ManipulateMovement(movementSpeed * Mathf.Abs(leftStickHorizontal), Vector3.right);
-        else if (leftStickHorizontal < -analogStickTolerance)
-            ManipulateMovement(movementSpeed * Mathf.Abs(leftStickHorizontal), -Vector3.right);
-
-        if (leftStickVertical > analogStickTolerance)
-            ManipulateMovement(movementSpeed * Mathf.Abs(leftStickVertical), -Vector3.forward);
-        else if (leftStickVertical < -analogStickTolerance)
-            ManipulateMovement(movementSpeed * Mathf.Abs(leftStickVertical), Vector3.forward);
-        //==========================================
-
-        //=============Rotation=====================
-        if (verticalRotation > analogStickTolerance || verticalRotation < -analogStickTolerance || horizontalRotation > analogStickTolerance || horizontalRotation < -analogStickTolerance)
-        {
-            rightAnalogStickIsUsed = true;
-            Vector3 angle = new Vector3(0, Mathf.Atan2(horizontalRotation, -verticalRotation) * Mathf.Rad2Deg, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(angle), Time.deltaTime * rotationSpeed);
-
-            //Shoot when you rotate
-            Shoot();
-
-            playerAnimator.SetBool("Shoot", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("Shoot", false);
-            //Debug.Log("BasePlayer: False");
-        }
-
-        if (!rightAnalogStickIsUsed)
-        {
-            //Check the analog stick tolerance
-            if (leftStickHorizontal > analogStickTolerance || leftStickHorizontal < -analogStickTolerance
-                || leftStickVertical > analogStickTolerance || leftStickVertical < -analogStickTolerance)
-            {
-                Vector3 angle = new Vector3(0, Mathf.Atan2(playerActions.LeftHorizontal, -playerActions.LeftVertical) * Mathf.Rad2Deg, 0);
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(angle), Time.deltaTime * rotationSpeed);
-            }
-        }
-
-        //playerAnimator.speed = 1;
-        rightAnalogStickIsUsed = false;
-        //==========================================
-    }
-
-
-    /// <summary>
-    /// Handles the actual movement with a speed in a certain direction.
-    /// </summary>
-    /// <param name="speedFactor">Speed of the movement.</param>
-    /// <param name="direction">Direction.</param>
-    public virtual void ManipulateMovement(float speedFactor, Vector3 direction)
+    public void HandleMovement()
     {
-        GetComponent<Rigidbody>().AddForce(direction * speedFactor);
+        playerInput.HandleMovement();
+    }
+
+    public void ManipulateMovement(float speedFactor, Vector3 direction)
+    {
+        playerInput.ManipulateMovement(speedFactor, direction);
     }
 
     /// <summary>
@@ -918,7 +807,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// Checks if the ability can be used based on the actual energy level.
     /// </summary>
     /// <returns>True: Ability can be used. False: Ability can't be used.</returns>
-    protected bool CheckEnergyLevel()
+    public bool CheckEnergyLevel()
     {
         if ((Energy - ability.EnergyCost) < minEnergy)
             return false;
