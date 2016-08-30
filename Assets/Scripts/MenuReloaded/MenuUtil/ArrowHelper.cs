@@ -7,8 +7,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AbstractMenuManager))]
 public class ArrowHelper : MonoBehaviour
 {
+    [SerializeField]
     private AbstractMenuManager menuManager;
-    private SelectorInterface selector;
 
     [SerializeField]
     private Image leftArrow;
@@ -24,8 +24,9 @@ public class ArrowHelper : MonoBehaviour
 
 	private void Start ()
     {
-        menuManager = GetComponent<AbstractMenuManager>();
-        selector = menuManager.Selector;
+        if(menuManager == null)
+            menuManager = GetComponent<AbstractMenuManager>();
+
         menuManager.NavigationNext += HandleSelectionChange;
         menuManager.NavigationPrevious += HandleSelectionChange;
 	}
@@ -61,6 +62,6 @@ public class ArrowHelper : MonoBehaviour
 
     private GameObject GetCurrentlySelectedMenuElement()
     {
-        return menuManager.MenuComponents[selector.Current];
+        return menuManager.MenuComponents[menuManager.Selector.Current];
     }
 }

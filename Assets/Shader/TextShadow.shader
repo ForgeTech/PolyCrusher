@@ -5,7 +5,7 @@
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
 		_ShadowColor ("Shadow Color", Color) = (0,0,0,0.2)
-        
+
         _StencilComp ("Stencil Comparison", Float) = 8
         _Stencil ("Stencil ID", Float) = 0
         _StencilOp ("Stencil Operation", Float) = 0
@@ -29,7 +29,7 @@
             "PreviewType"="Plane"
             "CanUseSpriteAtlas"="True"
         }
-        
+
         Stencil
         {
             Ref [_Stencil]
@@ -45,14 +45,14 @@
         ZTest [unity_GUIZTestMode]
         Blend SrcAlpha OneMinusSrcAlpha
         ColorMask [_ColorMask]
-        
+
         Pass
         {
             CGPROGRAM
             #pragma vertex ui_vert
             #pragma fragment ui_frag
             #pragma target 3.0
- 
+
             // prevent auto-normalize of normals & tangents on GLSL
             // because normals & tangents are used for a different purpose
             #pragma glsl_no_auto_normalization
@@ -79,22 +79,22 @@
 
 ;
             sampler2D _MainTex;
-            fixed4 _Color;
+            half4 _Color;
 			fixed4 _ShadowColor;
-            float _ShadowShiftX;
-            float _ShadowShiftY;
-			float _Quality;
-			float _Radius;
+            half _ShadowShiftX;
+            half _ShadowShiftY;
+			half _Quality;
+			half _Radius;
 
 
-			float4 blur(sampler2D tex, float2 uv, float4 uvRect) {
-                float4 col = float4(0,0,0,0);
-                for(float r0 = 0.0; r0 < 1.0; r0 += _Radius) {
-                    float r = r0 * _Quality;
-                    for(float a0 = 0.0; a0 < 1.0; a0 += _Radius) {
-                        float a = a0 * 6.283184;
-						float2 blurcoord = uv + float2(cos(a), sin(a)) * r;
-						float uvClip = UnityGet2DClipping(blurcoord, uvRect);
+			half4 blur(sampler2D tex, float2 uv, float4 uvRect) {
+                half4 col = float4(0,0,0,0);
+                for(half r0 = 0.0; r0 < 1.0; r0 += _Radius) {
+                    half r = r0 * _Quality;
+                    for(half a0 = 0.0; a0 < 1.0; a0 += _Radius) {
+                        half a = a0 * 6.283184;
+						half2 blurcoord = uv + float2(cos(a), sin(a)) * r;
+						half uvClip = UnityGet2DClipping(blurcoord, uvRect);
                         col.rgb += tex2D(tex, blurcoord).rgb;
 						col.a += tex2D(tex, blurcoord).a * uvClip;
                     }
@@ -103,7 +103,6 @@
 				col *= _Radius * _Radius;
                 return col;
             }
-
 
             v2f ui_vert(appdata_t IN)
             {
@@ -118,8 +117,6 @@
                 return OUT;
             }
 
-
-
             fixed4 ui_frag(v2f IN) : SV_Target
             {
                 fixed4 color = blur(_MainTex, IN.texcoord, IN.uvRect);
@@ -127,8 +124,6 @@
 				color.a *= _ShadowColor.a;
 				return color;
             }
-
-
             ENDCG
         }
 
@@ -148,18 +143,16 @@
                 fixed4 color            : COLOR;
                 half2 texcoord          : TEXCOORD0;
                 half4 uvRect            : TANGENT;
-            }
+            };
 
-;
             struct v2f
             {
                 float4 vertex           : SV_POSITION;
                 fixed4 color            : COLOR;
                 half2  texcoord         : TEXCOORD0;
                 half4 uvRect            : TEXCOORD2;
-            }
+            };
 
-;
             sampler2D _MainTex;
             fixed4 _Color;
             v2f ui_vert(appdata_t IN)
@@ -173,8 +166,6 @@
                 return OUT;
             }
 
-
-
             fixed4 ui_frag(v2f IN) : SV_Target
             {
                 fixed4 color;
@@ -185,11 +176,7 @@
                 color.a *= uvClip;
                 return color;
             }
-
-
             ENDCG
         }
     }
-
-
 }
