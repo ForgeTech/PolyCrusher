@@ -91,9 +91,16 @@ public class TimeSphereScript : MonoBehaviour
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, sphereRadius, 1 << 8);
 
+            BasePlayer basePlayer;
+
             for (int i = 0; i < hits.Length; i++)
             {
-                rumbleManager.Rumble(hits[i].GetComponent<BasePlayer>().InputDevice, RumbleType.Timesphere);
+                basePlayer = hits[i].GetComponent<BasePlayer>();
+
+                if (basePlayer != null)
+                {
+                    rumbleManager.Rumble(basePlayer.InputDevice, RumbleType.Timesphere);
+                }
             }
         }
     }

@@ -1953,17 +1953,20 @@ MonoBehaviour:
   health: 100
   minHealth: 0
   maxHealth: 100
+  lowHealth: 25
   energy: 50
   minEnergy: 0
   maxEnergy: 100
   energyRefillRate: .280000001
   energyIncrement: 1
-  playerName: Pantomime
   playerIdentifier: 4
+  playerColor: {r: 1, g: 1, b: 1, a: 1}
   deathTime: 3.29999995
-  movementSpeed: 20
-  analogStickTolerance: .100000001
-  rotationSpeed: 6
+  playerInput:
+    movementSpeed: 20
+    analogStickTolerance: .100000001
+    rotationSpeed: 6
+    rightAnalogStickIsUsed: 0
   weapon: {fileID: 11483280}
   ability: {fileID: 11431212}
   energyLevel: {fileID: 11444498}
@@ -2404,6 +2407,18 @@ Prefab:
       propertyPath: deathParticles
       value: 
       objectReference: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
+    - target: {fileID: 0}
+      propertyPath: playerInput.movementSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.analogStickTolerance
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.rotationSpeed
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193704}

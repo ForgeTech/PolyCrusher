@@ -1394,7 +1394,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149956}
-  m_LocalRotation: {x: .673879206, y: -.652568281, z: -.0719790235, w: -.338910729}
+  m_LocalRotation: {x: .673879266, y: -.65256834, z: -.071979031, w: -.338910758}
   m_LocalPosition: {x: .0117888842, y: 1.67970443, z: -.105552927}
   m_LocalScale: {x: .999999523, y: 1, z: .99999994}
   m_Children:
@@ -2693,9 +2693,11 @@ MonoBehaviour:
   playerIdentifier: 2
   playerColor: {r: .447058856, g: 1, b: 1, a: 1}
   deathTime: 3.29999995
-  movementSpeed: 20
-  analogStickTolerance: .100000001
-  rotationSpeed: 6
+  playerInput:
+    movementSpeed: 20
+    analogStickTolerance: .100000001
+    rotationSpeed: 6
+    rightAnalogStickIsUsed: 0
   weapon: {fileID: 11485336}
   ability: {fileID: 11447024}
   energyLevel: {fileID: 11471224}
@@ -3117,6 +3119,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: playerColor.r
       value: .447058856
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.movementSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.analogStickTolerance
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInput.rotationSpeed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
