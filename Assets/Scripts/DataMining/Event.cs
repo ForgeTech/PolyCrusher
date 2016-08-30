@@ -258,13 +258,16 @@ public class Event{
     public string mode { get; set; }
     [BsonIgnoreIfNull]
     public string[] characters { get; set; }
-    [BsonIgnoreIfNull]
-    public string cause { get; set; }
+
+    [BsonDefaultValue("")]
+    [BsonIgnoreIfDefault]
+    public string cause { get { return causePrivate; } set { this.causePrivate = value; } }
+    private string causePrivate = "";
+
     [BsonIgnoreIfNull]
     public int? kills { get; set; }      // ? to make variable nullable
     [BsonIgnoreIfNull]
     public int? score { get; set; }
-
     [BsonIgnore]
     public bool isSaved { get; set; }
     #endregion
