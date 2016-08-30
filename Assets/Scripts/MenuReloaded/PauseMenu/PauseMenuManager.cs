@@ -13,6 +13,8 @@ public class PauseMenuManager : MonoBehaviour {
     private GameObject staticElements;
 
     private Vector3 startPosition = new Vector3(2000, 0, 0);
+
+    [SerializeField]
     private float tweenTime = 0.5f;
 
     private bool pauseScreenActivated = false;
@@ -87,7 +89,7 @@ public class PauseMenuManager : MonoBehaviour {
             second = 1.0f;
         }
 
-        LeanTween.value(gameObject, first, second, tweenTime*2).setOnUpdate(
+        LeanTween.value(gameObject, first, second, tweenTime * 2f).setOnUpdate(
             (float val) => { Time.timeScale = val; }
         ).setEase(LeanTweenType.easeOutSine).setUseEstimatedTime(true).setOnComplete(()=> {
 
@@ -97,8 +99,6 @@ public class PauseMenuManager : MonoBehaviour {
                 InputManager.Devices[i].StopVibration();
             }
         });
-
-        
     }
 
     private void PauseTween(bool animateIn)
