@@ -179,4 +179,5 @@
             ENDCG
         }
     }
+	Fallback "UI/Default Font"
 }
