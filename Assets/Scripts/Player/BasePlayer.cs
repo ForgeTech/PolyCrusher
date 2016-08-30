@@ -754,7 +754,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     protected virtual void OnPlayerDeath()
     {
         if (PlayerDied != null)
+        {
             PlayerDied();
+            if (rumbleManager != null && inputDevice != null)
+                rumbleManager.Rumble(inputDevice, RumbleType.PlayerDeath);
+        }
     }
 
     /// <summary>

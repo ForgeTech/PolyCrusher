@@ -238,6 +238,33 @@ public class RumbleManager : MonoBehaviour
 
         inputDevice.StopVibration();
     }
+
+    private IEnumerator PlayerDeath(InputDevice inputDevice)
+    {
+        inputDevice.Vibrate(0.0f, 0.5f);
+        yield return waitTimes[1];
+
+        inputDevice.Vibrate(0.0f, 0.2f);
+        yield return waitTimes[1];
+
+        inputDevice.StopVibration();
+
+        inputDevice.Vibrate(0.0f, 0.5f);
+        yield return waitTimes[1];
+
+        inputDevice.Vibrate(0.0f, 0.2f);
+        yield return waitTimes[1];
+
+        inputDevice.StopVibration();
+
+        inputDevice.Vibrate(0.6f, 0.8f);
+        yield return waitTimes[6];
+
+        inputDevice.Vibrate(0.2f, 0.5f);
+        yield return waitTimes[1];
+
+        inputDevice.StopVibration();
+    }
   
 
     #endregion
