@@ -58,6 +58,8 @@ public class PlayerManager : MonoBehaviour
     // Start time for time measurement.
     private float startTime = 0;
 
+    private float overallTime = 0f;
+
     // Signals if the time should be measured or not.
     private bool measureTime;
 
@@ -248,12 +250,11 @@ public class PlayerManager : MonoBehaviour
         }
 
         playTime = new TimeUtil();
-        startTime = (int)Time.realtimeSinceStartup;
+        startTime = 0f;
         measureTime = true;
 
         // start session
         DataCollector.instance.startSession();
-
     }
 
 
@@ -273,7 +274,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (measureTime)
         {
-            float endTime = Time.realtimeSinceStartup;
+            overallTime += Time.deltaTime;
+            float endTime = overallTime;
             playTime = TimeUtil.SecondsToTime(endTime - startTime);
         }
     }
