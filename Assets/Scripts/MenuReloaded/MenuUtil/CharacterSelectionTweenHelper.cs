@@ -139,6 +139,7 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             LeanTween.scale(readyInfoBox, Vector3.one, tweenTime).setEase(easeType);
             TweenArrowAlpha(0f);
         }
+        SetImageGrayscale(1f, index);
 
         // Selected overlay text
         Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
@@ -156,6 +157,7 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
 
             TweenArrowAlpha(1f);
         }
+        SetImageGrayscale(0f, index);
 
         // Selected overlay text
         Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
@@ -262,6 +264,13 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
     private int CalculatePositiveMod(int a, int n)
     {
         return ((a % n) + n) % n;
+    }
+
+    private void SetImageGrayscale(float destinationValue, int index)
+    {
+        Image selectedComponent = menuManager.MenuComponents[index].GetComponent<Image>();
+        selectedComponent.material = new Material(selectedComponent.material);      // Hack :/
+        selectedComponent.material.SetFloat("_EffectAmount", destinationValue);
     }
 
     /// <summary>
