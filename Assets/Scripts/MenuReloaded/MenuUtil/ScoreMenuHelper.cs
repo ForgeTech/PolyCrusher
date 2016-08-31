@@ -101,7 +101,6 @@ public class ScoreMenuHelper : MonoBehaviour
         ScoreContainer score = DataCollector.instance.getScoreContainer();
         Queue<ScoreData> animationWorkQueue = new Queue<ScoreData>();
 
-        score.setWave(1.234255f);
         RegisterAnimationQueue(animationWorkQueue, score);
 
         // Count up each high score category
@@ -132,7 +131,7 @@ public class ScoreMenuHelper : MonoBehaviour
 
     private void RegisterAnimationQueue(Queue<ScoreData> animationWorkQueue, ScoreContainer score)
     {
-        AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, score.getWave(), score.getWaveScore());
+        AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, score.getWaveMultiplier(), score.getWaveScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.PolygonTriggered, score.getPolysTriggered(), score.getPolysTriggeredScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.PolyKill, score.getPolyKills(), score.getPolyKillsScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.LinecutKill, score.getCutKills(), score.getCutKillsScore());
