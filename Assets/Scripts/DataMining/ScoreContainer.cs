@@ -82,6 +82,11 @@ public class ScoreContainer
         return wave;
     }
 
+    public float getWaveMultiplier()
+    {
+        return wave-1;
+    }
+
     //------score getter------
 
     public int getBossKillsScore()
