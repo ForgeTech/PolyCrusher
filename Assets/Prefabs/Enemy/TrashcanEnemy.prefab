@@ -464,8 +464,9 @@ MonoBehaviour:
   attackRange: 8
   lifeTimeAfterDeath: 3
   bloodParticle: {fileID: 157414, guid: 4927ea95f2ba8c74eaa91f8b3ed5d9b8, type: 2}
-  hitLightTime: .200000003
+  hitLightTime: .150000006
   maxEnemyLifeTime: 300
+  hitBlinkTime: .200000003
   bulletPrefab: {fileID: 140958, guid: 55e20ccbf7ad6f0458c2892e46a100a8, type: 2}
 --- !u!114 &11480144
 MonoBehaviour:
@@ -579,6 +580,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spawnDistanceFromPlayers
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hitLightTime
+      value: .150000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
