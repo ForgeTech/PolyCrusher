@@ -56,7 +56,6 @@ public class DataCollector : MonoBehaviour
         private set
         {
             this.score = value;
-            Debug.Log("score:"+score);
         }
     }
     [SerializeField]
@@ -133,6 +132,8 @@ public class DataCollector : MonoBehaviour
         kills = new Dictionary<string, int>();
         deathtime = new Dictionary<string, int>();
         scoreContainer = new ScoreContainer();
+
+        Debug.Log("<color=purple>P</color><color=blue>O</color><color=cyan>L</color><color=green>Y</color><color=yellow>C</color><color=orange>R</color><color=red>U</color><color=purple>S</color><color=blue>H</color><color=cyan>E</color><color=yellow>R</color>");
 
         // set settings
         if(settings != null){
@@ -628,12 +629,16 @@ public class DataCollector : MonoBehaviour
                 break;
             case Event.TYPE.sessionEnd:
                 float wave = Event.getWave();
+                scoreContainer.setWave(wave);
+
                 int s = (int)((wave - (int)wave) * 10000);
                 Score += s;
 
-                scoreContainer.setWave(wave);
-
-                //Debug.Log("[DataCollector] Wave: " + wave);
+                /*
+                Debug.Log("[DataCollector] wave " + wave);
+                Debug.Log("[DataCollector] score " + Score);
+                Debug.Log("[ScoreContainer] score " + scoreContainer.getScoreSum());
+                */
 
                 break;
         }

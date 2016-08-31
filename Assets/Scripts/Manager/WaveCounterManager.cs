@@ -119,23 +119,12 @@ public class WaveCounterManager : MonoBehaviour
             RectTransform rectTrans = popup.GetComponent<RectTransform>();
             LeanTween.moveY(rectTrans, rectTrans.position.y + 120, 3.5f).setEase(LeanTweenType.easeOutQuad);
             LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
-        }
-    }
-
-    public void ScorePopup(string score)
-    {
-        if (scorePopup != null && canvas != null)
-        {
-            GameObject popup = Instantiate(scorePopup);
-            UnityEngine.UI.Text text = popup.GetComponent<UnityEngine.UI.Text>();
-            if (text != null)
+            float multiplikator = 1.2f;
+            if (score > 0)
             {
-                    text.text = score;
+                multiplikator = 1 + score / 1000f;
             }
-            popup.transform.SetParent(canvas.transform, false);
-            RectTransform rectTrans = popup.GetComponent<RectTransform>();
-            LeanTween.moveY(rectTrans, rectTrans.position.y + 80, 3.5f).setEase(LeanTweenType.easeInQuad);
-            LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
+            LeanTween.scale(rectTrans, Vector3.one * multiplikator, 0.05f).setEase(LeanTweenType.easeInQuad).setOnComplete(()=> { LeanTween.scale(rectTrans, Vector3.one, 0.1f).setEase(LeanTweenType.easeInQuad); });
         }
     }
 

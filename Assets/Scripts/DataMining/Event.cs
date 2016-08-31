@@ -80,7 +80,7 @@ public class Event{
         float wave = 0;
         if (GameManager.gameManagerInstance != null)
         {
-            wave= GameManager.gameManagerInstance.Wave;
+            wave = GameManager.gameManagerInstance.Wave;
             wave += (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool;
         }
         return wave;
