@@ -24,7 +24,7 @@ public class DataCollector : MonoBehaviour
         public int bundleSize = 10;
         public bool log = false;
         [Tooltip("Check if all registered events shall be logged in the console.")]
-        public bool logEvents = true;
+        public bool logEvents = false;
 
     private bool online = true;
 
@@ -560,6 +560,7 @@ public class DataCollector : MonoBehaviour
                     // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
                     float interpolationAddition = ((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
                     intermediateScore += interpolationAddition - 0.00001f;
+                   // intermediateScore = Score + (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool;
                     //Debug.Log("<color=red>[DataCollector]</color> popup " + interpolationAddition + " wave " + e.wave);
                     WaveCounterManager.instance.ScorePopup((int)interpolationAddition);
 
@@ -580,7 +581,7 @@ public class DataCollector : MonoBehaviour
                 resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 break;
             case Event.TYPE.waveUp:
-                intermediateScore = Score;
+                //intermediateScore = Score;
                 resourceValueBefore = 0;
                 break;
             case Event.TYPE.sessionEnd:
@@ -588,7 +589,7 @@ public class DataCollector : MonoBehaviour
                 break;
         }
 
-        
+        //intermediateScore = Score + (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool;
     }
 
     int playerDeathsInWave = 0;
