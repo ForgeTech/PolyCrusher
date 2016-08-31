@@ -590,7 +590,7 @@ public class DataCollector : MonoBehaviour
         }
 
         intermediateScore = Score + (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000;
-        Debug.Log("inter:" + intermediateScore + " score:" + Score);
+        //Debug.Log("inter:" + intermediateScore + " score:" + Score);
     }
 
     int playerDeathsInWave = 0;
