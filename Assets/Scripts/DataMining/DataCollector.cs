@@ -558,8 +558,8 @@ public class DataCollector : MonoBehaviour
                 if (e.character != "PolygonSystem")
                 {
                     // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
-                    float interpolationAddition = ((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
-                    intermediateScore += interpolationAddition - 0.00001f;
+                    float interpolationAddition = (GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000;
+                    //intermediateScore += interpolationAddition - 0.00001f;
                    // intermediateScore = Score + (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool;
                     //Debug.Log("<color=red>[DataCollector]</color> popup " + interpolationAddition + " wave " + e.wave);
                     WaveCounterManager.instance.ScorePopup((int)interpolationAddition);
@@ -577,7 +577,7 @@ public class DataCollector : MonoBehaviour
                 float scorevalueOfKilledEnemys = ((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
                 float scoreGain = 1000 + n + scorevalueOfKilledEnemys;
                 WaveCounterManager.instance.ScorePopup((int)scoreGain);
-                intermediateScore += scoreGain;
+                //intermediateScore += scoreGain;
                 resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 break;
             case Event.TYPE.waveUp:
@@ -589,7 +589,8 @@ public class DataCollector : MonoBehaviour
                 break;
         }
 
-        //intermediateScore = Score + (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool;
+        intermediateScore = Score + (float)GameManager.GameManagerInstance.AccumulatedRessourceValue / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000;
+        Debug.Log("inter:" + intermediateScore + " score:" + Score);
     }
 
     int playerDeathsInWave = 0;
@@ -637,7 +638,6 @@ public class DataCollector : MonoBehaviour
 
             case Event.TYPE.powerup:
                 Score += 100;
-                intermediateScore = Score;
                 scoreContainer.addPowerupsCollected(1);
                 WaveCounterManager.instance.ScorePopup(100);
                 break;
