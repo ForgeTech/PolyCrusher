@@ -7,6 +7,7 @@
 		_EmissionColor ("Emission Color", Color) = (1,1,1,1)
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
+		_MetallicTex ("Metallic (R), Smoothness (G)", 2D) = "white" {}
 
 		_GlowEmissionColor ("Glow Color", Color) = (1,1,1,1)
 		_GlowEmission ("Glow Emission", Float) = 1.0
@@ -25,6 +26,7 @@
 
 		sampler2D _MainTex;
 		sampler2D _EmissionTex;
+		sampler2D _MetallicTex;
 
 		struct Input {
 			float2 uv_MainTex;
@@ -50,9 +52,9 @@
 			fixed4 glowE = fixed4(1,1,1,1) * _GlowEmissionColor * _GlowEmission;
 			o.Emission = lerp(e.rgb, glowE.rgb, _EffectAmount);
 
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
+			half3 metallic = tex2D (_MetallicTex, IN.uv_MainTex).rgb;
+			o.Metallic = metallic.r * _Metallic;
+			o.Smoothness = metallic.g * _Glossiness;
 			o.Alpha = c.a;
 		}
 		ENDCG
