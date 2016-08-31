@@ -1430,6 +1430,7 @@ MonoBehaviour:
   bloodParticle: {fileID: 107548, guid: 3983c62af78a0ad418db957f51097f6d, type: 2}
   hitLightTime: .200000003
   maxEnemyLifeTime: 3000
+  hitBlinkTime: .150000006
   lifeSetting:
     onePlayer: .400000006
     twoPlayers: .5
@@ -3886,6 +3887,10 @@ Prefab:
       propertyPath: deathParticles
       value: 
       objectReference: {fileID: 167032, guid: 12a5d010e4bbb724e809fe93912f845f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: hitBlinkTime
+      value: .150000006
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141898}
