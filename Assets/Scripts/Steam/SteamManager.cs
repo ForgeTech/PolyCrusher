@@ -40,6 +40,7 @@ class SteamManager : BaseSteamManager
     //achievements
     private IDictionary<AchievementID, Achievement> achievements = new Dictionary<AchievementID, Achievement>();
     private int achievementCounter = 0;
+    private bool gameStarted = false;
 
     //leaderboards
     private SteamLeaderboard_t m_SteamLeaderboard;
@@ -263,6 +264,12 @@ class SteamManager : BaseSteamManager
         }
 
         //menu
+        if (!gameStarted)
+        {
+            totalGameStarts++;
+            gameStarted = true;
+            storeStats = true;
+        }
         if (totalGameStarts == 1)
             UnlockAchievement(AchievementID.ACH_STARTED_GAME_ONCE);
         else if (totalGameStarts == 3)
@@ -568,9 +575,6 @@ class SteamManager : BaseSteamManager
     {
         switch (id)
         {
-            case AchievementID.ACH_STARTED_GAME_ONCE: //TODO
-                totalGameStarts++;
-                break;
             case AchievementID.ACH_CREDITS_VIEWED: //TODO
                 UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
                 break;
