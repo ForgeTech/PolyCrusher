@@ -292,21 +292,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &126438
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 412698}
-  m_Layer: 8
-  m_Name: RockeSpawn01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &127188
 GameObject:
   m_ObjectHideFlags: 1
@@ -347,21 +332,6 @@ GameObject:
   - 4: {fileID: 459404}
   m_Layer: 8
   m_Name: CATRigRLegAnkle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &131354
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 495356}
-  m_Layer: 8
-  m_Name: RockeSpawn02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -969,7 +939,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.9888306, y: .0403244682, z: -71.0895386}
+  m_LocalPosition: {x: 35.9702034, y: .0410908498, z: -72.2685318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 442990}
@@ -992,18 +962,6 @@ Transform:
   m_Children:
   - {fileID: 475184}
   m_Father: {fileID: 455198}
-  m_RootOrder: 0
---- !u!4 &412698
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126438}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.77999997, y: 3.47000003, z: 4.92999983}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 461280}
   m_RootOrder: 0
 --- !u!4 &415878
 Transform:
@@ -1339,11 +1297,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0280000009, y: .944999993, z: -.0240000002}
+  m_LocalPosition: {x: -.0280000009, y: -.133000001, z: -.0240000002}
   m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
-  m_Children:
-  - {fileID: 412698}
-  - {fileID: 495356}
+  m_Children: []
   m_Father: {fileID: 409370}
   m_RootOrder: 1
 --- !u!4 &462720
@@ -1589,18 +1545,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 442990}
   m_RootOrder: 4
---- !u!4 &495356
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131354}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.29999995, y: 3.47000003, z: 4.92999983}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 461280}
-  m_RootOrder: 1
 --- !u!4 &497336
 Transform:
   m_ObjectHideFlags: 1
@@ -1976,6 +1920,7 @@ MonoBehaviour:
   bloodParticles: {fileID: 149012, guid: 7e0d42e889efde4448c4983a3a8a5c60, type: 2}
   deathParticles: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
   characterVoice: {fileID: 170934}
+  abilityCharacterSound: {fileID: 0}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
 --- !u!114 &11415850
 MonoBehaviour:

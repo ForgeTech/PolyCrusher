@@ -9,12 +9,17 @@ public class PantomimeWallBehaviour : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
+        obstacle.enabled = false;
         StartCoroutine(WaitForDestroy());
 
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
 
-        LeanTween.scale(gameObject, originalScale, 0.9f).setEase(AnimCurveContainer.AnimCurve.pingPong);
+        LeanTween.scale(gameObject, originalScale, 0.9f).setEase(AnimCurveContainer.AnimCurve.pingPong)
+            .setOnComplete(() => {
+                obstacle.enabled = true;
+            });
     }
 
     /// <summary>
@@ -24,6 +29,7 @@ public class PantomimeWallBehaviour : MonoBehaviour
     protected IEnumerator WaitForDestroy()
     {
         yield return new WaitForSeconds(activeTime);
-        Destroy(this.gameObject);
+        LeanTween.scale(gameObject, Vector3.zero, 0.5f).setEase(LeanTweenType.easeOutSine);
+        Destroy(this.gameObject, 0.55f);
     }
 }
