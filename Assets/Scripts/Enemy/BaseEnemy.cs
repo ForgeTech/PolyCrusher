@@ -36,6 +36,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [SerializeField]
     protected string enemyName = "Enemy";
 
+    private Material enemyMaterial;
+
     /// <summary>
     /// Returns enemy name.
     /// </summary>
@@ -118,6 +120,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [Tooltip("The maximum life time of the enemy in seconds.")]
     [SerializeField]
     float maxEnemyLifeTime = 300f;
+
+    [SerializeField]
+    private float hitBlinkTime = 0.2f;
 
     // The Finite state machine.
     protected FSMSystem fsm;
@@ -280,6 +285,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     // Use this for initialization
 	protected virtual void Start ()
     {
+        enemyMaterial = transform.GetComponentInChildren<Renderer>().material;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = movementSpeed;
 
@@ -383,12 +389,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             Health -= damage;
         }
 
-        // Light blink
-        if (lightComponent != null)
-        {
-            SetLightColor(damageDealer);
-            StartCoroutine(ColorBlink(hitLightTime));
-        }
+        // Material emmission blink
+        if (enemyMaterial != null)
+            BlinkMaterial(damageDealer);
     }
 
     /// <summary>
@@ -559,6 +562,28 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             BasePlayer p = damageDealer as BasePlayer;
             if(p != null)
                 lightComponent.color = p.PlayerColor;
+        }
+    }
+
+    protected virtual void BlinkMaterial(MonoBehaviour damageDealer)
+    {
+        if (damageDealer != null && damageDealer is BasePlayer)
+        {
+            BasePlayer p = damageDealer as BasePlayer;
+            float halfBlinkTime = hitBlinkTime * 0.5f;
+
+            LeanTween.cancel(gameObject);
+            enemyMaterial.SetColor("_GlowEmissionColor", p.PlayerColor);
+            LeanTween.value(gameObject, 0f, 1f, halfBlinkTime).setEase(LeanTweenType.easeOutSine)
+                .setOnUpdate((float val) => {
+                    enemyMaterial.SetFloat("_EffectAmount", val);
+                })
+                .setOnComplete(() => {
+                        LeanTween.value(gameObject, 1f, 0f, halfBlinkTime).setEase(LeanTweenType.easeOutSine)
+                   .setOnUpdate((float val) => {
+                       enemyMaterial.SetFloat("_EffectAmount", val);
+                   });
+                });
         }
     }
 

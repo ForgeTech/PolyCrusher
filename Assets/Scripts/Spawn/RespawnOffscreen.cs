@@ -89,6 +89,7 @@ public class RespawnOffscreen : MonoBehaviour
         {
             enemy.EnemySpawnScaleTween();
             navAgent.speed = enemy.InitialMovementSpeed;
+            enemy.SetNewTarget(enemy.TargetPlayer);
         }
     }
 
