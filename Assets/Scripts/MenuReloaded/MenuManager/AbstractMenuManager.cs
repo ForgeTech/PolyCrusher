@@ -295,8 +295,8 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected IEnumerator WaitBeforeTriggerBackAction(Action action)
     {
         acceptButtonInput = false;
-        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
         action();
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
         acceptButtonInput = true;
     }
 

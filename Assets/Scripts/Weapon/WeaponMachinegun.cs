@@ -38,6 +38,7 @@ public class WeaponMachinegun : Weapon
                 Vector3 rotationVector = rotation * v;
                 
                 bullet.Shoot(rotationVector, speed);
+                bulletRounds.Emit(1);
             }
 
             shootIsAllowed = false;

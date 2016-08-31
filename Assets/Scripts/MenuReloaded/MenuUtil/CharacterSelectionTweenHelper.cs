@@ -138,13 +138,13 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             LeanTween.moveY(selectInfoBox, topAnchoredPosition.y, tweenTime).setEase(easeType);
             LeanTween.scale(readyInfoBox, Vector3.one, tweenTime).setEase(easeType);
             TweenArrowAlpha(0f);
+            
+            // Selected overlay text
+            Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
+            LeanTween.rotateZ(selectedText.gameObject, 15f, textTweenTime).setEase(easeType);
+            LeanTween.scale(selectedText.rectTransform, Vector3.one, textTweenTime).setEase(easeType);
         }
         SetImageGrayscale(1f, index);
-
-        // Selected overlay text
-        Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
-        LeanTween.rotateZ(selectedText.gameObject, 15f, textTweenTime).setEase(easeType);
-        LeanTween.scale(selectedText.rectTransform, Vector3.one, textTweenTime).setEase(easeType);
     }
 
     private void HandleCharacterDeselected(int index, PlayerSlot slot)
@@ -156,13 +156,13 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
             LeanTween.scale(readyInfoBox, Vector3.zero, tweenTime).setEase(easeType);
 
             TweenArrowAlpha(1f);
+
+            // Selected overlay text
+            Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
+            LeanTween.rotateZ(selectedText.gameObject, 0f, textTweenTime).setEase(easeType);
+            LeanTween.scale(selectedText.rectTransform, Vector3.zero, textTweenTime).setEase(easeType);
         }
         SetImageGrayscale(0f, index);
-
-        // Selected overlay text
-        Text selectedText = FindPlayerSubObjectTextByTag(index, "Pie");
-        LeanTween.rotateZ(selectedText.gameObject, 0f, textTweenTime).setEase(easeType);
-        LeanTween.scale(selectedText.rectTransform, Vector3.zero, textTweenTime).setEase(easeType);
     }
 
     private Text FindPlayerSubObjectTextByTag(int index, string tag)
