@@ -114,6 +114,9 @@ public class ScoreContainer
         return playerRevivals * -1000;
     }
 
+    /// <summary>
+    /// (float Wave - 1) * 10000
+    /// </summary>
     public int getWaveScore()
     {
         return (int)((wave-1) * 10000);

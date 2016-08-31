@@ -168,7 +168,8 @@ public class DataCollector : MonoBehaviour
     void Start () {
         //EventRegistered += (Event e) => { Invoke(calculateScore(e), 10); };
         //EventRegistered += calculateScore;
-        EventRegistered += InvokeScoreCalcDelayed;
+        EventRegistered += calculateScore;
+        EventRegistered += InvokeDisplayScoreCalcDelayed;
         DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
         StartCoroutine(TestConnection());
     }
@@ -548,6 +549,22 @@ public class DataCollector : MonoBehaviour
         return "NO ONE";
     }
 
+    private void calculateDisplayScore(Event e)
+    {
+        if(e.type == Event.TYPE.kill)
+        {
+            // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
+            int interpolationAddition = (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
+            intermediateScore += interpolationAddition;
+
+            if (interpolationAddition != 0)
+            {
+                WaveCounterManager.instance.ScorePopup(interpolationAddition);
+            }
+
+            resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
+        }
+    }
 
     int playerDeathsInWave = 0;
     int resourceValueBefore = 0;
@@ -574,17 +591,7 @@ public class DataCollector : MonoBehaviour
                     WaveCounterManager.instance.ScorePopup(100);
                 }
 
-                // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
-                int interpolationAddition = (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
-                //Debug.Log("[Score]" + interpolationAddition);
-                intermediateScore += interpolationAddition;
-
-                if(interpolationAddition != 0)
-                {
-                    WaveCounterManager.instance.ScorePopup(interpolationAddition);
-                }
-
-                resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
+               
                 break;
 
             case Event.TYPE.superAbility:
@@ -652,11 +659,10 @@ public class DataCollector : MonoBehaviour
     }
 
     // wicked workaround for 1 frame delayed score calc (problem with AccumulatedRessourceValue)
-    public IEnumerator ScoreCalcCoroutine(Event e)
+    public IEnumerator DisplayScoreCalcCoroutine(Event e)
     {
         yield return null;
-
-        calculateScore(e);
+        calculateDisplayScore(e);
     }
 
     // check if server is reachable
@@ -694,9 +700,9 @@ public class DataCollector : MonoBehaviour
     }
 
 
-    public void InvokeScoreCalcDelayed(Event e)
+    public void InvokeDisplayScoreCalcDelayed(Event e)
     {
-        StartCoroutine(ScoreCalcCoroutine(e));
+        StartCoroutine(DisplayScoreCalcCoroutine(e));
     }
  
 }
