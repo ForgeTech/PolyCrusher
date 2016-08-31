@@ -132,24 +132,21 @@ public class PlayerInputHandler
     public virtual void HandleAbilityInput()
     {
         // Player presses ability button.
-        if (playerAction.Ability)
+        if (playerAction.Ability && player.ability != null)
         {
-            if (player.ability != null)
+            if (player.ability.UseIsAllowed && player.CheckEnergyLevel())
             {
-                if (player.ability.UseIsAllowed && player.CheckEnergyLevel())
-                {
-                    playerAnimator.SetTrigger("Ability");
-                    player.ability.Use();
+                playerAnimator.SetTrigger("Ability");
+                player.ability.Use();
 
-                    //inputDevice.Vibrate(0.5f, 0.4f);
+                //inputDevice.Vibrate(0.5f, 0.4f);
 
-                    // Play ability sound
-                    if (player.abilityCharacterSound != null)
-                        player.abilityCharacterSound.PlayRandomClip();
+                // Play ability sound
+                if (player.abilityCharacterSound != null)
+                    player.abilityCharacterSound.PlayRandomClip();
 
-                    // save ability event
-                    new Event(Event.TYPE.ability).addPos(player.transform).addCharacter(player.PlayerIdentifier.ToString("g")).addWave().send();
-                }
+                // save ability event
+                new Event(Event.TYPE.ability).addPos(player.transform).addCharacter(player.PlayerIdentifier.ToString("g")).addWave().send();
             }
         }
     }

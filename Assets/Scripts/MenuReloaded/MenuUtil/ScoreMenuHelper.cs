@@ -106,10 +106,19 @@ public class ScoreMenuHelper : MonoBehaviour
         // Count up each high score category
         foreach (var highscoreEntry in highscoreEntries)
         {
-            ScoreData currentScore = animationWorkQueue.Dequeue();
-            for (int i = 0; i < currentScore.scoreMultiplier; i++)
+            if (highscoreEntry.Key != HighscoreType.WaveCount)
             {
-                highscoreEntry.Value.scoreText.text = string.Format(currentScore.originalScoreText, i + 1);
+                ScoreData currentScore = animationWorkQueue.Dequeue();
+                for (int i = 0; i < currentScore.scoreMultiplier; i++)
+                {
+                    highscoreEntry.Value.scoreText.text = string.Format(currentScore.originalScoreText, i + 1);
+                    yield return waitForTextAdd;
+                }
+            }
+            else // Special case for the wave score multiplier -> Floating point
+            {
+                ScoreData currentScore = animationWorkQueue.Dequeue();
+                highscoreEntry.Value.scoreText.text = string.Format(currentScore.originalScoreText, currentScore.scoreMultiplier);
                 yield return waitForTextAdd;
             }
             DoScaleTween(highscoreEntry.Value.scoreText.rectTransform, this.scaleTime, upScale);
@@ -122,7 +131,7 @@ public class ScoreMenuHelper : MonoBehaviour
 
     private void RegisterAnimationQueue(Queue<ScoreData> animationWorkQueue, ScoreContainer score)
     {
-        AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, (int)score.getWave(), score.getWaveScore());
+        AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, score.getWave(), score.getWaveScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.PolygonTriggered, score.getPolysTriggered(), score.getPolysTriggeredScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.PolyKill, score.getPolyKills(), score.getPolyKillsScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.LinecutKill, score.getCutKills(), score.getCutKillsScore());
@@ -139,7 +148,7 @@ public class ScoreMenuHelper : MonoBehaviour
                 });
     }
 
-    private void AddAnimationEntry(Queue<ScoreData> animationQueue, HighscoreType highscoreType, int scoreMultiplier, int scoreValue)
+    private void AddAnimationEntry(Queue<ScoreData> animationQueue, HighscoreType highscoreType, float scoreMultiplier, int scoreValue)
     {
         highscoreEntries[highscoreType].scoreMultiplier = scoreMultiplier;
         highscoreEntries[highscoreType].scoreValue = scoreValue;
@@ -232,7 +241,7 @@ public class ScoreMenuHelper : MonoBehaviour
         public readonly Text highScoreEntry;
         public readonly Text scoreText;
 
-        public int scoreMultiplier = 0;
+        public float scoreMultiplier = 0;
         public int scoreValue = 0;
         public readonly string originalScoreText;
 
