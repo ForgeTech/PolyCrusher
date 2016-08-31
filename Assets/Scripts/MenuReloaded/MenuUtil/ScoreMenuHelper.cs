@@ -175,12 +175,12 @@ public class ScoreMenuHelper : MonoBehaviour
         }
 
         // Set score
-        scoreText.text = CreateHighscoreString(score.getWave(), score.getScoreSum(), 0);
+        scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), 0);
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
         yield return new WaitForSeconds(totalScoreTime);
 
         // Set online rank
-        scoreText.text = CreateHighscoreString(score.getWave(), score.getScoreSum(), onlineRank);
+        scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), onlineRank);
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
     }
     #endregion
