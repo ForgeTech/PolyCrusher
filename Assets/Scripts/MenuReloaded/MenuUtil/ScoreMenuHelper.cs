@@ -101,6 +101,7 @@ public class ScoreMenuHelper : MonoBehaviour
         ScoreContainer score = DataCollector.instance.getScoreContainer();
         Queue<ScoreData> animationWorkQueue = new Queue<ScoreData>();
 
+        score.setWave(1.234255f);
         RegisterAnimationQueue(animationWorkQueue, score);
 
         // Count up each high score category
