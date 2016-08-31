@@ -73,6 +73,8 @@ class SteamManager : BaseSteamManager
     private int totalPowerups = 0;
 
     private int COUNTER = 0;
+    private float TIME = 0f;
+    private float startTime = 0f;
     private int playerDeath = 0;
 
     protected override void Awake()
@@ -491,11 +493,18 @@ class SteamManager : BaseSteamManager
     /// <param name="e">The Event that is sent by the DataCollector.</param>
     public override void LogAchievementEvent(Event e)
     {
+        if (e.type == Event.TYPE.gameStart)
+        {
+            PerformGameStartActions(e);
+        }
+        else
+        {
+            TIME = Time.time - startTime;
+            startTime = Time.time;
+        }
+
         switch (e.type)
         {
-            case Event.TYPE.gameStart:
-                PerformGameStartActions(e);
-                break;
             case Event.TYPE.waveUp:
                 COUNTER -= (1000 * playerDeath);
                 playerDeath = 0;
@@ -589,6 +598,8 @@ class SteamManager : BaseSteamManager
     /// <param name="e">The game start event.</param>
     private void PerformGameStartActions(Event e)
     {
+        startTime = Time.time;
+
         //find leaderboard
         SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
         LeaderboardFindResult.Set(findHandle, OnLeaderboardFindResult);
@@ -658,25 +669,27 @@ class SteamManager : BaseSteamManager
 
         rank = 0;
         COUNTER += (int)(10000f * (float)e.wave) - 10000;
-        if (COUNTER == DataCollector.instance.Score)
-        {
-            //save leaderboard entry
-            int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
-            SteamAPICall_t uploadHandle = new SteamAPICall_t();
-            if (e.mode.Equals("normal"))
-            {
-                uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, DataCollector.instance.Score, additionalInfo, additionalInfo.Length);
-            }
-            if (e.mode.Equals("yolo"))
-            {
-                uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
-                if (e.time / 60000f >= 5f)
-                    UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
-            }
 
+        //save leaderboard entry
+        int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
+        SteamAPICall_t uploadHandle = new SteamAPICall_t();
+
+        if (e.mode.Equals("normal") && COUNTER == DataCollector.instance.Score)
+        {
+            Debug.Log("Attempting to upload score for normal mode!");
+            uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, DataCollector.instance.Score, additionalInfo, additionalInfo.Length);
             LeaderboardScoreUploaded.Set(uploadHandle, OnLeaderboardScoreUploaded);
         }
+        else if (e.mode.Equals("yolo") && TIME < 10f)
+        {
+            Debug.Log("Attempting to upload score for yolo mode!");
+            uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
+            LeaderboardScoreUploaded.Set(uploadHandle, OnLeaderboardScoreUploaded);
+            if (e.time / 60000f >= 5f)
+                UnlockAchievement(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES);
+        }
         COUNTER = 0;
+        TIME = 0f;
 
         //store new persisted stats next frame
         storeStats = true;

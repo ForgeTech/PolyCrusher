@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //
-// ISteamManager is the base class of SteamManager and SteamManagerDummy and regulates the initialization of those.
+// BaseSteamManager is the base class of SteamManager and SteamManagerDummy and regulates the initialization of those.
 // The dummy class is initialized instead of the manager class when Unity is running in editor mode (and WIN Standalone atm for all following test builds).
 // If testing the SteamManager, please enable your Steam Standalone and comment lines 20 and 22-24.
 //
