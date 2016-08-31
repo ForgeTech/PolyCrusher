@@ -41,6 +41,10 @@ public abstract class Weapon : MonoBehaviour, IUsable
     [SerializeField]
     protected float muzzleFlashTime = 0.1f;
 
+    [Header("Bullet round")]
+    [SerializeField]
+    protected ParticleSystem bulletRounds;
+
     // Audiosource of the weapon.
     protected AudioSource weaponAudioSource;
 

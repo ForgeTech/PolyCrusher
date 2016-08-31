@@ -41,6 +41,7 @@ public class WeaponRailgun : Weapon
 
                 //Shoot
                 ray.Shoot(CalculateAim(ray));
+                bulletRounds.Emit(1);
             }
 
             shootIsAllowed = false;

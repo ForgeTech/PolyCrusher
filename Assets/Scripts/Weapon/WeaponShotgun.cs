@@ -53,10 +53,10 @@ public class WeaponShotgun : Weapon
 
                     // Shoot bullet
                     bullet.Shoot(rotationVector, speed);
-
                     currentAngle += angleBetween;
                 }
             }
+            bulletRounds.Emit(1);
 
             shootIsAllowed = false;
             StartCoroutine(WaitForNextShot());

@@ -13,6 +13,9 @@ public class WeaponPistol : Weapon
     // Boolean for the spawn point alteration.
     private bool alternateSpawn = true;
 
+    [SerializeField]
+    private ParticleSystem rightBulletRounds;
+
 	protected override void Start()
     {
  	    base.Start();
@@ -43,9 +46,15 @@ public class WeaponPistol : Weapon
 
                 // Alternate the spawnpoint of the dual pistol
                 if (alternateSpawn)
+                {
                     spawn = bulletSpawns[1];
+                    bulletRounds.Emit(1);
+                }
                 else
+                {
                     spawn = bulletSpawns[2];
+                    rightBulletRounds.Emit(1);
+                }
 
                 alternateSpawn = !alternateSpawn;
 
