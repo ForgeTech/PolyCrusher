@@ -889,6 +889,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         PlayerDied = null;
         PlayerSpawned = null;
         AbilityUseable = null;
+
+        if (inputDevice != null)
+        {
+            inputDevice.StopVibration();
+        }
+
     }
     #endregion
 }

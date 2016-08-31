@@ -63,7 +63,8 @@ public class ScoreMenuHelper : MonoBehaviour
         VerifyInputs();
         Initialize();
         StartHighscoreAnimationPhases();
-	}
+        EnableMenuMusic();
+    }
 
     private void StartHighscoreAnimationPhases()
     {
@@ -252,4 +253,26 @@ public class ScoreMenuHelper : MonoBehaviour
             originalScoreText = scoreText.text.ToString();
         }
     }
+
+    #region menuMusicActivation
+    private void EnableMenuMusic()
+    {
+        GameObject globalScripts = GameObject.FindGameObjectWithTag("GlobalScripts");
+        if (globalScripts != null)
+        {
+            AudioSource menuMusic = globalScripts.GetComponent<AudioSource>();
+            if (menuMusic != null)
+            {
+                menuMusic.Stop();
+                menuMusic.volume = 1.0f;
+                menuMusic.time = 0.0f;
+                menuMusic.Play();
+            }
+        }
+        else
+        {
+            Debug.Log("No global scripts game object found!");
+        }
+    }
+    #endregion
 }
