@@ -104,27 +104,38 @@ public class WaveCounterManager : MonoBehaviour
 
     public void ScorePopup(int score)
     {
-        if(GameManager.gameManagerInstance.CurrentGameMode == GameMode.NormalMode && scorePopup != null && canvas != null)
+        if(GameManager.gameManagerInstance.CurrentGameMode == GameMode.NormalMode && scorePopup != null && canvas != null && score != 0)
         {
+            Debug.Log("[popup] " + score);
+
             GameObject popup = Instantiate(scorePopup);
             UnityEngine.UI.Text text = popup.GetComponent<UnityEngine.UI.Text>();
+
+            float multiplikator = 1.2f;
+            if (score >= 0)
+            {
+                multiplikator = 1 + score / 1000f;
+            }
+            float multiplikatorScale = 1 + (multiplikator - 1) * 0.1f;
+
+            text.color = new Color(1f, 2.4f - multiplikator, 0);
+
             if (text != null)
             {
                 if (score >= 0)
                     text.text = "+" + score.ToString("N0");
-                else
+                else{
                     text.text = score.ToString();
+                    text.color = Color.red;
+                }
             }
+
             popup.transform.SetParent(canvas.transform, false);
             RectTransform rectTrans = popup.GetComponent<RectTransform>();
             LeanTween.moveY(rectTrans, rectTrans.position.y + 120, 3.5f).setEase(LeanTweenType.easeOutQuad);
             LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup); });
-            float multiplikator = 1.2f;
-            if (score > 0)
-            {
-                multiplikator = 1 + score / 1000f;
-            }
-            LeanTween.scale(rectTrans, Vector3.one * multiplikator, 0.05f).setEase(LeanTweenType.easeInQuad).setOnComplete(()=> { LeanTween.scale(rectTrans, Vector3.one, 0.1f).setEase(LeanTweenType.easeInQuad); });
+
+            LeanTween.scale(rectTrans, Vector3.one * multiplikator, 0.05f).setEase(LeanTweenType.easeInQuad).setOnComplete(()=> { LeanTween.scale(rectTrans, Vector3.one * multiplikatorScale, 0.1f).setEase(LeanTweenType.easeInQuad); });
         }
     }
 

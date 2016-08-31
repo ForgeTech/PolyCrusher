@@ -24,7 +24,7 @@ public class DataCollector : MonoBehaviour
         public int bundleSize = 10;
         public bool log = false;
         [Tooltip("Check if all registered events shall be logged in the console.")]
-        public bool logEvents = false;
+        public bool logEvents = true;
 
     private bool online = true;
 
@@ -60,7 +60,7 @@ public class DataCollector : MonoBehaviour
     }
     [SerializeField]
     private int score;
-    public int intermediateScore; // score to be viewed in the UI
+    public float intermediateScore; // score to be viewed in the UI
 
     private ScoreContainer scoreContainer;
 
@@ -551,26 +551,45 @@ public class DataCollector : MonoBehaviour
 
     private void calculateDisplayScore(Event e)
     {
-        if(e.type == Event.TYPE.kill)
+        switch (e.type)
         {
-            // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
-            int interpolationAddition = (int)((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
-            intermediateScore += interpolationAddition;
+            case Event.TYPE.kill:
 
-            if (interpolationAddition != 0)
-            {
-                WaveCounterManager.instance.ScorePopup(interpolationAddition);
-            }
+                
+                if (e.character != "PolygonSystem")
+                {
+                    // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
+                    float interpolationAddition = ((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
 
-            resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
+                    intermediateScore += interpolationAddition;
+                    WaveCounterManager.instance.ScorePopup((int)interpolationAddition);
+                }
+                
+                break;
+            case Event.TYPE.superAbility:
+                int n = 0;
+                if (e.kills != null)
+                {
+                    n += (int)e.kills * 100;
+                }
+                float scorevalueOfKilledEnemys = ((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
+                float scoreGain = 1000 + n + scorevalueOfKilledEnemys;
+                WaveCounterManager.instance.ScorePopup((int)scoreGain);
+                intermediateScore += scoreGain;
+                break;
+            case Event.TYPE.waveUp:
+                intermediateScore = Score;
+                break;
         }
+
+        resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
     }
 
     int playerDeathsInWave = 0;
     int resourceValueBefore = 0;
     private void calculateScore(Event e)
     {
-        int scoreBefore = Score;
+        //int scoreBefore = Score;
 
         switch (e.type)
         {
@@ -590,8 +609,6 @@ public class DataCollector : MonoBehaviour
                     scoreContainer.addCutKills(1);
                     WaveCounterManager.instance.ScorePopup(100);
                 }
-
-               
                 break;
 
             case Event.TYPE.superAbility:
@@ -604,7 +621,7 @@ public class DataCollector : MonoBehaviour
                 }
                 scoreContainer.addPolysTriggered(1);
                 Score += 1000 + n;
-                WaveCounterManager.instance.ScorePopup(1000 + n);
+                //WaveCounterManager.instance.ScorePopup(1000 + n);
                 break;
 
             case Event.TYPE.death:
@@ -629,7 +646,7 @@ public class DataCollector : MonoBehaviour
                     Score += 10000;
                 }
                 //intermediateScore -= entireInterpolationAddition;
-                scoreBefore = Score;
+                //scoreBefore = Score;
                 intermediateScore = Score;
                 resourceValueBefore = 0;
                 playerDeathsInWave = 0;
@@ -650,7 +667,7 @@ public class DataCollector : MonoBehaviour
                 break;
         }
         //Debug.Log("[Score]" + (Score - scoreBefore));
-        intermediateScore += Score - scoreBefore;
+        //intermediateScore += Score - scoreBefore;
     }
     
     public ScoreContainer getScoreContainer()
