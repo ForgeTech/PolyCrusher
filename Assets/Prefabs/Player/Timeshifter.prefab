@@ -945,6 +945,7 @@ GameObject:
   - 114: {fileID: 11437546}
   - 95: {fileID: 9535596}
   - 195: {fileID: 19570622}
+  - 114: {fileID: 11449412}
   m_Layer: 8
   m_Name: Timeshifter
   m_TagString: Player
@@ -1412,7 +1413,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149956}
-  m_LocalRotation: {x: .673879206, y: -.652568281, z: -.0719790235, w: -.338910729}
+  m_LocalRotation: {x: .673879266, y: -.65256834, z: -.071979031, w: -.338910758}
   m_LocalPosition: {x: .0117888842, y: 1.67970443, z: -.105552927}
   m_LocalScale: {x: .999999523, y: 1, z: .99999994}
   m_Children:
@@ -2753,6 +2754,17 @@ MonoBehaviour:
   energyCost: 65
   abilityCoolDown: 9
   timeSphere: {fileID: 154732, guid: b10aaf14c9c91374d9c5e48896b9e8a0, type: 2}
+--- !u!114 &11449412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b02066571a6b74a929460d245ff120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11451088
 MonoBehaviour:
   m_ObjectHideFlags: 1

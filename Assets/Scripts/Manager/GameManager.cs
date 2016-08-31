@@ -221,6 +221,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     protected float[] playerCountHealthMultiplier;
+
+    private PlayerManager playerManager;
     #endregion
 
     #endregion
@@ -406,6 +408,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
 	void Start () 
     {
+        playerManager = GameObject.FindObjectOfType<PlayerManager>();
+
         // Search for enemy spawn points.
         enemySpawnPoints = GameObject.FindGameObjectsWithTag("EnemySpawn");
 
@@ -509,7 +513,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ModifyEnemyHealthBasedOnPlayerCount(SpawnInformation spawnInfo)
     {
-        PlayerManager playerManager = GameObject.FindObjectOfType<PlayerManager>();
         if(playerManager.PlayerCountInGameSession > 0)
             spawnInfo.ActualHealth = (int)(spawnInfo.ActualHealth * playerCountHealthMultiplier[playerManager.PlayerCountInGameSession - 1]);
     }
@@ -537,8 +540,16 @@ public class GameManager : MonoBehaviour
         WaveActive = false;
         isBossWave = false;
         StartCoroutine(WaitForNextWave());
+        CheckSteamAchievement();
 
         OnWaveEnded();
+    }
+
+    private void CheckSteamAchievement()
+    {
+        // Last man standing
+        if (playerManager.PlayerCountInGameSession == 4 && PlayerManager.PlayerCount == 1)
+            BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_LAST_MAN_STANDING);
     }
 
     /// <summary>

@@ -195,6 +195,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected GameObject respawnParticles;
 
+    #region Delegates and Events
     //Event handler for player deaths.
     public static event PlayerDiedEventHandler PlayerDied;
 
@@ -203,6 +204,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     // Event handler for the use of the ability.
     public static event AbilityUseableEventHandler AbilityUseable;
+
+    public delegate void TakeDamageEventHandler(int damageDealed);
+    public event TakeDamageEventHandler DamageTaken;
+    #endregion
     #endregion
 
 
@@ -596,6 +601,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                 hurtCharacterSound.PlayRandomClip();
             
             this.Health -= damage;
+            OnDamageTaken(damage);
 
             if(this.health < lowHealth && !lowHealthRumbleActive)
             {
@@ -881,6 +887,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
+    protected void OnDamageTaken(int damageTaken)
+    {
+        if (DamageTaken != null)
+            DamageTaken(damageTaken);
+    }
+
     /// <summary>
     /// Resets all neccessary values.
     /// </summary>
@@ -894,7 +906,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         {
             inputDevice.StopVibration();
         }
-
     }
     #endregion
 }
