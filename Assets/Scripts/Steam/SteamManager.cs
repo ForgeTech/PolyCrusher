@@ -584,10 +584,10 @@ class SteamManager : BaseSteamManager
             case AchievementID.ACH_A_MILLION_SHOTS:
                 bulletsShot++;
                 break;
-            case AchievementID.ACH_LAST_MAN_STANDING: //TODO
+            case AchievementID.ACH_LAST_MAN_STANDING:
                 UnlockAchievement(AchievementID.ACH_LAST_MAN_STANDING);
                 break;
-            case AchievementID.ACH_NO_DAMAGE_UNTIL_W10: //TODO
+            case AchievementID.ACH_NO_DAMAGE_UNTIL_W10:
                 UnlockAchievement(AchievementID.ACH_NO_DAMAGE_UNTIL_W10);
                 break;
             case AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU:
