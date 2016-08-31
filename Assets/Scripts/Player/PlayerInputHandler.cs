@@ -132,7 +132,7 @@ public class PlayerInputHandler
     public virtual void HandleAbilityInput()
     {
         // Player presses ability button.
-        if (playerAction.Ability && player.ability != null)
+        if (playerAction.Ability.WasPressed && player.ability != null)
         {
             if (player.ability.UseIsAllowed && player.CheckEnergyLevel())
             {
