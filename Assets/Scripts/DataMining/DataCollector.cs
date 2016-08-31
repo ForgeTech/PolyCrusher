@@ -548,21 +548,22 @@ public class DataCollector : MonoBehaviour
         }
         return "NO ONE";
     }
-
+    int resourceValueBefore = 0;
     private void calculateDisplayScore(Event e)
     {
         switch (e.type)
         {
             case Event.TYPE.kill:
 
-                
                 if (e.character != "PolygonSystem")
                 {
                     // another hound burried: this score always hangs back one kill, because the kill event is triggered before the AccumulatedRessourceValue can be updated
                     float interpolationAddition = ((GameManager.gameManagerInstance.AccumulatedRessourceValue - resourceValueBefore) / (float)GameManager.gameManagerInstance.EnemyRessourcePool * 10000);
-
-                    intermediateScore += interpolationAddition;
+                    intermediateScore += interpolationAddition - 0.00001f;
+                    //Debug.Log("<color=red>[DataCollector]</color> popup " + interpolationAddition + " wave " + e.wave);
                     WaveCounterManager.instance.ScorePopup((int)interpolationAddition);
+
+                    resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 }
                 
                 break;
@@ -576,17 +577,22 @@ public class DataCollector : MonoBehaviour
                 float scoreGain = 1000 + n + scorevalueOfKilledEnemys;
                 WaveCounterManager.instance.ScorePopup((int)scoreGain);
                 intermediateScore += scoreGain;
+                resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
                 break;
             case Event.TYPE.waveUp:
                 intermediateScore = Score;
+                resourceValueBefore = 0;
+                break;
+            case Event.TYPE.sessionEnd:
+                resourceValueBefore = 0; 
                 break;
         }
 
-        resourceValueBefore = GameManager.GameManagerInstance.AccumulatedRessourceValue;
+        
     }
 
     int playerDeathsInWave = 0;
-    int resourceValueBefore = 0;
+    
     private void calculateScore(Event e)
     {
         //int scoreBefore = Score;
@@ -630,6 +636,7 @@ public class DataCollector : MonoBehaviour
 
             case Event.TYPE.powerup:
                 Score += 100;
+                intermediateScore = Score;
                 scoreContainer.addPowerupsCollected(1);
                 WaveCounterManager.instance.ScorePopup(100);
                 break;
@@ -645,10 +652,10 @@ public class DataCollector : MonoBehaviour
                     }
                     Score += 10000;
                 }
+                //resourceValueBefore = 0;
                 //intermediateScore -= entireInterpolationAddition;
                 //scoreBefore = Score;
                 intermediateScore = Score;
-                resourceValueBefore = 0;
                 playerDeathsInWave = 0;
                 break;
             case Event.TYPE.sessionEnd:
@@ -678,6 +685,7 @@ public class DataCollector : MonoBehaviour
     // wicked workaround for 1 frame delayed score calc (problem with AccumulatedRessourceValue)
     public IEnumerator DisplayScoreCalcCoroutine(Event e)
     {
+        yield return null;
         yield return null;
         calculateDisplayScore(e);
     }
