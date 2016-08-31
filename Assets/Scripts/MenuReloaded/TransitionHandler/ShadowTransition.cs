@@ -15,7 +15,7 @@ public class ShadowTransition : TransitionHandlerInterface
             .setOnUpdate((float val) => {
                 shadowColor.a = val / 255f;
                 mat.SetColor("_ShadowColor", shadowColor);
-            });
+            }).setUseEstimatedTime(true);
     }
 
     public void OnFocus(GameObject gameobject)
@@ -28,7 +28,7 @@ public class ShadowTransition : TransitionHandlerInterface
             .setOnUpdate((float val) => {
                 shadowColor.a = val / 255f;
                 mat.SetColor("_ShadowColor", shadowColor);
-            });
+            }).setUseEstimatedTime(true);
     }
 
     private Material GetMaterialFrom(GameObject g)

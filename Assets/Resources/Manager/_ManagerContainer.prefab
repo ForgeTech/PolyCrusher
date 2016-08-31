@@ -248,6 +248,7 @@ GameObject:
   - 114: {fileID: 11433620}
   - 114: {fileID: 11441616}
   - 114: {fileID: 11444274}
+  - 114: {fileID: 11404960}
   m_Layer: 0
   m_Name: Resume
   m_TagString: Untagged
@@ -588,6 +589,7 @@ GameObject:
   - 114: {fileID: 11433566}
   - 114: {fileID: 11481386}
   - 114: {fileID: 11439358}
+  - 114: {fileID: 11439810}
   m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1327,6 +1329,20 @@ MonoBehaviour:
   activateCutting: 0
   bossCuttingDamage: 5
   lightSabrePrefab: {fileID: 175004, guid: b8fa2eb29f1dc684488854f36b762479, type: 2}
+--- !u!114 &11404960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: 1bb25c1e0b109274b853f3171a5f7f8f, type: 2}
+  textMaterial: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
 --- !u!114 &11407458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1338,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9fdb5b1af6ee149bc10321d7dba6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chosenPlayerIndices: 00000000
+  chosenPlayerIndices: 04000000
   controllerNumber: 01000000
   playerPrefabs:
   - {fileID: 134618, guid: 575a9c71ee4c8e24e8acf93a1aa0bf22, type: 2}
@@ -1895,7 +1911,7 @@ MonoBehaviour:
   buttonPressedWaitTime: .200000003
   stickMovedWaitTime: .200000003
   menuSpawnTweenTime: .5
-  transitions: 0100000004000000
+  transitions: 010000000400000006000000
   pressedHandlerEnum: 00000000
   spawnHandlerEnum: 0
   subSelectorTransition: 
@@ -1910,7 +1926,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: afc38f959e7f97540af4c5193b243cd2, type: 2}
   m_Color: {r: .909803927, g: .909803927, b: .909803927, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1942,7 +1958,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f3e57ffefe173374b9e7672d5acb0d51, type: 2}
   m_Color: {r: .909803927, g: .909803927, b: .909803927, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1986,6 +2002,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: MenuReloadedMainMenu
+--- !u!114 &11439810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41945e9b86b7f2d4da0788150fa05bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 30
+  imageMaterial: {fileID: 2100000, guid: 1bb25c1e0b109274b853f3171a5f7f8f, type: 2}
+  textMaterial: {fileID: 2100000, guid: afc38f959e7f97540af4c5193b243cd2, type: 2}
 --- !u!114 &11441616
 MonoBehaviour:
   m_ObjectHideFlags: 1
