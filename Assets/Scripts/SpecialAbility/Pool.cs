@@ -23,35 +23,6 @@ public class Pool : MonoBehaviour {
     void Awake()
     {
         current = this;
-
-        StartCoroutine(InitializePool());
-    }
-
-
-
-
-    public GameObject getPooledObject()
-    {
-
-        for(int i = 0; i < pool.Count; i++)
-        {
-            if (!pool[i].activeInHierarchy)
-            {                
-                return pool[i];
-            }
-
-        }
-        return null;
-
-
-    }
-
-    
-    private IEnumerator InitializePool()
-    {
-        yield return new WaitForSeconds(2.5f);
-      
-
         pool = new List<GameObject>();
 
         for (int i = 0; i < amount; i++)
@@ -62,10 +33,25 @@ public class Pool : MonoBehaviour {
             pool.Add(go);
 
         }
-
-
     }
 
+
+
+
+    public GameObject getPooledObject()
+    {
+        for(int i = 0; i < pool.Count; i++)
+        {
+            if (!pool[i].activeInHierarchy)
+            {                
+                return pool[i];
+            }
+        }
+        return null;
+    }
+
+    
+   
 
 	
 }
