@@ -13,6 +13,8 @@ public class ScoreContainer
     private int playerRevivals = 0;
     private float wave = 0;
 
+    private int yoloScore = 0;
+
     public void addBossKills(int x)
     {
         bossKills += x;
@@ -41,6 +43,11 @@ public class ScoreContainer
     public void addPlayerRevials(int x)
     {
         playerRevivals += x;
+    }
+
+    public void setYoloScore(int x)
+    {
+        yoloScore = x;
     }
 
     public void setWave(float x)
@@ -130,6 +137,11 @@ public class ScoreContainer
     public int getScoreSum()
     {
         return getBossKillsScore() + getPolysTriggeredScore() + getPolyKillsScore() + getCutKillsScore() + getPowerupsCollectedScore() + getPlayerRevivalsScore() + getWaveScore();
+    }
+
+    public int getYoloScore()
+    {
+        return yoloScore;
     }
 }
 
