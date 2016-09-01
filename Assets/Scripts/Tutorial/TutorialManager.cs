@@ -96,7 +96,7 @@ public class TutorialManager : MonoBehaviour {
 				});
 
 				tutorialBorder.transform.localScale = borderStartSize;
-				borderTweenID = LeanTween.scale(tutorialBorder, new Vector3(1.3f, 1.1f, 1f), 1.5f).setLoopPingPong().setEase(LeanTweenType.easeInOutSine).id;
+				borderTweenID = LeanTween.scale(tutorialBorder, new Vector3(1.7f, 1.1f, 1f), 1.5f).setLoopPingPong().setEase(LeanTweenType.easeInOutSine).id;
 			}
 			i++;
 		}

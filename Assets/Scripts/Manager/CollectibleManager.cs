@@ -67,7 +67,7 @@ public class CollectibleManager : MonoBehaviour {
 		activePowerUpsCount--;
 	}
 	
-	protected void checkSpawn(){
+	public void checkSpawn(){
 		if (PowerUpSpawnPoints != null){
 			if (activePowerUpsCount <= 0){
 

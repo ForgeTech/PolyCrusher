@@ -197,6 +197,7 @@ class SteamManager : BaseSteamManager
         requestedStats = false;
         statsValid = false;
         currDownloadedEntries = new List<LeaderboardEntry>();
+        currentMode = "normal";
 
         Debug.Log("SteamManager enabled by " + SteamFriends.GetPersonaName());
     }
