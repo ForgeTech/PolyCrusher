@@ -20,8 +20,14 @@ public class PlayerSelectionContainer : MonoBehaviour
         + " If wrong characters are spawned, check this order first!")]
     public GameObject[] playerPrefabs;
 
-    void Awake()
+    private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void ResetPlayers()
+    {
+        for (int i = 0; i < playerInputDevices.Length; i++)
+            playerActive[i] = false;
     }
 }
