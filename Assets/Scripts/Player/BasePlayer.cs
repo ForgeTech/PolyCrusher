@@ -468,8 +468,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             ability.InputDevice = inputDevice;
             ability.PlayerActions = playerActions;
         }
-
-        playerInput = new PlayerInputHandler(this, playerAnimator, playerActions);
+        playerInput = new PlayerInputHandler(this, playerAnimator);
     }
 
     void OnEnable()

@@ -28,6 +28,9 @@ public class PlayerSelectionContainer : MonoBehaviour
     public void ResetPlayers()
     {
         for (int i = 0; i < playerInputDevices.Length; i++)
+        {
             playerActive[i] = false;
+            playerInputDevices[i] = null;
+        }
     }
 }

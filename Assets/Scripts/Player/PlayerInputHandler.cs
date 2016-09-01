@@ -5,7 +5,6 @@ public class PlayerInputHandler
 {
     #region Internal members
     private Animator playerAnimator;
-    private PlayerControlActions playerAction;
     private BasePlayer player;
     private Rigidbody playerRigidBody;
     #endregion
@@ -35,8 +34,11 @@ public class PlayerInputHandler
     {
         get
         {
-            float leftStickHorizontal = playerAction.LeftHorizontal;
-            float leftStickVertical = playerAction.LeftVertical;
+            if (player == null)
+                return false;
+
+            float leftStickHorizontal = player.PlayerActions.LeftHorizontal;
+            float leftStickVertical = player.PlayerActions.LeftVertical;
 
             // Horizontal check
             if (leftStickHorizontal < analogStickTolerance && leftStickHorizontal > -analogStickTolerance)
@@ -50,10 +52,9 @@ public class PlayerInputHandler
         }
     }
 
-    public PlayerInputHandler(BasePlayer player, Animator playerAnimator, PlayerControlActions playerAction)
+    public PlayerInputHandler(BasePlayer player, Animator playerAnimator)
     {
         this.playerAnimator = playerAnimator;
-        this.playerAction = playerAction;
         this.player = player;
         this.playerRigidBody = player.GetComponent<Rigidbody>();
     }
@@ -63,10 +64,10 @@ public class PlayerInputHandler
     /// </summary>
     public virtual void HandleMovement()
     {
-        float leftStickHorizontal = playerAction.LeftHorizontal;
-        float leftStickVertical = playerAction.LeftVertical;
-        float verticalRotation = playerAction.RightVertical;
-        float horizontalRotation = playerAction.RightHorizontal;
+        float leftStickHorizontal = player.PlayerActions.LeftHorizontal;
+        float leftStickVertical = player.PlayerActions.LeftVertical;
+        float verticalRotation = player.PlayerActions.RightVertical;
+        float horizontalRotation = player.PlayerActions.RightHorizontal;
 
         // Set animator value
         float magnitude = new Vector2(leftStickHorizontal, leftStickVertical).magnitude;
@@ -108,7 +109,7 @@ public class PlayerInputHandler
             if (leftStickHorizontal > analogStickTolerance || leftStickHorizontal < -analogStickTolerance
                 || leftStickVertical > analogStickTolerance || leftStickVertical < -analogStickTolerance)
             {
-                Vector3 angle = new Vector3(0, Mathf.Atan2(playerAction.LeftHorizontal, -playerAction.LeftVertical) * Mathf.Rad2Deg, 0);
+                Vector3 angle = new Vector3(0, Mathf.Atan2(player.PlayerActions.LeftHorizontal, -player.PlayerActions.LeftVertical) * Mathf.Rad2Deg, 0);
                 player.transform.rotation = Quaternion.Lerp(player.transform.rotation, Quaternion.Euler(angle), Time.deltaTime * rotationSpeed);
             }
         }
@@ -132,7 +133,7 @@ public class PlayerInputHandler
     public virtual void HandleAbilityInput()
     {
         // Player presses ability button.
-        if (playerAction.Ability.WasPressed && player.ability != null)
+        if (player.PlayerActions.Ability.WasPressed && player.ability != null)
         {
             if (player.ability.UseIsAllowed && player.CheckEnergyLevel())
             {
