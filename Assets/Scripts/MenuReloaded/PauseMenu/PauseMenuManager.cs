@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using InControl;
 
-public class PauseMenuManager : MonoBehaviour {
-
+public class PauseMenuManager : MonoBehaviour
+{
     private PlayerControlActions playerActions;
 
     [SerializeField]
@@ -12,7 +11,7 @@ public class PauseMenuManager : MonoBehaviour {
     [SerializeField]
     private GameObject staticElements;
 
-    private Vector3 startPosition = new Vector3(2000, 0, 0);
+    private Vector3 startPosition = new Vector3(0, 1100f, 0);
 
     [SerializeField]
     private float tweenTime = 0.5f;
@@ -23,19 +22,17 @@ public class PauseMenuManager : MonoBehaviour {
     //private Camera camera;
     private GradientImageEffect gradient;
 
-
     private AbstractMenuManager menuManager;
-
 
     [Header("Camera effect setting")]
     [SerializeField]
-    private float destinationIntensity = 0.7f;
+    private float destinationIntensity = 1f;
 
     [SerializeField]
-    private float destinationGreenIntensity = 0.3f;
+    private float destinationGreenIntensity = 0f;
 
 
-    void OnEnable()
+    private void OnEnable()
     {
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
         gameObject.transform.position = startPosition;
@@ -47,35 +44,29 @@ public class PauseMenuManager : MonoBehaviour {
         menuManager.SetMenuInputActive(false);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         playerActions.Destroy();
     }
 
-	// Update is called once per frame
-	void Update () {
-        if (playerActions.Pause)
+	private void Update ()
+    {
+        if (playerActions.Pause.WasPressed)
         {
             if (!pauseScreenActivated)
-            {
                  PauseGame();
-            }
         }
 
-        if (playerActions.Pause || playerActions.Back)
+        if (playerActions.Pause.WasPressed || playerActions.Back.WasPressed)
         {
             if (pauseScreenActivated)
-            {
                 ResumeGame();
-            }
-
         }
 	}
 
     private void SetMenuActive(bool setActive)
     {
         menuElements.SetActive(setActive);
-       
     }
 
     private void TimeTween(bool animateIn)
@@ -103,7 +94,6 @@ public class PauseMenuManager : MonoBehaviour {
 
     private void PauseTween(bool animateIn)
     {
-
         Vector3 first = startPosition;
         Vector3 second = Vector3.zero;
 
@@ -153,7 +143,6 @@ public class PauseMenuManager : MonoBehaviour {
             }).setUseEstimatedTime(true);
     }
 
-
     public void ResumeGame()
     {
         if (animationFinished)
@@ -175,8 +164,4 @@ public class PauseMenuManager : MonoBehaviour {
             animationFinished = false;
         }
     }
-
-
-
-  
 }
