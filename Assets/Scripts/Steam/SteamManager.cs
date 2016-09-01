@@ -77,6 +77,7 @@ class SteamManager : BaseSteamManager
     private float TIME = 0f;
     private float startTime = 0f;
     private int playerDeath = 0;
+    private string currentMode = "normal";
 
     protected override void Awake()
     {
@@ -518,7 +519,7 @@ class SteamManager : BaseSteamManager
                 break;
             case Event.TYPE.death:
                 playerDeath++;
-                if (e.wave >= 1 && e.wave < 2)
+                if (e.wave >= 1 && e.wave < 2 && currentMode.Equals("normal"))
                     UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
                 if (e.enemy.Equals("Laser") || e.enemy.Equals("DeathTrap"))
                     UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
@@ -585,10 +586,12 @@ class SteamManager : BaseSteamManager
                 bulletsShot++;
                 break;
             case AchievementID.ACH_LAST_MAN_STANDING:
-                UnlockAchievement(AchievementID.ACH_LAST_MAN_STANDING);
+                if (currentMode.Equals("normal"))
+                    UnlockAchievement(AchievementID.ACH_LAST_MAN_STANDING);
                 break;
             case AchievementID.ACH_NO_DAMAGE_UNTIL_W10:
-                UnlockAchievement(AchievementID.ACH_NO_DAMAGE_UNTIL_W10);
+                if (currentMode.Equals("normal"))
+                    UnlockAchievement(AchievementID.ACH_NO_DAMAGE_UNTIL_W10);
                 break;
             case AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU:
                 UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
@@ -603,6 +606,7 @@ class SteamManager : BaseSteamManager
     private void PerformGameStartActions(Event e)
     {
         startTime = Time.time;
+        currentMode = e.mode;
 
         //find leaderboard
         SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
@@ -664,11 +668,11 @@ class SteamManager : BaseSteamManager
         totalGamesPlayed++;
 
         //waves reached achievement
-        if (e.wave >= 10)
+        if (e.wave >= 10 && currentMode.Equals("normal"))
             UnlockAchievement(AchievementID.ACH_REACH_W10);
-        if (e.wave >= 20)
+        if (e.wave >= 20 && currentMode.Equals("normal"))
             UnlockAchievement(AchievementID.ACH_REACH_W20);
-        if (e.wave >= 30)
+        if (e.wave >= 30 && currentMode.Equals("normal"))
             UnlockAchievement(AchievementID.ACH_REACH_W30);
 
         rank = 0;
@@ -678,13 +682,13 @@ class SteamManager : BaseSteamManager
         int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
         SteamAPICall_t uploadHandle = new SteamAPICall_t();
 
-        if (e.mode.Equals("normal") && COUNTER == DataCollector.instance.Score)
+        if (currentMode.Equals("normal") && COUNTER == DataCollector.instance.Score)
         {
             Debug.Log("Attempting to upload score for normal mode!");
             uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, DataCollector.instance.Score, additionalInfo, additionalInfo.Length);
             LeaderboardScoreUploaded.Set(uploadHandle, OnLeaderboardScoreUploaded);
         }
-        else if (e.mode.Equals("yolo") && TIME < 10f)
+        else if (currentMode.Equals("yolo") && TIME < 10f)
         {
             Debug.Log("Attempting to upload score for yolo mode!");
             uploadHandle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, e.time, additionalInfo, additionalInfo.Length);
