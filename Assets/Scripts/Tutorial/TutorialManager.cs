@@ -25,9 +25,9 @@ public class TutorialManager : MonoBehaviour {
 	[SerializeField]
 	private GameObject[] tutorialPrefabs;							// Prefabs of the tutorials.
 	[SerializeField]
-	private int ButtonFontSize = 50;							// Size of the Button.
+	private int ButtonFontSize = 50;								// Size of the Button.
 	[SerializeField]
-	private int ButtonAllignementDistance = 4;				// Distance between the several buttons.
+	private int ButtonAllignementDistance = 4;						// Distance between the several buttons.
 	[SerializeField]
 	private Vector3 textRotationVector = new Vector3(90,0,0);		// Rotationvector of the text button objects.
 	[SerializeField]
@@ -44,7 +44,8 @@ public class TutorialManager : MonoBehaviour {
 
 	// private fields
 	private GameObject[] textButtons;								// Runtime generated text mesh buttons for tutorial prefab selection.
-
+	private int borderTweenID = 0;									// Unique ID of the lean tween (needed for appropriate ending stopping method).
+	private Vector3 borderStartSize;
 
 	void Start() {
 		LineBorderScript.TutorialLeft += ActivateTutorialTextButtons;
@@ -52,12 +53,16 @@ public class TutorialManager : MonoBehaviour {
 		tutorialBorder = Instantiate(tutorialBorder);
 		tutorialBorder.GetComponentInChildren<Image>().enabled = false;
 
+		borderStartSize = tutorialBorder.transform.localScale;
+
 		// Create on-collision buttons for the tutorial prefab selection.
 		for (int i = 0; i < tutorialPrefabs.Length; i++) {
 			textButtons[i] = Instantiate(tutorialButtonPrefab);
+
 			textButtons[i].transform.position = new Vector3(tutorialButtonPositionObject.transform.position.x + ButtonAllignementDistance * i
 				, tutorialButtonPositionObject.transform.position.y
 				, tutorialButtonPositionObject.transform.position.z);
+
 			tutorialPrefabs[i].transform.position = new Vector3(textButtons[i].transform.position.x + tutorialAddToPositionVector.x
 				, textButtons[i].transform.position.y + tutorialAddToPositionVector.y
 				, textButtons[i].transform.position.z + tutorialAddToPositionVector.z);
@@ -86,13 +91,20 @@ public class TutorialManager : MonoBehaviour {
 				LeanTween.value(tutorialBorder.transform.GetChild(0).gameObject, tutorialBorder.GetComponentInChildren<Image>().color.g, 0, 0.5f).setOnUpdate((float val) => {
 					tutorialBorder.GetComponentInChildren<Image>().color = new Color(val, 1f, val, 1 + (-1*val));
 				});
-				//LeanTween.scale(tutorialBorder, tutorialBorder.GetComponent<RectTransform>().localScale, 0.5f).setLoopPingPong()));
+				LeanTween.value(tutorialBorder.transform.GetChild(0).gameObject, tutorialBorder.GetComponentInChildren<Image>().color.g, 0, 0.5f).setOnUpdate((float val) => {
+					tutorialBorder.GetComponentInChildren<Image>().color = new Color(val, 1f, val, 1 + (-1 * val));
+				});
+
+				tutorialBorder.transform.localScale = borderStartSize;
+				borderTweenID = LeanTween.scale(tutorialBorder, new Vector3(1.3f, 1.1f, 1f), 1.5f).setLoopPingPong().setEase(LeanTweenType.easeInOutSine).id;
 			}
 			i++;
 		}
 	}
 
 	void ActivateTutorialTextButtons() {
+		LeanTween.cancel(borderTweenID);
+
 		foreach (GameObject prefab in textButtons) {
 			if (!prefab.GetComponent<TextButtonScript>().IsActive) {
 				prefab.GetComponentInChildren<Text>().color = Color.yellow;
