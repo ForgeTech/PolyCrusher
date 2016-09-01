@@ -20,11 +20,17 @@ public class LevelEndManager : MonoBehaviour
     private float waitTimeBeforeLevelLoad = 1.0f;
 
     [SerializeField]
-    private GameObject endScreenImage;
+    private Image crushedCircle;
+
+    [SerializeField]
+    private Text crushedText;
 
     [Header("Tweening setting")]
     [SerializeField]
     private float tweenTime = 0.5f;
+
+    [SerializeField]
+    private float crushedTextTweenTime = 0.1f;
 
     [SerializeField]
     private LeanTweenType easeType = LeanTweenType.easeOutSine;
@@ -35,49 +41,65 @@ public class LevelEndManager : MonoBehaviour
 
     [SerializeField]
     private float destinationGreenIntensity = 0.3f;
+
+    [SerializeField]
+    private AudioClip wooshSound;
+
+    [SerializeField]
+    private AudioClip punchSound;
     #endregion
 
     #region Internal members
     private RectTransform ingameCanvas;
     private Camera cam;
-	public static event LevelExitDelegate levelExitEvent;
+    public static event LevelExitDelegate levelExitEvent;
     #endregion
 
-    private void Awake ()
+    private void Awake()
     {
         ingameCanvas = GameObject.FindGameObjectWithTag("IngameCanvas").GetComponent<RectTransform>();
         if (ingameCanvas == null)
             Debug.LogError("Ingame canvas not found!");
 
-        if (endScreenImage == null)
-            Debug.LogError("No end screen image is set!");
+        if (crushedCircle == null)
+            Debug.LogError("No circle image is set!");
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         if (cam == null)
             Debug.Log("Level end manager found no camera!");
 
-		PlayerManager.AllPlayersDeadEventHandler += TweenEndScreenImage;
-	}
+        PlayerManager.AllPlayersDeadEventHandler += TweenEndScreenImage;
+    }
 
     protected void TweenEndScreenImage()
     {
         DisableCanvasChildObjects();
-
-        GameObject endScreen = Instantiate(endScreenImage);
-        endScreen.transform.SetParent(ingameCanvas.gameObject.transform, false);
-        Debug.Log("<b>Instantiated end image!</b>");
-
-        Image img = endScreen.GetComponent<Image>();
-        img.rectTransform.anchoredPosition.Set(ingameCanvas.rect.width, 0f);
-
-        LeanTween.value(img.gameObject, ingameCanvas.rect.width, 0, tweenTime).setEase(easeType)
-            .setOnUpdate((float val) => {
-                img.rectTransform.anchoredPosition = new Vector2(val, img.rectTransform.anchoredPosition.y);
-            });
-
+        TweenCircleAndText();
         TweenCameraEffect();
-
         StartCoroutine(LoadNextScene());
+    }
+
+    private void TweenCircleAndText()
+    {
+        GameObject g = Instantiate(crushedCircle.gameObject);
+        g.transform.SetParent(ingameCanvas.gameObject.transform, false);
+        Image img = g.GetComponent<Image>();
+
+        SoundManager.SoundManagerInstance.Play(wooshSound, Vector3.zero, 10f, 1f, false);
+        img.rectTransform.localScale = Vector3.zero;
+        LeanTween.scale(img.rectTransform, Vector3.one, tweenTime).setEase(LeanTweenType.easeOutElastic)
+            .setOnComplete(TweenText);
+    }
+
+    private void TweenText()
+    {
+        GameObject g = Instantiate(crushedText.gameObject);
+        g.transform.SetParent(ingameCanvas.gameObject.transform, false);
+        Text txt = g.GetComponent<Text>();
+
+        SoundManager.SoundManagerInstance.Play(punchSound, Vector3.zero, 15f, 1f, false);
+        txt.rectTransform.localScale = Vector3.one * 8f;
+        LeanTween.scale(txt.rectTransform, Vector3.one, crushedTextTweenTime).setEase(LeanTweenType.easeOutCubic);
     }
 
     protected void DisableCanvasChildObjects()
