@@ -22,7 +22,7 @@ public class RangedEnemy : BaseEnemy
         follow.AddTransition(Transition.ReachedDestination, StateID.Idle);
 
         // Attack behaviour
-        ShootPlayer shoot = new ShootPlayer(attackRange, playerAttackLayer, attackInterval);
+        ShootPlayer shoot = new ShootPlayer(attackRange, playerAttackLayer, attackInterval, this);
         shoot.AddTransition(Transition.LostPlayerAttackRange, StateID.FollowPlayer);
         shoot.AddTransition(Transition.ReachedDestination, StateID.Idle);
 

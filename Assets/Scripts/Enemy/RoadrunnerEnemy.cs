@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Script for the Roadrunner enemy.

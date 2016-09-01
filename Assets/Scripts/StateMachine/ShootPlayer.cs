@@ -6,8 +6,8 @@ using System.Collections;
 /// </summary>
 public class ShootPlayer : AttackPlayer
 {
-    public ShootPlayer(float playerAttackRange, int playerLayer, float attackInterval)
-        : base(playerAttackRange, playerLayer, attackInterval, 0f)
+    public ShootPlayer(float playerAttackRange, int playerLayer, float attackInterval, BaseEnemy enemy)
+        : base(playerAttackRange, playerLayer, attackInterval, 0f, enemy)
     {
         
     }

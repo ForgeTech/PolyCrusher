@@ -269,7 +269,14 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         get { return this.lifeTimeAfterDeath; }
         set { this.lifeTimeAfterDeath = value; }
     }
+    #endregion
 
+    #region Delegates & Events
+    public delegate void AttackAheadEventHandler(float currentAttackTime, float maxAttackTime);
+    public event AttackAheadEventHandler AttackAhead;
+
+    public delegate void AttackCanceledEventHandler();
+    public event AttackCanceledEventHandler AttackCanceled;
     #endregion
 
     protected virtual void Awake()
@@ -292,9 +299,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         initialMovementSpeed = movementSpeed;
 
         anim = GetComponent<Animator>();
-
-        // Light
-        SetupLight();
 
         //Find player
         CalculateTargetPlayer();
@@ -339,7 +343,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
 
         // Attack behaviour
-        AttackPlayer attack = new AttackPlayer(attackRange, playerAttackLayer, attackInterval, pushAwayForce);
+        AttackPlayer attack = new AttackPlayer(attackRange, playerAttackLayer, attackInterval, pushAwayForce, this);
         attack.AddTransition(Transition.LostPlayerAttackRange, StateID.FollowPlayer);
         attack.AddTransition(Transition.ReachedDestination, StateID.Idle);
 
@@ -501,10 +505,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <summary>
     /// Ranged attack method.
     /// </summary>
-    public virtual void Shoot()
-    {
-
-    }
+    public virtual void Shoot() { }
 
     /// <summary>
     /// Melee attack method.
@@ -538,33 +539,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         LeanTween.scale(this.gameObject, originalScale, 0.7f).setEase(AnimCurveContainer.AnimCurve.pingPong);
     }
 
-    /// <summary>
-    /// Sets up a light with the initial values.
-    /// </summary>
-    protected virtual void SetupLight()
-    {
-        lightComponent = gameObject.AddComponent<Light>();
-        lightComponent.enabled = false;
-        lightComponent.bounceIntensity = 0f;
-        lightComponent.range = 0.5f;
-        lightComponent.intensity = 0.0f;
-        lightComponent.color = Color.white;
-        lightComponent.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-    }
-
-    /// <summary>
-    /// Sets the light color of the enemy light.
-    /// </summary>
-    protected virtual void SetLightColor(MonoBehaviour damageDealer)
-    {
-        if (damageDealer is BasePlayer && lightComponent != null)
-        {
-            BasePlayer p = damageDealer as BasePlayer;
-            if(p != null)
-                lightComponent.color = p.PlayerColor;
-        }
-    }
-
     protected virtual void BlinkMaterial(MonoBehaviour damageDealer)
     {
         if (damageDealer != null && damageDealer is BasePlayer)
@@ -588,55 +562,23 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     }
 
     /// <summary>
-    /// Blinks the light component.
-    /// </summary>
-    /// <param name="time">The time of the blinking.</param>
-    /// <returns></returns>
-    protected virtual IEnumerator ColorBlink(float time)
-    {
-        // Time variables
-        float elapsedTime = 0f;
-        float t;
-        float halfTime = time / 2.0f;
-
-        // Initial light intensity
-        float initialLightIntensity = 8.0f;
-
-        lightComponent.enabled = true;
-
-        // Fade in
-        while (elapsedTime < halfTime)
-        {
-            t = elapsedTime / halfTime;
-            lightComponent.intensity = Mathf.Lerp(0, initialLightIntensity, t);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        lightComponent.intensity = initialLightIntensity;
-
-        elapsedTime = 0;
-
-        // Fade out
-        while (elapsedTime < halfTime)
-        {
-            t = elapsedTime / halfTime;
-            lightComponent.intensity = Mathf.Lerp(initialLightIntensity, 0, t);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        lightComponent.intensity = 0f;
-        lightComponent.enabled = false;
-    }
-
-    /// <summary>
     /// Resets all neccessary values.
     /// </summary>
     protected virtual void ResetValues()
     {
         EnemyKilled = null;
+    }
+
+    public void OnAttackAhead(float currentAttackTime, float maxAttackTime)
+    {
+        if (AttackAhead != null)
+            AttackAhead(currentAttackTime, maxAttackTime);
+    }
+
+    public void OnAttackCanceled()
+    {
+        if (AttackCanceled != null)
+            AttackCanceled();
     }
     #endregion
 }

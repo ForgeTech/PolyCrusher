@@ -30,14 +30,17 @@ public class AttackPlayer : FSMState
     // Reference for the first attack coroutine.
     protected IEnumerable coroutineFirstAttack;
 
+    private BaseEnemy enemy;
 
-    public AttackPlayer(float playerAttackRange, int playerLayer, float attackInterval, float explosionForce)
+
+    public AttackPlayer(float playerAttackRange, int playerLayer, float attackInterval, float explosionForce, BaseEnemy enemy)
     {
         this.stateID = StateID.AttackPlayer;
         this.playerAttackRange = playerAttackRange;
         this.playerLayer = playerLayer;
         this.attackInterval = attackInterval;
         this.explosionForce = explosionForce;
+        this.enemy = enemy;
 
         attack = false;
 
@@ -115,6 +118,7 @@ public class AttackPlayer : FSMState
     public override void DoBeforeLeaving()
     {
         base.DoBeforeLeaving();
+        enemy.OnAttackCanceled();
         attack = false;
         currentAttacktime = 0f;
     }
@@ -122,6 +126,7 @@ public class AttackPlayer : FSMState
     public override void DoBeforeEntering()
     {
         base.DoBeforeEntering();
+        enemy.OnAttackAhead(currentAttacktime, attackInterval);
         attack = false;
         currentAttacktime = 0f;
     }
