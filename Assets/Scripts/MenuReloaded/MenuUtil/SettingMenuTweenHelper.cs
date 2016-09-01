@@ -19,7 +19,13 @@ public class SettingMenuTweenHelper : MonoBehaviour
     [SerializeField]
     private float tweenTime = 0.2f;
 
-	void Start ()
+    [SerializeField]
+    private Image leftArrowApply;
+
+    [SerializeField]
+    private Image rightArrowApply;
+
+	private void Start ()
     {
         Initialize();
 	}
@@ -44,6 +50,14 @@ public class SettingMenuTweenHelper : MonoBehaviour
         NavigationInformation arrowInfo = leftArrow.gameObject.GetComponent<NavigationInformation>();
         if (subSelectorOfCurrentObject.Components.Count > 0)
         {
+            NavigationInformation applyArrow = leftArrowApply.gameObject.GetComponent<NavigationInformation>();
+
+            if (leftArrow.color.a == 0f)
+            {
+                TweenArrowColor(leftArrowApply, applyArrow.NormalColor);
+                TweenArrowColor(rightArrowApply, applyArrow.NormalColor);
+            }
+
             TweenArrowColor(leftArrow, arrowInfo.HighlightedColor);
             TweenArrowColor(rightArrow, arrowInfo.HighlightedColor);
 
@@ -62,8 +76,15 @@ public class SettingMenuTweenHelper : MonoBehaviour
         }
         else
         {
-            TweenArrowColor(leftArrow, arrowInfo.PressedColor);
-            TweenArrowColor(rightArrow, arrowInfo.PressedColor);
+            if (leftArrow.color.a != 0f)
+            {
+                TweenArrowColor(leftArrow, arrowInfo.PressedColor);
+                TweenArrowColor(rightArrow, arrowInfo.PressedColor);
+            }
+
+            NavigationInformation applyArrow = leftArrowApply.gameObject.GetComponent<NavigationInformation>();
+            TweenArrowColor(leftArrowApply, applyArrow.PressedColor);
+            TweenArrowColor(rightArrowApply, applyArrow.PressedColor);
         }
     }
 
