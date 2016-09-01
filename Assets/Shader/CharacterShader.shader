@@ -11,6 +11,8 @@
 		_Occlusion ("Occlusion", 2D) = "white" {}
 		_FillColor ("FillColor", Color) = (0,0,0,1)
 		_FillEmission ("FillEmission", Color) = (1,1,1,1)
+		_FillEmissionMult ("FillEmission Multiplicator", Float) = 1.0
+		_EffectAmount ("Effect Amount", Range (0, 1)) = 0.0
 	}
 	SubShader {
 		ZWrite Off
@@ -69,18 +71,26 @@
 		fixed4 _Color;
 		fixed4 _EmissionColor;
 		float _EmissionMult;
+		fixed4 _FillColor;
+		fixed4 _FillEmission;
+		half _FillEmissionMult;
+		float _EffectAmount;
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			o.Emission = tex2D (_Emission, IN.uv_MainTex) * _EmissionColor * _EmissionMult;
+			fixed4 glowC = _FillColor;
+			o.Albedo = lerp(c.rgb, glowC.rgb, _EffectAmount);
+
+			fixed4 e = tex2D (_Emission, IN.uv_MainTex) * _EmissionColor * _EmissionMult;
+			fixed4 glowE = _FillEmission * _FillEmissionMult;
+			o.Emission = lerp(e.rgb, glowE.rgb, _EffectAmount);
 
 			// Metallic is channel R and Smoothness is channel G
 			half3 metallic = tex2D (_MetallicTex, IN.uv_MainTex).rgb;
 			o.Metallic = metallic.r * _Metallic;
 			o.Smoothness = metallic.g * _Smoothness;
 
-			o.Albedo = c.rgb;
 			o.Occlusion = tex2D (_Occlusion, IN.uv_MainTex);
 			o.Alpha = _Color.a;
 		}
