@@ -11,6 +11,9 @@ public class ScoreContainer
     private int cutKills = 0;
     private int powerupsCollected = 0;
     private int playerRevivals = 0;
+    private GameMode gameMode = GameMode.NormalMode;
+    private int playerCount = 0;
+    private string levelname = "";
     private float wave = 0;
 
     private int yoloScore = 0;
@@ -55,6 +58,24 @@ public class ScoreContainer
         wave = x;
     }
 
+    public void setPlayerCount(int x)
+    {
+        playerCount = x;
+    }
+
+    public void setGameMode(GameMode mode)
+    {
+        gameMode = mode;
+    }
+
+    public void setLevelName(string name)
+    {
+        levelname = name;
+    }
+
+    //--------------------------
+
+
     public int getBossKills()
     {
         return bossKills;
@@ -93,6 +114,22 @@ public class ScoreContainer
     {
         return wave-1;
     }
+
+    public int getPlayerCount()
+    {
+        return playerCount;
+    }
+
+    public GameMode getGameMode()
+    {
+        return gameMode;
+    }
+
+    public string getLevelName()
+    {
+        return levelname;
+    }
+
 
     //------score getter------
 
