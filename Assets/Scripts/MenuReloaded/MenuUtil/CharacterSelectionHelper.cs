@@ -82,7 +82,7 @@ public class CharacterSelectionHelper : MonoBehaviour
     {
         NavigationInformation navInfo = overlayBackground.gameObject.GetComponent<NavigationInformation>();
 
-        LeanTween.moveX(infoBar, 0f, tweenTime).setEase(LeanTweenType.easeOutSine);
+        LeanTween.scale(infoBar, Vector3.one, tweenTime).setEase(LeanTweenType.easeOutSine);
         LeanTween.value(navInfo.gameObject, navInfo.NormalColor, navInfo.HighlightedColor, tweenTime)
             .setEase(LeanTweenType.easeOutSine)
             .setOnUpdate((Color val) => {
@@ -94,7 +94,7 @@ public class CharacterSelectionHelper : MonoBehaviour
     {
         NavigationInformation navInfo = overlayBackground.gameObject.GetComponent<NavigationInformation>();
 
-        LeanTween.moveX(infoBar, infoBar.sizeDelta.x, tweenTime).setEase(LeanTweenType.easeOutSine);
+        LeanTween.scale(infoBar, new Vector3(1f, 0f, 1f), tweenTime).setEase(LeanTweenType.easeOutSine);
         LeanTween.value(navInfo.gameObject, navInfo.HighlightedColor, navInfo.NormalColor, tweenTime)
             .setEase(LeanTweenType.easeOutSine)
             .setOnUpdate((Color val) => {
