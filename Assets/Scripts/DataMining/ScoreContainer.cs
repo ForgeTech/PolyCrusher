@@ -15,8 +15,7 @@ public class ScoreContainer
     private int playerCount = 0;
     private string levelname = "";
     private float wave = 0;
-
-    private int yoloScore = 0;
+    private int yoloTime = 0;
 
     public void addBossKills(int x)
     {
@@ -48,9 +47,9 @@ public class ScoreContainer
         playerRevivals += x;
     }
 
-    public void setYoloScore(int x)
+    public void setYoloTime(int x)
     {
-        yoloScore = x;
+        yoloTime = x;
     }
 
     public void setWave(float x)
@@ -178,7 +177,18 @@ public class ScoreContainer
 
     public int getYoloScore()
     {
-        return yoloScore;
+        return yoloTime;
+    }
+
+    public override string ToString()
+    {
+        string str = "[ScoreContainer]";
+        str += " playercount: " + getPlayerCount();
+        str += " level: " + getLevelName();
+        str += " yoloscore: " + getYoloScore();
+        str += " score: " + getScoreSum();
+        str += " mode: " + getGameMode().ToString();
+        return str;
     }
 }
 

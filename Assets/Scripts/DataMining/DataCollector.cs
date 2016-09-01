@@ -662,10 +662,30 @@ public class DataCollector : MonoBehaviour
             case Event.TYPE.sessionEnd:
                 float wave = Event.getWave();
                 scoreContainer.setWave(wave);
+                if(e.playerCount != null)
+                {
+                    scoreContainer.setPlayerCount((int)e.playerCount);
+                }
+                else
+                {
+                    Debug.LogError("[DataCollector] no player count found in sessionEnd event");
+                }
+                scoreContainer.setLevelName(e.level);
 
                 int s = (int)((wave - (int)wave) * 10000);
                 Score += s;
 
+                if(GameManager.gameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
+                {
+                    scoreContainer.setGameMode(GameMode.YOLOMode);
+                    scoreContainer.setYoloTime(e.time);
+                }
+                else
+                {
+                    scoreContainer.setGameMode(GameMode.NormalMode);
+                }
+
+                Debug.Log(scoreContainer.ToString());
                 /*
                 Debug.Log("[DataCollector] wave " + wave);
                 Debug.Log("[DataCollector] score " + Score);
