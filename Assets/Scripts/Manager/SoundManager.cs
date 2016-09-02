@@ -20,10 +20,12 @@ public class SoundManager : MonoBehaviour
     {
         get
         {
+            soundManagerInstance = GameObject.FindObjectOfType<SoundManager>();
+
             //If the instance isn't set yet, it will be set (Happens only the first time!)
             if (soundManagerInstance == null)
             {
-                soundManagerInstance = GameObject.FindObjectOfType<SoundManager>();
+                soundManagerInstance = new GameObject("_SoundManager").AddComponent<SoundManager>();
                 DontDestroyOnLoad(soundManagerInstance);
             }
 

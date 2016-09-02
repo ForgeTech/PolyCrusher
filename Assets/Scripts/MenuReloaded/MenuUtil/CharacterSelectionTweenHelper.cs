@@ -46,6 +46,10 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
     [SerializeField]
     private float arrowOffset = 35f;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip registerSound;
+
     #region Internal Members
     private CharacterMenuManager menuManager;
     private ImageData[] characters;
@@ -107,6 +111,8 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
 
     private void HandlePlayerRegistered()
     {
+        SoundManager.SoundManagerInstance.Play(registerSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+
         // Position fade for info boxes
         LeanTween.moveY(joinInfoBox, topAnchoredPosition.y, tweenTime).setEase(easeType);
         LeanTween.moveY(selectInfoBox, bottomAchoredPosition.y, tweenTime).setEase(easeType);

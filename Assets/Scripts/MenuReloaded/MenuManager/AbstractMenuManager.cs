@@ -44,6 +44,19 @@ public abstract class AbstractMenuManager : MonoBehaviour
     [Header("Sub selector transitions")]
     [Tooltip("The transition of the sub selector when the main selector changes, not the overall sub selector transitions!")]
     public TransitionEnum[] subSelectorTransition;
+
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip navigationSound;
+
+    [SerializeField]
+    private AudioClip acceptSound;
+
+    [SerializeField]
+    private AudioClip declineSound;
+
+    [SerializeField]
+    private AudioClip backSound;
     #endregion
 
     #region Internal Fields
@@ -132,7 +145,6 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     public virtual void InitializeMenuManager()
     {
-       // InitializeCoroutineHelper();
         InitializeActions();
         InitializeDictionary();
         InitializeSpawnHandler();
@@ -144,11 +156,13 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         // Next & Previous Action callbacks
         navigationNextAction = () => {
+            SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
             selector.Next();
             OnNextSelection();
             StartCoroutine(StickInputCooldown());
         };
         navigationPreviousAction = () => {
+            SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
             selector.Previous();
             OnPreviousSelection();
             StartCoroutine(StickInputCooldown());
@@ -156,11 +170,13 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
         // Sub navigation actions
         subNavigationNextAction = () => {
+            SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
             ((SelectorWithSubSelector)selector).SubSelectorNext();
             OnSubNavigationNext();
             StartCoroutine(StickInputCooldown());
         };
         subNavigationPreviousAction = () => {
+            SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
             ((SelectorWithSubSelector)selector).SubSelectorPrevious();
             OnSubNavigationPrevious();
             StartCoroutine(StickInputCooldown());
@@ -247,6 +263,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         menuInputHandler.HandleBackInput(() => {
             StartCoroutine(WaitBeforeTriggerBackAction(() => {
+                SoundManager.SoundManagerInstance.Play(backSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
                 backAction.PerformAction<MonoBehaviour>(this);
             }));
         });
@@ -286,6 +303,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     protected IEnumerator WaitBeforeTriggerAction(GameObject selectedGameObject)
     {
         acceptButtonInput = false;
+        SoundManager.SoundManagerInstance.Play(acceptSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
         selector.HandleSelectedElement();
         yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
         PerformActionOnSelectedElement(selectedGameObject);

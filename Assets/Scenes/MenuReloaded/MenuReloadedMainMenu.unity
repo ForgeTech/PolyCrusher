@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1664226776}
+  m_Material: {fileID: 461996376}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1297830898}
+  m_Material: {fileID: 1749064734}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -334,13 +334,13 @@ MonoBehaviour:
   size: 30
   imageMaterial: {fileID: 2100000, guid: b174d9f29e1358d418a6e8ebb224b59d, type: 2}
   textMaterial: {fileID: 2100000, guid: afc38f959e7f97540af4c5193b243cd2, type: 2}
---- !u!21 &516301087
+--- !u!21 &461996376
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ShadowFont
+  m_Name: ShadowFontZeroAlpha
   m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -431,6 +431,10 @@ Material:
         second: .5
       data:
         first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -460,10 +464,6 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
         second: 0
       data:
         first:
@@ -513,7 +513,7 @@ Material:
       data:
         first:
           name: _ShadowColor
-        second: {r: 0, g: 0, b: 0, a: .200000003}
+        second: {r: 0, g: 0, b: 0, a: 0}
       data:
         first:
           name: _GlowColor
@@ -566,7 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1785801102}
+  m_Material: {fileID: 1349428120}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -754,7 +754,7 @@ MonoBehaviour:
   shaderFXAAPreset3: {fileID: 4800000, guid: c182fa94a5a0a4c02870641efcd38cd5, type: 3}
   shaderFXAAII: {fileID: 4800000, guid: cd5b323dcc592457790ff18b528f5e67, type: 3}
   shaderFXAAIII: {fileID: 4800000, guid: c547503fff0e8482ea5793727057041c, type: 3}
---- !u!21 &780481269
+--- !u!21 &779696087
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -851,6 +851,10 @@ Material:
         second: .5
       data:
         first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -880,10 +884,6 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
         second: 0
       data:
         first:
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 780481269}
+  m_Material: {fileID: 779696087}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -1127,13 +1127,13 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1158450636}
---- !u!21 &1297830898
+--- !u!21 &1301774573
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ShadowFontZeroAlpha
+  m_Name: ShadowFont
   m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -1224,6 +1224,10 @@ Material:
         second: .5
       data:
         first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -1253,10 +1257,6 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
         second: 0
       data:
         first:
@@ -1306,7 +1306,7 @@ Material:
       data:
         first:
           name: _ShadowColor
-        second: {r: 0, g: 0, b: 0, a: 0}
+        second: {r: 0, g: 0, b: 0, a: .200000003}
       data:
         first:
           name: _GlowColor
@@ -1353,47 +1353,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d652023c8bfbee945a62cad5f3f965f1, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1376942957
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1376942959}
-  - 114: {fileID: 1376942958}
-  m_Layer: 0
-  m_Name: DataCollectorStarter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1376942958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1376942957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95e5e6aad6c9f574eb779032dedbff1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: 6826c0d46dc5d84438fc87f6c1a3a5ad, type: 2}
---- !u!4 &1376942959
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1376942957}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 62.6189041, y: 34.9308167, z: 235.292053}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
---- !u!21 &1664226776
+--- !u!21 &1349428120
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -1490,6 +1450,10 @@ Material:
         second: .5
       data:
         first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -1519,10 +1483,6 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
         second: 0
       data:
         first:
@@ -1577,6 +1537,46 @@ Material:
         first:
           name: _GlowColor
         second: {r: 1, g: 0, b: 0, a: .200000003}
+--- !u!1 &1376942957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1376942959}
+  - 114: {fileID: 1376942958}
+  m_Layer: 0
+  m_Name: DataCollectorStarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1376942958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1376942957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e5e6aad6c9f574eb779032dedbff1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 6826c0d46dc5d84438fc87f6c1a3a5ad, type: 2}
+--- !u!4 &1376942959
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1376942957}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 62.6189041, y: 34.9308167, z: 235.292053}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &1681726033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,7 +1644,7 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1681726033}
---- !u!21 &1785801102
+--- !u!21 &1749064734
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -1741,6 +1741,10 @@ Material:
         second: .5
       data:
         first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -1770,10 +1774,6 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
         second: 0
       data:
         first:
@@ -1876,7 +1876,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 516301087}
+  m_Material: {fileID: 1301774573}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -2031,6 +2031,10 @@ MonoBehaviour:
   pressedHandlerEnum: 0200000000000000
   spawnHandlerEnum: 0
   subSelectorTransition: 
+  navigationSound: {fileID: 8300000, guid: 72914f6afb037874e8f720628e4856d8, type: 3}
+  acceptSound: {fileID: 8300000, guid: 92da9c33902cb5a43b56d49ef5c92bc3, type: 3}
+  declineSound: {fileID: 8300000, guid: b2ca083b447fc2243abb70a36c43e3d9, type: 3}
+  backSound: {fileID: 8300000, guid: 72914f6afb037874e8f720628e4856d8, type: 3}
 --- !u!114 &1887416938
 MonoBehaviour:
   m_ObjectHideFlags: 0
