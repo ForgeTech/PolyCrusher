@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// State behaviour for idle.
 /// </summary>
 public class IdleEnemy : FSMState
 {
+    private const float recalculateTargetTime = 1f;
+    private float currentRecalculationTime = 0f;
+
     public IdleEnemy()
     {
         this.stateID = StateID.Idle;
@@ -21,6 +23,13 @@ public class IdleEnemy : FSMState
 
             if (e.TargetPlayer != null)
                 e.SetTransition(Transition.SawPlayer);
+
+            if (currentRecalculationTime >= recalculateTargetTime)
+            {
+                e.CalculateTargetPlayer();
+                currentRecalculationTime = 0f;
+            }
+            currentRecalculationTime += Time.deltaTime;
         }
     }
 

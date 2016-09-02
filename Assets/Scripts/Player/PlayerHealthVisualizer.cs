@@ -28,15 +28,21 @@ public class PlayerHealthVisualizer : MonoBehaviour
 
     private void DoDamageTween(int damageDealed)
     {
-        LeanTween.value(gameObject, 0f, 1f, halfTweenTime)
-            .setOnUpdate((float val) => {
-                playerMaterial.SetFloat("_EffectAmount", val);
-            })
-            .setOnComplete(() => {
-                LeanTween.value(gameObject, 1f, 0f, halfTweenTime)
-                    .setOnUpdate((float val) => {
-                        playerMaterial.SetFloat("_EffectAmount", val);
-                    });
-            });
+        if (!player.IsDead)
+        {
+            LeanTween.value(gameObject, 0f, 1f, halfTweenTime)
+                .setOnUpdate((float val) =>
+                {
+                    playerMaterial.SetFloat("_EffectAmount", val);
+                })
+                .setOnComplete(() =>
+                {
+                    LeanTween.value(gameObject, 1f, 0f, halfTweenTime)
+                        .setOnUpdate((float val) =>
+                        {
+                            playerMaterial.SetFloat("_EffectAmount", val);
+                        });
+                });
+        }
     }
 }

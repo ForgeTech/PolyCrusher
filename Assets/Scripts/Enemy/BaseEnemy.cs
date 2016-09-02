@@ -105,9 +105,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     // Represents the reference to the NavMeshAgent.
     protected NavMeshAgent navMeshAgent;
 
-    // Reference to the light component.
-    protected Light lightComponent;
-
     // The active time of the light
     [Space(5)]
     [Header("Hit light")]
@@ -478,7 +475,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             else if (players.Length > 1)
                 targetPlayer = players[Random.Range(0, players.Length)].transform;
             else
+            {
                 targetPlayer = null;
+                Debug.Log("<b>No target players</b> were found!");
+            }
         }
     }
 
@@ -546,7 +546,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             BasePlayer p = damageDealer as BasePlayer;
             float halfBlinkTime = hitBlinkTime * 0.5f;
 
-            LeanTween.cancel(gameObject);
             enemyMaterial.SetColor("_GlowEmissionColor", p.PlayerColor);
             LeanTween.value(gameObject, 0f, 1f, halfBlinkTime).setEase(LeanTweenType.easeOutSine)
                 .setOnUpdate((float val) => {
