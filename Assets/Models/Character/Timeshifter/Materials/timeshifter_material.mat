@@ -45,6 +45,20 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Emission
+        second:
+          m_Texture: {fileID: 2800000, guid: 75394dc1e86ef9a45bdbc0c6898dc1e9, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Occlusion
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -80,13 +94,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Occlusion
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _MetallicGlossMap
         second:
           m_Texture: {fileID: 0}
@@ -97,13 +104,6 @@ Material:
           name: _SpecGlossMap
         second:
           m_Texture: {fileID: 2800000, guid: 07e060c6f3ebf7f4995b437275c7e90d, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Emission
-        second:
-          m_Texture: {fileID: 2800000, guid: 75394dc1e86ef9a45bdbc0c6898dc1e9, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -130,6 +130,22 @@ Material:
         first:
           name: _Smoothness
         second: .360000014
+      data:
+        first:
+          name: _EmissionMult
+        second: .699999988
+      data:
+        first:
+          name: _Metallic
+        second: 1.58000004
+      data:
+        first:
+          name: _FillEmissionMult
+        second: 2.92000008
+      data:
+        first:
+          name: _EffectAmount
+        second: 0
       data:
         first:
           name: _Parallax
@@ -164,16 +180,8 @@ Material:
         second: 0
       data:
         first:
-          name: _Metallic
-        second: 1.58000004
-      data:
-        first:
           name: _EmissionScaleUI
         second: 0
-      data:
-        first:
-          name: _EmissionMult
-        second: .699999988
     m_Colors:
       data:
         first:
@@ -189,13 +197,13 @@ Material:
         second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
       data:
         first:
-          name: _EmissionColorUI
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
           name: _FillColor
         second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
           name: _FillEmission
         second: {r: 0, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _EmissionColorUI
+        second: {r: 1, g: 1, b: 1, a: 1}

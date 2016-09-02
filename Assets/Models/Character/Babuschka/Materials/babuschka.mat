@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: babuschka
-  m_Shader: {fileID: 4800000, guid: 41a9cdc4fe7a5cd4285cbe74106e3e03, type: 3}
+  m_Shader: {fileID: 4800000, guid: 076a6c9c19c7eeb4eabe4c3afcfa3138, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: 3000
@@ -38,7 +38,21 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _MetallicGlossMap
+          name: _MetallicTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Emission
+        second:
+          m_Texture: {fileID: 2800000, guid: 001dcb857d027df4b9de62b2d50357fb, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Occlusion
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -80,14 +94,7 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Emission
-        second:
-          m_Texture: {fileID: 2800000, guid: 001dcb857d027df4b9de62b2d50357fb, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Occlusion
+          name: _MetallicGlossMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -118,6 +125,26 @@ Material:
         second: .5
       data:
         first:
+          name: _EmissionMult
+        second: 1
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _FillEmissionMult
+        second: 2.45000005
+      data:
+        first:
+          name: _EffectAmount
+        second: 0
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
           name: _ZWrite
         second: 1
       data:
@@ -126,16 +153,8 @@ Material:
         second: .5
       data:
         first:
-          name: _Metallic
-        second: 0
-      data:
-        first:
           name: _BumpScale
         second: 1
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
       data:
         first:
           name: _OcclusionStrength
@@ -152,10 +171,6 @@ Material:
         first:
           name: _Mode
         second: 0
-      data:
-        first:
-          name: _EmissionMult
-        second: 1
     m_Colors:
       data:
         first:

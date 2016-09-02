@@ -627,6 +627,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 461060}
+  - 114: {fileID: 11433176}
   m_Layer: 0
   m_Name: ChargerMesh
   m_TagString: Untagged
@@ -1694,7 +1695,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.3953323, y: .0403219126, z: -63.9278145}
+  m_LocalPosition: {x: 3.76964641, y: 0, z: -10.9429674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 461060}
@@ -2340,6 +2341,18 @@ MonoBehaviour:
   friendRadius: 2.5
   explosionParticle: {fileID: 195472, guid: d8668c6507db98a4bb46126e28231537, type: 2}
   chargeParticle: {fileID: 117560, guid: a78ace41a72582742964bdb24b7e9239, type: 2}
+--- !u!114 &11433176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c57be5dbbfce74591470af877663bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTime: .200000003
 --- !u!114 &11434596
 MonoBehaviour:
   m_ObjectHideFlags: 1

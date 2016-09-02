@@ -373,6 +373,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400600}
+  - 114: {fileID: 11443242}
   m_Layer: 0
   m_Name: Fatman
   m_TagString: Untagged
@@ -1390,7 +1391,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162758}
-  m_LocalRotation: {x: -.262356848, y: .529743373, z: .509451866, w: .625299752}
+  m_LocalRotation: {x: -.262356818, y: .529743314, z: .509451807, w: .625299692}
   m_LocalPosition: {x: -.187269375, y: .12523374, z: -.0498048998}
   m_LocalScale: {x: .999999821, y: .999999702, z: .999999881}
   m_Children:
@@ -2020,7 +2021,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.6103363, y: .0374879055, z: -63.1981277}
+  m_LocalPosition: {x: 9.11473656, y: 0, z: -9.85003853}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400600}
@@ -2703,6 +2704,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &11443242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c57be5dbbfce74591470af877663bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTime: .200000003
 --- !u!114 &11444754
 MonoBehaviour:
   m_ObjectHideFlags: 1

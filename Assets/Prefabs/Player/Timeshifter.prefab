@@ -1192,6 +1192,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 492510}
+  - 114: {fileID: 11499048}
   m_Layer: 0
   m_Name: TimeShifter
   m_TagString: Untagged
@@ -1413,7 +1414,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149956}
-  m_LocalRotation: {x: .673879266, y: -.65256834, z: -.071979031, w: -.338910758}
+  m_LocalRotation: {x: .673879206, y: -.652568281, z: -.0719790235, w: -.338910729}
   m_LocalPosition: {x: .0117888842, y: 1.67970443, z: -.105552927}
   m_LocalScale: {x: .999999523, y: 1, z: .99999994}
   m_Children:
@@ -1929,7 +1930,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.8998871, y: .0371317714, z: -60.039257}
+  m_LocalPosition: {x: 8.66098976, y: 0, z: -9.52178288}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 492510}
@@ -2921,6 +2922,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d2a910ab4a4bad64d891eb0d137edb06, type: 3}
   - {fileID: 8300000, guid: 9f81693400044384c891a48476f696d7, type: 3}
   - {fileID: 8300000, guid: 384297f7bbb204140b6293168273d1e8, type: 3}
+--- !u!114 &11499048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c57be5dbbfce74591470af877663bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTime: .200000003
 --- !u!137 &13749134
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -45,6 +45,20 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Emission
+        second:
+          m_Texture: {fileID: 2800000, guid: aef6508251965d847af957e2377710cd, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Occlusion
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -94,20 +108,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Emission
-        second:
-          m_Texture: {fileID: 2800000, guid: aef6508251965d847af957e2377710cd, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Occlusion
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Specular
         second:
           m_Texture: {fileID: 2800000, guid: 9905f29780c65d64eab3f680bcb1e91f, type: 3}
@@ -130,6 +130,22 @@ Material:
         first:
           name: _Smoothness
         second: 1
+      data:
+        first:
+          name: _EmissionMult
+        second: 1
+      data:
+        first:
+          name: _Metallic
+        second: 1
+      data:
+        first:
+          name: _FillEmissionMult
+        second: 5
+      data:
+        first:
+          name: _EffectAmount
+        second: 0
       data:
         first:
           name: _Parallax
@@ -164,21 +180,13 @@ Material:
         second: 0
       data:
         first:
-          name: _Metallic
-        second: 1
-      data:
-        first:
           name: _EmissionScaleUI
         second: 0
-      data:
-        first:
-          name: _EmissionMult
-        second: 1
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: .29411763, g: .29411763, b: .29411763, a: 0}
+        second: {r: 0, g: .46274513, b: 1, a: 1}
       data:
         first:
           name: _Color
@@ -189,13 +197,13 @@ Material:
         second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
       data:
         first:
-          name: _EmissionColorUI
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
           name: _FillColor
         second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
           name: _FillEmission
         second: {r: 0, g: .462069035, b: 1, a: 1}
+      data:
+        first:
+          name: _EmissionColorUI
+        second: {r: 1, g: 1, b: 1, a: 1}
