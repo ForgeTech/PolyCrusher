@@ -1287,6 +1287,8 @@ MonoBehaviour:
   bloodParticle: {fileID: 157414, guid: 4927ea95f2ba8c74eaa91f8b3ed5d9b8, type: 2}
   hitLightTime: .200000003
   maxEnemyLifeTime: 3000
+  hitBlinkTime: .200000003
+  deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
   lifeSetting:
     onePlayer: .5
     twoPlayers: .649999976
@@ -1330,6 +1332,8 @@ MonoBehaviour:
   spreadAngle: 165
   meteorAttackPrefab: {fileID: 142476, guid: aa39370f394fd2c42a40b3b95c553953, type: 2}
   meteorSpawnHeight: 10
+  gravestone: {fileID: 0}
+  deathParticles: {fileID: 0}
   healthLevel: {fileID: 11471558}
 --- !u!114 &11446950
 MonoBehaviour:
@@ -1609,6 +1613,10 @@ Prefab:
       propertyPath: enemyBullet
       value: 
       objectReference: {fileID: 140958, guid: d5b39436daa252c478bcdfc39464dcd5, type: 2}
+    - target: {fileID: 0}
+      propertyPath: deathBurst
+      value: 
+      objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 128610}

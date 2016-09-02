@@ -166,6 +166,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     [SerializeField]
     protected GameObject deathParticles;
 
+    [Space(10)]
+    [Header("Enemy kill particle prefab")]
+    [Tooltip("Prefab of the enemy kill particles.")]
+    [SerializeField]
+    public GameObject killParticles;
+
     // Specifies if the object can shoot or not.
     protected bool canShoot;
 

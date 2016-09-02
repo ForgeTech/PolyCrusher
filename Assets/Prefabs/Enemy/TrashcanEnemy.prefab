@@ -467,6 +467,7 @@ MonoBehaviour:
   hitLightTime: .150000006
   maxEnemyLifeTime: 300
   hitBlinkTime: .200000003
+  deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
   bulletPrefab: {fileID: 140958, guid: 55e20ccbf7ad6f0458c2892e46a100a8, type: 2}
 --- !u!114 &11480144
 MonoBehaviour:
@@ -585,6 +586,10 @@ Prefab:
       propertyPath: hitLightTime
       value: .150000006
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathBurst
+      value: 
+      objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146790}

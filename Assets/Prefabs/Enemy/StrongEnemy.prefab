@@ -1126,6 +1126,7 @@ MonoBehaviour:
   hitLightTime: .200000003
   maxEnemyLifeTime: 300
   hitBlinkTime: .150000006
+  deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
 --- !u!137 &13731972
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1237,6 +1238,10 @@ Prefab:
       propertyPath: hitBlinkTime
       value: .150000006
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathBurst
+      value: 
+      objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157580}

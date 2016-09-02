@@ -2276,6 +2276,7 @@ MonoBehaviour:
   cameraEdgeDetectionOffset: -.100000001
   bloodParticles: {fileID: 162124, guid: 86cc07e97b038b549b89bfa50e6dbff8, type: 2}
   deathParticles: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
+  killParticles: {fileID: 194392, guid: 590682d4a183c584f825afc4bfa2007c, type: 2}
   characterVoice: {fileID: 145590}
   abilityCharacterSound: {fileID: 0}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
@@ -3608,6 +3609,10 @@ Prefab:
       propertyPath: playerInput.rotationSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: killParticles
+      value: 
+      objectReference: {fileID: 194392, guid: 590682d4a183c584f825afc4bfa2007c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134618}

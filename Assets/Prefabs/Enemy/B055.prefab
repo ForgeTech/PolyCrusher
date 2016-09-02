@@ -1431,6 +1431,7 @@ MonoBehaviour:
   hitLightTime: .200000003
   maxEnemyLifeTime: 3000
   hitBlinkTime: .150000006
+  deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
   lifeSetting:
     onePlayer: .400000006
     twoPlayers: .5
@@ -3884,6 +3885,10 @@ Prefab:
       propertyPath: hitBlinkTime
       value: .150000006
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathBurst
+      value: 
+      objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141898}

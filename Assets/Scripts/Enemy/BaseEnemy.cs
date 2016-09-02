@@ -121,6 +121,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [SerializeField]
     private float hitBlinkTime = 0.2f;
 
+    [Space(5)]
+    [Header("Death particle burst")]
+    [SerializeField]
+    private GameObject deathBurst;
+
     // The Finite state machine.
     protected FSMSystem fsm;
 
@@ -371,10 +376,12 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
                 if (damageDealer is BasePlayer)
                 {
                     character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
+                    Instantiate(((BasePlayer)damageDealer).killParticles, transform.position, transform.rotation);
                 }
                 else
                 {
                     character = damageDealer.GetType().Name;
+                    Instantiate(deathBurst, transform.position, transform.rotation);
                 }
             }
 
@@ -452,7 +459,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             // Normal Scale Fade out.
             LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart);
         }
- 
 
         //Event.
         OnEnemyDeath();
