@@ -47,6 +47,16 @@ public class ScoreMenuHelper : MonoBehaviour
 
     [SerializeField]
     private float scoreTextUpScale = 1.1f;
+
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource countClickSound;
+
+    [SerializeField]
+    private AudioSource countFinishedSound;
+
+    [SerializeField]
+    private AudioSource scoreSound;
     #endregion
 
     #region Internal members
@@ -108,14 +118,17 @@ public class ScoreMenuHelper : MonoBehaviour
         // Count up each high score category
         foreach (var highscoreEntry in highscoreEntries)
         {
+            countFinishedSound.Play();
             if (highscoreEntry.Key != HighscoreType.WaveCount)
             {
                 ScoreData currentScore = animationWorkQueue.Dequeue();
                 for (int i = 0; i < currentScore.scoreMultiplier; i++)
                 {
+                    countClickSound.Play();
                     highscoreEntry.Value.scoreText.text = string.Format(currentScore.originalScoreText, i + 1);
                     yield return waitForTextAdd;
                 }
+                countClickSound.Stop();
             }
             else // Special case for the wave score multiplier -> Floating point
             {
@@ -186,11 +199,13 @@ public class ScoreMenuHelper : MonoBehaviour
             ScoreData currentScore = animationWorkQueue.Dequeue();
             highscoreEntry.Value.scoreText.text = string.Format("{0:0,0}", currentScore.scoreValue);
             DoScaleTween(highscoreEntry.Value.scoreText.rectTransform, scaleTime, upScale);
+            countFinishedSound.Play();
             yield return waitForNextLine;
         }
 
         // Set score
         StringBuilder timeString = null;
+        scoreSound.Play();
         if (score.getGameMode() == GameMode.NormalMode)
             scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), 0);
         else
@@ -206,7 +221,8 @@ public class ScoreMenuHelper : MonoBehaviour
         yield return new WaitForSeconds(totalScoreTime);
 
         // Set online rank
-        if(score.getGameMode() == GameMode.NormalMode)
+        scoreSound.Play();
+        if (score.getGameMode() == GameMode.NormalMode)
             scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), onlineRank);
         else
             scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), onlineRank);
