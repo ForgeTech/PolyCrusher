@@ -67,6 +67,7 @@ public class PauseMenuManager : MonoBehaviour
     private void SetMenuActive(bool setActive)
     {
         menuElements.SetActive(setActive);
+        Debug.Log("- Pause Menu: "+setActive);
     }
 
     private void TimeTween(bool animateIn)
@@ -84,7 +85,7 @@ public class PauseMenuManager : MonoBehaviour
             (float val) => { Time.timeScale = val; }
         ).setEase(LeanTweenType.easeOutSine).setUseEstimatedTime(true).setOnComplete(()=> {
 
-            animationFinished = true;
+            
             for (int i = 0; i < InputManager.Devices.Count; i++)
             {
                 InputManager.Devices[i].StopVibration();
@@ -103,6 +104,10 @@ public class PauseMenuManager : MonoBehaviour
             second = startPosition;
         }
 
+        menuManager.enabled = animateIn;
+        menuManager.SetMenuInputActive(animateIn);
+       // SetMenuActive(animateIn);
+
         LeanTween.value(gameObject, first, second, tweenTime).setOnUpdate(
             (Vector3 pos) => { gameObject.transform.position = pos; }
         ).setEase(LeanTweenType.easeInQuad).setUseEstimatedTime(true).setOnComplete(()=>TweenCameraEffect(animateIn) );
@@ -112,8 +117,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         gradient.enabled = true;
 
-        menuManager.enabled = animateIn;
-        SetMenuActive(animateIn);
+       
 
         float first = 0.0f;
         float second = destinationIntensity;
@@ -140,7 +144,7 @@ public class PauseMenuManager : MonoBehaviour
         LeanTween.value(gradient.gameObject, first, second, tweenTime).setEase(LeanTweenType.easeOutSine)
             .setOnUpdate((float val) => {
                 gradient.greenIntensity = val;
-            }).setUseEstimatedTime(true);
+            }).setUseEstimatedTime(true).setOnComplete(()=> { animationFinished = true; });
     }
 
     public void ResumeGame()
