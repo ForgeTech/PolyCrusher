@@ -10,6 +10,10 @@ public class Laser : MonoBehaviour
     private Vector3 AntiRotation = Vector3.zero;
     private LaserTrap trap;
 
+    private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
+    private bool bossTakesDamage = true;
+
+
     //when instantiated, destroy the laser script after trapActiveTime
     void Awake()
     {
@@ -95,7 +99,12 @@ public class Laser : MonoBehaviour
                             if (trap.bossCuttingParticles != null)
                                 Destroy(Instantiate(trap.bossCuttingParticles, hit.point, hit.transform.rotation), 2);
 
-                            enemy.TakeDamage(trap.bossDamage, this);
+                            if (bossTakesDamage)
+                            {
+                                bossTakesDamage = false;
+                                StartCoroutine(StartBossDamageCoolDown());
+                                enemy.TakeDamage(trap.bossDamage, this);
+                            }
                         }
                     }
                     else
@@ -106,6 +115,12 @@ public class Laser : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator StartBossDamageCoolDown()
+    {
+        yield return bossDamageCoolDown;
+        bossTakesDamage = true;
     }
 
     //destroy laser

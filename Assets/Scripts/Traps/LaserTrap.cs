@@ -12,9 +12,6 @@ public class LaserTrap : Trap, ITriggerable
     public Transform endPos;
 
     //the line renderer in use
-    //[SerializeField]
-    //public LineRenderer line;
-
     [SerializeField]
     public LineShaderUtility lineShader;
     

@@ -17,7 +17,7 @@ public class LightSabreScript : MonoBehaviour {
     private float heightOffset = 1.0f;
 
     [SerializeField]
-    private float powerUpDuration = 20.0f;
+    private float powerUpDuration = 12.0f;
 
     [SerializeField]
     private int bossCuttingDamage = 250;

@@ -51,7 +51,7 @@ MonoBehaviour:
   speed: 1000
   colorStrength: 7.0999999
   functionType: 0
-  useWorldSpace: 1
+  useWorldSpace: 0
 --- !u!114 &11463096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,6 +132,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: powerUpDuration
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: useWorldSpace
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
