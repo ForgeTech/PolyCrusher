@@ -9,6 +9,7 @@ public class PowerUpMango : PowerUp
     public override void Use()
     {
         Instantiate(explosion, transform.position, transform.rotation);
+        CameraManager.CameraReference.ShakeOnce();
 
         Collider[] hits = Physics.OverlapSphere(transform.position, range, 1 << 9);
         for(int i = 0; i < hits.Length; i++)
