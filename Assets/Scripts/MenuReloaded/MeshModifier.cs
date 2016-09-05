@@ -103,7 +103,6 @@ public class MeshModifier : BaseMeshEffect
                 posNew.y += addY;
                 vertex.position = new Vector3(posNew.x, posNew.y, 0);
                 // re-calculate UVs accordingly to prevent scaled texts
-                Vector2 uvOld = vertex.uv0;
                 vertex.uv0 += vecUvX / vecXLen * addX * signX;
                 vertex.uv0 += vecUvY / vecYLen * addY * signY;
                 // set the tangent so we know the UV boundaries. We use this to

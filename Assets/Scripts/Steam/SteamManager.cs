@@ -79,6 +79,9 @@ class SteamManager : BaseSteamManager
     private int playerDeath = 0;
     private string currentMode = "normal";
 
+    //currently in a game - if true events are logged
+    private bool ingame;
+
     protected override void Awake()
     {
         base.Awake();
@@ -506,70 +509,73 @@ class SteamManager : BaseSteamManager
         {
             PerformGameStartActions(e);
         }
-        else
+        else if (ingame)
         {
             TIME = Time.time - startTime;
             startTime = Time.time;
         }
 
-        switch (e.type)
+        if (ingame)
         {
-            case Event.TYPE.waveUp:
-                COUNTER -= (1000 * playerDeath);
-                playerDeath = 0;
-                break;
-            case Event.TYPE.death:
-                playerDeath++;
-                if (e.wave >= 1 && e.wave < 2 && currentMode.Equals("normal"))
-                    UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
-                if (e.enemy.Equals("Laser") || e.enemy.Equals("DeathTrap"))
-                    UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
-                break;
-            case Event.TYPE.kill:
-                enemiesKilled++;
-                if (e.enemy.Equals("MeleeVeryWeak"))
-                    assesKilled++;
-                if (e.enemy.Equals("B055"))
-                {
-                    COUNTER += 2500;
+            switch (e.type)
+            {
+                case Event.TYPE.waveUp:
+                    COUNTER -= (1000 * playerDeath);
+                    playerDeath = 0;
+                    break;
+                case Event.TYPE.death:
+                    playerDeath++;
+                    if (e.wave >= 1 && e.wave < 2 && currentMode.Equals("normal"))
+                        UnlockAchievement(AchievementID.ACH_DIED_IN_W1);
+                    if (e.enemy.Equals("Laser") || e.enemy.Equals("DeathTrap"))
+                        UnlockAchievement(AchievementID.ACH_DIED_IN_TRAP);
+                    break;
+                case Event.TYPE.kill:
+                    enemiesKilled++;
+                    if (e.enemy.Equals("MeleeVeryWeak"))
+                        assesKilled++;
+                    if (e.enemy.Equals("B055"))
+                    {
+                        COUNTER += 2500;
 
-                    if (e.cause.Equals("ChickenBehaviour"))
-                        UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CHICKEN);
-                    else if (e.character.Equals("LineSystem"))
-                        UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CUTTING);
-                }
-                if (e.character.Equals("LineSystem"))
-                {
-                    enemiesCut++;
+                        if (e.cause.Equals("ChickenBehaviour"))
+                            UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CHICKEN);
+                        else if (e.character.Equals("LineSystem"))
+                            UnlockAchievement(AchievementID.ACH_KILL_B055_WITH_CUTTING);
+                    }
+                    if (e.character.Equals("LineSystem"))
+                    {
+                        enemiesCut++;
+                        COUNTER += 100;
+                    }
+                    break;
+                case Event.TYPE.powerup:
                     COUNTER += 100;
-                }
-                break;
-            case Event.TYPE.powerup:
-                COUNTER += 100;
-                Dictionary<string, int> currentPowerups = new Dictionary<string, int>(characterPowerups);
-                foreach (KeyValuePair<string, int> entry in currentPowerups) //WTF - iterate through copy and save in true dictionary to avoid out of sync exception
-                {
-                    if (e.character.Equals(entry.Key))
-                        characterPowerups[entry.Key]++;
-                }
-                totalPowerups++;
+                    Dictionary<string, int> currentPowerups = new Dictionary<string, int>(characterPowerups);
+                    foreach (KeyValuePair<string, int> entry in currentPowerups) //WTF - iterate through copy and save in true dictionary to avoid out of sync exception
+                    {
+                        if (e.character.Equals(entry.Key))
+                            characterPowerups[entry.Key]++;
+                    }
+                    totalPowerups++;
 
-                //powerup achievement
-                foreach (KeyValuePair<string, int> entry in characterPowerups)
-                {
-                    if (entry.Value == totalPowerups && characterPowerups.Count > 1 && totalPowerups > 20)
-                        UnlockAchievement(AchievementID.ACH_GET_ALL_POWERUPS);
-                }
+                    //powerup achievement
+                    foreach (KeyValuePair<string, int> entry in characterPowerups)
+                    {
+                        if (entry.Value == totalPowerups && characterPowerups.Count > 1 && totalPowerups > 20)
+                            UnlockAchievement(AchievementID.ACH_GET_ALL_POWERUPS);
+                    }
 
-                break;
-            case Event.TYPE.superAbility:
-                COUNTER += (1000 + 100 * (int)e.kills);
-                if (e.kills >= 40)
-                    UnlockAchievement(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY);
-                break;
-            case Event.TYPE.sessionEnd:
-                PerformGameEndActions(e);
-                break;
+                    break;
+                case Event.TYPE.superAbility:
+                    COUNTER += (1000 + 100 * (int)e.kills);
+                    if (e.kills >= 40)
+                        UnlockAchievement(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY);
+                    break;
+                case Event.TYPE.sessionEnd:
+                    PerformGameEndActions(e);
+                    break;
+            }
         }
     }
 
@@ -606,8 +612,12 @@ class SteamManager : BaseSteamManager
     /// <param name="e">The game start event.</param>
     private void PerformGameStartActions(Event e)
     {
+        ingame = true;
+
         startTime = Time.time;
         currentMode = e.mode;
+
+        playerDeath = 0;
 
         //find leaderboard
         SteamAPICall_t findHandle = SteamUserStats.FindLeaderboard(e.level + " - " + e.playerCount);
@@ -665,6 +675,8 @@ class SteamManager : BaseSteamManager
     /// <param name="e">The game end event.</param>
     private void PerformGameEndActions(Event e)
     {
+        ingame = false;
+
         //update played games
         totalGamesPlayed++;
 
@@ -678,6 +690,8 @@ class SteamManager : BaseSteamManager
 
         rank = 0;
         COUNTER += (int)(10000f * (float)e.wave) - 10000;
+        Debug.Log("DataCollector score " + DataCollector.instance.Score);
+        Debug.Log("SteamManager score " + COUNTER);
 
         //save leaderboard entry
         int[] additionalInfo = new int[4] { (int)e.wave, DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day };
