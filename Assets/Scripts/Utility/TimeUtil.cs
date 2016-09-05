@@ -87,4 +87,14 @@ public class TimeUtil
 
         return new TimeUtil(h, m, s, ms);
     }
+
+    public static TimeUtil MillisToTime(float millis)
+    {
+        int seconds = (int)((millis / 1000) % 60);
+        int minute = (int)((millis / (1000 * 60)) % 60);
+        int hour = (int)((millis / (1000 * 60 * 60)) % 24);
+
+        millis -= seconds * 1000;
+        return new TimeUtil(hour, minute, seconds, (int)millis);
+    }
 }

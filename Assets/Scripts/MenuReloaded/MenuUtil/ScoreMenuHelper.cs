@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -132,7 +133,11 @@ public class ScoreMenuHelper : MonoBehaviour
 
     private void RegisterAnimationQueue(Queue<ScoreData> animationWorkQueue, ScoreContainer score)
     {
-        AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, score.getWaveMultiplier(), score.getWaveScore());
+        if(score.getGameMode() == GameMode.NormalMode)
+            AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, score.getWaveMultiplier(), score.getWaveScore());
+        else
+            AddAnimationEntry(animationWorkQueue, HighscoreType.WaveCount, score.getYoloScore(), score.getYoloScore());     // Only show wave score not the multiplier -> In YOLO-Mode there should be no wave multiplier
+
         AddAnimationEntry(animationWorkQueue, HighscoreType.PolygonTriggered, score.getPolysTriggered(), score.getPolysTriggeredScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.PolyKill, score.getPolyKills(), score.getPolyKillsScore());
         AddAnimationEntry(animationWorkQueue, HighscoreType.LinecutKill, score.getCutKills(), score.getCutKillsScore());
@@ -185,12 +190,27 @@ public class ScoreMenuHelper : MonoBehaviour
         }
 
         // Set score
-        scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), 0);
+        StringBuilder timeString = null;
+        if (score.getGameMode() == GameMode.NormalMode)
+            scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), 0);
+        else
+        {
+            TimeUtil time = TimeUtil.MillisToTime(score.getYoloScore());
+            timeString = new StringBuilder(time.Minute == 0 ? "00" : time.Minute.ToString()).Append(":")
+                .Append(time.Second == 0 ? "00" : time.Second.ToString())
+                .Append(":").Append(time.Milliseconds == 0 ? "00" : time.Milliseconds.ToString());
+            scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), 0);
+        }
+
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
         yield return new WaitForSeconds(totalScoreTime);
 
         // Set online rank
-        scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), onlineRank);
+        if(score.getGameMode() == GameMode.NormalMode)
+            scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), onlineRank);
+        else
+            scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), onlineRank);
+
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
     }
     #endregion

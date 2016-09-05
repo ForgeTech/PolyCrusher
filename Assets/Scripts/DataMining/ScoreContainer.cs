@@ -111,7 +111,7 @@ public class ScoreContainer
 
     public float getWaveMultiplier()
     {
-        return wave-1;
+        return wave - 1;
     }
 
     public int getPlayerCount()
@@ -159,7 +159,10 @@ public class ScoreContainer
 
     public int getPlayerRevivalsScore()
     {
-        return playerRevivals * -1000;
+        if (getGameMode() == GameMode.NormalMode)
+            return playerRevivals * -1000;
+        else
+            return 0;
     }
 
     /// <summary>
@@ -167,12 +170,17 @@ public class ScoreContainer
     /// </summary>
     public int getWaveScore()
     {
-        return (int)((wave-1) * 10000);
+        if (wave == 0)
+            return 0;
+        else
+            return (int)((wave - 1) * 10000);
     }
 
     public int getScoreSum()
-    {
-        return getBossKillsScore() + getPolysTriggeredScore() + getPolyKillsScore() + getCutKillsScore() + getPowerupsCollectedScore() + getPlayerRevivalsScore() + getWaveScore();
+    {   if (getGameMode() == GameMode.NormalMode)
+            return getBossKillsScore() + getPolysTriggeredScore() + getPolyKillsScore() + getCutKillsScore() + getPowerupsCollectedScore() + getPlayerRevivalsScore() + getWaveScore();
+        else
+            return getBossKillsScore() + getPolysTriggeredScore() + getPolyKillsScore() + getCutKillsScore() + getPowerupsCollectedScore() + getPlayerRevivalsScore() + getYoloScore();
     }
 
     public int getYoloScore()
