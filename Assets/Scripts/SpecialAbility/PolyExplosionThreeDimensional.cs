@@ -29,11 +29,17 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     [Header("Power Up")]
     [SerializeField]
     [Tooltip("Power up prefab for line cutting.")]
-    protected GameObject powerUpPrefab;
+    protected GameObject powerUpPrefabLineCut;
+    [SerializeField]
+    [Tooltip("Power up prefab for mango explosion.")]
+    protected GameObject powerUpPrefabMango;
 
     [SerializeField]
-    [Tooltip("Probability for a power up spawn.")]
-    protected float powerUpProbability = 0.05f;
+    [Tooltip("Probability for a power up spawn (line).")]
+    protected float powerUpProbabilityLineCut = 0.05f;
+    [SerializeField]
+    [Tooltip("Probability for a power up spawn (mango).")]
+    protected float powerUpProbabilityMango = 0.05f;
 
     public struct Tri
     {
@@ -335,10 +341,17 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     protected void SpawnPowerUp()
     {
         // Spawn based on the probability
-        if (powerUpPrefab != null && Random.value < powerUpProbability)
+        if (powerUpPrefabLineCut != null && Random.value < powerUpProbabilityLineCut)
         {
             // Instantiate
-            Instantiate(powerUpPrefab, transform.position, powerUpPrefab.transform.rotation);
+            Instantiate(powerUpPrefabLineCut, transform.position, powerUpPrefabLineCut.transform.rotation);
+        }
+
+        // Spawn based on the probability
+        if (powerUpPrefabMango != null && Random.value < powerUpProbabilityMango)
+        {
+            // Instantiate
+            Instantiate(powerUpPrefabMango, transform.position, powerUpPrefabMango.transform.rotation);
         }
     }
 

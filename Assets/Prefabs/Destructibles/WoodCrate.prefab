@@ -27,9 +27,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102728}
-  m_LocalRotation: {x: -.707106829, y: 7.45057971e-09, z: 7.45057971e-09, w: .707106829}
-  m_LocalPosition: {x: -47.2900009, y: .0299999993, z: 44.3800011}
-  m_LocalScale: {x: 1.20000005, y: 1.20000076, z: 1.20000052}
+  m_LocalRotation: {x: .258485764, y: -.658168077, z: -.658168018, w: -.258485854}
+  m_LocalPosition: {x: -127.180321, y: 265.833008, z: -199.221985}
+  m_LocalScale: {x: 1.20000005, y: 1.20000064, z: 1.20000052}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -110,8 +110,10 @@ MonoBehaviour:
   respawn: 1
   timeTillRespawn: 20
   deactivators: []
-  powerUpPrefab: {fileID: 191898, guid: 89c14861e46496a44b12daf67b6a76ec, type: 2}
-  powerUpProbability: .100000001
+  powerUpPrefabLineCut: {fileID: 191898, guid: 89c14861e46496a44b12daf67b6a76ec, type: 2}
+  powerUpPrefabMango: {fileID: 137420, guid: 46081003073f41340b7d052f420ff722, type: 2}
+  powerUpProbabilityLineCut: .100000001
+  powerUpProbabilityMango: .100000001
 --- !u!208 &20810182
 NavMeshObstacle:
   m_ObjectHideFlags: 1
