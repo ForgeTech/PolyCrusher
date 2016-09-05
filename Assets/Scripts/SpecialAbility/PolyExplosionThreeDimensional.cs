@@ -7,7 +7,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     public bool explode = false;
     public float extrudeFactor;
-    public int hitsTillExplosion;
+    public int healthValue = 60;
     
     public bool explodeable = true;
     public bool respawn = false;
@@ -18,6 +18,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
 
     private Vector3 scaleFactor;
     private Pool pool;
+
     private int health;
 
 
@@ -95,7 +96,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         //scaleFactor = 0.03f * step * 2;
         scaleFactor = transform.localScale;
        
-        health = hitsTillExplosion;
+        health = healthValue;
 
         if (respawn)
         {
@@ -301,18 +302,20 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     {        
         if (coll.GetComponent<Collider>().tag == "Bullet" || coll.GetComponent<Collider>().tag == "EnemyBullet")
         {
-            DecrementHealth();
+            Bullet bullet = coll.GetComponent<Bullet>();
+            if (bullet != null)
+                DecrementHealth(bullet.Damage);
         }        
     }
 
     /// <summary>
     /// Decrements the health and checks if the object should explode.
     /// </summary>
-    public void DecrementHealth()
+    public void DecrementHealth(int health)
     {
-        this.health--;
+        this.health -= health;
 
-        if (health <= 0 && explodeable)
+        if (this.health <= 0 && explodeable)
         {
             explode = true;
             explodeable = false;
@@ -323,7 +326,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     {
         respawnScript.Respawn();       
         explodeable = true;
-        health = hitsTillExplosion;
+        health = healthValue;
     }
 
     /// <summary>

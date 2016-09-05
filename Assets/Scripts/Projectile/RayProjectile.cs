@@ -180,7 +180,7 @@ public class RayProjectile : Projectile
         PolyExplosionThreeDimensional destructible = hitInfo.transform.gameObject.GetComponent<PolyExplosionThreeDimensional>();
         if (destructible != null)
         {
-            destructible.DecrementHealth();
+            destructible.DecrementHealth(Damage);
         }
     }
 

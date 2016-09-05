@@ -184,7 +184,7 @@ public class PerlinRayProjectile : Projectile
             PolyExplosionThreeDimensional destructible = hitInfo.transform.gameObject.GetComponent<PolyExplosionThreeDimensional>();
             if (destructible != null)
             {
-                destructible.DecrementHealth();
+                destructible.DecrementHealth(Damage);
                 SpawnDeathParticle(hitInfo.transform.position);
             }
         }
