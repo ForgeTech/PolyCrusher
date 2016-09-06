@@ -14,4 +14,6 @@ public class DataCollectorSettings : ScriptableObject {
     public bool log = false;
     [Tooltip("Check if all registered events shall be logged in the console.")]
     public bool logEvents = false;
+
+    public bool eventBuild = true;
 }
