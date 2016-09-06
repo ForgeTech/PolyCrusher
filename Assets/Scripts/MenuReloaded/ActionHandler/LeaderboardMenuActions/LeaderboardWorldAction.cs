@@ -2,7 +2,6 @@
 
 public enum LeaderboardWorld
 {
-    AllWorlds = 0,
     Skyrena = 1,
     BurningMan = 2,
     GreenMamba = 3,
@@ -15,7 +14,7 @@ public enum LeaderboardWorld
 public class LeaderboardWorldAction : AbstractActionHandler
 {
     [SerializeField]
-    public LeaderboardWorld world = LeaderboardWorld.AllWorlds;
+    public LeaderboardWorld world = LeaderboardWorld.Skyrena;
 
     public override void PerformAction<T>(T triggerInstance)
     {

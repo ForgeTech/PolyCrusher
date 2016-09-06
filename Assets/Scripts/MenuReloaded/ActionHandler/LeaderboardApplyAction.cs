@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LeaderboardApplyAction : AbstractActionHandler
 {
+    [SerializeField]
+    private LeaderboardHelper leaderboardHelper;
+
     private AbstractMenuManager menuManager;
     private SelectorWithSubSelector selector;
+
+    private RequestData requestData = null;
 
     private void Start ()
     {
@@ -21,10 +27,22 @@ public class LeaderboardApplyAction : AbstractActionHandler
     public void InvokeSteamRequest ()
     {
         GetInvocationData();
+
+        if (requestData != null)
+        {
+            SteamManager.Instance.RequestLeaderboardEntries(requestData.level, requestData.playerCount, 1, 10,
+                (List<LeaderboardEntry> entries) => {
+                    leaderboardHelper.SetLeaderboardEntries(entries);
+            });
+        }
     }
 
     public void GetInvocationData()
     {
+        string levelName = null;
+        int playerCount = -1;
+        requestData = null;
+
         // Iterate through all selector components (Levels, Character count)
         foreach (var pair in selector.SubSelectionEntries)
         {
@@ -34,9 +52,28 @@ public class LeaderboardApplyAction : AbstractActionHandler
                 GameObject selectedMenuComponent = pair.Value.Components[pair.Value.Current];
                 AbstractActionHandler componentAction = selectedMenuComponent.GetComponent<AbstractActionHandler>();
 
-                // Apply the action of each menu component
-                componentAction.PerformAction<AbstractActionHandler>(this);
+                if (componentAction is LeaderboardWorldAction)
+                    levelName = ((LeaderboardWorldAction)componentAction).world.ToString();
+                else if (componentAction is LeaderboardPlayerCountAction)
+                    playerCount = (int)((LeaderboardPlayerCountAction)componentAction).playerCount;
+
+                    // Apply the action of each menu component
+                    componentAction.PerformAction<AbstractActionHandler>(this);
             }
+        }
+
+        requestData = new RequestData(levelName, playerCount);
+    }
+
+    private class RequestData
+    {
+        internal readonly string level;
+        internal readonly int playerCount;
+
+        public RequestData(string level, int playerCount)
+        {
+            this.level = level;
+            this.playerCount = playerCount;
         }
     }
 }

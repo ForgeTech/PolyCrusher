@@ -2,7 +2,6 @@
 
 public enum LeaderboardPlayerCount
 {
-    AllPlayer = 0,
     OnePlayer = 1,
     TwoPlayer = 2,
     ThreePlayer = 3,
@@ -12,7 +11,7 @@ public enum LeaderboardPlayerCount
 public class LeaderboardPlayerCountAction : AbstractActionHandler
 {
     [SerializeField]
-    public LeaderboardPlayerCount playerCount = LeaderboardPlayerCount.AllPlayer;
+    public LeaderboardPlayerCount playerCount = LeaderboardPlayerCount.OnePlayer;
 
     public override void PerformAction<T>(T triggerInstance)
     {
