@@ -230,7 +230,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157464}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -42.2353668, y: -3.81469727e-06, z: -66.5801163}
+  m_LocalPosition: {x: -37.9173584, y: -3.81469727e-06, z: -67.5075684}
   m_LocalScale: {x: -.00648076553, y: -.00648076832, z: -.00648076832}
   m_Children:
   - {fileID: 488292}
@@ -589,8 +589,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    cnt0: 200
-    cnt1: 100
+    cnt0: 100
+    cnt1: 50
     cnt2: 30
     cnt3: 30
     time0: .5
@@ -1545,7 +1545,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 50
+      scalar: 30
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3555,7 +3555,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: .5
+      scalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3667,7 +3667,7 @@ ParticleSystem:
     cnt1: 0
     cnt2: 30
     cnt3: 30
-    time0: .5
+    time0: .449999988
     time1: 0
     time2: 0
     time3: 0
@@ -4685,7 +4685,7 @@ ParticleSystem:
     cnt1: 30
     cnt2: 30
     cnt3: 30
-    time0: 0
+    time0: .0500000007
     time1: 0
     time2: 0
     time3: 0
@@ -6569,7 +6569,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: .5
+      scalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6681,7 +6681,7 @@ ParticleSystem:
     cnt1: 0
     cnt2: 30
     cnt3: 30
-    time0: 0
+    time0: .100000001
     time1: 0
     time2: 0
     time3: 0
@@ -7699,7 +7699,7 @@ ParticleSystem:
     cnt1: 10
     cnt2: 30
     cnt3: 30
-    time0: 0
+    time0: .150000006
     time1: .300000012
     time2: 0
     time3: 0
@@ -8733,8 +8733,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    cnt0: 100
-    cnt1: 50
+    cnt0: 50
+    cnt1: 25
     cnt2: 30
     cnt3: 30
     time0: .5
@@ -10797,7 +10797,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 50
+      scalar: 30
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11667,7 +11667,7 @@ ParticleSystemRenderer:
   m_GameObject: {fileID: 164492}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: 82ee017bd4329734ab4ac2fc9fa6a6c5, type: 2}
   m_SubsetIndices: 
@@ -11741,7 +11741,7 @@ ParticleSystemRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 82d7ff1bf4c5e408391926acdd65c033, type: 2}
+  - {fileID: 2100000, guid: 9ec49ee695e32bd4ca022cdf85962c78, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -11763,7 +11763,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_SortMode: 0
-  m_Mesh: {fileID: 4300000, guid: b794d3cbdf99c4ff5afeb390dbbd65c1, type: 3}
+  m_Mesh: {fileID: 4300002, guid: f0a193f477a90a34db353f4ab36d80f1, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -11847,7 +11847,7 @@ ParticleSystemRenderer:
   m_GameObject: {fileID: 166976}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: 82ee017bd4329734ab4ac2fc9fa6a6c5, type: 2}
   m_SubsetIndices: 
@@ -11885,7 +11885,7 @@ ParticleSystemRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 82d7ff1bf4c5e408391926acdd65c033, type: 2}
+  - {fileID: 2100000, guid: 9ec49ee695e32bd4ca022cdf85962c78, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -11907,7 +11907,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_SortMode: 0
-  m_Mesh: {fileID: 4300000, guid: b794d3cbdf99c4ff5afeb390dbbd65c1, type: 3}
+  m_Mesh: {fileID: 4300002, guid: f0a193f477a90a34db353f4ab36d80f1, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -11919,7 +11919,7 @@ ParticleSystemRenderer:
   m_GameObject: {fileID: 182568}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: f7d581c92fcf86d47a5a9d3c4cd7c6dd, type: 2}
   m_SubsetIndices: 
@@ -11955,7 +11955,7 @@ ParticleSystemRenderer:
   m_GameObject: {fileID: 157464}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: f7d581c92fcf86d47a5a9d3c4cd7c6dd, type: 2}
   m_SubsetIndices: 
