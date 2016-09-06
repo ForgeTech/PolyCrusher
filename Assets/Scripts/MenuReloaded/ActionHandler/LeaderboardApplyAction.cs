@@ -30,7 +30,7 @@ public class LeaderboardApplyAction : AbstractActionHandler
 
         if (requestData != null)
         {
-            SteamManager.Instance.RequestLeaderboardEntries(requestData.level, requestData.playerCount, 1, 10,
+            BaseSteamManager.Instance.RequestLeaderboardEntries(requestData.level, requestData.playerCount, 1, 10,
                 (List<LeaderboardEntry> entries) => {
                     leaderboardHelper.SetLeaderboardEntries(entries);
             });

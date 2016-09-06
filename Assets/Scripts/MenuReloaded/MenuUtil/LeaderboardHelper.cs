@@ -13,6 +13,9 @@ public class LeaderboardHelper : MonoBehaviour
     [SerializeField]
     private RectTransform highscoreContainer;
 
+    [SerializeField]
+    private Color playerHighlightColor;
+
     [Header("Arrows")]
     [SerializeField]
     private Image leftArrow;
@@ -75,7 +78,7 @@ public class LeaderboardHelper : MonoBehaviour
         }
     }
 
-    private void AddDataRow(int rank, string name, int score, int wave)
+    private GameObject AddDataRow(int rank, string name, int score, int wave)
     {
         GameObject row = Instantiate(dataRow);
         row.transform.SetParent(highscoreContainer.transform, false);
@@ -89,18 +92,23 @@ public class LeaderboardHelper : MonoBehaviour
             else if (name != null && child.name.Equals("GameName"))
                 rankInfo = name;
             else if (score >= 0 && child.name.Equals("Score"))
-                rankInfo = score.ToString();
+                rankInfo = string.Format("{0:0,0}", score);
             else if (wave > 0 && child.name.Equals("Wave"))
                 rankInfo = wave.ToString();
 
             txt.text = rankInfo == null ? "??" : rankInfo;
         }
+
+        return row;
     }
 
     private void ShowLeaderboardEntries()
     {
         foreach (LeaderboardEntry entry in leaderboardEntries)
-            AddDataRow(entry.rank, entry.steamName, entry.score, entry.wave);
+        {
+            GameObject g = AddDataRow(entry.rank, entry.steamName, entry.score, entry.wave);
+            ColorifyPlayerInHighscore(g);
+        }
     }
 
     private void DeleteAllRows()
@@ -109,11 +117,32 @@ public class LeaderboardHelper : MonoBehaviour
             Destroy(child.gameObject);
     }
 
-    public void SetLeaderboardEntries(List<LeaderboardEntry> leaderboardEntries)
+    public void SetLeaderboardEntries(List<LeaderboardEntry> steamEntries)
     {
         DeleteAllRows();
         this.leaderboardEntries.Clear();
-        this.leaderboardEntries = leaderboardEntries;
+
+        foreach (LeaderboardEntry entry in steamEntries)
+            this.leaderboardEntries.Add(entry);
+        
         ShowLeaderboardEntries();
+    }
+
+    private void ColorifyPlayerInHighscore(GameObject row)
+    {
+        string foundName = "";
+        foreach (Transform child in row.transform) {
+            if (child.name.Equals("GameName"))
+                foundName = child.GetComponent<Text>().text;
+        }
+
+        if (foundName.Equals(BaseSteamManager.Instance.GetSteamName()))
+        {
+            foreach (Transform child in row.transform)
+            {
+                Text txt = child.GetComponent<Text>();
+                txt.color = playerHighlightColor;
+            }
+        }
     }
 }
