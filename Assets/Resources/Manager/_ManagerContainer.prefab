@@ -50,8 +50,8 @@ GameObject:
   - 114: {fileID: 11432422}
   - 223: {fileID: 22349544}
   - 114: {fileID: 11455756}
-  - 114: {fileID: 11437948}
   - 114: {fileID: 11477636}
+  - 114: {fileID: 11421450}
   m_Layer: 5
   m_Name: MenuManager
   m_TagString: Untagged
@@ -488,8 +488,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 414468}
-  - 114: {fileID: 11400074}
-  - 114: {fileID: 11448644}
+  - 114: {fileID: 11437322}
   m_Layer: 0
   m_Name: _LineManager
   m_TagString: Untagged
@@ -1297,38 +1296,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11400074
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b52509d97b6c0049a5d68d9c2702ef3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heightOffset: 1
-  healAmount: 10
-  energyHealAmount: 5
-  normalLineWidth: .0500000007
-  healLineWidth: .25
-  healDistance: 5
-  lerpSpeed: 4
-  healDistancePadding: 0
-  polyDistance: 0
-  powerUpTime: 12
-  mats:
-  - {fileID: 2100000, guid: 26ad2a7c9c4161046a7c0d6bb511ef2d, type: 2}
-  - {fileID: 2100000, guid: 624c396bc2f94e34980cd709858792a2, type: 2}
-  - {fileID: 2100000, guid: febbee396b3337e41b19466d684030ad, type: 2}
-  - {fileID: 2100000, guid: 279961c07c6b5534285ac1cae93b2ba7, type: 2}
-  health: {fileID: 131436, guid: 2278b706a80e5a3459fd4c2a78d25d7e, type: 2}
-  energy: {fileID: 146558, guid: 7e45a7591af7c8a43a050bbc0c8a1559, type: 2}
-  laserParticles: {fileID: 103782, guid: 6c186ddd736f0194780b95a9f1c90977, type: 2}
-  activateCutting: 0
-  bossCuttingDamage: 5
-  lightSabrePrefab: {fileID: 175004, guid: b8fa2eb29f1dc684488854f36b762479, type: 2}
 --- !u!114 &11404960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1354,8 +1321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9fdb5b1af6ee149bc10321d7dba6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chosenPlayerIndices: 04000000
-  controllerNumber: 01000000
+  chosenPlayerIndices: 010000000100000001000000
+  controllerNumber: 000000000100000001000000
   playerPrefabs:
   - {fileID: 134618, guid: 575a9c71ee4c8e24e8acf93a1aa0bf22, type: 2}
   - {fileID: 151210, guid: 8527a4d37ed862c42ac85c98c16d691f, type: 2}
@@ -1820,6 +1787,17 @@ MonoBehaviour:
   - {fileID: 100210, guid: 3058aedee7ce74d48a9dc1c646e00cd3, type: 2}
   - {fileID: 159910, guid: 13ff4ff2be20b0248aa0ba6fc7bf558d, type: 2}
   - {fileID: 165106, guid: 60e4c90d8e3f55e44989a42d23982226, type: 2}
+--- !u!114 &11421450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55956fb7957e494f98cf5c916786aa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11423028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1831,32 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab60844790a3a5c4190f793d81b7a3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
-  detonate: 0
-  explosionParticle: {fileID: 187532, guid: 8ff3dcd9ee30463419a54395ba08d2c5, type: 2}
-  bigExplosionParticle: {fileID: 109618, guid: 3702b9ac7ed1b9f46903ead9a2edf487, type: 2}
-  playerStandingParticle: {fileID: 174572, guid: 75ed02a9eb91d204ebf2909fde368e4c,
-    type: 2}
-  polyLoading: {fileID: 8300000, guid: ab1baa4bc3c386c4ba0fad86cc36c0c0, type: 3}
-  polyExplosion: {fileID: 8300000, guid: d45b3daab584efa40b0a383c674f1f8f, type: 3}
-  polyFail: {fileID: 8300000, guid: b2ca083b447fc2243abb70a36c43e3d9, type: 3}
-  mats:
-  - {fileID: 2100000, guid: febbee396b3337e41b19466d684030ad, type: 2}
-  - {fileID: 2100000, guid: cb69ead05f14b8d4788a992b76336432, type: 2}
-  - {fileID: 2100000, guid: 0ee14f93ecf113f40b18747cf2454d95, type: 2}
-  - {fileID: 2100000, guid: f1a3ae89d8da07346a231a70f89da272, type: 2}
-  - {fileID: 2100000, guid: 43732e068e0e68a4daf7b6fd54ca0992, type: 2}
-  - {fileID: 2100000, guid: fdfc7670ae73fb4449a44dcbe6ff6ea7, type: 2}
-  heightOffset: 1.04999995
-  polyStartHeight: -5
-  polyStartSpeed: 6
-  standStillRequiredTime: 1
-  requiredPolyDistance: 7.5
-  transitionCooldown: 1.5
-  hintArrow: {fileID: 148820, guid: 2a42a585305e91b4484d387292efc50e, type: 2}
-  hintOffset: 0
-  bossDamage: 00000000e8030000c4090000a00f0000
-  currentBossDamage: 0
+  polygonProperties: {fileID: 11400000, guid: 317c6b08381f8b449a95cd1feb1f63cd, type: 2}
 --- !u!114 &11430202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1983,17 +1936,42 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: RESUME
---- !u!114 &11437948
+--- !u!114 &11437322
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110796}
+  m_GameObject: {fileID: 167848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8485e5d60f45d8943b51a29b7b8a9467, type: 3}
+  m_Script: {fileID: 11500000, guid: f82f332671f4a6e43ae8a3741750a3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineStartOffset: 1
+  healAmount: 10
+  energyHealAmount: 5
+  normalLineWidth: 5
+  healLineWidth: .0500000007
+  healDistance: .25
+  lerpSpeed: 4
+  healDistancePadding: 0
+  polyDistance: 0
+  powerUpTime: 12
+  colors:
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 1, g: .972413778, b: 0, a: 0}
+  - {r: 1, g: 0, b: 0, a: 0}
+  lineShaderMaterial: {fileID: 2100000, guid: 51faca7a011a0c540a8892ef2921fd20, type: 2}
+  health: {fileID: 131436, guid: 2278b706a80e5a3459fd4c2a78d25d7e, type: 2}
+  energy: {fileID: 146558, guid: 7e45a7591af7c8a43a050bbc0c8a1559, type: 2}
+  laserParticles: {fileID: 103782, guid: 6c186ddd736f0194780b95a9f1c90977, type: 2}
+  activateCutting: 0
+  bossCuttingDamage: 100
+  lightSabrePrefab: {fileID: 175004, guid: b8fa2eb29f1dc684488854f36b762479, type: 2}
+  lineSineFrequency: 20
+  colorChangeSpeed: .400000006
+  amplitudeChangeSpeed: .400000006
+  lineEndOffset: 0
 --- !u!114 &11439358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2171,29 +2149,6 @@ MonoBehaviour:
   - .899999976
   - .949999988
   - 1
---- !u!114 &11448644
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 803a76758a583ea439be466aad55cbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 0, z: 0}
-  endPosition: {x: 0, y: 0, z: 0}
-  width: .200000003
-  lineMaterial: {fileID: 2100000, guid: 51faca7a011a0c540a8892ef2921fd20, type: 2}
-  lineColor: {r: 1, g: .0156862736, b: .0156862736, a: 1}
-  amplitude: .400000006
-  frequeny: 5
-  smoothing: .100000001
-  speed: 100
-  colorStrength: 6.32999992
-  functionType: 1
-  useWorldSpace: 1
 --- !u!114 &11449808
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -19,7 +19,7 @@ public class LineShaderUtility : MonoBehaviour
     public float width;
 
     [SerializeField]
-    private Material lineMaterial;
+    public Material lineMaterial;
 
     [Header("Shader settings")]
     [SerializeField]
@@ -50,7 +50,13 @@ public class LineShaderUtility : MonoBehaviour
 
 	void Start ()
     {
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        
         lineRenderer.material = new Material(lineMaterial);
         lineRenderer.SetWidth(width, width);
         lineRenderer.useWorldSpace = true;

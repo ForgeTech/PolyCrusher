@@ -21,7 +21,7 @@ public class Trap : MonoBehaviour,ITriggerable {
     public GameObject[] playerMeshes;
     
     //specifies the trap gives boss damage
-    public int bossDamage = 5;
+    public int bossDamage = 100;
 
     [SerializeField]
     public GameObject bossCuttingParticles;
@@ -60,7 +60,6 @@ public class Trap : MonoBehaviour,ITriggerable {
                 yield return 0;
             }
             ResetTrap();
-
         }
         else
         {

@@ -34,34 +34,23 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159212}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab60844790a3a5c4190f793d81b7a3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemies: []
   detonate: 0
-  explosionParticle: {fileID: 187532, guid: 8ff3dcd9ee30463419a54395ba08d2c5, type: 2}
-  bigExplosionParticle: {fileID: 109618, guid: 3702b9ac7ed1b9f46903ead9a2edf487, type: 2}
-  playerStandingParticle: {fileID: 0}
-  polyLoading: {fileID: 0}
-  polyExplosion: {fileID: 0}
-  polyFail: {fileID: 0}
-  mats:
-  - {fileID: 2100000, guid: febbee396b3337e41b19466d684030ad, type: 2}
-  - {fileID: 2100000, guid: cb69ead05f14b8d4788a992b76336432, type: 2}
-  - {fileID: 2100000, guid: 0ee14f93ecf113f40b18747cf2454d95, type: 2}
-  - {fileID: 2100000, guid: f1a3ae89d8da07346a231a70f89da272, type: 2}
   heightOffset: 1.04999995
   polyStartHeight: -5
   polyStartSpeed: 6
   standStillRequiredTime: 1
   requiredPolyDistance: 0
   transitionCooldown: 2
-  hintArrow: {fileID: 148820, guid: 2a42a585305e91b4484d387292efc50e, type: 2}
   hintOffset: 0
   bossDamage: 
   currentBossDamage: 0
+  polygonProperties: {fileID: 11400000, guid: 317c6b08381f8b449a95cd1feb1f63cd, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -71,12 +60,17 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: hintArrow
       value: 
       objectReference: {fileID: 148820, guid: 2a42a585305e91b4484d387292efc50e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: polygonProperties
+      value: 
+      objectReference: {fileID: 11400000, guid: 317c6b08381f8b449a95cd1feb1f63cd,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 159212}
