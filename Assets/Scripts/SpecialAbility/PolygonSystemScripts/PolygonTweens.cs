@@ -17,7 +17,7 @@ public class PolygonTweens : MonoBehaviour {
     private float bottomHeight = -6.0f;
 
     [SerializeField]
-    private float startAnimationTime = 0.7f;
+    private float startAnimationTime = 0.3f;
 
     private PolygonSystem polygonSystem;
     private PolygonProperties polygonProperties;
@@ -73,15 +73,18 @@ public class PolygonTweens : MonoBehaviour {
 
     public void InitiatePolyStartAnimation(float[] polygonPartHeightOffsets)
     {
-        startAnimationCount = polygonPartHeightOffsets.Length-1;
-        PolyStartAnimation(polygonPartHeightOffsets);
+        if (startAnimationCount == 0)
+        {
+            startAnimationCount = polygonPartHeightOffsets.Length - 1;
+            PolyStartAnimation(polygonPartHeightOffsets);
+        }
     }
 
     private void PolyStartAnimation(float[] polygonPartHeightOffsets)
     {
         LeanTween.value(gameObject, beginHeight, finalHeight, startAnimationTime)
             .setOnUpdate((float height) => { polygonPartHeightOffsets[startAnimationCount] = height; })
-            .setEase(LeanTweenType.easeOutBounce).setOnComplete(() =>
+            .setEase(LeanTweenType.easeOutCirc).setOnComplete(() =>
             {              
                 if (--startAnimationCount >= 0)
                 {
@@ -89,6 +92,7 @@ public class PolygonTweens : MonoBehaviour {
                 }
                 else
                 {
+                    startAnimationCount = 0;
                     OnPolygonStartAnimationFinished();
                 }         
             });      
@@ -99,15 +103,18 @@ public class PolygonTweens : MonoBehaviour {
 
     public void InitiatePolygonExecutedAnimation(float[] polygonPartHeightOffsets)
     {
-        executedAnimationCount = polygonPartHeightOffsets.Length-1;
-        PolygonExecutedAnimation(polygonPartHeightOffsets);
+        if (executedAnimationCount == 0)
+        {
+            executedAnimationCount = polygonPartHeightOffsets.Length - 1;
+            PolygonExecutedAnimation(polygonPartHeightOffsets);
+        }
     }
 
     private void PolygonExecutedAnimation(float[] polygonPartHeightOffsets)
     {
         LeanTween.value(gameObject, finalHeight, beginHeight, startAnimationTime)
             .setOnUpdate((float height) => { polygonPartHeightOffsets[executedAnimationCount] = height; })
-            .setEase(LeanTweenType.pingPong).setOnComplete(() =>
+            .setEase(LeanTweenType.linear).setOnComplete(() =>
             {
                 if (--executedAnimationCount >= 0)
                 {
@@ -115,6 +122,7 @@ public class PolygonTweens : MonoBehaviour {
                 }
                 else
                 {
+                    executedAnimationCount = 0;
                     OnPolygonEndAnimationFinished();
                 }              
             });

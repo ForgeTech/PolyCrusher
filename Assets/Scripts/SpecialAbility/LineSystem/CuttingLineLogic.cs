@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+public delegate void CuttingActivatedHandler();
+public delegate void CuttingDeactivateHandler();
+
 public class CuttingLineLogic : MonoBehaviour {
+
+    public static event CuttingActivatedHandler CuttingActive;
+    public static event CuttingDeactivateHandler CuttingInactive;
 
     [SerializeField]
     private bool activateCutting;
@@ -65,6 +72,17 @@ public class CuttingLineLogic : MonoBehaviour {
 
     #endregion
 
+    void Awake()
+    {
+        LevelEndManager.levelExitEvent += ResetValues;
+    }
+
+    private void ResetValues()
+    {
+        CuttingActive = null;
+        CuttingInactive = null;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -92,6 +110,7 @@ public class CuttingLineLogic : MonoBehaviour {
             if (!activateCutting)
             {
                 activateCutting = true;
+                OnCuttingActivated();
             }
 
             timeActive -= Time.deltaTime;
@@ -99,14 +118,31 @@ public class CuttingLineLogic : MonoBehaviour {
             if (timeActive <= 0.0f)
             {
                 activateCutting = false;
+                OnCuttingDeactivated();
                 for (int i = 0; i < lineSystem.LineShaderUtilities.Length; i++)
                 {
-                    lineTweens.TweenColor(i, -1, true);
+                    lineTweens.TweenColor(i, -1, false);
+                    lineTweens.TweenAmplitude(i,0.0f, LineShaderType.SineWave);
                 }
             }
         }
     }
 
+    private void OnCuttingActivated()
+    {
+        if (CuttingActive != null)
+        {
+            CuttingActive();
+        }
+    }
+
+    private void OnCuttingDeactivated()
+    {
+        if (CuttingInactive != null)
+        {
+            CuttingInactive();
+        }
+    }
 
     private void CuttingLinesPowerUp()
     {
@@ -158,6 +194,7 @@ public class CuttingLineLogic : MonoBehaviour {
     }
 
     private void PrepareLightSabre()
+
     {
         if (lightSabreGameObject == null)
         {

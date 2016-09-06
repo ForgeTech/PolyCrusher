@@ -44,6 +44,18 @@ public class LineTweens : MonoBehaviour {
     #endregion
 
     #region amplitudeTween
+    public void TweenAmplitude(int lineNumber, float endAmplitude, LineStatus status)
+    {
+        lineSystem.IsChangingAmplitude[lineNumber] = true;
+        LeanTween.value(gameObject, lineSystem.LineShaderUtilities[lineNumber].amplitude, endAmplitude, amplitudeChangeSpeed)
+           .setOnUpdate((float lerpAmplitude) => { lineSystem.LineShaderUtilities[lineNumber].amplitude = lerpAmplitude; })
+           .setEase(LeanTweenType.pingPong).setOnComplete(() =>
+           {
+               lineSystem.IsChangingAmplitude[lineNumber] = false;
+               lineSystem.Status[lineNumber] = status; 
+           });
+    }
+
     public void TweenAmplitude(int lineNumber, float endAmplitude)
     {
         lineSystem.IsChangingAmplitude[lineNumber] = true;
@@ -52,10 +64,26 @@ public class LineTweens : MonoBehaviour {
            .setEase(LeanTweenType.pingPong).setOnComplete(() =>
            {
                lineSystem.IsChangingAmplitude[lineNumber] = false;
-               lineSystem.Status[lineNumber] = LineStatus.heal;
            });
     }
+
+    public void TweenAmplitude(int lineNumber, float endAmplitude, LineShaderType lineType)
+    {
+        lineSystem.IsChangingAmplitude[lineNumber] = true;
+        LeanTween.value(gameObject, lineSystem.LineShaderUtilities[lineNumber].amplitude, endAmplitude, amplitudeChangeSpeed)
+           .setOnUpdate((float lerpAmplitude) => { lineSystem.LineShaderUtilities[lineNumber].amplitude = lerpAmplitude; })
+           .setEase(LeanTweenType.pingPong).setOnComplete(() =>
+           {
+               lineSystem.IsChangingAmplitude[lineNumber] = false;
+               lineSystem.LineShaderUtilities[lineNumber].functionType = lineType;
+           });
+    }
+
+
     #endregion
+
+
+
 
     #endregion
 

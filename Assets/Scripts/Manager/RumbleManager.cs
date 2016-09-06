@@ -21,9 +21,6 @@ public class RumbleManager : MonoBehaviour
     
     private static WaitForSeconds[] waitTimes;
 
-    private static WaitForSeconds longWait = new WaitForSeconds(9.5f);
-
-
     private Dictionary<RumbleType, string> rumbleMethodNames;
 
     public delegate void PlayerRumbleHandle(float tweenTime, InputDevice device);

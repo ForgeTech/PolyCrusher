@@ -47,7 +47,7 @@ public class PolygonCoreLogic : MonoBehaviour {
 
     private bool polygonIsDeCharging = false;
 
-    
+    private bool cuttingIsActive = false;
 
     private float currentPolyTriggerTime = 0.0f;
 
@@ -117,6 +117,9 @@ public class PolygonCoreLogic : MonoBehaviour {
         LevelEndManager.levelExitEvent += ResetValues;
         PolygonTweens.PolygonStartAnimationFinished += SetPolygonActive;
         PolygonTweens.PolygonEndAnimationFinished += SetPolygonInactive;
+
+        CuttingLineLogic.CuttingActive += OnCuttingActivated;
+        CuttingLineLogic.CuttingInactive += OnCuttingDeactivated;
 
         polygonMeshBuilder = gameObject.AddComponent<PolygonMeshBuilder>();
 
@@ -224,7 +227,7 @@ public class PolygonCoreLogic : MonoBehaviour {
             playerGameObjects = polygonUtil.AllignPlayers(playerGameObjects, donkey);
 
             //core logic
-            if (polygonUtil.CheckPlayerEnergyLevels(playerScripts) && !polygonIsStarting && !polygonIsActive && polygonIsInactive)
+            if (polygonUtil.CheckPlayerEnergyLevels(playerScripts) && !polygonIsStarting && !polygonIsActive && polygonIsInactive && !cuttingIsActive)
             {
                 polygonIsInactive = false;
                 polygonIsStarting = true;
@@ -285,28 +288,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     }
     #endregion
 
-    private void AdjustPlayerValues()
-    {
-        for (int i = 0; i < playerScripts.Length; i++)
-        {
-            playerScripts[i].Health = playerScripts[i].MaxHealth;
-            playerScripts[i].Energy = 50;
-        }
-    }
-
-    private void SetPolygonActive()
-    {
-        polygonIsStarting = false;
-        polygonIsActive = true;
-    }
-
-    private void SetPolygonInactive()
-    {
-        polygonIsEnding = false;
-        polygonIsInactive = true;
-    }
-
-
     #region calculateMiddlePoint
     private Vector3 CalculateNewMiddlePoint()
     {
@@ -339,6 +320,27 @@ public class PolygonCoreLogic : MonoBehaviour {
     }
     #endregion
 
+    #region adjustment
+    private void AdjustPlayerValues()
+    {
+        for (int i = 0; i < playerScripts.Length; i++)
+        {
+            playerScripts[i].Health = playerScripts[i].MaxHealth;
+            playerScripts[i].Energy = 50;
+        }
+    }
+
+    private void SetPolygonActive()
+    {
+        polygonIsStarting = false;
+        polygonIsActive = true;
+    }
+
+    private void SetPolygonInactive()
+    {
+        polygonIsEnding = false;
+        polygonIsInactive = true;
+    }
 
     private void UpdatePolygonMaterialBrightness()
     {
@@ -355,6 +357,17 @@ public class PolygonCoreLogic : MonoBehaviour {
             renderers[i].material.Lerp(renderers[i].material, polygonProperties.polygonMaterials[1], currentAlpha);
         }
     }
+
+    private void OnCuttingActivated()
+    {
+        cuttingIsActive = true;
+    }
+
+    private void OnCuttingDeactivated()
+    {
+        cuttingIsActive = false;
+    }
+    #endregion
 
     #region updatePlayerInformation
 

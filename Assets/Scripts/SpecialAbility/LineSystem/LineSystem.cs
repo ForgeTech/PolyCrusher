@@ -3,7 +3,7 @@ using System.Collections;
 
  public enum LineStatus
 {
-    normal, healAnimation, heal, normalAnimation
+    normal, healAnimation, heal, normalAnimation, cuttingAnimation, cutting
 }
 
 public class LineSystem : MonoBehaviour {
@@ -71,19 +71,11 @@ public class LineSystem : MonoBehaviour {
     private int[] activeColor;
     private bool[] activeHealSineLine;
     private int lineRendererLength;
-    
-    [SerializeField]
-    private bool activateCutting;
-
+   
     [SerializeField]
     private int bossCuttingDamage = 5;
 
 
-    private float timeActive;
-
-    
-    private Vector3 bufferVectorA;
-    private Vector3 bufferVectorB;
 
     //single player light sabre power up variables
     public GameObject lightSabrePrefab;
@@ -104,6 +96,9 @@ public class LineSystem : MonoBehaviour {
     private float amplitudeChangeSpeed = 0.4f;
 
     [SerializeField]
+    private float endAmplitude = 0.2f;
+
+    [SerializeField]
     private float lineEndOffset = 0.0f;
 
     private float currentHeightOffset;
@@ -112,6 +107,7 @@ public class LineSystem : MonoBehaviour {
     private LineTweens lineTweens;
 
     private int[] lineSpeeds;
+    private float[] lineDistances;
     private int initialSpeed = 200;
     
 
@@ -194,12 +190,7 @@ public class LineSystem : MonoBehaviour {
         energyParticles = new ParticleSystem[4];
         healthParticles = new ParticleSystem[4];
 
-        activateCutting = false;
-        timeActive = -0.01f;
- 
-        bufferVectorA = new Vector3();
-        bufferVectorB = new Vector3();
-
+     
         currentHeightOffset = lineStartOffset;
 
     }
@@ -244,9 +235,9 @@ public class LineSystem : MonoBehaviour {
 
             HealOverTime();
 
-            //HealLineUpdate();
+            UpdateLineStatus();
 
-            //UpdateLineSpeed();
+            UpdateLineSpeed();
 
             UpdateLines();          
         }
@@ -267,17 +258,6 @@ public class LineSystem : MonoBehaviour {
             }           
         } 
 	}
-
-    private void ResetNearbyPlayers()
-    {
-        for(int i = 0; i < nearbyPlayers.GetLength(0); i++)
-        {
-            for(int j = 0; j< nearbyPlayers.GetLength(1); j++)
-            {
-                nearbyPlayers[i, j] = false;
-            }
-        }
-    }
 
     public void ActivateCutting()
     {
@@ -313,6 +293,8 @@ public class LineSystem : MonoBehaviour {
             if (cuttingLineLogic.TimeActive > 0.0f && !isChangingColor[i] && activeColor[i] != 2)
             {
                 lineTweens.TweenColor(i, 2, false);
+                lineShaderUtilities[i].functionType = LineShaderType.SawTooth;
+                lineTweens.TweenAmplitude(i, endAmplitude);
             }
             else if ((activeColor[i] == 0 || activeColor[i] == 2) && !isChangingColor[i] && distance < healDistance && cuttingLineLogic.TimeActive <= 0.0f)
             {
@@ -350,7 +332,6 @@ public class LineSystem : MonoBehaviour {
 
     void HandleHealthRecovery()
     {
-        ResetNearbyPlayers();
         for (int i = 0; i < players.Length; i++)
         {
             playersInReach[i] = 0;
@@ -361,7 +342,6 @@ public class LineSystem : MonoBehaviour {
                     if (Vector3.Distance(players[i].transform.position, players[j].transform.position) <= healDistance)
                     {
                         playersInReach[i]++;
-                        nearbyPlayers[i, j] = true;
 
                         if (!playerMoved[i])
                         {
@@ -388,70 +368,25 @@ public class LineSystem : MonoBehaviour {
         }
     }
 
-    void DebugNearbyPlayers()
-    {
-        for(int i = 0; i < nearbyPlayers.GetLength(0); i++)
-        {
-            string tmp = "player "+i+" | ";
-            for(int j = 0; j < nearbyPlayers.GetLength(1); j++)
-            {
-                tmp += nearbyPlayers[i, j] + " ";
-            }
-            tmp += "|";
-            Debug.Log(tmp);
-        }
-    }
-
-
-    private int FindLine(int playerA, int playerB)
+    private void UpdateLineStatus()
     {
         for(int i = 0; i < linesNeeded[players.Length-1]; i++)
         {
-            if((firstVertex[i] == playerA && secondVertex[i] == playerB) || (firstVertex[i] == playerB && secondVertex[i] == playerA))
-            {
-                Debug.Log("Returned line: " + i);
-                return i;
-            }
-        }
-        return -1;
-    }
+            bool first = playerWasHealed[firstVertex[i]];
+            bool second = playerWasHealed[secondVertex[i]];
+            float distance = Vector3.Distance(players[firstVertex[i]].transform.position, players[secondVertex[i]].transform.position);
 
-
-    private void HealLineUpdate()
-    {
-        for(int i = 0; i < players.Length; i++)
-        {
-            if (playerWasHealed[i])
+            if(lineStatus[i] == LineStatus.normal && (first || second) && !isChangingAmplitude[i] && distance<=healDistance)
             {
-                for(int j = 0; j < nearbyPlayers.GetLength(1); j++)
-                {
-                    if (i!=j && nearbyPlayers[i, j])
-                    {
-                        int line = FindLine(i,j);
-                        if (line != -1 && !isChangingAmplitude[line] && lineStatus[line] == LineStatus.normal)
-                        {
-                            lineStatus[line] = LineStatus.healAnimation;
-                            isChangingAmplitude[line] = true;
-                            lineTweens.TweenAmplitude(line, 0.4f);
-                        }
-                    }
-                }
-            }
-            else
+                lineStatus[i]  = LineStatus.healAnimation;
+                isChangingAmplitude[i] = true;
+                lineTweens.TweenAmplitude(i, endAmplitude, LineStatus.heal);
+                lineShaderUtilities[i].frequeny = lineSineFrequency;
+            }else if(lineStatus[i] == LineStatus.heal && !isChangingAmplitude[i] && (distance > healDistance || (!first && !second)))
             {
-                for (int j = 0; j < nearbyPlayers.GetLength(1); j++)
-                {
-                    if (i != j && nearbyPlayers[i, j])
-                    {
-                        int line = FindLine(i, j);
-                        if (line != -1 && !isChangingAmplitude[line] && lineStatus[line] == LineStatus.heal)
-                        {
-                            lineStatus[line] = LineStatus.normalAnimation;
-                            isChangingAmplitude[line] = true;
-                            lineTweens.TweenAmplitude(line, 0.0f);
-                        }
-                    }
-                }
+                lineStatus[i] = LineStatus.normalAnimation;
+                isChangingAmplitude[i] = true;
+                lineTweens.TweenAmplitude(i, 0.0f, LineStatus.normal);
             }
         }
     }
@@ -462,7 +397,7 @@ public class LineSystem : MonoBehaviour {
         for(int i = 0; i < linesNeeded[players.Length-1]; i++)
         {
 
-            if(lineStatus[i] == LineStatus.heal)
+            if(lineStatus[i] == LineStatus.healAnimation || lineStatus[i] == LineStatus.heal )
             {
                 int healthA = playerScripts[firstVertex[i]].Health;
                 int healthB = playerScripts[secondVertex[i]].Health;
@@ -475,7 +410,6 @@ public class LineSystem : MonoBehaviour {
               
                 lineShaderUtilities[i].speed = lineSpeeds[i];
             }
-
         }
     }
 
@@ -505,7 +439,8 @@ public class LineSystem : MonoBehaviour {
             else
             {                
                 healthParticles[i].enableEmission = false;
-                
+                playerWasHealed[i] = false;
+
             }
 
             if (playersInReach[i] > 0)
@@ -530,22 +465,6 @@ public class LineSystem : MonoBehaviour {
         }
     }
 
-
-
-    private void HandleAmplitudeChange(int index, float endAmplitude)
-    {
-        for(int j =0; j < nearbyPlayers.GetLength(1); j++)
-        {
-            if (nearbyPlayers[index,j])
-            {
-                int line = FindLine(index, j);
-                if (line != -1 && !isChangingAmplitude[line])
-                {
-                    lineTweens.TweenAmplitude(line, endAmplitude);
-                }
-            }
-        }
-    }
 
 
     void UpdateLines()
@@ -627,6 +546,7 @@ public class LineSystem : MonoBehaviour {
             activeHealSineLine = new bool[linesNeeded[players.Length - 1]];
             lineStatus = new LineStatus[linesNeeded[players.Length - 1]];
             lineSpeeds = new int[linesNeeded[players.Length - 1]];
+            lineDistances = new float[linesNeeded[players.Length - 1]];
 
             incremenetTimers = new float[players.Length];
             playerWasHealed = new bool[players.Length];
