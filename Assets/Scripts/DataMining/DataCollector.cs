@@ -30,6 +30,7 @@ public class DataCollector : MonoBehaviour
 
     // VERSION NUMBER
     internal string buildVersion = "0.3";
+    internal bool eventBuild = true;
 
     // general fields
     private bool sessionRunning = false;
@@ -142,6 +143,7 @@ public class DataCollector : MonoBehaviour
             logEvents = settings.logEvents;
             scriptsAddress = settings.scriptsAddress;
             bundleSize = settings.bundleSize;
+            eventBuild = settings.eventBuild;
         }
         else
             Debug.Log("[DataCollector] no settings loaded, using standard settings");
@@ -159,7 +161,7 @@ public class DataCollector : MonoBehaviour
             Debug.LogError("[DataCollector] already instantiated before initialization");
         }
         DataCollector.settings = settings;
-        instance.buildVersion = settings.buildVersion;
+        instance.buildVersion = settings.buildVersion; // doing random thing calling instance to start instanciation
     }
 
     /// <summary>
@@ -238,7 +240,16 @@ public class DataCollector : MonoBehaviour
             {
                 endEvent.addGameName(currentSession.steamName);
             }
-            
+            else
+            {
+                endEvent.addGameName(GetRandomName());
+            }
+
+            if (eventBuild)
+            {
+                endEvent.addGameName(GetRandomName());
+            }
+
             endEvent.addPlayerCharacters();
             endEvent.addMode(currentSession.mode);
             addEvent(endEvent);
@@ -687,6 +698,12 @@ public class DataCollector : MonoBehaviour
                     scoreContainer.setGameMode(GameMode.NormalMode);
                 }
 
+                if (DataCollector.instance.eventBuild)
+                {
+                    scoreContainer.setGameName(e.name);
+                }
+                
+
                 Debug.Log(scoreContainer.ToString());
                 /*
                 Debug.Log("[DataCollector] wave " + wave);
@@ -752,7 +769,35 @@ public class DataCollector : MonoBehaviour
     {
         StartCoroutine(DisplayScoreCalcCoroutine(e));
     }
- 
+
+
+    public static string GetRandomName()
+    {
+        String[] names = {"FUN", "FANCY", "UGLY", "RED", "BETTER", "EASY",
+            "ODD", "WRONG", "GRUMPY", "IMPORTANT", "HILARIOUS", "DEEP",
+            "DEADLY", "GREAT", "HUGE", "SEXY", "CRAZY", "DUMB", "BORING",
+            "CRAP", "DERP", "PANTS", "FURIOUS", "FLUFFY", "YUMMY", "ROYAL",
+            "DECENT", "CAT", "SCARY", "FAT", "BUGGY", "MOON", "NEW", "SAVE",
+            "RANDOM", "FUNKY", "HUMID", "FLIRT", "GLOBAL", "FRIED", "LETHAL",
+            "QUICK", "CUTE", "BLOODY", "BOARD", "WEIRD", "JUICY", "ARCADE",
+            "SAD", "BORING", "BOLD", "FRESH", "GROOVY", "PAIN", "END", "GRAND",
+            "GUN", "POLY", "WAR", "BRUTAL", "GROSS", "NUDE", "GAY", "FLOWER",
+            "FALSE", "SWEET", "PUBLIC", "SPEED", "SOUP", "TOTAL", "POETIC",
+            "SLEEP", "TRAP", "HONEST", "STRANGE", "BELLY", "GRIND", "HOLY",
+            "ZOO", "FARMER", "CANDY", "FILTHY", "TRAGIC", "FIRST",
+            "BAD", "HORSE", "HAND", "FOOT", "EYE", "FLOPPY", "FRUITY", "DOG", "CAGE",
+            "PAST", "FUTURISTIC", "BANANA", "HAWAII", "PLAY", "BABY", "ANT", "HAVY",
+            "WAFFLE", "ANCIENT", "GRAND", "APPLE", "VESSEL", "LINZ", "REST" ,"TRICK",
+            "TRICK", "FREAKAZOID", "PINKY", "NICE" , "NEAT", "GOO", "HAPPY", "EXTRA", "SALTY",
+            "MONDAY" , "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY","SATURDAY", "SUNDAY",
+            "MANGO", "MANGOE", "MENGO", "MAYNGO", "MEHNGO", "MANGOH", "MANKO" , "MANGOO",
+            "SPACE", "TIME", "WHIMPY", "GOOD", "WHOLE","WACKY", "SOUND", "MENTAL","LUNATIC","BESERK","ODDBALL" };
+
+        System.Random rnd = new System.Random();
+        int location = rnd.Next(names.Length - 1);
+
+        return names[location];
+    }
 }
 
 /*

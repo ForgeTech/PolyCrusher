@@ -16,6 +16,7 @@ public class ScoreContainer
     private string levelname = "";
     private float wave = 0;
     private int yoloTime = 0;
+    private string gameName = "";
 
     public void addBossKills(int x)
     {
@@ -72,6 +73,12 @@ public class ScoreContainer
         levelname = name;
     }
 
+    public void setGameName(string name)
+    {
+        gameName = name;
+    }
+
+
     //--------------------------
 
 
@@ -127,6 +134,11 @@ public class ScoreContainer
     public string getLevelName()
     {
         return levelname;
+    }
+
+    public string getGameName()
+    {
+        return gameName;
     }
 
 
