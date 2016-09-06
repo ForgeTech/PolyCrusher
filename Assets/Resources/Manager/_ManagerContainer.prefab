@@ -1321,8 +1321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9fdb5b1af6ee149bc10321d7dba6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chosenPlayerIndices: 010000000100000001000000
-  controllerNumber: 000000000100000001000000
+  chosenPlayerIndices: 0100000001000000
+  controllerNumber: 0000000001000000
   playerPrefabs:
   - {fileID: 134618, guid: 575a9c71ee4c8e24e8acf93a1aa0bf22, type: 2}
   - {fileID: 151210, guid: 8527a4d37ed862c42ac85c98c16d691f, type: 2}
@@ -1950,9 +1950,9 @@ MonoBehaviour:
   lineStartOffset: 1
   healAmount: 10
   energyHealAmount: 5
-  normalLineWidth: 5
-  healLineWidth: .0500000007
-  healDistance: .25
+  normalLineWidth: .0500000007
+  healLineWidth: .25
+  healDistance: 5
   lerpSpeed: 4
   healDistancePadding: 0
   polyDistance: 0
@@ -1971,7 +1971,7 @@ MonoBehaviour:
   lineSineFrequency: 20
   colorChangeSpeed: .400000006
   amplitudeChangeSpeed: .400000006
-  lineEndOffset: 0
+  lineEndOffset: 12
 --- !u!114 &11439358
 MonoBehaviour:
   m_ObjectHideFlags: 1
