@@ -601,7 +601,7 @@ class SteamManager : BaseSteamManager
             case AchievementID.ACH_CREDITS_VIEWED: //TODO
                 UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
                 break;
-            case AchievementID.ACH_PICK_SPACETIME_MANGO: //TODO
+            case AchievementID.ACH_PICK_SPACETIME_MANGO:
                 UnlockAchievement(AchievementID.ACH_PICK_SPACETIME_MANGO);
                 break;
             case AchievementID.ACH_A_MILLION_SHOTS:

@@ -8,6 +8,8 @@ public class PowerUpMango : PowerUp
 
     public override void Use()
     {
+        BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_PICK_SPACETIME_MANGO);
+
         Instantiate(explosion, transform.position, transform.rotation);
         CameraManager.CameraReference.ShakeOnce();
 
