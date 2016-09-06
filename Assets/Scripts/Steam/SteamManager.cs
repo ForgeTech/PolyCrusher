@@ -47,7 +47,6 @@ class SteamManager : BaseSteamManager
     private List<LeaderboardEntry> currDownloadedEntries;
     private int rank;
     private bool downloadEntries = false;
-    private bool downloadOwnEntry = false;
     private Vector2 downloadRange = Vector2.zero;
     private LeaderboardAction currAction;
 
@@ -477,42 +476,38 @@ class SteamManager : BaseSteamManager
     {
         Debug.Log("[" + LeaderboardScoresDownloaded_t.k_iCallback + " - LeaderboardScoresDownloaded] - " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_hSteamLeaderboardEntries + " -- " + pCallback.m_cEntryCount);
 
-        if (downloadOwnEntry)
+        for (int i = 0; i < pCallback.m_cEntryCount; i++)
         {
-            if (pCallback.m_cEntryCount > 0)
-            {
-                LeaderboardEntry_t e;
-                int[] additionalInfo = new int[4];
-                SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, 0, out e, additionalInfo, 4);
-                if (!(e.m_nGlobalRank >= downloadRange.x && e.m_nGlobalRank <= downloadRange.y))
-                    currDownloadedEntries[(int)downloadRange.y-1] = (new LeaderboardEntry(SteamFriends.GetFriendPersonaName(e.m_steamIDUser), e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
-            }
+            LeaderboardEntry_t e;
+            int[] additionalInfo = new int[4];
+            SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, i, out e, additionalInfo, 4);
 
-            currAction(currDownloadedEntries);
-            downloadOwnEntry = false;
+            SteamFriends.RequestUserInformation(e.m_steamIDUser, true);
+            currDownloadedEntries[e.m_nGlobalRank - 1] = (new LeaderboardEntry("not loaded", e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
         }
-        else
+
+        for (int i = 0; i < pCallback.m_cEntryCount; i++)
         {
-            for (int i = 0; i < pCallback.m_cEntryCount; i++)
-            {
-                LeaderboardEntry_t e;
-                int[] additionalInfo = new int[4];
-                SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, i, out e, additionalInfo, 4);
-
-                SteamFriends.RequestUserInformation(e.m_steamIDUser, true);
-                currDownloadedEntries[e.m_nGlobalRank-1] = (new LeaderboardEntry("not loaded", e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
-            }
-
-            for (int i = 0; i < pCallback.m_cEntryCount; i++)
-            {
-                currDownloadedEntries[i].steamName = SteamFriends.GetFriendPersonaName(currDownloadedEntries[i].steamID);
-                Debug.Log("entry " + i + 1 + " with name " + currDownloadedEntries[i].steamName + " and rank " + currDownloadedEntries[i].rank + " and score " + currDownloadedEntries[i].score + " retrieved");
-            }
-
-            downloadOwnEntry = true;
-            SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntriesForUsers(m_SteamLeaderboard, new CSteamID[1] { SteamUser.GetSteamID() }, 1);
-            LeaderboardScoresDownloaded.Set(downloadHandle, OnLeaderboardScoresDownloaded);
+            currDownloadedEntries[i].steamName = SteamFriends.GetFriendPersonaName(currDownloadedEntries[i].steamID);
+            Debug.Log("entry " + i + 1 + " with name " + currDownloadedEntries[i].steamName + " and rank " + currDownloadedEntries[i].rank + " and score " + currDownloadedEntries[i].score + " retrieved");
         }
+
+        SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntriesForUsers(m_SteamLeaderboard, new CSteamID[] { SteamUser.GetSteamID() }, 1);
+        LeaderboardScoresDownloaded.Set(downloadHandle, OnOwnLeaderboardScoreDownloaded);
+    }
+
+    private void OnOwnLeaderboardScoreDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
+    {
+        if (pCallback.m_cEntryCount > 0)
+        {
+            LeaderboardEntry_t e;
+            int[] additionalInfo = new int[4];
+            SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, 0, out e, additionalInfo, 4);
+            if (!(e.m_nGlobalRank >= downloadRange.x && e.m_nGlobalRank <= downloadRange.y))
+                currDownloadedEntries[(int)downloadRange.y - 1] = (new LeaderboardEntry(SteamFriends.GetFriendPersonaName(e.m_steamIDUser), e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
+        }
+
+        currAction(currDownloadedEntries);
     }
 
     #endregion
