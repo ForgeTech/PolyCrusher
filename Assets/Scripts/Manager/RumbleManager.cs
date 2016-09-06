@@ -26,6 +26,9 @@ public class RumbleManager : MonoBehaviour
 
     private Dictionary<RumbleType, string> rumbleMethodNames;
 
+    public delegate void PlayerRumbleHandle(float tweenTime, InputDevice device);
+    public event PlayerRumbleHandle DamageRumble;
+
     public static RumbleManager Instance
     {
         get
@@ -76,9 +79,12 @@ public class RumbleManager : MonoBehaviour
     private void FillWaitTimes()
     {
         for(int i = 0; i < waitTimes.Length; i++)
-        {
-            waitTimes[i] = new WaitForSeconds(0.1f* i +0.1f);
-        }
+            waitTimes[i] = new WaitForSeconds(CalculateTimeValue(i));
+    }
+
+    private float CalculateTimeValue(int index)
+    {
+        return 0.1f * index + 0.1f;
     }
 
     public void Rumble(InputDevice inputDevice, RumbleType rumbleType)
@@ -179,6 +185,7 @@ public class RumbleManager : MonoBehaviour
     {      
         for(int i = 0; i < 3; i++)
         {
+            OnDamageRumbleActivated(CalculateTimeValue(3) + CalculateTimeValue(1), inputDevice);
             inputDevice.Vibrate(0.25f, 0.0f);
             yield return waitTimes[3];
 
@@ -265,8 +272,12 @@ public class RumbleManager : MonoBehaviour
 
         inputDevice.StopVibration();
     }
-  
 
+    protected void OnDamageRumbleActivated(float tweenTime, InputDevice device)
+    {
+        if (DamageRumble != null)
+            DamageRumble(tweenTime, device);
+    }
     #endregion
 
 }

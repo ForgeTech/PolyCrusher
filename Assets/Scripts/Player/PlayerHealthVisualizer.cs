@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using InControl;
+using UnityEngine;
 
 public class PlayerHealthVisualizer : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public class PlayerHealthVisualizer : MonoBehaviour
 
     [SerializeField]
     private float tweenTime = 0.2f;
-    private float halfTweenTime;
 
     private void OnEnable()
     {
@@ -22,15 +22,26 @@ public class PlayerHealthVisualizer : MonoBehaviour
         playerMaterial = transform.GetComponentInChildren<Renderer>().material;
 
         player.DamageTaken += DoDamageTween;
-
-        halfTweenTime = tweenTime * 0.5f;
+        RumbleManager.Instance.DamageRumble += DoRumbleTween;
     }
 
     private void DoDamageTween(int damageDealed)
     {
         if (!player.IsDead)
-        {
-            LeanTween.value(gameObject, 0f, 1f, halfTweenTime)
+            TweenMaterialProperties(tweenTime);
+    }
+
+    private void DoRumbleTween(float tweenTime, InputDevice device)
+    {
+        if (device == player.InputDevice && !player.IsDead)
+            TweenMaterialProperties(tweenTime);
+    }
+
+    private void TweenMaterialProperties(float tweenTime)
+    {
+        float halfTweenTime = tweenTime * 0.5f;
+
+        LeanTween.value(gameObject, 0f, 1f, halfTweenTime)
                 .setOnUpdate((float val) =>
                 {
                     playerMaterial.SetFloat("_EffectAmount", val);
@@ -43,6 +54,5 @@ public class PlayerHealthVisualizer : MonoBehaviour
                             playerMaterial.SetFloat("_EffectAmount", val);
                         });
                 });
-        }
     }
 }

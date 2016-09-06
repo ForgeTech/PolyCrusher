@@ -658,16 +658,18 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     private void DamageTakenRumble()
     {
-        if (rumbleManager != null)
+        if (rumbleManager != null && !IsDead)
             rumbleManager.Rumble(inputDevice, RumbleType.BasicRumbleExtraShort);
     }
 
     private void LowHealthRumble()
     {
-        if (rumbleManager != null)
+        if (rumbleManager != null && !IsDead)
         {
             if (this.health < lowHealth)
+            {
                 rumbleManager.Rumble(inputDevice, RumbleType.LowHealth);
+            }
             else
             {
                 CancelInvoke();
