@@ -152,7 +152,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     public static void Initialize(DataCollectorSettings settings)
     {
-        Debug.Log("[DataCollector] initializing");
+        //Debug.Log("[DataCollector] initializing");
 
         if (_instance != null)
         {
@@ -183,11 +183,11 @@ public class DataCollector : MonoBehaviour
     {
         if (enabled)
         {
-            // if a session is still running, end it
+            // if a session is still running, warn
             if (sessionRunning && currentSession != null){
                 //endSession();
+                Debug.LogError("[DataCollector] starting new session when there is still one running.");
             }
-
             
             StartCoroutine(TestConnection());
 
@@ -211,7 +211,7 @@ public class DataCollector : MonoBehaviour
             StartCoroutine(UploadSession());
 
             GameManager.WaveStarted += () => { new Event(Event.TYPE.waveUp).addWave().send(); };
-            PlayerManager.AllPlayersDeadEventHandler += () => { endSession("Heinzi"); };
+            PlayerManager.AllPlayersDeadEventHandler += () => { endSession(); };
 
             // reset score
             score = 0;
@@ -228,13 +228,17 @@ public class DataCollector : MonoBehaviour
     /// <summary>
     /// To be called if current game session ends, with name and email for highscore
     /// </summary>
-    public void endSession(string gameName)
+    public void endSession()
     {
         if (enabled && sessionRunning)
         {
             Event endEvent = new Event(Event.TYPE.sessionEnd);
             endEvent.addPlayerCount().addWave().addLevel();
-            endEvent.addGameName(gameName);
+            if(currentSession.steamName != null)
+            {
+                endEvent.addGameName(currentSession.steamName);
+            }
+            
             endEvent.addPlayerCharacters();
             endEvent.addMode(currentSession.mode);
             addEvent(endEvent);
@@ -256,15 +260,13 @@ public class DataCollector : MonoBehaviour
     {
         if (!sessionRunning || currentSession == null)
         {
-            startSession();
-            addToSendQueue(e);
+            Debug.LogError("[DataCollector] No session running. Event not logged.");
         }
         else
         {
             addToSendQueue(e);
+            OnEventRegistered(e);
         }
-
-        OnEventRegistered(e);
     }
 
     /// <summary>
@@ -332,7 +334,7 @@ public class DataCollector : MonoBehaviour
         }
 
         // if event queue gets big enough upload data
-        if (enabled) { 
+        if (enabled && online) { 
             if (eventQueue.Count >= bundleSize || e.type == Event.TYPE.sessionEnd)
             {
                     StartCoroutine(UploadEvents());
@@ -731,7 +733,7 @@ public class DataCollector : MonoBehaviour
                 // if time has exceeded the max
                 // time, break out and return false
                 online = false;
-                Debug.Log("[DataCollector] OFFLINE");
+                Debug.Log("[DataCollector] <color=red>OFFLINE</color>");
                 break;
             }
 
@@ -739,7 +741,7 @@ public class DataCollector : MonoBehaviour
         }
         if (timeTaken <= maxTime) {
             online = true;
-            Debug.Log("[DataCollector] ONLINE");
+            Debug.Log("[DataCollector] <color=green>ONLINE</color>");
         }
         yield return null;
         
