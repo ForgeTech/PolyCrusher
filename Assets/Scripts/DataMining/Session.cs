@@ -13,6 +13,16 @@ public class Session
         macAddress = getMAC();
         version = DataCollector.instance.buildVersion;
         inEditor = Application.isEditor;
+        string tempName = BaseSteamManager.Instance.GetSteamName();
+        string tempId = BaseSteamManager.Instance.GetSteamID();
+        if (tempName.Length != 0) {
+            steamName = tempName;
+        }
+
+        if (tempId.Length != 0) {
+            steamId = tempId;
+        }
+
         switch (gameMode)
         {
             case GameMode.NormalMode: this.mode = "normal"; break;
