@@ -611,7 +611,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             if(this.health < lowHealth && !lowHealthRumbleActive)
             {
                 lowHealthRumbleActive = true;
-                InvokeRepeating("LowHealthRumble", 0.0f, 10.0f);
+                InvokeRepeating("LowHealthRumble", 0.0f, 5.0f);
             }
         }
     }
