@@ -73,13 +73,13 @@ public class LineSystem : MonoBehaviour {
     private GameObject lightSabreGameObject;
         
     [SerializeField]
-    private float lineSineFrequency = 20.0f;
+    private float lineSineFrequency = 15.0f;
 
     [SerializeField]
     private float colorChangeSpeed = 0.4f;
 
     [SerializeField]
-    private float endAmplitude = 0.2f;
+    private float endAmplitude = 0.35f;
 
     [SerializeField]
     private float lineEndOffset = 0.0f;
@@ -197,8 +197,10 @@ public class LineSystem : MonoBehaviour {
         cuttingLineLogic.LineSystem = this;
 
 
+        
         UpdatePlayerStatus();
-
+        InitializeLineObjects();
+        ResetLines();
     }
 	
 	// Update is called once per frame
@@ -238,6 +240,37 @@ public class LineSystem : MonoBehaviour {
         } 
 	}
 
+    private void InitializeLineObjects()
+    {
+
+        lineShaderUtilities = new LineShaderUtility[linesNeeded[3]];
+        isChangingColor = new bool[linesNeeded[3]];
+        isChangingAmplitude = new bool[linesNeeded[3]];
+        activeColor = new int[linesNeeded[3]];
+        lineStatus = new LineStatus[linesNeeded[3]];
+        lineSpeeds = new int[linesNeeded[3]];
+
+        incremenetTimers = new float[4];
+        playerWasHealed = new bool[4];
+
+        for (int i = 0; i < linesNeeded[3]; i++)
+        {
+            GameObject go = new GameObject("LineObject");
+            LineRenderer line = go.AddComponent<LineRenderer>();
+            line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            line.receiveShadows = false;
+            lineShaderUtilities[i] = go.AddComponent<LineShaderUtility>();
+            lineShaderUtilities[i].lineMaterial = new Material(lineShaderMaterial);
+            lineShaderUtilities[i].width = 0.25f;
+            lineShaderUtilities[i].colorStrength = 1.5f;
+            lineShaderUtilities[i].amplitude = 0.0f;
+            lineShaderUtilities[i].smoothing = 0.23f;
+            go.transform.parent = this.gameObject.transform;
+            lineSpeeds[i] = initialSpeed;
+        }
+    }
+
+
     public void ActivateCutting()
     {
        cuttingLineLogic.TimeActive = powerUpTime;
@@ -259,7 +292,7 @@ public class LineSystem : MonoBehaviour {
     {
         if (players.Length > 1)
         {
-            for (int i = 0; i < lineShaderUtilities.Length; i++)
+            for (int i = 0; i < linesNeeded[players.Length - 1]; i++)
             {
                 LeanTween.value(gameObject, lineEndOffset, lineStartOffset, colorChangeSpeed)
                 .setOnUpdate((float offset) => { currentHeightOffset = offset; })
@@ -270,7 +303,7 @@ public class LineSystem : MonoBehaviour {
 
     void UpdateConnectionType()
     {
-        for (int i = 0; i < lineShaderUtilities.Length; i++)
+        for (int i = 0; i < linesNeeded[players.Length-1]; i++)
         {
             float distance = Vector3.Distance(players[firstVertex[i]].transform.position, players[secondVertex[i]].transform.position);
 
@@ -453,7 +486,7 @@ public class LineSystem : MonoBehaviour {
 
     void UpdateLines()
     {
-        for (int i = 0; i < lineShaderUtilities.Length; i++)
+        for (int i = 0; i < linesNeeded[players.Length-1]; i++)
         {
             lineShaderUtilities[i].startPosition =(new Vector3(players[firstVertex[i]].transform.position.x, players[firstVertex[i]].transform.position.y + currentHeightOffset, players[firstVertex[i]].transform.position.z));
             lineShaderUtilities[i].endPosition = ( new Vector3(players[secondVertex[i]].transform.position.x, players[secondVertex[i]].transform.position.y + currentHeightOffset, players[secondVertex[i]].transform.position.z));
@@ -509,47 +542,16 @@ public class LineSystem : MonoBehaviour {
 
         for (int i = 0; i < players.Length; i++){
             playerScripts[i] = players[i].GetComponent<BasePlayer>();
-        }
-
-        if (this != null)
-        {
-            foreach (Transform t in transform)
-            {
-                Destroy(t.gameObject);
-            }
-        }
-        
-
-
-        if (players.Length > 1)
-        {
-            lineShaderUtilities = new LineShaderUtility[linesNeeded[players.Length - 1]];
-            isChangingColor = new bool[linesNeeded[players.Length - 1]];
-            isChangingAmplitude = new bool[linesNeeded[players.Length - 1]];
-            activeColor = new int[linesNeeded[players.Length - 1]];
-            lineStatus = new LineStatus[linesNeeded[players.Length - 1]];
-            lineSpeeds = new int[linesNeeded[players.Length - 1]];
-
-            incremenetTimers = new float[players.Length];
-            playerWasHealed = new bool[players.Length];
-
-            for (int i = 0; i < linesNeeded[players.Length - 1]; i++)
-            {
-                GameObject go = new GameObject("LineObject");
-                LineRenderer line = go.AddComponent<LineRenderer>();
-                line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                line.receiveShadows = false;
-                lineShaderUtilities[i] = go.AddComponent<LineShaderUtility>();
-                lineShaderUtilities[i].lineMaterial = new Material(lineShaderMaterial);
-                lineShaderUtilities[i].width = 0.25f;
-                lineShaderUtilities[i].colorStrength = 1.5f;
-                lineShaderUtilities[i].amplitude = 0.0f;
-                lineShaderUtilities[i].smoothing = 0.23f;
-                go.transform.parent = this.gameObject.transform;
-                lineSpeeds[i] = initialSpeed;
-            }  
-        }         
+        }       
     }
 
+    private void ResetLines()
+    {
+        for(int i = 0; i < lineShaderUtilities.Length; i++)
+        {
+            lineShaderUtilities[i].startPosition = Vector3.zero;
+            lineShaderUtilities[i].endPosition = Vector3.zero;
+        }
+    }
 
 }

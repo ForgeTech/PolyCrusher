@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38399ba1fe6fe0b42abad5357fa3513f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 120
+  health: 90
   minHealth: 0
   maxHealth: 120
   enemyName: Roadrunner
@@ -2404,6 +2404,10 @@ Prefab:
       propertyPath: deathBurst
       value: 
       objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 161998}

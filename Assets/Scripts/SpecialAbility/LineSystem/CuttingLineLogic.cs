@@ -25,9 +25,9 @@ public class CuttingLineLogic : MonoBehaviour {
     private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
     private bool bossTakesDamage = true;
 
-    //private GameObject[] players = new GameObject[0];
-    //private LineShaderUtility[] lineShaderUtilities = new LineShaderUtility[0];
     private LineSystem lineSystem;
+    private PlayerManager playerManager;
+
     private float lineStartOffset = 0.0f;
     private GameObject laserParticles;
     private GameObject lightSabrePrefab;
@@ -74,6 +74,11 @@ public class CuttingLineLogic : MonoBehaviour {
     void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
+        playerManager = FindObjectOfType<PlayerManager>();
+        if(playerManager == null)
+        {
+            Debug.LogError("playerManager is null");
+        }
     }
 
     private void ResetValues()
@@ -93,7 +98,7 @@ public class CuttingLineLogic : MonoBehaviour {
             {
                 CuttingLinesPowerUp();
             }
-            if (lineSystem.Players.Length == 1)
+            if (lineSystem.Players.Length  == 1 && playerManager.PlayerCountInGameSession==1)
             {
                 PrepareLightSabre();
             }
@@ -193,7 +198,6 @@ public class CuttingLineLogic : MonoBehaviour {
     }
 
     private void PrepareLightSabre()
-
     {
         if (lightSabreGameObject == null)
         {
@@ -201,6 +205,5 @@ public class CuttingLineLogic : MonoBehaviour {
             lightSabreGameObject.transform.parent = lineSystem.Players[0].transform;
             lightSabreGameObject.transform.position = Vector3.zero;
         }
-
     }
 }

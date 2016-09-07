@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eda1b31465eb8740a06ed4b38bc3dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 150
+  health: 100
   minHealth: 0
   maxHealth: 100
   enemyName: RangedBallistic
@@ -1763,6 +1763,10 @@ Prefab:
       propertyPath: deathBurst
       value: 
       objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 129478}
