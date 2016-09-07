@@ -466,7 +466,8 @@ class SteamManager : BaseSteamManager
     {
         Debug.Log("[" + LeaderboardScoreUploaded_t.k_iCallback + " - LeaderboardScoreUploaded] - " + pCallback.m_bSuccess + " -- " + pCallback.m_hSteamLeaderboard + " -- " + pCallback.m_nScore + " -- " + pCallback.m_bScoreChanged + " -- " + pCallback.m_nGlobalRankNew + " -- " + pCallback.m_nGlobalRankPrevious);
 
-        rank = pCallback.m_nGlobalRankNew;
+        if(pCallback.m_bScoreChanged == 1)
+            rank = pCallback.m_nGlobalRankNew;
 
         if (rank == 1)
             UnlockAchievement(AchievementID.ACH_CURRENT_HIGHSCORE);
@@ -492,8 +493,9 @@ class SteamManager : BaseSteamManager
             Debug.Log("entry " + i + 1 + " with name " + currDownloadedEntries[i].steamName + " and rank " + currDownloadedEntries[i].rank + " and score " + currDownloadedEntries[i].score + " retrieved");
         }
 
-        SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntriesForUsers(m_SteamLeaderboard, new CSteamID[] { SteamUser.GetSteamID() }, 1);
-        LeaderboardScoresDownloaded.Set(downloadHandle, OnOwnLeaderboardScoreDownloaded);
+        //SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntriesForUsers(m_SteamLeaderboard, new CSteamID[] { SteamUser.GetSteamID() }, 1);
+        //LeaderboardScoresDownloaded.Set(downloadHandle, OnOwnLeaderboardScoreDownloaded);
+        currAction(currDownloadedEntries);
     }
 
     private void OnOwnLeaderboardScoreDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
@@ -503,8 +505,8 @@ class SteamManager : BaseSteamManager
             LeaderboardEntry_t e;
             int[] additionalInfo = new int[4];
             SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, 0, out e, additionalInfo, 4);
-            if (!(e.m_nGlobalRank >= downloadRange.x && e.m_nGlobalRank <= downloadRange.y))
-                currDownloadedEntries[(int)downloadRange.y - 1] = (new LeaderboardEntry(SteamFriends.GetFriendPersonaName(e.m_steamIDUser), e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
+            if (e.m_nGlobalRank > downloadRange.y)
+                currDownloadedEntries[(int)downloadRange.y - 1] = (new LeaderboardEntry(SteamFriends.GetPersonaName(), e.m_steamIDUser, e.m_nGlobalRank, e.m_nScore, additionalInfo[0], additionalInfo[1], additionalInfo[2], additionalInfo[3]));
         }
 
         currAction(currDownloadedEntries);
