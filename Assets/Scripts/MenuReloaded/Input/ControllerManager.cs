@@ -4,17 +4,15 @@ using InControl;
 
 public class ControllerManager : MonoBehaviour
 {
-    private List<SmartphoneController> smartphoneControllerList;
-    private SmartphoneController smartphoneController;
+    //private List<SmartphoneController> smartphoneControllerList;
+    //private SmartphoneController smartphoneController;
     private KeyboardController keyboardController;
 
-    private NetControllInterface networkController;
 
    
     void OnEnable()
     {
-        networkController = FindObjectOfType<PlayerNetCommunicate>();
-        smartphoneControllerList = new List<SmartphoneController>();        
+        //smartphoneControllerList = new List<SmartphoneController>();        
     }
 
     void Start()
@@ -32,13 +30,13 @@ public class ControllerManager : MonoBehaviour
 
     void OnDisable()
     {
-        InputManager.DetachDevice(smartphoneController);
+        //InputManager.DetachDevice(smartphoneController);
         InputManager.DetachDevice(keyboardController);
     }
    
     void OnSmartphoneJoin(int smartphoneID)
     {
-        smartphoneController = new SmartphoneController(smartphoneID, networkController);
+        //smartphoneController = new SmartphoneController(smartphoneID, networkController);
     }
 
     

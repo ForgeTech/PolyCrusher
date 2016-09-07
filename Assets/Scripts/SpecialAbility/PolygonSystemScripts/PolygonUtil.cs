@@ -3,10 +3,7 @@ using System.Collections;
 
 public class PolygonUtil : MonoBehaviour {
 
-    #region variables
-    private bool loadingSoundPlaying;
-    private bool declineSoundPlaying;
-
+    #region variables   
     private RumbleManager rumbleManager;
     #endregion
 
@@ -18,20 +15,6 @@ public class PolygonUtil : MonoBehaviour {
     #endregion
 
     #region methods
-
-    #region sounds
-    private IEnumerator SoundCoolDown()
-    {
-        yield return new WaitForSeconds(1.2f);
-        loadingSoundPlaying = false;
-    }
-
-    private IEnumerator SoundDeclineCoolDown()
-    {
-        yield return new WaitForSeconds(1.2f);
-        declineSoundPlaying = false;
-    }
-    #endregion
 
     #region rumbleMethods
     /// <summary>

@@ -5,10 +5,9 @@ using InControl;
 public class SmartphoneController : InputDevice {
 
     private int smartphoneID;
-    private NetControllInterface networkController;
 
-    private Vector2 leftVector;
-    private Vector2 rightVector;
+    //private Vector2 leftVector;
+    //private Vector2 rightVector;
     
     public int SmartphoneIndex
     {
@@ -18,13 +17,12 @@ public class SmartphoneController : InputDevice {
         }
     }
 
-    public SmartphoneController(int smartphoneIndex, NetControllInterface networkController) : base( "Smartphone Controller" )
+    public SmartphoneController(int smartphoneIndex) : base( "Smartphone Controller" )
 	{
         this.smartphoneID = smartphoneIndex;
-        this.networkController = networkController;
 
-        leftVector = new Vector2();
-        rightVector = new Vector2();
+        //leftVector = new Vector2();
+        //rightVector = new Vector2();
 
         //left analog stick 
         AddControl(InputControlType.LeftStickLeft, "Left Stick Left");
@@ -54,31 +52,31 @@ public class SmartphoneController : InputDevice {
 
     public override void Update(ulong updateTick, float deltaTime)
     {
-        if (networkController != null)
-        {
-            //updating left analog stick
-            leftVector.Set(networkController.GetLeftAnalogStickHorizontal(smartphoneID), networkController.GetLeftAnalogStickVertical(smartphoneID));
-            UpdateLeftStickWithValue(leftVector, updateTick, deltaTime);
+        //if (networkController != null)
+        //{
+        //    //updating left analog stick
+        //    leftVector.Set(networkController.GetLeftAnalogStickHorizontal(smartphoneID), networkController.GetLeftAnalogStickVertical(smartphoneID));
+        //    UpdateLeftStickWithValue(leftVector, updateTick, deltaTime);
 
-            //updating right analog stick
-            rightVector.Set(networkController.GetRightAnalogStickHorizontal(smartphoneID), networkController.GetRightAnalogStickVertical(smartphoneID));
-            UpdateRightStickWithValue(rightVector, updateTick, deltaTime);
+        //    //updating right analog stick
+        //    rightVector.Set(networkController.GetRightAnalogStickHorizontal(smartphoneID), networkController.GetRightAnalogStickVertical(smartphoneID));
+        //    UpdateRightStickWithValue(rightVector, updateTick, deltaTime);
 
-            //updating ability button
-            UpdateWithState(InputControlType.LeftBumper, networkController.GetAbilityButton(smartphoneID), updateTick, deltaTime);
+        //    //updating ability button
+        //    UpdateWithState(InputControlType.LeftBumper, networkController.GetAbilityButton(smartphoneID), updateTick, deltaTime);
 
-            //updating join button
-            UpdateWithState(InputControlType.Action1, networkController.GetJoinButton(smartphoneID), updateTick, deltaTime);
+        //    //updating join button
+        //    UpdateWithState(InputControlType.Action1, networkController.GetJoinButton(smartphoneID), updateTick, deltaTime);
 
-            //updating back button
-            //UpdateWithState(InputControlType.Button1, networkController.GetBackButton(smartphoneID), updateTick, deltaTime);
+        //    //updating back button
+        //    //UpdateWithState(InputControlType.Button1, networkController.GetBackButton(smartphoneID), updateTick, deltaTime);
 
-            //updating pause button
-            //UpdateWithState(InputControlType.Button6, networkController.GetPauseButton(smartphoneID), updateTick, deltaTime);
+        //    //updating pause button
+        //    //UpdateWithState(InputControlType.Button6, networkController.GetPauseButton(smartphoneID), updateTick, deltaTime);
 
-            //apply changes
-            Commit(updateTick, deltaTime);
-        }
+        //    //apply changes
+        //    Commit(updateTick, deltaTime);
+        //}
     }
 
     public override void Vibrate(float leftMotor, float rightMotor)

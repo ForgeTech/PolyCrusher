@@ -7,7 +7,6 @@ public class Laser : MonoBehaviour
     protected LineShaderUtility lineShader;
     protected GameObject lineShaderGameObject;
 
-    private Vector3 AntiRotation = Vector3.zero;
     private LaserTrap trap;
 
     private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);

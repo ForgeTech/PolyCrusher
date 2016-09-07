@@ -34,7 +34,6 @@ public class CuttingLineLogic : MonoBehaviour {
     private GameObject lightSabreGameObject;
     private LineTweens lineTweens;
 
-    private int[] linesNeeded = new int[] { 0, 1, 3, 6 };
     private int[] firstVertex = new int[] { 0, 1, 2, 0, 1, 2 };
     private int[] secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
 

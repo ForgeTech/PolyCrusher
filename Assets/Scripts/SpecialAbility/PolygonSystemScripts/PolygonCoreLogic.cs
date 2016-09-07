@@ -25,7 +25,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     private BasePlayer[] playerScripts;
     private GameObject[] playerGameObjects;
 
-    private PolygonSystem polygonSystem;
     private PolygonProperties polygonProperties;
     private PolygonUtil polygonUtil;
     private PolygonMeshBuilder polygonMeshBuilder;
@@ -42,8 +41,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     private bool polygonIsActive = false;
 
     private bool polygonIsInactive = true;
-
-    private bool polygonIsEnding = false;
 
     private bool polygonIsDeCharging = false;
 
@@ -62,11 +59,6 @@ public class PolygonCoreLogic : MonoBehaviour {
             InitializePolygonPartMeshes();
             UpdatePlayerStatus();
         }
-    }
-
-    public PolygonSystem PolygonSystem
-    {
-        set { polygonSystem = value; }
     }
 
     public PolygonUtil PolygonUtil
@@ -109,7 +101,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     #region methods
 
     #region initialization
-
     void Awake()
     {
         BasePlayer.PlayerSpawned += UpdatePlayerStatus;
@@ -271,12 +262,6 @@ public class PolygonCoreLogic : MonoBehaviour {
                         }
                     }
                 }
-                
-
-                
-
-
-
             }
 
             //updating components
@@ -338,7 +323,6 @@ public class PolygonCoreLogic : MonoBehaviour {
 
     private void SetPolygonInactive()
     {
-        polygonIsEnding = false;
         polygonIsInactive = true;
     }
 
@@ -430,7 +414,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     {
         currentPolyTriggerTime = 0.0f;
         polygonIsActive = false;
-        polygonIsEnding = true;
         AdjustPlayerValues();
 
         audioPlayer.Stop();

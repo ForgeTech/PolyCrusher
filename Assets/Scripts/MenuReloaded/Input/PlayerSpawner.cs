@@ -46,11 +46,9 @@ public class PlayerSpawner : MonoBehaviour {
 
     private Transform spawnPosition;
 
-    private PlayerControlActions playerAction;
+    //private PlayerControlActions playerAction;
 
     private int maxPlayers = 4;
-
-    private int currentPlayers = 0;
 
     private InputDevice current;
 
@@ -87,7 +85,7 @@ public class PlayerSpawner : MonoBehaviour {
             }
             else
             {
-                playerAction = PlayerControlActions.CreateWithGamePadBindings();
+                //playerAction = PlayerControlActions.CreateWithGamePadBindings();
                 
                 GameObject prefab;
 

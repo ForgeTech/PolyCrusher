@@ -24,13 +24,9 @@ public class LoadingScreenManager : MonoBehaviour {
     private Shader transitionShader;
 
     private string levelName;
-    private bool levelLoaded = false;
     private WaitForSeconds waitTime = new WaitForSeconds(2.5f);
-    private WaitForSeconds fadeTime = new WaitForSeconds(0.8f);
     private PlayerSelectionContainer playerSelectionContainer;
     private AudioSource audioSource;
-
-    private bool loadingFinished = false;
 
     void Start () {
         GetLevelName();

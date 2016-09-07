@@ -55,9 +55,6 @@ public class LineSystem : MonoBehaviour {
     private bool[] playerWasHealed;
     private int[] playersInReach;
 
-    private bool[,] nearbyPlayers;
-
-
     private BasePlayer[] playerScripts;
     private LineShaderUtility[] lineShaderUtilities;
     private int[] linesNeeded;
@@ -69,31 +66,17 @@ public class LineSystem : MonoBehaviour {
     private bool sabreAnimationFinished;
 
     private int[] activeColor;
-    private bool[] activeHealSineLine;
     private int lineRendererLength;
    
-    [SerializeField]
-    private int bossCuttingDamage = 5;
-
-
-
     //single player light sabre power up variables
     public GameObject lightSabrePrefab;
     private GameObject lightSabreGameObject;
-
-    private float sabreLength = 5.0f;
-
-    private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
-    private bool bossTakesDamage = true;
-
+        
     [SerializeField]
     private float lineSineFrequency = 20.0f;
 
     [SerializeField]
     private float colorChangeSpeed = 0.4f;
-
-    [SerializeField]
-    private float amplitudeChangeSpeed = 0.4f;
 
     [SerializeField]
     private float endAmplitude = 0.2f;
@@ -107,7 +90,6 @@ public class LineSystem : MonoBehaviour {
     private LineTweens lineTweens;
 
     private int[] lineSpeeds;
-    private float[] lineDistances;
     private int initialSpeed = 200;
     
 
@@ -176,9 +158,6 @@ public class LineSystem : MonoBehaviour {
         secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
         playerMoved = new bool[4];
         playerHealing = new bool[4];
-        nearbyPlayers = new bool[4, 4];
-
-       
 
         playersInReach = new int[4];
 
@@ -548,10 +527,8 @@ public class LineSystem : MonoBehaviour {
             isChangingColor = new bool[linesNeeded[players.Length - 1]];
             isChangingAmplitude = new bool[linesNeeded[players.Length - 1]];
             activeColor = new int[linesNeeded[players.Length - 1]];
-            activeHealSineLine = new bool[linesNeeded[players.Length - 1]];
             lineStatus = new LineStatus[linesNeeded[players.Length - 1]];
             lineSpeeds = new int[linesNeeded[players.Length - 1]];
-            lineDistances = new float[linesNeeded[players.Length - 1]];
 
             incremenetTimers = new float[players.Length];
             playerWasHealed = new bool[players.Length];

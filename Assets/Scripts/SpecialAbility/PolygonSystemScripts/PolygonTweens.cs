@@ -14,13 +14,7 @@ public class PolygonTweens : MonoBehaviour {
     private float finalHeight = 0.0f;
 
     [SerializeField]
-    private float bottomHeight = -6.0f;
-
-    [SerializeField]
     private float startAnimationTime = 0.3f;
-
-    private PolygonSystem polygonSystem;
-    private PolygonProperties polygonProperties;
 
     public static event PolygonStartAnimationHandler PolygonStartAnimationFinished;
     public static event PolygonEndAnimationHandler PolygonEndAnimationFinished;
@@ -36,19 +30,6 @@ public class PolygonTweens : MonoBehaviour {
     private Image screenFlashImage;
     #endregion
 
-    #endregion
-
-    #region properties
-
-    public PolygonSystem PolygonSystem
-    {
-        set { polygonSystem = value; }
-    }
-
-    public PolygonProperties PolygonProperties
-    {
-        set { polygonProperties = value; }
-    }
     #endregion
 
     #region methods
@@ -70,7 +51,6 @@ public class PolygonTweens : MonoBehaviour {
     #endregion
 
     #region polygonStartAnimation
-
     public void InitiatePolyStartAnimation(float[] polygonPartHeightOffsets)
     {
         if (startAnimationCount == 0)

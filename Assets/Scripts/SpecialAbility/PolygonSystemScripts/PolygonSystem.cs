@@ -37,16 +37,13 @@ public class PolygonSystem : MonoBehaviour
     void Start()
     {
         polygonTweens = gameObject.AddComponent<PolygonTweens>();
-        polygonTweens.PolygonSystem = this;
-        polygonTweens.PolygonProperties = polygonProperties;
-
+      
         polygonUtil = gameObject.AddComponent<PolygonUtil>();
 
         polygonMeshBuilder = gameObject.AddComponent<PolygonMeshBuilder>();
         polygonMeshBuilder.PolygonProperties = polygonProperties;
 
         polygonCoreLogic = gameObject.AddComponent<PolygonCoreLogic>();
-        polygonCoreLogic.PolygonSystem = this;
         polygonCoreLogic.PolygonUtil = polygonUtil;
         polygonCoreLogic.PolygonMeshBuilder = polygonMeshBuilder;
         polygonCoreLogic.PolygonProperties = polygonProperties;
