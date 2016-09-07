@@ -319,7 +319,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
     protected virtual void FixedUpdate()
     {
-
         // Update Finite state machine
         if (targetPlayer != null)
         {
@@ -339,7 +338,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     protected virtual void MakeFSM()
     {
         // Follow behaviour
-        FollowPlayer follow = new FollowPlayer(attackRange, playerAttackLayer, gameObject);
+        FollowPlayer follow = new FollowPlayer(attackRange, playerAttackLayer, this);
         follow.AddTransition(Transition.InPlayerAttackRange, StateID.AttackPlayer);
         follow.AddTransition(Transition.ReachedDestination, StateID.Idle);
 
