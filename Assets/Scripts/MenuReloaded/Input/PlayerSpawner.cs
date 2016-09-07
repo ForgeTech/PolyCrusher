@@ -85,8 +85,6 @@ public class PlayerSpawner : MonoBehaviour {
             }
             else
             {
-                //playerAction = PlayerControlActions.CreateWithGamePadBindings();
-                
                 GameObject prefab;
 
                 int amount = chosenPlayerIndices.Length;

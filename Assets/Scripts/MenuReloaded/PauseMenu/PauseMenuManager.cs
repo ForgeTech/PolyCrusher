@@ -42,11 +42,14 @@ public class PauseMenuManager : MonoBehaviour
         menuManager = GetComponentInChildren<AbstractMenuManager>();
         menuManager.enabled = false;
         menuManager.SetMenuInputActive(false);
+
+        SteamManager.Instance.OnOverlayActivated += OnOverlayActivated;
     }
 
     private void OnDisable()
     {
         playerActions.Destroy();
+        SteamManager.Instance.OnOverlayActivated -= OnOverlayActivated;
     }
 
 	private void Update ()
@@ -147,7 +150,16 @@ public class PauseMenuManager : MonoBehaviour
             }).setUseEstimatedTime(true).setOnComplete(()=> { animationFinished = true; });
     }
 
-    public void ResumeGame()
+    private void OnOverlayActivated()
+    {
+        if (!pauseScreenActivated)
+        {
+            PauseGame();
+        }
+    }
+
+
+    private void ResumeGame()
     {
         if (animationFinished)
         {
