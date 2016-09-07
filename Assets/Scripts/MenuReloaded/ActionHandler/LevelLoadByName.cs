@@ -8,7 +8,7 @@ using System;
 public class LevelLoadByName : AbstractActionHandler
 {
     [SerializeField]
-    private string levelName = null;
+    protected string levelName = null;
 
     public override void PerformAction<T>(T triggerInstance)
     {

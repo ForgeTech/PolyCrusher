@@ -2,16 +2,10 @@
 using System.Collections;
 using System;
 
-public class LevelLoadByNameWithAudioActivation : AbstractActionHandler {
-   
-    [SerializeField]
-    private string levelName = null;
-
+public class LevelLoadByNameWithAudioActivation : LevelLoadByName
+{
     public override void PerformAction<T>(T triggerInstance)
     {
-        //timescale back to normal
-        Time.timeScale = 1f;
-
         //let the menumusic begin
         GameObject globalScripts = GameObject.FindGameObjectWithTag("GlobalScripts");
         if (globalScripts != null)
@@ -26,18 +20,8 @@ public class LevelLoadByNameWithAudioActivation : AbstractActionHandler {
             }
         }
         else
-        {
             Debug.Log("No global scripts game object found!");
-        }
 
-        //load the menu scene
-        if (levelName != null)
-            Application.LoadLevel(levelName);
-        else
-            Debug.LogError("Level name is null!");
-
-        OnActionPerformed();
+        base.PerformAction(triggerInstance);
     }
-
-
 }
