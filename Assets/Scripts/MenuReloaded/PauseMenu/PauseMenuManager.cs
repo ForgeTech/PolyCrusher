@@ -31,6 +31,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField]
     private float destinationGreenIntensity = 0f;
 
+    private BaseSteamManager steamManager;
 
     private void OnEnable()
     {
@@ -43,13 +44,23 @@ public class PauseMenuManager : MonoBehaviour
         menuManager.enabled = false;
         menuManager.SetMenuInputActive(false);
 
-        SteamManager.Instance.OnOverlayActivated += OnOverlayActivated;
+        LevelEndManager.levelExitEvent += DeRegister;
+
+        steamManager = SteamManager.Instance;
+        if (steamManager != null)
+        {
+            steamManager.OnOverlayActivated += OnOverlayActivated;
+        }
     }
 
-    private void OnDisable()
+    private void DeRegister()
     {
         playerActions.Destroy();
-        SteamManager.Instance.OnOverlayActivated -= OnOverlayActivated;
+
+        if (steamManager!=null)
+        {
+            steamManager.OnOverlayActivated -= OnOverlayActivated;
+        }
     }
 
 	private void Update ()
