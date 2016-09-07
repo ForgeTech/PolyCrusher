@@ -266,21 +266,26 @@ public class LineSystem : MonoBehaviour {
 
     private void HideLines()
     {
-        for(int i = 0; i < lineShaderUtilities.Length; i++)
-        {
-            LeanTween.value(gameObject, lineStartOffset, lineEndOffset, colorChangeSpeed)
-            .setOnUpdate((float offset) => { currentHeightOffset = offset; })
-            .setEase(LeanTweenType.pingPong);
+        if (players.Length > 1) {
+            for (int i = 0; i < lineShaderUtilities.Length; i++)
+            {
+                LeanTween.value(gameObject, lineStartOffset, lineEndOffset, colorChangeSpeed)
+                .setOnUpdate((float offset) => { currentHeightOffset = offset; })
+                .setEase(LeanTweenType.pingPong);
+            }
         }
     }
 
     private void ShowLines()
     {
-        for (int i = 0; i < lineShaderUtilities.Length; i++)
+        if (players.Length > 1)
         {
-            LeanTween.value(gameObject, lineEndOffset, lineStartOffset, colorChangeSpeed)
-            .setOnUpdate((float offset) => { currentHeightOffset = offset; })
-            .setEase(LeanTweenType.pingPong);
+            for (int i = 0; i < lineShaderUtilities.Length; i++)
+            {
+                LeanTween.value(gameObject, lineEndOffset, lineStartOffset, colorChangeSpeed)
+                .setOnUpdate((float offset) => { currentHeightOffset = offset; })
+                .setEase(LeanTweenType.pingPong);
+            }
         }
     }
 

@@ -394,7 +394,7 @@ public class PolygonCoreLogic : MonoBehaviour {
             playerScripts[i] = playerGameObjects[i].GetComponent<BasePlayer>();
         }
 
-        if (playerScripts.Length <= 1)
+        if (playerScripts.Length <= 1 && !polygonIsInactive)
         {
             OnPolyEnded();
             polygonMeshBuilder.ClearMeshes(filters, polys);
