@@ -96,6 +96,10 @@ public class BaseSteamManager : MonoBehaviour {
     public virtual int GetRank() { return 0; }
 
     public virtual void RequestLeaderboardEntries(string level, int playerCount, int from, int to, LeaderboardAction action) { }
+
+    //pause menu event
+    public delegate void OnOverLayActivatedEvent();
+    public virtual event OnOverLayActivatedEvent OnOverlayActivated;
 }
 
 //

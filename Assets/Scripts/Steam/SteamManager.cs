@@ -19,6 +19,7 @@ class SteamManager : BaseSteamManager
 
     // game ID
     private CGameID gameID;
+    private CSteamID steamID;
 
     // could the stats be retrieved from steam?
     private bool resetStats;
@@ -81,6 +82,9 @@ class SteamManager : BaseSteamManager
 
     //currently in a game - if true events are logged
     private bool ingame;
+
+    //pause menu event
+    public override event OnOverLayActivatedEvent OnOverlayActivated;
 
     protected override void Awake()
     {
@@ -155,6 +159,7 @@ class SteamManager : BaseSteamManager
 
         // cache to compare in callbacks
         gameID = new CGameID(SteamUtils.GetAppID());
+        steamID = SteamUser.GetSteamID();
 
         // add achievements
         achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games."));
@@ -438,13 +443,7 @@ class SteamManager : BaseSteamManager
     private void OnGameOverlayActivated(GameOverlayActivated_t pCallback)
     {
         if (pCallback.m_bActive != 0)
-        {
-            Debug.Log("Steam Overlay has been activated");
-        }
-        else
-        {
-            Debug.Log("Steam Overlay has been closed");
-        }
+            OnOverlayActivated();
     }
 
     private void OnLeaderboardFindResult(LeaderboardFindResult_t pCallback, bool bIOFailure)
@@ -490,15 +489,15 @@ class SteamManager : BaseSteamManager
         for (int i = 0; i < pCallback.m_cEntryCount; i++)
         {
             currDownloadedEntries[i].steamName = SteamFriends.GetFriendPersonaName(currDownloadedEntries[i].steamID);
-            Debug.Log("entry " + i + 1 + " with name " + currDownloadedEntries[i].steamName + " and rank " + currDownloadedEntries[i].rank + " and score " + currDownloadedEntries[i].score + " retrieved");
+            Debug.Log("entry " + i + " with name " + currDownloadedEntries[i].steamName + " and rank " + currDownloadedEntries[i].rank + " and score " + currDownloadedEntries[i].score + " retrieved");
         }
-
-        //SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntriesForUsers(m_SteamLeaderboard, new CSteamID[] { SteamUser.GetSteamID() }, 1);
+        
+        //SteamAPICall_t downloadHandle = SteamUserStats.DownloadLeaderboardEntriesForUsers(m_SteamLeaderboard, new CSteamID[] {steamID}, 1);
         //LeaderboardScoresDownloaded.Set(downloadHandle, OnOwnLeaderboardScoreDownloaded);
         currAction(currDownloadedEntries);
     }
 
-    private void OnOwnLeaderboardScoreDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
+    /*private void OnOwnLeaderboardScoreDownloaded(LeaderboardScoresDownloaded_t pCallback, bool bIOFailure)
     {
         if (pCallback.m_cEntryCount > 0)
         {
@@ -510,7 +509,7 @@ class SteamManager : BaseSteamManager
         }
 
         currAction(currDownloadedEntries);
-    }
+    }*/
 
     #endregion
 
