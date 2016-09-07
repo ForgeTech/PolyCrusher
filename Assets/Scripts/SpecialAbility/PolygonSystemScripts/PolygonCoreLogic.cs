@@ -295,7 +295,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     #endregion
 
     #region polyMaterialUpdate
-
     private void UpdatePolygonMaterialColor()
     {
         for (int i = 0; i < renderers.Length; i++)

@@ -111,6 +111,8 @@ public class PolygonEnemyDetection : MonoBehaviour {
     /// </summary>
     private void ChainExplosion()
     {
+        Debug.Log(System.DateTime.Now.ToString() + " Polygon explosion executed!");
+
         CameraManager.CameraReference.ShakeOnce();
 
         SoundManager.SoundManagerInstance.Play(polygonProperties.polyExplosion, Vector3.zero);
