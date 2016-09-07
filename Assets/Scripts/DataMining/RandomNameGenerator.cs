@@ -5,8 +5,8 @@ using System.Text;
 
 class RandomNameGenerator
 {
-    static List<string> names = new List<string>();
-    static Random rnd = new Random();
+    static readonly List<string> names = new List<string>();
+    static readonly Random rnd = new Random();
 
     public static string Generate()
     {
@@ -48,4 +48,3 @@ class RandomNameGenerator
         return names[location].ToUpper();
     }
 }
-
