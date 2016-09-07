@@ -13,28 +13,33 @@ class RandomNameGenerator
         // if names have not been loaded, load them
         if(names.Count <= 0)
         {
-            StreamReader theReader = new StreamReader("Assets/Scripts/DataMining/names.txt", Encoding.Default);
-            string line = theReader.ReadLine();
+            try { 
+                StreamReader theReader = new StreamReader("Assets/Resources/names.txt", Encoding.Default);
+                string line = theReader.ReadLine();
 
-            using (theReader)
-            {
-                if (line != null)
+                using (theReader)
                 {
-                    do
+                    if (line != null)
                     {
-                        line = theReader.ReadLine();
-
-                        if(line != "")
+                        do
                         {
-                            names.Add(line);
+                            line = theReader.ReadLine();
+
+                            if(line != "")
+                            {
+                                names.Add(line);
+                            }
+
+                            line = theReader.ReadLine();
                         }
-
-                        line = theReader.ReadLine();
+                        while (line != null);
                     }
-                    while (line != null);
-                }
 
-                theReader.Close();
+                    theReader.Close();
+                }
+            }catch(Exception e)
+            {
+                names.Add("NONAME");
             }
         }
         

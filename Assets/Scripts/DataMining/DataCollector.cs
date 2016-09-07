@@ -250,6 +250,8 @@ public class DataCollector : MonoBehaviour
                 endEvent.addGameName(RandomNameGenerator.Generate());
             }
 
+            Debug.Log(RandomNameGenerator.Generate());
+
             endEvent.addPlayerCharacters();
             endEvent.addMode(currentSession.mode);
             addEvent(endEvent);
