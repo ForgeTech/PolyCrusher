@@ -186,7 +186,7 @@ public class DataCollector : MonoBehaviour
         if (enabled)
         {
             // if a session is still running, warn
-            if (sessionRunning && currentSession != null){
+            if (sessionRunning){
                 //endSession();
                 Debug.LogError("[DataCollector] starting new session when there is still one running.");
             }
@@ -267,7 +267,7 @@ public class DataCollector : MonoBehaviour
 
     public void Reset()
     {
-        Debug.LogError("[DataCollector] Session interrupted.");
+        Debug.Log("[DataCollector] Session interrupted.");
         sessionRunning = false;
         eventQueue.Clear();
         kills.Clear();
