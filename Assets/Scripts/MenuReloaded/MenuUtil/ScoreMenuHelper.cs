@@ -18,6 +18,9 @@ public class ScoreMenuHelper : MonoBehaviour
     [SerializeField]
     private Text playerCountLevelName;
 
+    [SerializeField]
+    private Text eventGameName;
+
     [Header("Tweening options")]
     [SerializeField]
     private LeanTweenType easeType = LeanTweenType.easeOutSine;
@@ -260,6 +263,14 @@ public class ScoreMenuHelper : MonoBehaviour
 
         InitializeWaitForSeconds();
 
+        // Event game name  (Only active if this is an event build)
+        ScoreContainer scoreData = DataCollector.instance.getScoreContainer();
+        if (DataCollector.instance.eventBuild)
+        {
+            eventGameName.gameObject.SetActive(true);
+            eventGameName.text = string.Format(eventGameName.text, scoreData.getGameName());
+        }
+
         // Init highscore entries
         originalScoreText = scoreText.text.ToString();
         foreach (Transform child in scoreContainer.transform)
@@ -272,7 +283,6 @@ public class ScoreMenuHelper : MonoBehaviour
         }
 
         // Init player count and levelname
-        ScoreContainer scoreData = DataCollector.instance.getScoreContainer();
         string splittedLevelName = Regex.Replace(scoreData.getLevelName(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         
         playerCountLevelName.text = string.Format(playerCountLevelName.text,
