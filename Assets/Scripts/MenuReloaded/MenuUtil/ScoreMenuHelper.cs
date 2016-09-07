@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class ScoreMenuHelper : MonoBehaviour
 
     [SerializeField]
     private Text scoreText;
+
+    [SerializeField]
+    private Text playerCountLevelName;
 
     [Header("Tweening options")]
     [SerializeField]
@@ -243,6 +247,9 @@ public class ScoreMenuHelper : MonoBehaviour
 
         if (scoreText == null)
             Debug.LogError("ScoreText is not set!");
+
+        if (playerCountLevelName == null)
+            Debug.LogError("PlayerCountLevelName is not set!");
     }
 
     private void Initialize()
@@ -253,8 +260,8 @@ public class ScoreMenuHelper : MonoBehaviour
 
         InitializeWaitForSeconds();
 
+        // Init highscore entries
         originalScoreText = scoreText.text.ToString();
-
         foreach (Transform child in scoreContainer.transform)
         {
             Text textItem = child.GetComponent<Text>();
@@ -263,6 +270,14 @@ public class ScoreMenuHelper : MonoBehaviour
 
             highscoreEntries.Add(scoreType.ScoreType, new ScoreData(textItem, scoreNumberText));
         }
+
+        // Init player count and levelname
+        ScoreContainer scoreData = DataCollector.instance.getScoreContainer();
+        string splittedLevelName = Regex.Replace(scoreData.getLevelName(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+        
+        playerCountLevelName.text = string.Format(playerCountLevelName.text,
+            scoreData.getPlayerCount(),
+            scoreData.getLevelName() == "" ? "?" : splittedLevelName.ToUpper());
     }
 
     private void InitializeWaitForSeconds()
