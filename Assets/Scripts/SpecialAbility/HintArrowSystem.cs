@@ -15,7 +15,7 @@ public class HintArrowSystem : MonoBehaviour {
     private float hintStartHeight = 10.0f;
     private float hintEndHeight = 0.0f;
 
-    private Vector3 hintScale = new Vector3(1, 1, 1);
+    private Vector3 hintScale = new Vector3(0.56f, 0.56f, 0.56f);
 
     private Vector3 hintHeight = new Vector3(0, 0, 0);
 
