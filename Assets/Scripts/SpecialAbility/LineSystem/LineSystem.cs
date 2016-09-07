@@ -200,7 +200,7 @@ public class LineSystem : MonoBehaviour {
         
         UpdatePlayerStatus();
         InitializeLineObjects();
-        ResetLines();
+        //ResetLines();
     }
 	
 	// Update is called once per frame
@@ -542,16 +542,22 @@ public class LineSystem : MonoBehaviour {
 
         for (int i = 0; i < players.Length; i++){
             playerScripts[i] = players[i].GetComponent<BasePlayer>();
-        }       
+        }
+
+        ResetLines();
     }
 
     private void ResetLines()
     {
-        for(int i = 0; i < lineShaderUtilities.Length; i++)
+        if (lineShaderUtilities != null)
         {
-            lineShaderUtilities[i].startPosition = Vector3.zero;
-            lineShaderUtilities[i].endPosition = Vector3.zero;
+            for (int i = 0; i < lineShaderUtilities.Length; i++)
+            {
+                lineShaderUtilities[i].startPosition = Vector3.zero;
+                lineShaderUtilities[i].endPosition = Vector3.zero;
+            }
         }
+       
     }
 
 }
