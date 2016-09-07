@@ -36,6 +36,7 @@ public class CuttingLineLogic : MonoBehaviour {
 
     private int[] firstVertex = new int[] { 0, 1, 2, 0, 1, 2 };
     private int[] secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
+    private int[] linesNeeded = new int[] { 0, 1, 3, 6 };
 
     #region properties
     public float TimeActive
@@ -98,6 +99,10 @@ public class CuttingLineLogic : MonoBehaviour {
             {
                 CuttingLinesPowerUp();
             }
+            else
+            {
+                Debug.Log("playercount: " + playerManager.PlayerCountInGameSession);
+            }
             if (lineSystem.Players.Length  == 1 && playerManager.PlayerCountInGameSession==1)
             {
                 PrepareLightSabre();
@@ -150,7 +155,7 @@ public class CuttingLineLogic : MonoBehaviour {
 
     private void CuttingLinesPowerUp()
     {
-        for (int i = 0; i < lineSystem.LineShaderUtilities.Length; i++)
+        for (int i = 0; i < linesNeeded[lineSystem.Players.Length-1] ; i++)
         {
             RaycastHit[] hits;
             bufferVectorA = lineSystem.Players[firstVertex[i]].transform.position;
