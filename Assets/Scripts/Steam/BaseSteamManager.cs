@@ -97,6 +97,8 @@ public class BaseSteamManager : MonoBehaviour {
 
     public virtual void RequestLeaderboardEntries(string level, int playerCount, int from, int to, LeaderboardAction action) { }
 
+    public virtual void ResetGame() { }
+
     //pause menu event
     public delegate void OnOverLayActivatedEvent();
     public virtual event OnOverLayActivatedEvent OnOverlayActivated;

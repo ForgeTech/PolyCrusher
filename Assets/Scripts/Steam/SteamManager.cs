@@ -734,11 +734,9 @@ class SteamManager : BaseSteamManager
         storeStats = true;
     }
 
-    /// <summary>
-    /// Performs all actions related to the game end event when a reset happens.
-    /// </summary>
-    /// <param name="e">The game end event.</param>
-    private void PerformGameResetActions(Event e)
+    #endregion
+
+    public override void ResetGame()
     {
         ingame = false;
         rank = 0;
@@ -748,8 +746,6 @@ class SteamManager : BaseSteamManager
         //store new persisted stats next frame
         storeStats = true;
     }
-
-    #endregion
 
     public override string GetSteamName()
     {
