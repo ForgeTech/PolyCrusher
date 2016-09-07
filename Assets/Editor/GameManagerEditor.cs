@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 [CanEditMultipleObjects]
@@ -162,6 +161,7 @@ public class GameManagerEditor : Editor
     public void DrawWaveIncreaseSettings()
     {
         SerializedProperty enemyRessourceIncreaseFactor = serializedGameManager.FindProperty("enemyRessourceIncreaseFactor");
+        SerializedProperty ressourceIncreaseFactorMultiplier = serializedGameManager.FindProperty("ressourceIncreaseFactorMultiplier");
         SerializedProperty enemyCountIncreaseFactor = serializedGameManager.FindProperty("enemyCountIncreaseFactor");
         SerializedProperty timeBetweeenWaveDecreaseFactor = serializedGameManager.FindProperty("timeBetweeenWaveDecreaseFactor");
         SerializedProperty enemyHealthIncreaseFactor = serializedGameManager.FindProperty("enemyHealthIncreaseFactor");
@@ -172,6 +172,7 @@ public class GameManagerEditor : Editor
 
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.PropertyField(enemyRessourceIncreaseFactor, new GUIContent("Res. Increase Factor"));
+        EditorGUILayout.PropertyField(ressourceIncreaseFactorMultiplier, new GUIContent("Res. Increase Factor Mult."));
         EditorGUILayout.PropertyField(enemyCountIncreaseFactor, new GUIContent("Enemy Count Increase"));
         EditorGUILayout.PropertyField(timeBetweeenWaveDecreaseFactor);
         EditorGUILayout.PropertyField(enemyHealthIncreaseFactor);

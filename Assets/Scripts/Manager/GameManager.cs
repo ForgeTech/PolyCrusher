@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text;
+using System;
 
 /// <summary>
 /// Eventhandler for the wave start.
@@ -158,7 +159,8 @@ public class GameManager : MonoBehaviour
     //[Header("==========Ressource Settings============")]
     // The max enemy ressources
     [SerializeField]
-    protected int enemyRessourcePool = 10;
+    protected int enemyRessourcePool = 20;
+    protected double preciseRessourcePool = 20.0;
 
     // Current ressource pool of the enemies.
     [SerializeField]
@@ -197,7 +199,13 @@ public class GameManager : MonoBehaviour
     //[Header("=========Wave Increase Settings=========")]
     [Tooltip("The increase factor of the enemy ressources for every wave. Value should be between 0 and 1!")]
     [SerializeField]
-    protected float enemyRessourceIncreaseFactor = 0.2f;
+    protected double enemyRessourceIncreaseFactor = 0.19;
+
+    [Tooltip("Multiplier for the enemy ressource increase Factor. This value increases the ressource factor each wave.")]
+    [SerializeField]
+    protected double ressourceIncreaseFactorMultiplier = 1.01;
+
+    [Space(10f)]
 
     [Tooltip("The increase factor of the enemy count for every wave. Value should be between 0 and 1!")]
     [SerializeField]
@@ -403,6 +411,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
+
+        // Increase one time before actual wave starts
+        enemyRessourceIncreaseFactor *= ressourceIncreaseFactorMultiplier;
+        preciseRessourcePool = EnemyRessourcePool;
     }
 
     // Use this for initialization
@@ -429,7 +441,6 @@ public class GameManager : MonoBehaviour
 
         // Init variables
         accumulatedRessourceValue = 0;
-
 	}
 
     /// <summary>
@@ -451,7 +462,7 @@ public class GameManager : MonoBehaviour
         // Calculate the boss wave spawns at the start of the game.
         if (wave <= 1)
         {
-            bossSpawnWaves = Random.Range(BossSpawnInfo.spawnEveryXWave, BossSpawnInfo.spawnEveryXWave + BossSpawnInfo.waveSpawnVariation + 1);
+            bossSpawnWaves = UnityEngine.Random.Range(BossSpawnInfo.spawnEveryXWave, BossSpawnInfo.spawnEveryXWave + BossSpawnInfo.waveSpawnVariation + 1);
         }
 
         // Calculate boss wave
@@ -483,8 +494,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     protected void CalculateNextWaveValues()
     {
+        // Increase enemy ressource increase factor
+        enemyRessourceIncreaseFactor *= ressourceIncreaseFactorMultiplier;
+
         // Increase the enemy ressources.
-        EnemyRessourcePool += (int) (EnemyRessourcePool * enemyRessourceIncreaseFactor);
+        preciseRessourcePool += preciseRessourcePool * enemyRessourceIncreaseFactor;
+        EnemyRessourcePool = (int) Math.Round(preciseRessourcePool);
 
         // Increase the enemy count.
         MaxEnemyActiveCount += (int) (MaxEnemyActiveCount * enemyCountIncreaseFactor);
@@ -507,7 +522,7 @@ public class GameManager : MonoBehaviour
 
         // Calculates if the wave is a special wave or not.
         if (SpecialWaveModeEnabled && !IsBossWave) {
-            isCurrentlySpecialWave = Random.Range(0.0f, 1.0f) < SpecialWaveProbablity;
+            isCurrentlySpecialWave = UnityEngine.Random.Range(0.0f, 1.0f) < SpecialWaveProbablity;
         }
     }
 
