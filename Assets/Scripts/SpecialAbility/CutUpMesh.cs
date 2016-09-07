@@ -289,6 +289,7 @@ public class CutUpMesh : MonoBehaviour
         if(upperVertices != 0)
         {
             upper = pool.getPooledObject();
+            upper.layer = LayerMask.NameToLayer("Fragments");
             upper.transform.position = transform.position;
 
             upper.transform.rotation = SMR.transform.rotation;
@@ -330,7 +331,7 @@ public class CutUpMesh : MonoBehaviour
         if (lowerVertices != 0)
         {
             lower = pool.getPooledObject();
-
+            lower.layer = LayerMask.NameToLayer("Fragments");
             lower.transform.position = transform.position;
 
             lower.transform.rotation = SMR.transform.rotation;
