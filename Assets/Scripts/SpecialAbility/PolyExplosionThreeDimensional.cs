@@ -340,18 +340,24 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     /// </summary>
     protected void SpawnPowerUp()
     {
+        bool instantiated = false;
+
         // Spawn based on the probability
         if (powerUpPrefabLineCut != null && Random.value < powerUpProbabilityLineCut)
         {
             // Instantiate
             Instantiate(powerUpPrefabLineCut, transform.position, powerUpPrefabLineCut.transform.rotation);
+            instantiated = true;
         }
 
-        // Spawn based on the probability
-        if (powerUpPrefabMango != null && Random.value < powerUpProbabilityMango)
+        if (!instantiated)
         {
-            // Instantiate
-            Instantiate(powerUpPrefabMango, transform.position, powerUpPrefabMango.transform.rotation);
+            // Spawn based on the probability
+            if (powerUpPrefabMango != null && Random.value < powerUpProbabilityMango)
+            {
+                // Instantiate
+                Instantiate(powerUpPrefabMango, transform.position, powerUpPrefabMango.transform.rotation);
+            }
         }
     }
 
