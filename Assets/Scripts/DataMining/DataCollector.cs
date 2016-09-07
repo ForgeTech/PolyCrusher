@@ -228,7 +228,7 @@ public class DataCollector : MonoBehaviour
     }
 
     /// <summary>
-    /// To be called if current game session ends, with name and email for highscore
+    /// To be called if current game session ends
     /// </summary>
     public void endSession()
     {
@@ -260,6 +260,15 @@ public class DataCollector : MonoBehaviour
         sessionRunning = false;
 
         // is the hound burried here?
+        eventQueue.Clear();
+        kills.Clear();
+        deathtime.Clear();
+    }
+
+    public void Reset()
+    {
+        Debug.LogError("[DataCollector] Session interrupted.");
+        sessionRunning = false;
         eventQueue.Clear();
         kills.Clear();
         deathtime.Clear();
