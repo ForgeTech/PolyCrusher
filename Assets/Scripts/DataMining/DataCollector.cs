@@ -29,7 +29,7 @@ public class DataCollector : MonoBehaviour
     private bool online = true;
 
     // VERSION NUMBER
-    internal string buildVersion = "0.3";
+    internal string buildVersion = "0.4";
     internal bool eventBuild = true;
 
     // general fields
@@ -135,9 +135,9 @@ public class DataCollector : MonoBehaviour
         scoreContainer = new ScoreContainer();
 
         Debug.Log("<color=purple>P</color><color=blue>O</color><color=cyan>L</color><color=green>Y</color><color=yellow>C</color><color=orange>R</color><color=red>U</color><color=purple>S</color><color=blue>H</color><color=cyan>E</color><color=yellow>R</color>");
-
+       
         // set settings
-        if(settings != null){
+        if (settings != null){
             buildVersion = settings.buildVersion;
             log = settings.log;
             logEvents = settings.logEvents;
@@ -242,13 +242,15 @@ public class DataCollector : MonoBehaviour
             }
             else
             {
-                endEvent.addGameName(GetRandomName());
+                endEvent.addGameName(RandomNameGenerator.Generate());
             }
 
             if (eventBuild)
             {
-                endEvent.addGameName(GetRandomName());
+                endEvent.addGameName(RandomNameGenerator.Generate());
             }
+
+            Debug.Log(RandomNameGenerator.Generate());
 
             endEvent.addPlayerCharacters();
             endEvent.addMode(currentSession.mode);
@@ -770,35 +772,41 @@ public class DataCollector : MonoBehaviour
         StartCoroutine(DisplayScoreCalcCoroutine(e));
     }
 
-
-    public static string GetRandomName()
-    {
-        String[] names = {"FUN", "FANCY", "UGLY", "RED", "BETTER", "EASY",
-            "ODD", "WRONG", "GRUMPY", "IMPORTANT", "HILARIOUS", "DEEP",
-            "DEADLY", "GREAT", "HUGE", "SEXY", "CRAZY", "DUMB", "BORING",
-            "CRAP", "DERP", "PANTS", "FURIOUS", "FLUFFY", "YUMMY", "ROYAL",
-            "DECENT", "CAT", "SCARY", "FAT", "BUGGY", "MOON", "NEW", "SAVE",
-            "RANDOM", "FUNKY", "HUMID", "FLIRT", "GLOBAL", "FRIED", "LETHAL",
-            "QUICK", "CUTE", "BLOODY", "BOARD", "WEIRD", "JUICY", "ARCADE",
-            "SAD", "BORING", "BOLD", "FRESH", "GROOVY", "PAIN", "END", "GRAND",
-            "GUN", "POLY", "WAR", "BRUTAL", "GROSS", "NUDE", "GAY", "FLOWER",
-            "FALSE", "SWEET", "PUBLIC", "SPEED", "SOUP", "TOTAL", "POETIC",
-            "SLEEP", "TRAP", "HONEST", "STRANGE", "BELLY", "GRIND", "HOLY",
-            "ZOO", "FARMER", "CANDY", "FILTHY", "TRAGIC", "FIRST",
-            "BAD", "HORSE", "HAND", "FOOT", "EYE", "FLOPPY", "FRUITY", "DOG", "CAGE",
-            "PAST", "FUTURISTIC", "BANANA", "HAWAII", "PLAY", "BABY", "ANT", "HAVY",
-            "WAFFLE", "ANCIENT", "GRAND", "APPLE", "VESSEL", "LINZ", "REST" ,"TRICK",
-            "TRICK", "FREAKAZOID", "PINKY", "NICE" , "NEAT", "GOO", "HAPPY", "EXTRA", "SALTY",
-            "MONDAY" , "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY","SATURDAY", "SUNDAY",
-            "MANGO", "MANGOE", "MENGO", "MAYNGO", "MEHNGO", "MANGOH", "MANKO" , "MANGOO",
-            "SPACE", "TIME", "WHIMPY", "GOOD", "WHOLE","WACKY", "SOUND", "MENTAL","LUNATIC","BESERK","ODDBALL" };
-
-        System.Random rnd = new System.Random();
-        int location = rnd.Next(names.Length - 1);
-
-        return names[location];
-    }
 }
+
+
+/*
+public static string GetRandomName()
+{
+    String[] names = {"FUN", "FANCY", "UGLY", "RED", "BETTER", "EASY",
+        "ODD", "WRONG", "GRUMPY", "IMPORTANT", "HILARIOUS", "DEEP",
+        "DEADLY", "GREAT", "HUGE", "SEXY", "CRAZY", "DUMB", "BORING",
+        "CRAP", "DERP", "PANTS", "FURIOUS", "FLUFFY", "YUMMY", "ROYAL",
+        "DECENT", "CAT", "SCARY", "FAT", "BUGGY", "MOON", "NEW", "SAVE",
+        "RANDOM", "FUNKY", "HUMID", "FLIRT", "GLOBAL", "FRIED", "LETHAL",
+        "QUICK", "CUTE", "BLOODY", "BOARD", "WEIRD", "JUICY", "ARCADE",
+        "SAD", "BORING", "BOLD", "FRESH", "GROOVY", "PAIN", "END", "GRAND",
+        "GUN", "POLY", "WAR", "BRUTAL", "GROSS", "NUDE", "GAY", "FLOWER",
+        "FALSE", "SWEET", "PUBLIC", "SPEED", "SOUP", "TOTAL", "POETIC",
+        "SLEEP", "TRAP", "HONEST", "STRANGE", "BELLY", "GRIND", "HOLY",
+        "ZOO", "FARMER", "CANDY", "FILTHY", "TRAGIC", "FIRST",
+        "BAD", "HORSE", "HAND", "FOOT", "EYE", "FLOPPY", "FRUITY", "DOG", "CAGE",
+        "PAST", "FUTURISTIC", "BANANA", "HAWAII", "PLAY", "BABY", "ANT", "HAVY",
+        "WAFFLE", "ANCIENT", "GRAND", "APPLE", "VESSEL", "LINZ", "REST" ,"TRICK",
+        "TRICK", "FREAKAZOID", "PINKY", "NICE" , "NEAT", "GOO", "HAPPY", "EXTRA", "SALTY",
+        "MONDAY" , "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY","SATURDAY", "SUNDAY",
+        "MANGO", "MANGOE", "MENGO", "MAYNGO", "MEHNGO", "MANGOH", "MANKO" , "MANGOO",
+        "SPACE", "TIME", "WHIMPY", "GOOD", "WHOLE","WACKY", "SOUND", "MENTAL","LUNATIC","BESERK","ODDBALL" };
+
+
+
+    System.Random rnd = new System.Random();
+    int location = rnd.Next(names.Length - 1);
+    Debug.Log("[DataCollector]" + names.Length);
+
+    return names[location];
+}
+*/
 
 /*
   ////// EXAMPLE EVENT ////////
