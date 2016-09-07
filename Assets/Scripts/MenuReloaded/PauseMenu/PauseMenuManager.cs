@@ -159,7 +159,7 @@ public class PauseMenuManager : MonoBehaviour
     }
 
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         if (animationFinished)
         {
