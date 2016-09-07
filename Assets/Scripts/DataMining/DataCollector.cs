@@ -273,12 +273,85 @@ public class DataCollector : MonoBehaviour
     {
         if (!sessionRunning || currentSession == null)
         {
-            Debug.LogError("[DataCollector] No session running. Event not logged.");
+            Debug.LogError("[DataCollector] No session running. Event not logged." + e.ToString());
         }
         else
         {
-            addToSendQueue(e);
+            // reference current session
+            e.session_id = currentSession._id;
+
+            // set event time (if session end take official time)
+            if (e.type == Event.TYPE.sessionEnd)
+            {
+                e.time = PlayerManager.PlayTime.TotalTime;
+            }
+            else
+            {
+                e.time = (int)(Time.time * 1000) - currentSession.time;
+            }
+            
+
+            /*
+            // track kills locally
+            if (e.type == Event.TYPE.kill)
+            {
+                if (kills.ContainsKey(e.character))
+                {
+                    kills[e.character] = kills[e.character] + 1;
+                }
+                else
+                {
+                    kills.Add(e.character, 1);
+                }
+            }
+
+            // track death time
+            // TODO
+            if (e.type == Event.TYPE.death)
+            {
+                if (deathtime.ContainsKey(e.character))
+                {
+                    deathtime[e.character] = deathtime[e.character] + 1;
+                }
+                else
+                {
+                    deathtime.Add(e.character, 1);
+                }
+            }
+
+            // track deaths locally
+            if (e.type == Event.TYPE.death)
+            {
+                if (kills.ContainsKey(e.character))
+                {
+                    kills[e.character] = kills[e.character] + 1;
+                }
+                else
+                {
+                    kills.Add(e.character, 1);
+                }
+            }
+            */
+
             OnEventRegistered(e);
+
+            // event log
+            if (logEvents)
+            {
+                Debug.Log("[DataCollector] " + e.ToString());
+            }
+
+            // add event to queue for later upload
+            eventQueue.Enqueue(e);
+
+            // if event queue gets big enough upload data
+            if (enabled && online)
+            {
+                if (eventQueue.Count >= bundleSize || e.type == Event.TYPE.sessionEnd)
+                {
+                    StartCoroutine(UploadEvents());
+                }
+            }
         }
     }
 
@@ -287,72 +360,7 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     private void addToSendQueue(Event e)
     {
-        // reference current session
-        e.session_id = currentSession._id;
 
-        // set event time (if session end take official time)
-        if(e.type == Event.TYPE.sessionEnd)
-        {
-            e.time = PlayerManager.PlayTime.TotalTime;
-        }
-        else
-        {
-            e.time = (int)(Time.time * 1000) - currentSession.time;
-        }
-
-        // add event to queue for later upload
-        eventQueue.Enqueue(e);
-
-        // track kills locally
-        if (e.type == Event.TYPE.kill)
-        {
-            if(kills.ContainsKey(e.character)){
-                kills[e.character] = kills[e.character]+1;
-            }else{
-                kills.Add(e.character, 1);
-            }
-        }
-
-        // track death time
-        // TODO
-        if (e.type == Event.TYPE.death)
-        {
-            if (deathtime.ContainsKey(e.character))
-            {
-                deathtime[e.character] = deathtime[e.character] + 1;
-            }
-            else
-            {
-                deathtime.Add(e.character, 1);
-            }
-        }
-
-        // track deaths locally
-        if (e.type == Event.TYPE.death)
-        {
-            if (kills.ContainsKey(e.character))
-            {
-                kills[e.character] = kills[e.character] + 1;
-            }
-            else
-            {
-                kills.Add(e.character, 1);
-            }
-        }
-
-        // event log
-        if (logEvents)
-        {
-            Debug.Log("[DataCollector] " + e.ToString());
-        }
-
-        // if event queue gets big enough upload data
-        if (enabled && online) { 
-            if (eventQueue.Count >= bundleSize || e.type == Event.TYPE.sessionEnd)
-            {
-                    StartCoroutine(UploadEvents());
-            }
-        }
     }
 
 
@@ -689,6 +697,8 @@ public class DataCollector : MonoBehaviour
 
                 int s = (int)((wave - (int)wave) * 10000);
                 Score += s;
+
+                e.addScore(Score);
 
                 if(GameManager.gameManagerInstance.CurrentGameMode == GameMode.YOLOMode)
                 {
