@@ -18,7 +18,9 @@ public class PowerUpMango : PowerUp
         {
             BaseEnemy enemy = hits[i].GetComponent<BaseEnemy>();
 
-            if (enemy)
+            if (enemy is BossEnemy)
+                enemy.TakeDamage(2000, this);
+            else
                 enemy.TakeDamage(enemy.Health, this, transform.position);
         }
 
