@@ -188,7 +188,8 @@ public class PolygonTweens : MonoBehaviour {
     #region reset
     private void Reset()
     {
-        PolygonStartAnimationFinished = null;     
+        PolygonStartAnimationFinished = null;
+        PolygonEndAnimationFinished = null;
     }
     #endregion
 
