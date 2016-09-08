@@ -85,190 +85,6 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 23800000, guid: 903088c3593c65043a69b9b40ae421c1, type: 2}
---- !u!21 &28527906
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ShadowFontZeroAlpha
-  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _OcclusionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EmissionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailMask
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailAlbedoMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _SrcBlend
-        second: 1
-      data:
-        first:
-          name: _DstBlend
-        second: 0
-      data:
-        first:
-          name: _Radius
-        second: .186000004
-      data:
-        first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
-          name: _ZWrite
-        second: 1
-      data:
-        first:
-          name: _Glossiness
-        second: .5
-      data:
-        first:
-          name: _BumpScale
-        second: 1
-      data:
-        first:
-          name: _OcclusionStrength
-        second: 1
-      data:
-        first:
-          name: _DetailNormalMapScale
-        second: 1
-      data:
-        first:
-          name: _UVSec
-        second: 0
-      data:
-        first:
-          name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0
-      data:
-        first:
-          name: _Stencil
-        second: 0
-      data:
-        first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _ShadowShiftX
-        second: -2.82999992
-      data:
-        first:
-          name: _ShadowShiftY
-        second: -3.30999994
-      data:
-        first:
-          name: _Quality
-        second: .00800000038
-    m_Colors:
-      data:
-        first:
-          name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _GlowColor
-        second: {r: 1, g: 0, b: 0, a: .200000003}
-      data:
-        first:
-          name: _ShadowColor
-        second: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &34882321
 Prefab:
   m_ObjectHideFlags: 0
@@ -485,13 +301,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &59927563
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -990,13 +808,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &200393108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1271,13 +1091,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &241633433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1552,13 +1374,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &284261676
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1973,13 +1797,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &403790356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2661,13 +2487,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &521741619
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2972,13 +2800,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &589213168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3113,13 +2943,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &642438488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3494,13 +3326,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &701013467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5680,13 +5514,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!54 &957220158
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5717,6 +5553,190 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -.790000021, y: 0, z: .449999988}
   m_TimeToStationary: .0500000007
+--- !u!21 &965359216
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShadowFont
+  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Radius
+        second: .186000004
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: .5
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _ShadowShiftX
+        second: -2.82999992
+      data:
+        first:
+          name: _ShadowShiftY
+        second: -3.30999994
+      data:
+        first:
+          name: _Quality
+        second: .00800000038
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _GlowColor
+        second: {r: 1, g: 0, b: 0, a: .200000003}
+      data:
+        first:
+          name: _ShadowColor
+        second: {r: 0, g: 0, b: 0, a: .200000003}
 --- !u!1 &989237564 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: c7c0b19a9bb88704b875a702052c643e, type: 3}
@@ -5929,13 +5949,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!208 &1048603891
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -6358,13 +6380,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &1139575958
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6429,13 +6453,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &1154158739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7164,13 +7190,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &1316433584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7402,13 +7430,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &1363123587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7663,13 +7693,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &1401823936
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7750,13 +7782,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!208 &1433293108
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -8007,13 +8041,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &1453223017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8499,13 +8535,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!208 &1546342821
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -8634,9 +8672,201 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 19860444, guid: 43033cbbb1859774988e6487c0878296, type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.rgba
+      value: 715561895
+      objectReference: {fileID: 0}
+    - target: {fileID: 19860444, guid: 43033cbbb1859774988e6487c0878296, type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key1.rgba
+      value: 4288582558
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 43033cbbb1859774988e6487c0878296, type: 2}
   m_IsPrefabParent: 0
+--- !u!21 &1594588685
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShadowFontZeroAlpha
+  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Radius
+        second: .186000004
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: .5
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _ShadowShiftX
+        second: -2.82999992
+      data:
+        first:
+          name: _ShadowShiftY
+        second: -3.30999994
+      data:
+        first:
+          name: _Quality
+        second: .00800000038
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _GlowColor
+        second: {r: 1, g: 0, b: 0, a: .200000003}
+      data:
+        first:
+          name: _ShadowColor
+        second: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1603852605 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: aa453cf41f13aac4aac54a9fa080e33b, type: 3}
@@ -8880,13 +9110,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!208 &1660582152
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -10729,13 +10961,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!65 &2038182327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10786,190 +11020,6 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: edba780dbe745574981307d4b2c9a9bc, type: 3}
   m_PrefabInternal: {fileID: 1574884853}
---- !u!21 &2121808990
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ShadowFont
-  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _OcclusionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EmissionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailMask
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailAlbedoMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _SrcBlend
-        second: 1
-      data:
-        first:
-          name: _DstBlend
-        second: 0
-      data:
-        first:
-          name: _Radius
-        second: .186000004
-      data:
-        first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
-          name: _ZWrite
-        second: 1
-      data:
-        first:
-          name: _Glossiness
-        second: .5
-      data:
-        first:
-          name: _BumpScale
-        second: 1
-      data:
-        first:
-          name: _OcclusionStrength
-        second: 1
-      data:
-        first:
-          name: _DetailNormalMapScale
-        second: 1
-      data:
-        first:
-          name: _UVSec
-        second: 0
-      data:
-        first:
-          name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0
-      data:
-        first:
-          name: _Stencil
-        second: 0
-      data:
-        first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _ShadowShiftX
-        second: -2.82999992
-      data:
-        first:
-          name: _ShadowShiftY
-        second: -3.30999994
-      data:
-        first:
-          name: _Quality
-        second: .00800000038
-    m_Colors:
-      data:
-        first:
-          name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _GlowColor
-        second: {r: 1, g: 0, b: 0, a: .200000003}
-      data:
-        first:
-          name: _ShadowColor
-        second: {r: 0, g: 0, b: 0, a: .200000003}
 --- !u!1 &2143059207
 GameObject:
   m_ObjectHideFlags: 0
