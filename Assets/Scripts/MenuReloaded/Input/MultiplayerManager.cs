@@ -15,10 +15,16 @@ public enum PlayerSlot
 
 public class MultiplayerManager : MonoBehaviour
 {
+
+    #region Inspector
+    [SerializeField]
+    private AudioClip finishedSound;
+    #endregion
+
     #region variables
 
     //----------public
-       
+
 
     public delegate void FinalSelectionHandler(float tweentime);
     public event FinalSelectionHandler FinalSelectionExecuted;
@@ -246,6 +252,7 @@ public class MultiplayerManager : MonoBehaviour
             if (specificGamepadListener.Join.WasPressed)
             {
                 SaveSelectionInformationToContainer();
+                DontDestroyOnLoad(SoundManager.SoundManagerInstance.Play(finishedSound, Vector3.zero));
                 ChangeScene();
             }
 
