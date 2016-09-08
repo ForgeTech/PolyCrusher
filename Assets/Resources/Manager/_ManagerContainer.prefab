@@ -203,23 +203,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &134596
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 476130}
-  - 114: {fileID: 11479932}
-  - 114: {fileID: 11466478}
-  m_Layer: 0
-  m_Name: LanguageManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &134694
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +748,7 @@ Transform:
   m_Children:
   - {fileID: 438714}
   m_Father: {fileID: 415424}
-  m_RootOrder: 17
+  m_RootOrder: 16
 --- !u!4 &408004
 Transform:
   m_ObjectHideFlags: 1
@@ -813,7 +796,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415424}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!4 &414468
 Transform:
   m_ObjectHideFlags: 1
@@ -845,7 +828,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.05941617, y: 6.30673504, z: 5.92782307}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 421362}
@@ -863,7 +846,6 @@ Transform:
   - {fileID: 438972}
   - {fileID: 408004}
   - {fileID: 482048}
-  - {fileID: 476130}
   - {fileID: 413824}
   - {fileID: 407684}
   - {fileID: 494092}
@@ -1121,18 +1103,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 482048}
   m_RootOrder: 10
---- !u!4 &476130
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134596}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 380.102051, y: 260.035736, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 415424}
-  m_RootOrder: 15
 --- !u!4 &477280
 Transform:
   m_ObjectHideFlags: 1
@@ -1196,7 +1166,7 @@ Transform:
   - {fileID: 22443434}
   - {fileID: 22420728}
   m_Father: {fileID: 415424}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!4 &494476
 Transform:
   m_ObjectHideFlags: 1
@@ -1321,8 +1291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9fdb5b1af6ee149bc10321d7dba6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chosenPlayerIndices: 01000000
-  controllerNumber: 01000000
+  chosenPlayerIndices: 000000000100000003000000
+  controllerNumber: 010000000000000002000000
   playerPrefabs:
   - {fileID: 134618, guid: 575a9c71ee4c8e24e8acf93a1aa0bf22, type: 2}
   - {fileID: 151210, guid: 8527a4d37ed862c42ac85c98c16d691f, type: 2}
@@ -1969,7 +1939,7 @@ MonoBehaviour:
   lineSineFrequency: 15
   colorChangeSpeed: .400000006
   endAmplitude: .349999994
-  lineEndOffset: 25
+  lineEndOffset: 36
 --- !u!114 &11439358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2132,7 +2102,7 @@ MonoBehaviour:
     waveSpawnVariation: 2
   specialWaveModeEnabled: 1
   specialWaveProbablity: .0500000007
-  enemyRessourcePool: 20
+  enemyRessourcePool: 18
   currentEnemyRessourceValue: 0
   maxEnemyActiveCount: 20
   currentEnemyCount: 0
@@ -2274,17 +2244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rumbleEnabled: 1
---- !u!114 &11466478
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e5c20c4534978442a665663636d1902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11470494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2540,17 +2499,6 @@ MonoBehaviour:
   nativeInputOverrideUpdateRate: 0
   nativeInputUpdateRate: 0
   customProfiles: []
---- !u!114 &11479932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2266460c8fd5df1468177b7b0db1f007, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11481386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3374,7 +3322,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: enemyRessourcePool
-      value: 30
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialWaveProbablity

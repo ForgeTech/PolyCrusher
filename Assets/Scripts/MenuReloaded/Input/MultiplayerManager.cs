@@ -243,13 +243,13 @@ public class MultiplayerManager : MonoBehaviour
 
         if (globalControls)
         {
-            if (specificGamepadListener.Join)
+            if (specificGamepadListener.Join.WasPressed)
             {
                 SaveSelectionInformationToContainer();
                 ChangeScene();
             }
 
-            if (specificGamepadListener.Back)
+            if (specificGamepadListener.Back.WasPressed)
             {               
                 SlotContainer slot = FindSlotContainer(InputManager.ActiveDevice);
                 if (slot != null)

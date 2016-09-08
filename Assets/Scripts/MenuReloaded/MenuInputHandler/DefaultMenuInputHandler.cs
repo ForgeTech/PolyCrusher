@@ -12,7 +12,7 @@ public class DefaultMenuInputHandler : MenuInputHandler
 
     public void HandleBackInput(Action onInput)
     {
-        if (playerControlActions.Back)
+        if (playerControlActions.Back.WasPressed)
             onInput();
     }
 
@@ -26,7 +26,7 @@ public class DefaultMenuInputHandler : MenuInputHandler
 
     public void HandleSelectInput(Action onInput)
     {
-        if (playerControlActions.Ability || playerControlActions.Join)
+        if (playerControlActions.Ability.WasPressed || playerControlActions.Join.WasPressed)
             onInput();
     }
 

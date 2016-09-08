@@ -567,7 +567,11 @@ public class GameManager : MonoBehaviour
     {
         // Last man standing
         if (playerManager.PlayerCountInGameSession == 4 && PlayerManager.PlayerCount == 1)
-            BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_LAST_MAN_STANDING);
+        {
+            BasePlayer player = GameObject.FindGameObjectWithTag("Player").GetComponent<BasePlayer>();
+            if(player != null && (player.Health <= player.MaxHealth * 0.1f))
+                BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_LAST_MAN_STANDING);
+        }
     }
 
     /// <summary>
