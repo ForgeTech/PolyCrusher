@@ -21,9 +21,6 @@ public class PlayerManager : MonoBehaviour
     //The actual player count.
     protected static int playerCount;
 
-    //The actual player prefix.
-    protected string playerPrefix;
-
     //A random radius value, so the players don't spawn at one point.
     [Header("Spawning option")]
     [SerializeField]
