@@ -60,6 +60,9 @@ public class PowerUpItem : BaseItem
     [SerializeField]
     protected float range = 5f;
 
+    [SerializeField]
+    protected AudioClip clip;
+
     // Event handler for the collectible collected.
     public static event PowerUpCollectedHandler PowerUpCollected;
     #endregion
@@ -166,6 +169,7 @@ public class PowerUpItem : BaseItem
             {
                 PowerUpMango mango = player.gameObject.AddComponent<PowerUpMango>();
                 mango.SetExplosionProperties(explosionParticles, range);
+                SoundManager.SoundManagerInstance.Play(clip, transform, 0.8f, 1, false);
                 mango.Use();
             }
             //==================TEMPORARY_OR_PERMANENTLY_ADD_POWERUPS_end================================
