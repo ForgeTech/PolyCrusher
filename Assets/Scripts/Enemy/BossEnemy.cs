@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Event handler for a killed boss.
@@ -224,6 +223,10 @@ public class BossEnemy : BaseEnemy
     [SerializeField]
     [Tooltip("Death Particle System")]
     protected GameObject deathParticles;
+
+    [SerializeField]
+    [Tooltip("Death sound")]
+    protected AudioClip deathSound;
 
     [Space(5)]
     [SerializeField]
@@ -508,6 +511,7 @@ public class BossEnemy : BaseEnemy
         Instantiate(gravestone, transform.position, gravestone.transform.rotation);
 
         //Create Particles
+        SoundManager.SoundManagerInstance.Play(deathSound, Vector3.zero, 0.8f, 1f);
         Destroy(Instantiate(deathParticles, transform.position, gravestone.transform.rotation), 10);
 
         //Animation
