@@ -2053,7 +2053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyCost: 45
-  abilityCoolDown: 6
+  abilityCoolDown: 9
   wallPrefab: {fileID: 192818, guid: efeec1303c6e32041b40b6a19f7d6b29, type: 2}
 --- !u!114 &11444498
 MonoBehaviour:
@@ -4594,6 +4594,10 @@ Prefab:
       propertyPath: killParticles
       value: 
       objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+    - target: {fileID: 0}
+      propertyPath: abilityCoolDown
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193704}
