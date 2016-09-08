@@ -132,7 +132,7 @@ public class LevelEndManager : MonoBehaviour
 		Application.LoadLevel (levelToLoad);
 	}
 
-	protected void OnLevelExit()
+	public void OnLevelExit()
     {
 		if (levelExitEvent != null)
 			levelExitEvent();

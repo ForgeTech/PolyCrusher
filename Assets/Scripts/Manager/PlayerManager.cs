@@ -454,6 +454,7 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerJoinedEventHandler = null;
         AllPlayersDeadEventHandler = null;
+        playerCount = 0;
     }
     #endregion
 }

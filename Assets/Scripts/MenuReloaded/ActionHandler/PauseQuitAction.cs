@@ -1,9 +1,14 @@
-﻿public class PauseQuitAction : LevelLoadByNameWithAudioActivation
+﻿using UnityEngine;
+
+public class PauseQuitAction : LevelLoadByNameWithAudioActivation
 {
     public override void PerformAction<T> (T triggerInstance)
     {
-        // TODO: Call steam manager reset method
+        BaseSteamManager.Instance.ResetGame();
         DataCollector.instance.Reset();
+
+        LevelEndManager levelEndManager = GameObject.FindObjectOfType<LevelEndManager>();
+        levelEndManager.OnLevelExit();
         base.PerformAction<T>(triggerInstance);
     }
 }
