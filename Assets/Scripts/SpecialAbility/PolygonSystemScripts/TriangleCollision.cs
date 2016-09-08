@@ -9,13 +9,15 @@ public class TriangleCollision : MonoBehaviour {
 
     #region variables
     private List<GameObject> detectedEnemies;
-    private BossEnemy bossEnemy;
+   
+    private BossEnemy[] bossEnemy;
+   
     private MeshCollider meshCollider;
     private MeshFilter meshFilter;
     private static int collidersFinished = 0;
     private static int currentColliderCount = 0;
     private WaitForFixedUpdate fixedWait;
-
+    private bool isDetecting = false;
     public static event DetectionFinishedHandler DetectionDone;
     #endregion
 
@@ -25,7 +27,7 @@ public class TriangleCollision : MonoBehaviour {
         set { detectedEnemies = value; }
     } 
 
-    public BossEnemy BossEnemy
+    public BossEnemy[] BossEnemy
     {
         set { bossEnemy = value; }
     }
@@ -37,29 +39,45 @@ public class TriangleCollision : MonoBehaviour {
         LevelEndManager.levelExitEvent += ResetValues;
         PolygonCoreLogic.PolyExecuted += HandleEnemyDetection;
         meshCollider = GetComponent<MeshCollider>();
+        if(meshCollider == null)
+        {
+            Debug.LogError("Meshcollider is null!");
+        }
         meshFilter = GetComponent<MeshFilter>();
+        if(meshFilter == null)
+        {
+            Debug.LogError("Meshfilter is null!");
+        }
         fixedWait = new WaitForFixedUpdate();
         currentColliderCount++;
-        Debug.Log("colliders: " + currentColliderCount);
     }
 
     private void HandleEnemyDetection()
     {
-        StartCoroutine(DetectEnemies());
+        if (!isDetecting)
+        {
+            isDetecting = true;
+            StartCoroutine(DetectEnemies());
+        }
+        else
+        {
+            Debug.Log("detecting started while detecting");
+        }
     }
 
     private IEnumerator DetectEnemies()
     {
-        meshCollider.enabled = true;
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = meshFilter.mesh;
+        meshCollider.enabled = true;
         
         yield return fixedWait;
 
+        meshCollider.enabled = false;
         meshCollider.sharedMesh = null;
-        meshCollider.enabled = true;
 
         yield return fixedWait;
+        isDetecting = false;
         OnDetectionDone();
     }
 
@@ -69,9 +87,9 @@ public class TriangleCollision : MonoBehaviour {
         {
             if (coll.GetComponent<MonoBehaviour>() is BossEnemy)
             {
-                if (bossEnemy == null)
+                if (bossEnemy[0] == null)
                 {
-                    bossEnemy = coll.GetComponent<BossEnemy>();
+                    bossEnemy[0] = coll.GetComponent<BossEnemy>();
                 }
             }
             else
@@ -103,6 +121,8 @@ public class TriangleCollision : MonoBehaviour {
     private void ResetValues()
     {
         DetectionDone = null;
+        currentColliderCount = 0;
+        collidersFinished = 0;
     }
     #endregion
 

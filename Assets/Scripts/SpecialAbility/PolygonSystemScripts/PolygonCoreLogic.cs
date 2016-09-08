@@ -135,6 +135,7 @@ public class PolygonCoreLogic : MonoBehaviour {
                 polyParts[i] = new GameObject();
                 polyParts[i].transform.parent = gameObject.transform;
                 polys[i] = new Mesh();
+                polys[i].name = "PolygonTriangle";
                 filters[i] = polyParts[i].AddComponent<MeshFilter>();
                 filters[i].sharedMesh = polys[i];
                 renderers[i] = polyParts[i].AddComponent<MeshRenderer>();

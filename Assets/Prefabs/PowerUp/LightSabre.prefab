@@ -68,7 +68,7 @@ MonoBehaviour:
   sabreAnimationTime: 2
   heightOffset: .959999979
   powerUpDuration: 12
-  bossCuttingDamage: 250
+  bossCuttingDamage: 100
   laserParticles: {fileID: 103782, guid: 6c186ddd736f0194780b95a9f1c90977, type: 2}
 --- !u!1001 &100100000
 Prefab:
@@ -136,6 +136,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: useWorldSpace
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bossCuttingDamage
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

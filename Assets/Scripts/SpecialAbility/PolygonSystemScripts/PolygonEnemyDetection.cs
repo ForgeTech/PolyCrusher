@@ -7,6 +7,7 @@ public class PolygonEnemyDetection : MonoBehaviour {
 
     #region variables
     private List<GameObject> detectedEnemies = new List<GameObject>();
+    private BossEnemy[] bossDetected = new BossEnemy[1];
     private GameObject[] polygonParts;
     private GameObject[] playerGameObjects;
     private Mesh[] polygonMeshes;
@@ -15,7 +16,7 @@ public class PolygonEnemyDetection : MonoBehaviour {
 
     private PolygonCoreLogic polygonCoreLogic;
     private PolygonProperties polygonProperties;
-    private BossEnemy bossEnemy;
+    
     #endregion
 
     #region properties
@@ -58,7 +59,7 @@ public class PolygonEnemyDetection : MonoBehaviour {
             meshCollider.enabled = false;
             triangleCollision = polygonParts[i].AddComponent<TriangleCollision>();
             triangleCollision.DetectedEnemies = detectedEnemies;
-            triangleCollision.BossEnemy = bossEnemy;
+            triangleCollision.BossEnemy = bossDetected;
         }
     }
     #endregion
@@ -87,9 +88,9 @@ public class PolygonEnemyDetection : MonoBehaviour {
                 {
                     if (coll.GetComponent<MonoBehaviour>() is BossEnemy)
                     {
-                        if (bossEnemy == null)
+                        if (bossDetected[0] == null)
                         {
-                            bossEnemy = coll.GetComponent<BossEnemy>();
+                            bossDetected[0] = coll.GetComponent<BossEnemy>();
                         }
                     }
                     else
@@ -120,17 +121,18 @@ public class PolygonEnemyDetection : MonoBehaviour {
 
         for (int i = 0; i < detectedEnemies.Count; i++)
         {
+            
             detectedEnemies[i].GetComponent<BaseEnemy>().InstantKill(this);
             detectedEnemies[i].AddComponent<PolyExplosion>();
         }
 
-        if (bossEnemy != null)
+        if (bossDetected[0] != null)
         {
-            bossEnemy.TakeDamage(polygonProperties.bossDamage[playerGameObjects.Length], this);
-            bossEnemy = null;
+            bossDetected[0].TakeDamage(polygonProperties.bossDamage[playerGameObjects.Length-1], this);
         }
-
+      
         detectedEnemies.Clear();
+        bossDetected[0] = null;
     }
     #endregion
 

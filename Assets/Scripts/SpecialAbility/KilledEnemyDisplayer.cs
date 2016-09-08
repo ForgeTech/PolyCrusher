@@ -34,7 +34,7 @@ public class KilledEnemyDisplayer : MonoBehaviour {
     private void Initialize()
     {
         GameObject g = Instantiate(polygonProperties.killedEnemiesGameObject) as GameObject;
-        g.transform.parent = transform.parent;
+        g.transform.SetParent(transform, false);
         audioPlayer = g.AddComponent<AudioSource>();
         audioPlayer.clip = polygonProperties.polyChashRegister;
         audioPlayer.loop = false;
