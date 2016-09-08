@@ -482,7 +482,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             else
             {
                 targetPlayer = null;
-                Debug.Log("<b>No target players</b> were found!");
+                //Debug.Log("<b>No target players</b> were found!");
             }
         }
     }
