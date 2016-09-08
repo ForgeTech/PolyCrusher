@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TimeUtil
 {
-    protected int hour;
-
-    protected int minute;
-
-    protected int second;
-
-    protected int milliseconds;
+    protected int hour = 0;
+    protected int minute = 0;
+    protected int second = 0;
+    protected int milliseconds = 0;
 
     /// <summary>
     ///  Gets the hour.
@@ -94,7 +90,7 @@ public class TimeUtil
         int minute = (int)((millis / (1000 * 60)) % 60);
         int hour = (int)((millis / (1000 * 60 * 60)) % 24);
 
-        millis -= seconds * 1000;
+        millis %= 1000;
         return new TimeUtil(hour, minute, seconds, (int)millis);
     }
 }

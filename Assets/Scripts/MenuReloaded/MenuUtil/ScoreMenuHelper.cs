@@ -218,9 +218,11 @@ public class ScoreMenuHelper : MonoBehaviour
         else
         {
             TimeUtil time = TimeUtil.MillisToTime(score.getYoloScore());
-            timeString = new StringBuilder(time.Minute == 0 ? "00" : time.Minute.ToString()).Append(":")
-                .Append(time.Second == 0 ? "00" : time.Second.ToString())
-                .Append(":").Append(time.Milliseconds == 0 ? "00" : time.Milliseconds.ToString());
+            timeString = new StringBuilder(string.Format("{0:00}", time.Minute))
+                .Append(":")
+                .Append(string.Format("{0:00}", time.Second))
+                .Append(":")
+                .Append(string.Format("{0:000}", time.Milliseconds));
             scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), 0);
         }
 
