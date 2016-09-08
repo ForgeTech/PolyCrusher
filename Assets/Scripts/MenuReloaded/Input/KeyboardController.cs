@@ -59,7 +59,7 @@ public class KeyboardController : InputDevice {
         UpdateWithState(InputControlType.Action2, Input.GetKeyDown(KeyCode.Backspace), updateTick, deltaTime);
 
         //updating pause button
-        UpdateWithState(InputControlType.Action8, Input.GetKeyDown(KeyCode.Escape), updateTick, deltaTime);
+        UpdateWithState(InputControlType.Action8, Input.GetKeyDown(KeyCode.P), updateTick, deltaTime);
 
         //apply changes
         Commit(updateTick, deltaTime);

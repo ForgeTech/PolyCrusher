@@ -323,6 +323,10 @@ public class PolygonCoreLogic : MonoBehaviour {
 
     private void SetPolygonInactive()
     {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].enabled = false;
+        }
         polygonIsInactive = true;
     }
 
@@ -393,6 +397,10 @@ public class PolygonCoreLogic : MonoBehaviour {
     //when all players have full energy the polygon starts
     private void OnPolyStarted()
     {
+        for(int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].enabled = true;
+        }
         currentAlpha = 0.0f;
         if (PolyStarted != null)
         {

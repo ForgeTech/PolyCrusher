@@ -168,7 +168,6 @@ public class LineSystem : MonoBehaviour {
         healingparticles = new GameObject[4];
         energyParticles = new ParticleSystem[4];
         healthParticles = new ParticleSystem[4];
-
      
         currentHeightOffset = lineStartOffset;
 
@@ -195,12 +194,9 @@ public class LineSystem : MonoBehaviour {
         cuttingLineLogic.LineStartOffset = lineStartOffset;
         cuttingLineLogic.LineTweens = lineTweens;
         cuttingLineLogic.LineSystem = this;
-
-
         
         UpdatePlayerStatus();
         InitializeLineObjects();
-        //ResetLines();
     }
 	
 	// Update is called once per frame
@@ -267,6 +263,7 @@ public class LineSystem : MonoBehaviour {
             lineShaderUtilities[i].smoothing = 0.23f;
             go.transform.parent = this.gameObject.transform;
             lineSpeeds[i] = initialSpeed;
+            lineShaderUtilities[i].frequeny = lineSineFrequency;
         }
     }
 
@@ -398,7 +395,7 @@ public class LineSystem : MonoBehaviour {
                 lineStatus[i]  = LineStatus.healAnimation;
                 isChangingAmplitude[i] = true;
                 lineTweens.TweenAmplitude(i, endAmplitude, LineStatus.heal);
-                lineShaderUtilities[i].frequeny = lineSineFrequency;
+                
             }else if(lineStatus[i] == LineStatus.heal && !isChangingAmplitude[i] && (distance > healDistance || (!first && !second)))
             {
                 lineStatus[i] = LineStatus.normalAnimation;
