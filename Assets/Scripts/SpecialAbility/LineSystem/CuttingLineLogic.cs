@@ -5,7 +5,8 @@ using System.Collections;
 public delegate void CuttingActivatedHandler();
 public delegate void CuttingDeactivateHandler();
 
-public class CuttingLineLogic : MonoBehaviour {
+public class CuttingLineLogic : MonoBehaviour
+{
 
     public static event CuttingActivatedHandler CuttingActive;
     public static event CuttingDeactivateHandler CuttingInactive;
@@ -14,7 +15,7 @@ public class CuttingLineLogic : MonoBehaviour {
     private bool activateCutting;
 
     [SerializeField]
-    private int bossCuttingDamage = 5;
+    private int bossCuttingDamage = 100;
 
     private Vector3 bufferVectorA = new Vector3();
 
@@ -76,7 +77,7 @@ public class CuttingLineLogic : MonoBehaviour {
     {
         LevelEndManager.levelExitEvent += ResetValues;
         playerManager = FindObjectOfType<PlayerManager>();
-        if(playerManager == null)
+        if (playerManager == null)
         {
             Debug.LogError("playerManager is null");
         }
@@ -99,11 +100,8 @@ public class CuttingLineLogic : MonoBehaviour {
             {
                 CuttingLinesPowerUp();
             }
-            else
-            {
-                Debug.Log("playercount: " + playerManager.PlayerCountInGameSession);
-            }
-            if (lineSystem.Players.Length  == 1 && playerManager.PlayerCountInGameSession==1)
+
+            if (lineSystem.Players.Length == 1 && playerManager.PlayerCountInGameSession == 1)
             {
                 PrepareLightSabre();
             }
@@ -131,7 +129,7 @@ public class CuttingLineLogic : MonoBehaviour {
                 for (int i = 0; i < lineSystem.LineShaderUtilities.Length; i++)
                 {
                     lineTweens.TweenColor(i, -1, false);
-                    lineTweens.TweenAmplitude(i,0.0f, LineShaderType.SineWave);
+                    lineTweens.TweenAmplitude(i, 0.0f, LineShaderType.SineWave);
                 }
             }
         }
@@ -155,7 +153,7 @@ public class CuttingLineLogic : MonoBehaviour {
 
     private void CuttingLinesPowerUp()
     {
-        for (int i = 0; i < linesNeeded[lineSystem.Players.Length-1] ; i++)
+        for (int i = 0; i < linesNeeded[lineSystem.Players.Length - 1]; i++)
         {
             RaycastHit[] hits;
             bufferVectorA = lineSystem.Players[firstVertex[i]].transform.position;

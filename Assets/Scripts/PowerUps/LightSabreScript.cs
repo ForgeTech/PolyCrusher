@@ -20,7 +20,7 @@ public class LightSabreScript : MonoBehaviour {
     private float powerUpDuration = 12.0f;
 
     [SerializeField]
-    private int bossCuttingDamage = 250;
+    private int bossCuttingDamage = 100;
 
     [SerializeField]
     private GameObject laserParticles;
@@ -36,8 +36,11 @@ public class LightSabreScript : MonoBehaviour {
 
     private Vector3 offsetVector = new Vector3();
 
-	// Use this for initialization
-	void Start () {
+    private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
+    private bool bossTakesDamage = true;
+
+    // Use this for initialization
+    void Start () {
         offsetVector.y = heightOffset;
         CalculateSabrePositions();
         LightSabreTween(true);
@@ -64,7 +67,12 @@ public class LightSabreScript : MonoBehaviour {
                     if (gotHit is BossEnemy)
                     {
                         Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
-                        enemy.TakeDamage(bossCuttingDamage, this);
+                        if (bossTakesDamage)
+                        {
+                            bossTakesDamage = false;
+                            StartCoroutine(StartBossDamageCoolDown());
+                            enemy.TakeDamage(bossCuttingDamage, this);
+                        }
                     }
                     else
                     {
@@ -75,6 +83,12 @@ public class LightSabreScript : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private IEnumerator StartBossDamageCoolDown()
+    {
+        yield return bossDamageCoolDown;
+        bossTakesDamage = true;
     }
 
 
