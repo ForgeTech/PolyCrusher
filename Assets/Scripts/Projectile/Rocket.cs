@@ -67,6 +67,8 @@ public class Rocket : Projectile {
     [SerializeField]
     protected GameObject attackVisualization;
 
+    private bool alreadyTriggered = false;
+
 	/// <summary>
 	/// Gets or sets the speed of the projectile.
 	/// </summary>
@@ -172,16 +174,21 @@ public class Rocket : Projectile {
     /// Handles the explosion, damage taking, soundplaying, etc. of the Rocket.
     /// </summary>
     /// <param name="collider">Colliding Object.</param>
-	void OnTriggerEnter(Collider collider){
-		if(collider.tag == "Terrain"){
+	void OnTriggerEnter(Collider collider)
+    {
+		if(!alreadyTriggered && collider.tag == "Terrain")
+        {
+            alreadyTriggered = true;    // Ensure that the OnTrigger routine is only triggered once
 
 			// Deactivate mesh renderer.
-			MeshRenderer meshRenderer =transform.GetComponentInChildren<MeshRenderer>();
+			MeshRenderer meshRenderer = transform.GetComponentInChildren<MeshRenderer> ();
 			meshRenderer.enabled = false;
 
 			// only calling the explosionsound method once
-			if (playExplode){
-				if (explosionSound != null){
+			if (playExplode)
+            {
+				if (explosionSound != null)
+                {
 					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
 					playExplode = false;
 				}
@@ -189,22 +196,21 @@ public class Rocket : Projectile {
 				Collider[] collidingObjects = Physics.OverlapSphere(transform.position, damageRadius, 1 << 8);
 				
                 // Handles the damage taking of the players.
-				foreach (Collider objects in collidingObjects){
-					if (objects.tag == "Player"){
+				foreach (Collider objects in collidingObjects)
+                {
+					if (objects.tag == "Player")
+                    {
 						MonoBehaviour m = objects.gameObject.GetComponent<MonoBehaviour>();
 						if (m != null && m is IDamageable)
-						{
 							((IDamageable)m).TakeDamage(damage, this);
-						}
 					}
 				}
 
 				// if the projectile hits a player, then play the explosion particle without the stain
-				if(collider.tag == "Terrain"){
+				if(collider.tag == "Terrain")
 					SpawnDeathParticle(new Vector3(transform.position.x, transform.position.y + 0.075f, transform.position.z));
-				} else {
+				else
 					SpawnAirDeathParticle(transform.position);
-				}
 
                 // Camera Shake
                 CameraManager.CameraReference.ShakeOnce();
