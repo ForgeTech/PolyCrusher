@@ -335,6 +335,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         get { return playerActions; }
         set
         {
+            playerActions.Destroy();
             playerActions = value;
             ability.PlayerActions = playerActions;
         }
@@ -908,7 +909,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         PlayerDied = null;
         PlayerSpawned = null;
         AbilityUseable = null;
-
+        playerActions.Destroy();
         if (inputDevice != null)
         {
             inputDevice.StopVibration();
