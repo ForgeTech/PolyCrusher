@@ -35,7 +35,7 @@ public class RespawnOffscreen : MonoBehaviour
         Initialize();
 	}
 	
-	void Update ()
+	private void Update ()
     {
         if (cam == null)
             FetchCamerSystem();

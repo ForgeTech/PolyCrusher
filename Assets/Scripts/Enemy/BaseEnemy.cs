@@ -392,9 +392,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             Instantiate(bloodParticle, transform.position, bloodParticle.transform.rotation);
 
         // Substract health
-        if(Health >= 0){
+        if(Health >= 0)
             Health -= damage;
-        }
 
         // Material emmission blink
         if (enemyMaterial != null)
@@ -414,7 +413,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             originRagdollForcePosition = damageDealerPosition;
             killedWithRagdoll = true;
         }
-        
         TakeDamage(damage, damageDealer);
     }
 
@@ -446,7 +444,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         GetComponent<NavMeshAgent>().updateRotation = false;
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
-        //GetComponent<BoxCollider>().size = new Vector3(0.5f, 0.5f, 0.5f);
         GetComponent<Collider>().enabled = false;
 
         //Animation
@@ -482,7 +479,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             else
             {
                 targetPlayer = null;
-                //Debug.Log("<b>No target players</b> were found!");
             }
         }
     }

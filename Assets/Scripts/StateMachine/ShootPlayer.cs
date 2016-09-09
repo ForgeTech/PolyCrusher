@@ -46,17 +46,11 @@ public class ShootPlayer : AttackPlayer
             MonoBehaviour p = player.GetComponent<MonoBehaviour>();
             MonoBehaviour n = npc.GetComponent<MonoBehaviour>();
 
-            if (p is IDamageable)
-            {
-                if (n is BaseEnemy)
-                {
-                    (n as BaseEnemy).Attack();
-                }
-            }
+            if (p is IDamageable && n is BaseEnemy)
+                (n as BaseEnemy).Attack();
 
             attack = false;
         }
-
         currentAttacktime += Time.deltaTime;
     }
 }

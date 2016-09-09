@@ -59,8 +59,9 @@ public class AttackPlayer : FSMState
 
             bool hit = Physics.Raycast(ray, out hitInfo, playerAttackRange, 1 << playerLayer);
 
+#if UNITY_EDITOR
             Debug.DrawRay(nPos, (pPos - nPos).normalized * playerAttackRange, Color.yellow);
-
+#endif
             // If the player is in attack range, make a transition to walk.
             if (!(hit && hitInfo.transform.gameObject.tag == "Player"))
                 npc.GetComponent<BaseEnemy>().SetTransition(Transition.LostPlayerAttackRange);
@@ -72,9 +73,7 @@ public class AttackPlayer : FSMState
         NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
 
         if (agent.enabled)
-        {
             agent.Stop();
-        }
 
         // ========Animator settings ========
         Animator anim = npc.GetComponent<Animator>();
