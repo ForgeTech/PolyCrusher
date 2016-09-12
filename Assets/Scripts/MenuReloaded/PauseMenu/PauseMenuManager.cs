@@ -33,6 +33,8 @@ public class PauseMenuManager : MonoBehaviour
 
     private BaseSteamManager steamManager;
 
+    private bool gameEnded = false;
+
     private void OnEnable()
     {
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
@@ -51,6 +53,10 @@ public class PauseMenuManager : MonoBehaviour
         {
             steamManager.OnOverlayActivated += OnOverlayActivated;
         }
+
+        PlayerManager.AllPlayersDeadEventHandler += () => {
+            gameEnded = true;
+        };
     }
 
     private void DeRegister()
@@ -65,7 +71,7 @@ public class PauseMenuManager : MonoBehaviour
 
 	private void Update ()
     {
-        if (playerActions.Pause.WasPressed)
+        if (playerActions.Pause.WasPressed && !gameEnded)
         {
             if (!pauseScreenActivated)
                  PauseGame();
@@ -81,7 +87,7 @@ public class PauseMenuManager : MonoBehaviour
     private void SetMenuActive(bool setActive)
     {
         menuElements.SetActive(setActive);
-        Debug.Log("- Pause Menu: "+setActive);
+        Debug.Log("- Pause Menu: " + setActive);
     }
 
     private void TimeTween(bool animateIn)
