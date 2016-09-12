@@ -21,9 +21,14 @@ public class SoundManager : MonoBehaviour
 {
     //Reference to the sound manager instance
     private static SoundManager soundManagerInstance;
-    public static AudioMixer audioMixer;
+    private static AudioMixer audioMixer;
 
     private List<AudioSource> audioSources;
+
+    public AudioMixer SoundManagerMainMixer
+    {
+        get { return SoundManager.audioMixer; }
+    }
 
     /// <summary>
     /// Gets the sound manager instance
@@ -48,6 +53,8 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
+        if(audioMixer == null)
+            audioMixer = Resources.Load<AudioMixer>("MixerGroups/MainMixer");
         audioSources = new List<AudioSource>();
     }
 
