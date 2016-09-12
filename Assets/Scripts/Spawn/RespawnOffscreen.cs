@@ -111,7 +111,7 @@ public class RespawnOffscreen : MonoBehaviour
     /// </summary>
     private void FetchCamerSystem()
     {
-        CameraSystem camSys = GameObject.FindObjectOfType<CameraSystem>();
+        CameraSystem camSys = CameraManager.CameraReference;
 
         if (camSys != null)
             cam = camSys.Cam;

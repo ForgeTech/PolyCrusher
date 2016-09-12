@@ -26,7 +26,6 @@ GameObject:
   - 4: {fileID: 430918}
   - 33: {fileID: 3300856}
   - 23: {fileID: 2330566}
-  - 114: {fileID: 11452574}
   - 114: {fileID: 11411994}
   - 54: {fileID: 5488012}
   - 135: {fileID: 13516178}
@@ -73,7 +72,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6915affd28652c34c953116dad92b189, type: 2}
+  - {fileID: 2100000, guid: 26e654818a5adc341bbab858858bf683, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -224,19 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTime: 9
   slowFactor: 4
---- !u!114 &11452574
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 154732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01aa40b40ca118548abc39ef52975361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetFactor: .0299999993
-  enableScaling: 1
+  fadeOutTweenTime: .300000012
 --- !u!135 &13516178
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -255,7 +242,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26e654818a5adc341bbab858858bf683, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 154732}

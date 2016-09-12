@@ -312,9 +312,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 	}
 
     protected virtual void Update()
-    { }
-
-    protected virtual void FixedUpdate()
     {
         // Update Finite state machine
         if (targetPlayer != null)

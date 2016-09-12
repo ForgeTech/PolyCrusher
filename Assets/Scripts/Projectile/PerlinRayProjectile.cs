@@ -96,9 +96,9 @@ public class PerlinRayProjectile : Projectile
 
             // Use Set() to avoid 'new Vector()'
             offset.Set(noise.Noise(timeX + position.x, timeX + position.y, timeX + position.z),
-                                        noise.Noise(timeY + position.x, timeY + position.y, timeY + position.z),
-                                        noise.Noise(timeZ + position.x, timeZ + position.y, timeZ + position.z));
-            
+                                       noise.Noise(timeY + position.x, timeY + position.y, timeY + position.z),
+                                       noise.Noise(timeZ + position.x, timeZ + position.y, timeZ + position.z));
+
             position += (offset * scale * ((float)i * oneOverQuantity));
 
             particles[i].position = position;

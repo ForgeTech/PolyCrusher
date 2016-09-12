@@ -169,6 +169,9 @@ public class PlayerManager : MonoBehaviour
 
     void Awake()
     {
+        // Default = 100
+        NavMesh.pathfindingIterationsPerFrame = 250;
+
         // Init player reference Array.
         playerReferences = new GameObject[4];
 

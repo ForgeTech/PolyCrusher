@@ -417,6 +417,7 @@ MonoBehaviour:
   maxHealth: 100
   enemyName: IceOfDeath
   movementSpeed: 6.5
+  movementAnimationSpeed: 1
   meleeAttackDamage: 6
   pushAwayForce: 2
   attackInterval: .400000006
@@ -489,7 +490,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -525,6 +526,10 @@ Prefab:
       propertyPath: deathBurst
       value: 
       objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 199272}
