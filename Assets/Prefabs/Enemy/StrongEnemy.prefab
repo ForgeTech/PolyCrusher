@@ -1117,6 +1117,7 @@ MonoBehaviour:
   maxHealth: 120
   enemyName: MeleeStrong
   movementSpeed: 9
+  movementAnimationSpeed: 1.79999995
   meleeAttackDamage: 15
   pushAwayForce: 2
   attackInterval: .600000024
@@ -1242,6 +1243,10 @@ Prefab:
       propertyPath: deathBurst
       value: 
       objectReference: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+    - target: {fileID: 0}
+      propertyPath: movementAnimationSpeed
+      value: 1.79999995
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157580}

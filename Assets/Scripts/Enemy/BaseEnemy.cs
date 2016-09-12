@@ -56,6 +56,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     // The initial movementSpeed (Is used, because the normal movementSpeed can be changed.)
     private float initialMovementSpeed;
 
+    [SerializeField]
+    [Tooltip("The base movement speed multiplier of the walk animation.")]
+    protected float movementAnimationSpeed = 1f;
+
     [Space(5)]
     [Header("Attack values")]
     // The damage of the melee attack.
@@ -203,19 +207,15 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         get { return this.pushAwayForce; }
     }
 
+    public float MovementAnimationSpeed { get { return this.movementAnimationSpeed; } }
+
     /// <summary>
     /// Gets or sets the canShoot value.
     /// </summary>
     public bool CanShoot
     {
-        get
-        {
-            return this.canShoot;
-        }
-        set
-        {
-            this.canShoot = value;
-        }
+        get { return this.canShoot; }
+        set { this.canShoot = value; }
     }
 
     /// <summary>
@@ -223,10 +223,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public float MovementSpeed
     {
-        get
-        {
-            return this.movementSpeed;
-        }
+        get { return this.movementSpeed; }
         set
         {
             this.movementSpeed = value;

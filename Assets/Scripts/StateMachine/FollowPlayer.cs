@@ -68,7 +68,7 @@ public class FollowPlayer : FSMState
         {
             if (!agent.pathPending)
             {
-                animator.speed = moveValue;
+                animator.speed = moveValue * enemy.MovementAnimationSpeed;
                 animator.SetFloat("MoveValue", moveValue);
             }
             else
@@ -77,6 +77,16 @@ public class FollowPlayer : FSMState
                 animator.SetFloat("MoveValue", 1.0f);
             }
         }
+    }
+
+    public override void DoBeforeEntering()
+    {
+        animator.speed = 1;
+    }
+
+    public override void DoBeforeLeaving()
+    {
+        animator.speed = 1;
     }
 
     private bool IsPlayerNearEnough(GameObject player)
