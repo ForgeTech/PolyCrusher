@@ -113,9 +113,13 @@
 
             fixed4 ui_frag(v2f IN) : SV_Target
             {
-                fixed4 color = blur(_MainTex, IN.texcoord, IN.uvRect);
-				color.rgb = _ShadowColor.rgb;
-				color.a *= _ShadowColor.a;
+                fixed4 color = fixed4(0.0, 0.0, 0.0, 0.0);
+                if (_ShadowColor.a > 0.0)
+                {
+                    color = blur(_MainTex, IN.texcoord, IN.uvRect);
+    				color.rgb = _ShadowColor.rgb;
+    				color.a *= _ShadowColor.a;
+                }
 				return color;
             }
             ENDCG
