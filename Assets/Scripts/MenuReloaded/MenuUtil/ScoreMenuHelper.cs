@@ -70,6 +70,8 @@ public class ScoreMenuHelper : MonoBehaviour
     private readonly Dictionary<HighscoreType, ScoreData> highscoreEntries = new Dictionary<HighscoreType, ScoreData>();
     private string originalScoreText;
 
+    private string rankString = "° <color=#FF1B26FF>NEW RANK {0:000}</color>";
+
     private WaitForSeconds waitForPhase01;
     private WaitForSeconds waitForTextAdd;
     private WaitForSeconds waitForNextLine;
@@ -103,7 +105,7 @@ public class ScoreMenuHelper : MonoBehaviour
         LeanTween.scale(scoreText.rectTransform, Vector3.one, startUpScaleTweenTime).setEase(easeType);
         LeanTween.scale(scoreContainer, Vector3.one, startUpScaleTweenTime).setEase(easeType);
 
-        scoreText.text = CreateHighscoreString("?", "?", "?");
+        scoreText.text = CreateHighscoreString("?", "?", "");
         yield return waitForPhase01;
 
         yield return waitForNextPhase;
@@ -191,12 +193,12 @@ public class ScoreMenuHelper : MonoBehaviour
     {
         ScoreContainer score = DataCollector.instance.getScoreContainer();
         Queue<ScoreData> animationWorkQueue = new Queue<ScoreData>();
+        string onlineRankString;
 
-        object onlineRank = null;
         if (BaseSteamManager.Instance.GetRank() == 0)
-            onlineRank = "?";
+            onlineRankString = "";
         else
-            onlineRank = BaseSteamManager.Instance.GetRank();
+            onlineRankString = string.Format(rankString, BaseSteamManager.Instance.GetRank());
 
         RegisterAnimationQueue(animationWorkQueue, score);
 
@@ -214,7 +216,7 @@ public class ScoreMenuHelper : MonoBehaviour
         StringBuilder timeString = null;
         scoreSound.Play();
         if (score.getGameMode() == GameMode.NormalMode)
-            scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), 0);
+            scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), "");
         else
         {
             TimeUtil time = TimeUtil.MillisToTime(score.getYoloScore());
@@ -223,7 +225,7 @@ public class ScoreMenuHelper : MonoBehaviour
                 .Append(string.Format("{0:00}", time.Second))
                 .Append(":")
                 .Append(string.Format("{0:000}", time.Milliseconds));
-            scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), 0);
+            scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), "");
         }
 
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
@@ -232,9 +234,9 @@ public class ScoreMenuHelper : MonoBehaviour
         // Set online rank
         scoreSound.Play();
         if (score.getGameMode() == GameMode.NormalMode)
-            scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), onlineRank);
+            scoreText.text = CreateHighscoreString((int)score.getWave(), score.getScoreSum(), onlineRankString);
         else
-            scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), onlineRank);
+            scoreText.text = CreateHighscoreString(timeString.ToString(), score.getScoreSum(), onlineRankString);
 
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
     }
