@@ -68,7 +68,7 @@ public class MeteorBullet : Bullet
                 // Sound
                 if (explosionSound != null)
                 {
-                    AudioSource audioSource = SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, 0.1f, 1.0f);
+                    AudioSource audioSource = SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, 0.1f, 1.0f, AudioGroup.Effects);
                     audioSource.spread = 360;
                 }
 
@@ -87,7 +87,7 @@ public class MeteorBullet : Bullet
             // Sound
             if (explosionSound != null)
             {
-                AudioSource audioSource = SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, 0.1f, 1.0f);
+                AudioSource audioSource = SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, 0.1f, 1.0f, AudioGroup.Effects);
                 audioSource.spread = 360;
             }
 

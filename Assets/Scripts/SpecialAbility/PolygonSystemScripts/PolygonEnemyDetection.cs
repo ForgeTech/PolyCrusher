@@ -116,7 +116,7 @@ public class PolygonEnemyDetection : MonoBehaviour {
 
         CameraManager.CameraReference.ShakeOnce();
 
-        SoundManager.SoundManagerInstance.Play(polygonProperties.polyExplosion, Vector3.zero);
+        SoundManager.SoundManagerInstance.Play(polygonProperties.polyExplosion, Vector3.zero, AudioGroup.Effects);
         new Event(Event.TYPE.superAbility).addPlayerCount().addWave().addLevel().addPos(polygonCoreLogic.MiddlePoint.x, polygonCoreLogic.MiddlePoint.z).addKills(detectedEnemies.Count).send();
 
         for (int i = 0; i < detectedEnemies.Count; i++)

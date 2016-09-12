@@ -252,7 +252,7 @@ public class MultiplayerManager : MonoBehaviour
             if (specificGamepadListener.Join.WasPressed)
             {
                 SaveSelectionInformationToContainer();
-                DontDestroyOnLoad(SoundManager.SoundManagerInstance.Play(finishedSound, Vector3.zero));
+                DontDestroyOnLoad(SoundManager.SoundManagerInstance.Play(finishedSound, Vector3.zero, AudioGroup.MenuSounds));
                 ChangeScene();
             }
 

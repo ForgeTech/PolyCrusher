@@ -169,7 +169,7 @@ public class PowerUpItem : BaseItem
             {
                 PowerUpMango mango = player.gameObject.AddComponent<PowerUpMango>();
                 mango.SetExplosionProperties(explosionParticles, range);
-                SoundManager.SoundManagerInstance.Play(clip, transform, 0.8f, 1, false);
+                SoundManager.SoundManagerInstance.Play(clip, transform, 0.8f, 1, false, AudioGroup.Effects);
                 mango.Use();
             }
             //==================TEMPORARY_OR_PERMANENTLY_ADD_POWERUPS_end================================

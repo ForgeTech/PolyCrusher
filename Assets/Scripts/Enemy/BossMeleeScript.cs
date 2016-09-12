@@ -86,7 +86,7 @@ public class BossMeleeScript : AttackVisualizationScript
         }
 
         if (sound != null)
-            SoundManager.SoundManagerInstance.Play(sound, transform.position, soundVolume, soundPitch);
+            SoundManager.SoundManagerInstance.Play(sound, transform.position, soundVolume, soundPitch, AudioGroup.Effects);
 
         if (explosionParticle != null)
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);

@@ -201,7 +201,7 @@ public class RocketBehaviour : MonoBehaviour {
             //play the explosion sound only once
 			if (playExplode){
 				if (explosionSound != null){
-					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
+					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, AudioGroup.Effects);
 					playExplode = false;
 				}
 			}

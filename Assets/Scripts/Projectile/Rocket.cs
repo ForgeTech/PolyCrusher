@@ -189,7 +189,7 @@ public class Rocket : Projectile {
             {
 				if (explosionSound != null)
                 {
-					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
+					SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, AudioGroup.Effects);
 					playExplode = false;
 				}
 

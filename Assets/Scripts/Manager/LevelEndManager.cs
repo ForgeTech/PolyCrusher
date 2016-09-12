@@ -85,7 +85,7 @@ public class LevelEndManager : MonoBehaviour
         g.transform.SetParent(ingameCanvas.gameObject.transform, false);
         Image img = g.GetComponent<Image>();
 
-        SoundManager.SoundManagerInstance.Play(wooshSound, Vector3.zero, 10f, 1f, false);
+        SoundManager.SoundManagerInstance.Play(wooshSound, Vector3.zero, 10f, 1f, false, AudioGroup.Effects);
         img.rectTransform.localScale = Vector3.zero;
         LeanTween.scale(img.rectTransform, Vector3.one, tweenTime).setEase(LeanTweenType.easeOutElastic)
             .setOnComplete(TweenText);
@@ -97,7 +97,7 @@ public class LevelEndManager : MonoBehaviour
         g.transform.SetParent(ingameCanvas.gameObject.transform, false);
         Text txt = g.GetComponent<Text>();
 
-        SoundManager.SoundManagerInstance.Play(punchSound, Vector3.zero, 15f, 1f, false);
+        SoundManager.SoundManagerInstance.Play(punchSound, Vector3.zero, 15f, 1f, false, AudioGroup.Effects);
         txt.rectTransform.localScale = Vector3.one * 8f;
         LeanTween.scale(txt.rectTransform, Vector3.one, crushedTextTweenTime).setEase(LeanTweenType.easeOutCubic);
     }

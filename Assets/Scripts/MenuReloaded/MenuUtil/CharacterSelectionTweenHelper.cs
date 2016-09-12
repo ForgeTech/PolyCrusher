@@ -111,7 +111,7 @@ public class CharacterSelectionTweenHelper : MonoBehaviour
 
     private void HandlePlayerRegistered()
     {
-        SoundManager.SoundManagerInstance.Play(registerSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+        SoundManager.SoundManagerInstance.Play(registerSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
 
         // Position fade for info boxes
         LeanTween.moveY(joinInfoBox, topAnchoredPosition.y, tweenTime).setEase(easeType);

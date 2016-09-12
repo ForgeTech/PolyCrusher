@@ -157,14 +157,14 @@ public abstract class AbstractMenuManager : MonoBehaviour
         // Next & Previous Action callbacks
         navigationNextAction = () => {
             if(navigationSound != null)
-                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
             selector.Next();
             OnNextSelection();
             StartCoroutine(StickInputCooldown());
         };
         navigationPreviousAction = () => {
             if (navigationSound != null)
-                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
             selector.Previous();
             OnPreviousSelection();
             StartCoroutine(StickInputCooldown());
@@ -173,14 +173,14 @@ public abstract class AbstractMenuManager : MonoBehaviour
         // Sub navigation actions
         subNavigationNextAction = () => {
             if (navigationSound != null)
-                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
             ((SelectorWithSubSelector)selector).SubSelectorNext();
             OnSubNavigationNext();
             StartCoroutine(StickInputCooldown());
         };
         subNavigationPreviousAction = () => {
             if (navigationSound != null)
-                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+                SoundManager.SoundManagerInstance.Play(navigationSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
             ((SelectorWithSubSelector)selector).SubSelectorPrevious();
             OnSubNavigationPrevious();
             StartCoroutine(StickInputCooldown());
@@ -268,7 +268,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
         menuInputHandler.HandleBackInput(() => {
             StartCoroutine(WaitBeforeTriggerBackAction(() => {
                 if(backSound != null)
-                    SoundManager.SoundManagerInstance.Play(backSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+                    SoundManager.SoundManagerInstance.Play(backSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
                 backAction.PerformAction<MonoBehaviour>(this);
             }));
         });
@@ -309,7 +309,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
     {
         acceptButtonInput = false;
         if(acceptSound != null)
-            SoundManager.SoundManagerInstance.Play(acceptSound, SoundManager.SoundManagerInstance.transform, 1f, 1f);
+            SoundManager.SoundManagerInstance.Play(acceptSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
         selector.HandleSelectedElement();
         yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(buttonPressedWaitTime));
         PerformActionOnSelectedElement(selectedGameObject);

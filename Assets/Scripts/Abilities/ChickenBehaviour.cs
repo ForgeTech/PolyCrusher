@@ -249,7 +249,7 @@ public class ChickenBehaviour : MonoBehaviour
         // Sound
         if (explosionSound != null)
         {
-            SoundManager.SoundManagerInstance.Play(explosionSound, transform.position);
+            SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, AudioGroup.Effects);
         }
 
         // Camera shake

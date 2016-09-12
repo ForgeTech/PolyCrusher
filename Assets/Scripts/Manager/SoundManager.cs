@@ -1,6 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
+
+public enum AudioGroup
+{
+    Music = 0,
+    Bullets = 1,
+    MenuSounds = 2,
+    CharacterVoice = 3,
+    Effects = 4,
+    Announcer = 5
+}
 
 /// <summary>
 /// This manager script handles the generating and pooling of AudioSources.
@@ -10,6 +21,7 @@ public class SoundManager : MonoBehaviour
 {
     //Reference to the sound manager instance
     private static SoundManager soundManagerInstance;
+    public static AudioMixer audioMixer;
 
     private List<AudioSource> audioSources;
 
@@ -26,6 +38,7 @@ public class SoundManager : MonoBehaviour
             if (soundManagerInstance == null)
             {
                 soundManagerInstance = new GameObject("_SoundManager").AddComponent<SoundManager>();
+                audioMixer = Resources.Load<AudioMixer>("MixerGroups/MainMixer");
                 DontDestroyOnLoad(soundManagerInstance);
             }
 
@@ -47,7 +60,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="volume">Volume of the clip.</param>
     /// <param name="pitch">Pitch of the clip.</param>
     /// <param name="loop">Specifies if the clip should be looped or not.</param>
-    public AudioSource Play(AudioClip clip, Transform emitter, float volume, float pitch, bool loop)
+    public AudioSource Play(AudioClip clip, Transform emitter, float volume, float pitch, bool loop, AudioGroup audioGroup)
     {
         //Instance a new GameObject
         GameObject g = new GameObject("AudioSource: " + clip.name);
@@ -58,6 +71,7 @@ public class SoundManager : MonoBehaviour
         AudioSource source;
 
         source = g.AddComponent<AudioSource>();
+        source.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioGroup.ToString())[0];
         source.clip = clip;
         source.volume = volume;
         source.pitch = pitch;
@@ -84,9 +98,9 @@ public class SoundManager : MonoBehaviour
     /// <param name="emitter">Parent object of the AudioSource.</param>
     /// <param name="volume">Volume of the clip.</param>
     /// <param name="pitch">Pitch of the clip.</param>
-    public AudioSource Play(AudioClip clip, Transform emitter, float volume, float pitch)
+    public AudioSource Play(AudioClip clip, Transform emitter, float volume, float pitch, AudioGroup audioGroup)
     {
-        return Play(clip, emitter, volume, pitch, false);
+        return Play(clip, emitter, volume, pitch, false, audioGroup);
     }
 
     /// <summary>
@@ -95,9 +109,9 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// <param name="clip">Audioclip which should be played.</param>
     /// <param name="emitter">Parent object of the AudioSource.</param>
-    public AudioSource Play(AudioClip clip, Transform emitter)
+    public AudioSource Play(AudioClip clip, Transform emitter, AudioGroup audioGroup)
     {
-        return Play(clip, emitter, 1f, 1f, false);
+        return Play(clip, emitter, 1f, 1f, false, audioGroup);
     }
 
     /// <summary>
@@ -109,7 +123,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="volume">Volume of the clip.</param>
     /// <param name="pitch">Pitch of the clip.</param>
     /// <param name="loop">Specifies if the clip should be looped or not.</param>
-    public AudioSource Play(AudioClip clip, Vector3 position, float volume, float pitch, bool loop)
+    public AudioSource Play(AudioClip clip, Vector3 position, float volume, float pitch, bool loop, AudioGroup audioGroup)
     {
         //Instance a new GameObject
         GameObject g = new GameObject("AudioSource: " + clip.name);
@@ -119,6 +133,7 @@ public class SoundManager : MonoBehaviour
         AudioSource source;
 
         source = g.AddComponent<AudioSource>();
+        source.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioGroup.ToString())[0];
         source.clip = clip;
         source.volume = volume;
         source.pitch = pitch;
@@ -145,9 +160,9 @@ public class SoundManager : MonoBehaviour
     /// <param name="position">Position of the AudioSource</param>
     /// <param name="volume">Volume of the clip.</param>
     /// <param name="pitch">Pitch of the clip.</param>
-    public AudioSource Play(AudioClip clip, Vector3 position, float volume, float pitch)
+    public AudioSource Play(AudioClip clip, Vector3 position, float volume, float pitch, AudioGroup audioGroup)
     {
-        return Play(clip, position, volume, pitch, false);
+        return Play(clip, position, volume, pitch, false, audioGroup);
     }
 
     /// <summary>
@@ -156,9 +171,9 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// <param name="clip">Audioclip which should be played.</param>
     /// <param name="position">Position of the AudioSource</param>
-    public AudioSource Play(AudioClip clip, Vector3 position)
+    public AudioSource Play(AudioClip clip, Vector3 position, AudioGroup audioGroup)
     {
-        return Play(clip, position, 1f, 1f, false);
+        return Play(clip, position, 1f, 1f, false, audioGroup);
     }
 
 

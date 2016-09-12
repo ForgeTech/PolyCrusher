@@ -511,7 +511,7 @@ public class BossEnemy : BaseEnemy
         Instantiate(gravestone, transform.position, gravestone.transform.rotation);
 
         //Create Particles
-        SoundManager.SoundManagerInstance.Play(deathSound, Vector3.zero, 0.8f, 1f);
+        SoundManager.SoundManagerInstance.Play(deathSound, Vector3.zero, 0.8f, 1f, AudioGroup.Effects);
         Destroy(Instantiate(deathParticles, transform.position, gravestone.transform.rotation), 10);
 
         //Animation
