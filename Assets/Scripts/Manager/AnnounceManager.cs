@@ -19,6 +19,7 @@ public class AnnounceManager : MonoBehaviour
     protected MultipleAudioclips playerDeath;
     protected MultipleAudioclips polyExecute;
     protected MultipleAudioclips polyFail;
+    protected MultipleAudioclips specialWave;
 
     // Use this for initialization
     void Start ()
@@ -56,8 +57,10 @@ public class AnnounceManager : MonoBehaviour
         {
             if (GameManager.gameManagerInstance.Wave > 1)
             {
-                if (!GameManager.GameManagerInstance.IsBossWave && playNextWaveSound)
+                if (!GameManager.GameManagerInstance.IsBossWave && !GameManager.gameManagerInstance.IsCurrentlySpecialWave && playNextWaveSound)
                     nextWave.PlayRandomClip();
+                else if (GameManager.gameManagerInstance.IsCurrentlySpecialWave && playNextWaveSound)
+                    specialWave.PlayRandomClip();
             }
         }
     }
@@ -131,6 +134,8 @@ public class AnnounceManager : MonoBehaviour
                         randomStart = clips[i];
                     if (clips[i].AudioCategory == "NextWave")
                         nextWave = clips[i];
+                    if (clips[i].AudioCategory == "SpecialWave")
+                        specialWave = clips[i];
                     if (clips[i].AudioCategory == "Trap")
                         trap = clips[i];
                     if (clips[i].AudioCategory == "BossWave")
