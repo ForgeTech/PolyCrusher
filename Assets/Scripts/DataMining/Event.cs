@@ -96,23 +96,16 @@ public class Event{
 
     public Event addPlayerCount()
     {
-        
-        PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
-        
-        if(playerManagerReference != null)
+        int count = PlayerManager.PlayerCountInGameSession;
+        if(count != 0)
         {
-            int count = playerManagerReference.PlayerCountInGameSession;
-            if(count != 0)
-            {
-                this.playerCount = count;
-                lastPlayerCount = count;
-            }
-            else
-            {
-                this.playerCount = lastPlayerCount;
-            }
+            this.playerCount = count;
+            lastPlayerCount = count;
         }
-
+        else
+        {
+            this.playerCount = lastPlayerCount;
+        }
         return this;
     }
 

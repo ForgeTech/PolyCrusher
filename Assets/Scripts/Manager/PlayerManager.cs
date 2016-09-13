@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour
     protected bool respawnPlayersAfterDeath = true;
 
     //The player slots of the four players. False -> Slot free, True -> Slot filled with player
-    private bool[] playerSlot;
+    private static bool[] playerSlot;
 
 
     // References to the players -> This array should have a size of 4.
@@ -73,7 +73,7 @@ public class PlayerManager : MonoBehaviour
     /// Gets the player count of the actual game session.
     /// Also dead players will be in the count number.
     /// </summary>
-    public int PlayerCountInGameSession
+    public static int PlayerCountInGameSession
     {
         get
         {

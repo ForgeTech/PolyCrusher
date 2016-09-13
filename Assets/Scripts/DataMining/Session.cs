@@ -30,12 +30,7 @@ public class Session
             default: this.mode = gameMode.ToString(); break;
         }
 
-        PlayerManager playerManagerReference = GameObject.FindObjectOfType<PlayerManager>();
-        if (playerManagerReference != null)
-        {
-            players = playerManagerReference.PlayerCountInGameSession;
-        }
-
+        players = PlayerManager.PlayerCountInGameSession;
         time = (int)(Time.time * 1000);
     }
 

@@ -28,21 +28,27 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 {
     #region Class Members
     [Header("Health Values")]
-    //The actual health value.
     [SerializeField]
     protected int health = 100;
     
-    //The minimum health
     [SerializeField]
     protected int minHealth = 0;
 
-    //The maximum health
     [SerializeField]
     protected int maxHealth = 100;
 
-    //The low health line
     [SerializeField]
     protected int lowHealth = 25;
+
+    [SerializeField]
+    protected float healthRefillRate = 0.3f;
+
+    [SerializeField]
+    protected int healthRefillIncrement = 2;
+
+    private bool allowHealthRefill = true;
+
+    private WaitForSeconds waitForHealthRefill;
 
     // Specifies if the player is invincible.
     protected bool invincible = false;
@@ -70,6 +76,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     // Stops the energy refill if it is true; Is used in combination with the LineSystem.
     protected bool stopEnergyRefill = true;
 
+    private WaitForSeconds waitForEnergyRefill;
     // The value which will be added to the actual energy.
     [SerializeField]
     protected int energyIncrement = 5;
@@ -104,10 +111,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     // The actual death time which will be used.
     protected float currentDeathTime;
 
-	//Phone player slot for the mobile controller input.
-	//[SerializeField]
-	protected int phonePlayerSlot = -1;
-
     [Space(10)]
     [Header("Movement")]
     [SerializeField]
@@ -128,8 +131,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     public Ability ability;
     //======================================
 
-
-
     //=========HUD Elements=================
     [Space(10)]
     [Header("HUD Element References")]
@@ -146,13 +147,11 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     private Vector3 originalHealthLevelScale;
     //======================================
 
-
     [Space(10)]
     [Header("Camera Edge detection")]
     [Tooltip("The offset value of the edge detection. (Screen space value!)")]
     [SerializeField]
     protected float cameraEdgeDetectionOffset = 0.02f;
-
 
     [Space(10)]
     [Header("Blood particle prefab")]
@@ -269,18 +268,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
-    /// <summary>
-    /// Sets or gets the invincibility.
-    /// </summary>
     public bool Invincible
     {
         get { return this.invincible; }
         set { this.invincible = value; }
     }
 
-    /// <summary>
-    /// Gets if the player is dead.
-    /// </summary>
     public bool IsDead
     {
         get { return this.isDead; }
@@ -295,27 +288,17 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         set { this.canShoot = value; }
     }
 
-    /// <summary>
-    /// Gets the player weapon.
-    /// </summary>
     public Weapon PlayerWeapon
     {
         get { return this.weapon; }
     }
 
-    /// <summary>
-    /// Gets or sets the current death time.
-    /// 
-    /// </summary>
     public float CurrentDeathTime
     {
         get { return this.currentDeathTime; }
         set { this.currentDeathTime = value; }
     }
 
-    /// <summary>
-    /// Gets or sets the inputDevice for this player
-    /// </summary>
     public InputDevice InputDevice
     {
         get { return inputDevice; }
@@ -327,9 +310,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
-    /// <summary>
-    /// Gets or Sets the Player Actions for this player
-    /// </summary>
     public PlayerControlActions PlayerActions
     {
         get { return playerActions; }
@@ -341,7 +321,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }   
 
-
     public RumbleManager RumbleManager
     {
         get { return rumbleManager; }
@@ -352,21 +331,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
-
     /// <summary>
-    /// Gets or sets the phone player slot.
-    /// </summary>
-    public int PhonePlayerSlot
-	{
-		get { return this.phonePlayerSlot; }
-		set
-		{
-			this.phonePlayerSlot = value;
-		}
-	}
-
-    /// <summary>
-    /// Gets or sets the energy.
+    /// Special ability energy.
     /// </summary>
     public int Energy
     {
@@ -381,50 +347,20 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
-    /// <summary>
-    /// Gets the energy refill rate.
-    /// </summary>
-    public float EnergyRefillRate
-    {
-        get { return this.energyRefillRate; }
-    }
-
-    /// <summary>
-    /// Gets or sets the energy increment value.
-    /// </summary>
-    public int EnergyIncrement
-    {
-        get { return this.energyIncrement; }
-        set { this.energyIncrement = value; }
-    }
-
-    /// <summary>
-    /// Gets or sets the Movement speed.
-    /// </summary>
     public float MovementSpeed
     {
         get { return playerInput.movementSpeed; }
         set { playerInput.movementSpeed = value; }
     }
 
-    /// <summary>
-    /// Gets if the player is moved by user input or not.
-    /// </summary>
-    public bool IsMoving
-    {
-        get { return playerInput.IsMoving; }
-    }
+    public bool IsMoving { get { return playerInput.IsMoving; } }
 
-    /// <summary>
-    /// Gets or sets the energy refill parameter.
-    /// </summary>
     public bool StopEnergyRefill
     {
         get { return this.stopEnergyRefill; }
         set { this.stopEnergyRefill = value; }
     }
     #endregion
-
 
     #region Methods
     private void Awake()
@@ -434,6 +370,8 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
         if (inputDevice != null)
             playerActions.Device = inputDevice;
+
+        InitializeWaitForSeconds();
     }
 
 	private void Start () 
@@ -478,7 +416,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         playerInput = new PlayerInputHandler(this, playerAnimator);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         this.CurrentDeathTime = deathTime;
         this.allowEnergyRefill = true;
@@ -489,12 +427,23 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             rigid.mass = 0.2f;
     }
 
+    private void InitializeWaitForSeconds()
+    {
+        waitForHealthRefill = new WaitForSeconds(healthRefillRate);
+        waitForEnergyRefill = new WaitForSeconds(energyRefillRate);
+    }
+
     private void Update () 
     {
         if (!IsDead)
         {
             // Refill Energy
             RefillEnergy(energyIncrement);
+            
+            // Only refill in a single player game
+            if(PlayerManager.PlayerCountInGameSession == 1)
+                RefillHealth();
+
 			HandleAbilityInput();
         }
         // HUD Elements
@@ -517,7 +466,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     void CheckAbilityStatusReady()
     {
-        if (!abilityUseable && phonePlayerSlot != -1 && CheckEnergyLevelWithoutSubtraction())
+        if (!abilityUseable && CheckEnergyLevelWithoutSubtraction())
             abilityUseable = true;
     }
 
@@ -527,7 +476,6 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     protected virtual void HandleInput()
     {
         //Handles the movement and rotation/shoot input.
-        //playerAnimator.speed = 1f;
 		HandleMovement ();
     }
 
@@ -592,7 +540,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                     GameObject deathParticle = Instantiate(deathParticles);
                     deathParticle.transform.position = transform.position;
                 }
-                new Event(Event.TYPE.death).addPos(this.transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();
+                new Event(Event.TYPE.death).addPos(transform).addCharacter(PlayerIdentifier.ToString("g")).addWave().addEnemy(enemyName).addLevel().addPlayerCount().send();
             }
 
             // Instantiate particles if the prefab reference isn't null.
@@ -606,10 +554,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             if (hurtCharacterSound != null && this.Health - damage > 0)
                 hurtCharacterSound.PlayRandomClip();
             
-            this.Health -= damage;
+            Health -= damage;
             OnDamageTaken(damage);
 
-            if(this.health < lowHealth && !lowHealthRumbleActive)
+            if(health < lowHealth && !lowHealthRumbleActive)
             {
                 lowHealthRumbleActive = true;
                 InvokeRepeating("LowHealthRumble", 0.0f, 5.0f);
@@ -644,12 +592,18 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
             }
 
             Energy += addEnergy;
-
-            allowEnergyRefill = false;
             StartCoroutine(WaitForEnergyRefill());
         }
     }
 
+    private void RefillHealth()
+    {
+        if (allowHealthRefill)
+        {
+            Health += healthRefillIncrement;
+            StartCoroutine(WaitForHealthRefill());
+        }
+    }
 
     public void PowerUpPickUpRumble()
     {
@@ -679,14 +633,18 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         }
     }
 
-    /// <summary>
-    /// Waits before the refill is allowed.
-    /// </summary>
-    /// <returns></returns>
     protected IEnumerator WaitForEnergyRefill()
     {
-        yield return new WaitForSeconds(EnergyRefillRate);
+        allowEnergyRefill = false;
+        yield return waitForEnergyRefill;
         allowEnergyRefill = true;
+    }
+
+    protected IEnumerator WaitForHealthRefill()
+    {
+        allowHealthRefill = false;
+        yield return waitForHealthRefill;
+        allowHealthRefill = true;
     }
 
     /// <summary>
@@ -910,10 +868,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         PlayerSpawned = null;
         AbilityUseable = null;
         playerActions.Destroy();
+
         if (inputDevice != null)
-        {
             inputDevice.StopVibration();
-        }
     }
     #endregion
 }

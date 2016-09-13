@@ -27,7 +27,6 @@ public class CuttingLineLogic : MonoBehaviour
     private bool bossTakesDamage = true;
 
     private LineSystem lineSystem;
-    private PlayerManager playerManager;
 
     private float lineStartOffset = 0.0f;
     private GameObject laserParticles;
@@ -73,14 +72,9 @@ public class CuttingLineLogic : MonoBehaviour
 
     #endregion
 
-    void Awake()
+    private void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
-        playerManager = FindObjectOfType<PlayerManager>();
-        if (playerManager == null)
-        {
-            Debug.LogError("playerManager is null");
-        }
     }
 
     private void ResetValues()
@@ -101,7 +95,7 @@ public class CuttingLineLogic : MonoBehaviour
                 CuttingLinesPowerUp();
             }
 
-            if (lineSystem.Players.Length == 1 && playerManager.PlayerCountInGameSession == 1)
+            if (lineSystem.Players.Length == 1 && PlayerManager.PlayerCountInGameSession == 1)
             {
                 PrepareLightSabre();
             }
