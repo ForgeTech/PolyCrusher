@@ -9,11 +9,11 @@ public class NoOpTransitionHandler : TransitionHandlerInterface
 {
     public void OnDefocus(GameObject gameobject)
     {
-        Debug.Log("NoOp Transition Defocus.");
+        // Nothing to do here
     }
 
     public void OnFocus(GameObject gameobject)
     {
-        Debug.Log("NoOp Transition Focus.");
+        // Nothing to do here
     }
 }
