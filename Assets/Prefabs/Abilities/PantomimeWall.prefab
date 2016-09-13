@@ -75,6 +75,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 9
+  collisionRadius: 4
+  radiusForwardOffset: 2
+  pushAwayForce: 600
+  backPositionTween: -5
 --- !u!208 &20846378
 NavMeshObstacle:
   m_ObjectHideFlags: 1
@@ -148,6 +152,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_CarveOnlyStationary
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: collisionRadius
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pushAwayForce
+      value: 600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
