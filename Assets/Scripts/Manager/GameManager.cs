@@ -174,9 +174,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     protected int maxEnemyActiveCount = 10;
 
-    // The factor for the enemy active count increase.
-    protected float maxEnemyActiveCountFactor = 1.3f;
-
     // The current enemy count.
     [SerializeField]
     protected int currentEnemyCount = 0;
@@ -249,47 +246,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Gets the current game mode.
-    /// </summary>
-    public GameMode CurrentGameMode
-    {
-        get { return this.gameMode; }
-    }
+    public GameMode CurrentGameMode { get { return gameMode; } }
+    public int Wave { get { return wave; } }
+    public SpawnInformation[] SpawnInfo { get { return spawnInfo; } }
+    public BossSpawnInformation BossSpawnInfo { get { return bossSpawnInfo; } }
+    public int AccumulatedRessourceValue { get { return accumulatedRessourceValue; } }
+    public bool SpecialWaveModeEnabled { get { return specialWaveModeEnabled; } }
+    public bool IsCurrentlySpecialWave { get { return isCurrentlySpecialWave; } }
+    public float SpecialWaveProbablity { get { return specialWaveProbablity; } }
 
-    /// <summary>
-    /// Gets the actual wave.
-    /// </summary>
-    public int Wave
-    {
-        get { return this.wave; }
-    }
-
-    /// <summary>
-    /// Gets or sets the enemy count pool.
-    /// </summary>
     public int EnemyRessourcePool
     {
-        get { return this.enemyRessourcePool; }
-        set { this.enemyRessourcePool = value; }
+        get { return enemyRessourcePool; }
+        set { enemyRessourcePool = value; }
     }
 
-    /// <summary>
-    /// Gets or sets the enemy active count.
-    /// </summary>
     public int MaxEnemyActiveCount
     {
-        get { return this.maxEnemyActiveCount; }
-        set { this.maxEnemyActiveCount = value; }
+        get { return maxEnemyActiveCount; }
+        set { maxEnemyActiveCount = value; }
     }
     
-    /// <summary>
-    /// Gets or sets the enemy active count factor.
-    /// </summary>
-    public float MaxEnemyActiveCountFactor
+    public bool WaveActive
     {
-        get { return this.maxEnemyActiveCountFactor; }
-        set { this.maxEnemyActiveCountFactor = value; }
+        get { return waveActive; }
+        protected set { waveActive = value; }
+    }
+
+    public bool IsBossWave
+    {
+        get { return isBossWave; }
+        protected set { isBossWave = value; }
     }
 
     /// <summary>
@@ -297,15 +284,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int CurrentEnemyRessourceValue
     {
-        get { return this.currentEnemyRessourceValue; }
+        get { return currentEnemyRessourceValue; }
         set
         {
             if (value >= 0)
-                this.currentEnemyRessourceValue = value;
+                currentEnemyRessourceValue = value;
             else
-                this.CurrentEnemyRessourceValue = 0;
+                CurrentEnemyRessourceValue = 0;
 
-            if (this.currentEnemyRessourceValue == 0 && this.currentEnemyCount == 0)
+            if (currentEnemyRessourceValue == 0 && currentEnemyCount == 0)
             {
                 Debug.Log("GameManager: No ressources and 0 enemies left -> Wave ended.");
                 EndWave();
@@ -318,95 +305,22 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int CurrentEnemyCount
     {
-        get { return this.currentEnemyCount; }
+        get { return currentEnemyCount; }
         protected set 
         {
-            this.currentEnemyCount = value;
+            currentEnemyCount = value;
 
-            if (this.currentEnemyRessourceValue == 0 && this.currentEnemyCount == 0)
+            if (currentEnemyRessourceValue == 0 && currentEnemyCount == 0)
             {
                 Debug.Log("GameManager: No ressources and 0 enemies left -> Wave ended.");
                 EndWave();
             }
         }
     }
-
-    /// <summary>
-    /// Gets the wave active state.
-    /// </summary>
-    public bool WaveActive
-    {
-        get { return this.waveActive; }
-        protected set
-        {
-            this.waveActive = value;
-        }
-    }
-
-    /// <summary>
-    /// Gets the boss active state.
-    /// </summary>
-    public bool IsBossWave
-    {
-        get { return this.isBossWave; }
-        protected set
-        {
-            this.isBossWave = value;
-        }
-    }
-
-    /// <summary>
-    /// Gets the spawn information.
-    /// </summary>
-    public SpawnInformation[] SpawnInfo
-    {
-        get { return this.spawnInfo; }
-    }
-
-    /// <summary>
-    /// Gets the boss spawn information.
-    /// </summary>
-    public BossSpawnInformation BossSpawnInfo
-    {
-        get { return this.bossSpawnInfo; }
-    }
-
-    /// <summary>
-    /// Gets the accumulated ressource value.
-    /// </summary>
-    public int AccumulatedRessourceValue
-    {
-        get { return this.accumulatedRessourceValue; }
-    }
-
-    /// <summary>
-    /// Gets if the special wave mode is enabled.
-    /// </summary>
-    public bool SpecialWaveModeEnabled
-    {
-        get { return this.specialWaveModeEnabled; }
-    }
-
-    /// <summary>
-    /// Gets if the current wave is a special wave.
-    /// </summary>
-    public bool IsCurrentlySpecialWave
-    {
-        get { return this.isCurrentlySpecialWave; }
-    }
-
-    /// <summary>
-    /// Gets the special wave probability.
-    /// </summary>
-    public float SpecialWaveProbablity
-    {
-        get { return this.specialWaveProbablity; }
-    }
-
     #endregion
 
     #region Methods
-    void Awake()
+    private void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
 
@@ -416,7 +330,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Use this for initialization
-	void Start () 
+	private void Start () 
     {
         // Search for enemy spawn points.
         enemySpawnPoints = GameObject.FindGameObjectsWithTag("EnemySpawn");
@@ -654,9 +568,6 @@ public class GameManager : MonoBehaviour
         this.CurrentEnemyCount++;
     }
 
-    /// <summary>
-    /// Waits for the next wave.
-    /// </summary>
     protected IEnumerator WaitForNextWave()
     {
         yield return new WaitForSeconds(timeBetweenWave);
@@ -681,9 +592,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Resets all neccessary values.
-    /// </summary>
     protected void ResetValues()
     {
         WaveStarted = null;
