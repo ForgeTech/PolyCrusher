@@ -180,7 +180,6 @@ public class CutUpMesh : MonoBehaviour
     {
         if (explode)
         {
-
             explode = false;
 
             SplitInTwo();
@@ -254,12 +253,7 @@ public class CutUpMesh : MonoBehaviour
                     above++;
                 }
 
-                if (above != 3 && below != 3)
-                {
-
-
-                }
-                else
+                if (above == 3 || below == 3)
                 {
                     if (above == 3)
                     {
@@ -288,6 +282,7 @@ public class CutUpMesh : MonoBehaviour
 
         if(upperVertices != 0)
         {
+            Debug.Log("upper part created");
             upper = pool.getPooledObject();
             upper.layer = LayerMask.NameToLayer("Fragments");
             upper.transform.position = transform.position;
@@ -330,6 +325,7 @@ public class CutUpMesh : MonoBehaviour
 
         if (lowerVertices != 0)
         {
+            Debug.Log("lower created");
             lower = pool.getPooledObject();
             lower.layer = LayerMask.NameToLayer("Fragments");
             lower.transform.position = transform.position;

@@ -79,6 +79,9 @@ public class Laser : MonoBehaviour
                             case "Pantomime":
                                 destroyMesh = trap.playerMeshes[5];
                                 break;
+                            case "Tomic":
+                                destroyMesh = trap.playerMeshes[6];
+                                break;
                         }
                         if (destroyMesh != null && addScript)
                         {

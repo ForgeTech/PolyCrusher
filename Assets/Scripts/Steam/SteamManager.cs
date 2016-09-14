@@ -267,7 +267,7 @@ class SteamManager : BaseSteamManager
         }
 
         //players
-        if (charactersPlayed == 63 && !charactersPlayedAchieved) //bitwise filled int -> 111111
+        if (charactersPlayed == 127 && !charactersPlayedAchieved) //bitwise filled int -> 1111111
         {
             UnlockAchievement(AchievementID.ACH_PLAY_ALL_CHARACTERS);
             charactersPlayedAchieved = true;
@@ -679,6 +679,10 @@ class SteamManager : BaseSteamManager
                 case "Pantomime":
                     if ((charactersPlayed & 32) != 32)
                         charactersPlayed += 32;
+                    break;
+                case "Tomic":
+                    if ((charactersPlayed & 64) != 64)
+                        charactersPlayed += 64;
                     break;
             }
             characterPowerups.Add(character, 0);

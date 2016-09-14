@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class CharacterSelectionHelper : MonoBehaviour
 {
     [SerializeField]
-    private int characterCount = 6;
+    private int characterCount = 7;
 
     [Header("End Screen elements")]
     [SerializeField]

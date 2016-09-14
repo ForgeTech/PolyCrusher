@@ -181,6 +181,7 @@ public class CuttingLineLogic : MonoBehaviour
                             enemy.InstantKill(this);
                             enemy.gameObject.AddComponent<CutUpMesh>();
                             Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
+                            new Event(Event.TYPE.kill).addCharacter("LineSystem").addEnemy(enemy.name).send();
                         }
                     }
                 }

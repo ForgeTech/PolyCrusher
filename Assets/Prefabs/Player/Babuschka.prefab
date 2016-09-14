@@ -854,7 +854,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0920333862, y: -0, z: -1.9559269}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481950}
@@ -984,7 +984,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 40.1557083, y: .0403244793, z: -71.4002533}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 447970}
@@ -1113,7 +1113,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!65 &6595526
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1382,7 +1382,7 @@ Light:
   m_Enabled: 0
   serializedVersion: 6
   m_Type: 2
-  m_Color: {r: .0758621693, g: 1, b: 0, a: 1}
+  m_Color: {r: .615686297, g: .274509817, b: .917647064, a: 1}
   m_Intensity: 1.79999995
   m_Range: 2.91000009
   m_SpotAngle: 32.2000008
@@ -1428,7 +1428,7 @@ MonoBehaviour:
   energyRefillRate: .170000002
   energyIncrement: 1
   playerIdentifier: 5
-  playerColor: {r: .24313727, g: 1, b: .113725498, a: 1}
+  playerColor: {r: .615686297, g: .274509817, b: .917647064, a: 1}
   deathTime: 3.29999995
   playerInput:
     movementSpeed: 20
@@ -1441,9 +1441,9 @@ MonoBehaviour:
   healthLevel: {fileID: 11494330}
   innerEnergyCircle: {fileID: 11430096}
   cameraEdgeDetectionOffset: -.100000001
-  bloodParticles: {fileID: 185320, guid: 250f80915417a5844b25406b875e90e1, type: 2}
+  bloodParticles: {fileID: 126262, guid: 62d553b1a0d54ad46b193690ffa6392e, type: 2}
   deathParticles: {fileID: 157414, guid: e39989a988483c544a992d97db282c73, type: 2}
-  killParticles: {fileID: 113450, guid: b24a4d09485467d4082a0281fc949779, type: 2}
+  killParticles: {fileID: 133128, guid: 79f284b7f2b7e1543a99c65034d36891, type: 2}
   characterVoice: {fileID: 135090}
   abilityCharacterSound: {fileID: 0}
   respawnParticles: {fileID: 100696, guid: af8b4d3f1ad6cb64d8596e8f8a25deaa, type: 2}
@@ -1487,7 +1487,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 7371f9dee134fed4a90344ff338e5ce3, type: 2}
+  m_Material: {fileID: 2100000, guid: f3fa331276da4fa4188d04161a545ea0, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -1629,7 +1629,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 7371f9dee134fed4a90344ff338e5ce3, type: 2}
+  m_Material: {fileID: 2100000, guid: f3fa331276da4fa4188d04161a545ea0, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -1944,7 +1944,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4280090424
+        rgba: 4293543581
       minMaxState: 0
     startSize:
       scalar: .100000001
@@ -3064,6 +3064,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: healthRefillIncrement
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_CollisionDetection
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

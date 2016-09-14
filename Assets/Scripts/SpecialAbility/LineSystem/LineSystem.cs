@@ -501,6 +501,7 @@ public class LineSystem : MonoBehaviour {
 
     void UpdatePlayerStatus(BasePlayer basePlayer)
     {
+        Debug.Log("playercount changed");
         UpdatePlayerStatus();
     }
 

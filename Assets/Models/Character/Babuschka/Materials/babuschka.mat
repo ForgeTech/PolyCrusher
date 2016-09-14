@@ -66,6 +66,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Specular
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _OcclusionMap
         second:
           m_Texture: {fileID: 0}
@@ -95,13 +102,6 @@ Material:
       data:
         first:
           name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Specular
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -145,12 +145,12 @@ Material:
         second: .0199999996
       data:
         first:
-          name: _ZWrite
-        second: 1
-      data:
-        first:
           name: _Glossiness
         second: .5
+      data:
+        first:
+          name: _ZWrite
+        second: 1
       data:
         first:
           name: _BumpScale
@@ -187,4 +187,4 @@ Material:
       data:
         first:
           name: _FillEmission
-        second: {r: .303625584, g: .823529422, b: .224048465, a: 1}
+        second: {r: .573126554, g: .318230987, b: .801470578, a: 1}

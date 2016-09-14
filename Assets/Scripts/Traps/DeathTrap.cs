@@ -61,6 +61,9 @@ public class DeathTrap : Trap, ITriggerable
                 case "Pantomime":
                     destroyMesh = this.playerMeshes[5];
                     break;
+                case "Tomic":
+                    destroyMesh = this.playerMeshes[6];
+                    break;
             }
             if (destroyMesh != null)
             {

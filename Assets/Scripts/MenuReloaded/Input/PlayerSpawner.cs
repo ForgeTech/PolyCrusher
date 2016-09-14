@@ -9,7 +9,7 @@ public class PlayerSpawner : MonoBehaviour {
 
     private enum PlayerNames
     {
-        Birdman, Charger, Fatman, Timeshifter, Babuschka, Pantomime
+        Birdman, Charger, Fatman, Timeshifter, Babuschka, Pantomime, Tomic
     }
 
     private enum Controllers

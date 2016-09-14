@@ -10,5 +10,6 @@ public enum PlayerEnum {
     Timeshifter = 2,
     Fatman = 3,
     Pantomime = 4,
-    Babuschka = 5
+    Babuschka = 5,
+    Tomic = 6
 }
