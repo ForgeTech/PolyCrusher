@@ -3,18 +3,15 @@ using System.Collections.Generic;
 
 public class DestructibleRespawn : MonoBehaviour {
 
-
     private Vector3 originalPosition;
     private Quaternion originalRotation;
     private Vector3 originalScale;
-
 
     private MeshRenderer meshRenderer;
     private Collider attachedCollider;
     private Rigidbody attachedRigidBody;
     private PolyExplosionThreeDimensional poly3DScript;
     private NavMeshObstacle attachedObstacle;
-
 
     void Awake()
     {
@@ -30,11 +27,11 @@ public class DestructibleRespawn : MonoBehaviour {
 
     public void Respawn()
     {
-       
         foreach(Deactivator deactivator in poly3DScript.deactivators)
         {
             deactivator.TriggerDeactivation(0.0f);
         }
+        poly3DScript.deactivators.Clear();
         transform.position = originalPosition;
         transform.rotation = originalRotation;
         transform.localScale = originalScale;
@@ -51,8 +48,5 @@ public class DestructibleRespawn : MonoBehaviour {
 
         attachedRigidBody.isKinematic = false;
         attachedObstacle.enabled = true;
-     
-
-        
     }
 }

@@ -173,8 +173,16 @@ public class EnemySpawn : MonoBehaviour
                     // Set increased health and attack
                     BaseEnemy e = enemy.GetComponent<MonoBehaviour>() as BaseEnemy;
                     e.MeleeAttackDamage = game.SpawnInfo[index].ActualDamage;
-                    e.MaxHealth = game.SpawnInfo[index].ActualHealth;
-                    e.Health = game.SpawnInfo[index].ActualHealth;
+
+                    if (game.SpawnInfo[index].ActualHealth <= e.MaxHealth)
+                    {
+                        e.Health = game.SpawnInfo[index].ActualHealth;
+                    }
+                    else
+                    {
+                        e.Health = e.MaxHealth;
+                    }
+                   
 
                     //Decrease ressource pool
                     game.CurrentEnemyRessourceValue -= game.SpawnInfo[index].enemyRessourceValue;

@@ -6,14 +6,14 @@ using System.Collections.Generic;
 /// </summary>
 public class CutUpMesh : MonoBehaviour
 {
-    public bool explode = false;
-
+    
     private int vertexCount;
     private int step;
     private int grandStep;
-   
-    private Pool pool;
+    private float deactivateTime = 15.0f;
 
+    private string pooledObjectName = "CuttingPartObject";
+   
     private int[] vertexPosChange;
 
     private int matchedIndex;
@@ -85,7 +85,6 @@ public class CutUpMesh : MonoBehaviour
         enemyScript = GetComponent<BaseEnemy>();
 
         insideMeshMaterial = Resources.Load("Material/MeshSplit/MeshInsideMaterial", typeof(Material)) as Material;
-        pool = Pool.current;
 
         if (GetComponent<MeshFilter>() != null)
         {
@@ -147,7 +146,22 @@ public class CutUpMesh : MonoBehaviour
 
         upNormals = new List<Vector3>();
         lowNormals = new List<Vector3>();
-        explode = true;
+      
+        SplitInTwo();
+        SMR.enabled = false;
+
+        if (playerScript != null)
+        {
+            playerScript.InstantKill(this);
+        }
+        else if (enemyScript != null)
+        {
+            enemyScript.InstantKill(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void DetermineVertexPositions(Vector3[] vertices)
@@ -176,30 +190,7 @@ public class CutUpMesh : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        if (explode)
-        {
-            explode = false;
-
-            SplitInTwo();
-            SMR.enabled = false;
-
-            if (playerScript != null)
-            {
-                playerScript.InstantKill(this);
-            }
-            else if (enemyScript != null)
-            {
-                enemyScript.InstantKill(this);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
+   
     private int[] ApplyIndexChange(List<int> indices, int[] lookUp)
     {
         int[] indexArray = new int[indices.Count];
@@ -282,8 +273,8 @@ public class CutUpMesh : MonoBehaviour
 
         if(upperVertices != 0)
         {
-            Debug.Log("upper part created");
-            upper = pool.getPooledObject();
+            upper = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
+            
             upper.layer = LayerMask.NameToLayer("Fragments");
             upper.transform.position = transform.position;
 
@@ -306,6 +297,7 @@ public class CutUpMesh : MonoBehaviour
             mesh.SetUVs(0, upperUVs);
 
             Deactivator deactivator = upper.GetComponent<Deactivator>();
+            deactivator.TriggerDeactivation(deactivateTime);
             
             Destroy(upper.GetComponent<MeshFilter>());
             Destroy(upper.GetComponent<MeshRenderer>());
@@ -325,8 +317,8 @@ public class CutUpMesh : MonoBehaviour
 
         if (lowerVertices != 0)
         {
-            Debug.Log("lower created");
-            lower = pool.getPooledObject();
+            lower = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
+
             lower.layer = LayerMask.NameToLayer("Fragments");
             lower.transform.position = transform.position;
 
@@ -350,6 +342,7 @@ public class CutUpMesh : MonoBehaviour
             meshLow.SetUVs(0, lowUVs);
 
             Deactivator deactivatorLow = lower.GetComponent<Deactivator>();
+            deactivatorLow.TriggerDeactivation(deactivateTime);
 
             Destroy(lower.GetComponent<MeshFilter>());
             Destroy(lower.GetComponent<MeshRenderer>());

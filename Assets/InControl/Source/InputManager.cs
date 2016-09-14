@@ -27,7 +27,7 @@ namespace InControl
 		static InputDevice activeDevice = InputDevice.Null;
 		static List<InputDevice> devices = new List<InputDevice>();
 
-		static List<PlayerActionSet> playerActionSets = new List<PlayerActionSet>();
+		internal static List<PlayerActionSet> playerActionSets = new List<PlayerActionSet>();
 
 
 		/// <summary>

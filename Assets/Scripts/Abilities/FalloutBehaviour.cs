@@ -25,9 +25,6 @@ public class FalloutBehaviour : MonoBehaviour {
     private float expandTime = 0.5f;
 
     [SerializeField]
-    private float fadeTime = 1.5f;
-
-    [SerializeField]
     private float enemyIdleTime = 4.0f;
    
     [SerializeField]

@@ -13,11 +13,12 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     public bool respawn = false;
     public int timeTillRespawn = 10;
 
+    private string pooledObjectName = "Fragment3DObject";
+
     private int vertexCount;
     private int step;
 
     private Vector3 scaleFactor;
-    private Pool pool;
 
     private int health;
 
@@ -80,8 +81,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        pool = Pool.current;
-        //explode = true;
         MF = GetComponent<MeshFilter>();
         MR = GetComponent<MeshRenderer>();
         M = MF.sharedMesh;
@@ -262,8 +261,8 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
                 mesh.uv = newUvs;
                 mesh.triangles = triangles;
 
-                GO = pool.getPooledObject();
-
+                //GO = pool.getPooledObject();
+                GO = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
                 if (GO != null)
                 {
                     GO.SetActive(true);

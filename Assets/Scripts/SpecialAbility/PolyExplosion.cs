@@ -21,8 +21,7 @@ public class PolyExplosion : MonoBehaviour {
     private int step;
     private int grandStep;
     private float scaleFactor;
-    private Pool pool;
-
+    private string pooledObjectName = "FragmentObject";
 
     SkinnedMeshRenderer MR;
     Mesh M;
@@ -40,7 +39,6 @@ public class PolyExplosion : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        pool = Pool.current;
         explode = true;
         MR = GetComponentInChildren<SkinnedMeshRenderer>();
         M = MR.sharedMesh;
@@ -57,9 +55,7 @@ public class PolyExplosion : MonoBehaviour {
 
         grandStep = step * 20;
 
-        scaleFactor = 4+((step/3)* 0.28f);
-       
-
+        scaleFactor = 3+((step/3)* 0.28f);
     }
 	
 	// Update is called once per frame
@@ -143,43 +139,20 @@ public class PolyExplosion : MonoBehaviour {
                                                 ExplodePartial(step * 9);
                                                 Destroy(gameObject);
                                             }
-
                                         }
-
-
                                     }
-
-
                                 }
-
                             }
                         }
-
                     }
-
                 }
-
             }
-
-
         }
-
-       
-       
-        
-
-       
-
-	
 	}
 
 
     private void ExplodePartial(int start)
     {
-        
-      
-       
-       
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
         {
             int[] indices = M.GetTriangles(submesh);
@@ -191,7 +164,6 @@ public class PolyExplosion : MonoBehaviour {
                 newUvs = new Vector2[3];
                 for (int n = 0; n < 3; n++)
                 {
-
                     int index = indices[i + n];
                     newVerts[n] = verts[index];
                     newUvs[n] = uvs[index];
@@ -204,7 +176,7 @@ public class PolyExplosion : MonoBehaviour {
 
                 mesh.triangles = new int[] { 0, 1, 2, 2, 1, 0 };
 
-                GO = pool.getPooledObject();
+                GO = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
                
                
 
@@ -230,24 +202,8 @@ public class PolyExplosion : MonoBehaviour {
 
                     deactivator.attachedRigid.AddExplosionForce(50, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, 0.0f);                   
                     deactivator.TriggerDeactivation(Random.Range(5.5f, 10.0f));
-
-                    
-                   
                 }
-
-
-
-                
             }
         }
-        //MR.enabled = false;
-
-       
-        
-     
-
-
-
     }
-
 }

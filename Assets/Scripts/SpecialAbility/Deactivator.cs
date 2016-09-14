@@ -31,9 +31,7 @@ public class Deactivator : MonoBehaviour
             attachedRenderer = gameObject.AddComponent<MeshRenderer>();
 
             attachedFilter = gameObject.AddComponent<MeshFilter>();
-
         }
-
 
         MeshFilter filter = GetComponent<MeshFilter>();
         if (filter == null)
@@ -41,16 +39,15 @@ public class Deactivator : MonoBehaviour
             attachedFilter = gameObject.AddComponent<MeshFilter>();
         }
 
-        gameObject.name = "Dummy(Clone)";      
-        this.gameObject.SetActive(false);
+        if (gameObject != null)
+        {
+            Debug.Log("part deactivated");
+            ObjectsPool.Despawn(gameObject);
+        }
     }
-
-
 
     void OnDisable()
     {
         CancelInvoke();
     }
-
-
 }
