@@ -39,7 +39,6 @@ public class PlayerManager : MonoBehaviour
     //The player slots of the four players. False -> Slot free, True -> Slot filled with player
     private static bool[] playerSlot;
 
-
     // References to the players -> This array should have a size of 4.
     GameObject[] playerReferences;
 
@@ -134,30 +133,12 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Gets the actual player count.
     /// </summary>
-    public static int PlayerCount
-    {
-        get { return playerCount; }
-    }
-
-    /// <summary>
-    /// Gets the actual playerPrefix.
-    /// </summary>
-    public string PlayerPrefix
-    {
-        get
-        {
-            return "P" + playerCount + "_";
-        }
-    }
+    public static int PlayerCount { get { return playerCount; } }
 
     /// <summary>
     /// Gets the play time.
     /// </summary>
-    public static TimeUtil PlayTime
-    {
-        get { return PlayerManager.playTime; }
-    }
-    
+    public static TimeUtil PlayTime { get { return PlayerManager.playTime; } }
     #endregion
 
     #region Methods
@@ -192,8 +173,7 @@ public class PlayerManager : MonoBehaviour
         PlayerManager.AllPlayersDeadEventHandler += DisableTimeMeasurement;
     }
     
-    // Use this for initialization
-	void Start () 
+	private void Start () 
     {
         //If there are more spawn points, choose the first one.
         if (spawnPosition == null && GameObject.FindGameObjectsWithTag("PlayerSpawn").Length > 0)
@@ -259,7 +239,7 @@ public class PlayerManager : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update() 
+    private void Update() 
     {
         // For testing
         //HandlePlayerJoin();
@@ -455,6 +435,7 @@ public class PlayerManager : MonoBehaviour
         PlayerJoinedEventHandler = null;
         AllPlayersDeadEventHandler = null;
         playerCount = 0;
+        playerSlot = new bool[4];
     }
     #endregion
 }
