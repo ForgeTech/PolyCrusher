@@ -42,8 +42,16 @@ public class SelectorWithSubSelector : Selector
                 subSelecorComponents.Add(info.SelectionID, child.gameObject);
             }
 
+            // The setting finder gets the unity setting in order to set the start index in the subselector
+            AbstractSettingFinder setting = pair.Value.GetComponent<AbstractSettingFinder>();
+            int firstIndex;
+            if (setting != null)
+                firstIndex = setting.CalculateSelectionIndex();
+            else
+                firstIndex = 0;
+
             subSelectionEntries.Add(pair.Value,
-                new SubSelector(0, subSelecorComponents, this.transitionHandler, this.elementPressedHandler, initialFocus, subSelectorTransition));
+                new SubSelector(firstIndex, subSelecorComponents, transitionHandler, elementPressedHandler, initialFocus, subSelectorTransition));
         }
     }
 

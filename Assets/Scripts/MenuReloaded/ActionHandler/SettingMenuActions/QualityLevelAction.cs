@@ -3,10 +3,10 @@ using UnityEngine;
 
 public enum QualityLevel
 {
-    Fantastic,  // Max
-    Beautiful,  // High
-    Good,       // Medium
-    Fastest     // Low
+    Fantastic = 0,  // Max
+    Beautiful = 1,  // High
+    Good = 2,       // Medium
+    Fastest = 3     // Low
 }
 public class QualityLevelAction : AbstractActionHandler
 {
@@ -19,7 +19,7 @@ public class QualityLevelAction : AbstractActionHandler
 
         for (int i = 0; i < qualityNames.Length; i++)
         {
-            if (qualityNames[i].Equals(qualityNames.ToString()))
+            if (qualityNames[i].Equals(qualityLevel.ToString()))
             {
                 QualitySettings.SetQualityLevel(i);
                 OnActionPerformed();

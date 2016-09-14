@@ -128,6 +128,7 @@ public class MeshModifier : BaseMeshEffect
     {
         return Mathf.Min(_a, Mathf.Min(_b, _c));
     }
+
     private static float Max(float _a, float _b, float _c)
     {
         return Mathf.Max(_a, Mathf.Max(_b, _c));

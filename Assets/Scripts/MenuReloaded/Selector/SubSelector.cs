@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SubSelector : Selector
@@ -13,6 +12,9 @@ public class SubSelector : Selector
         : base(startIndex, components, transitionHandlers, pressedHandler, initialFocus)
     {
         this.subSelectorTransitions = subSelectorTransition;
+
+        if(Components.Count > 0)
+            Components[startIndex].transform.localScale = Vector3.one;
     }
 
     internal void InvokeTransitionDeFocus()
