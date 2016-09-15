@@ -600,7 +600,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     private void RefillHealth()
     {
-        if (allowHealthRefill)
+        if (allowHealthRefill && !IsMoving)
         {
             Health += healthRefillIncrement;
             StartCoroutine(WaitForHealthRefill());
