@@ -1214,7 +1214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 90
   minHealth: 0
-  maxHealth: 120
+  maxHealth: 135
   enemyName: Roadrunner
   movementSpeed: 5
   movementAnimationSpeed: 1
@@ -2412,6 +2412,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 135
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
