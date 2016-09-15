@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using InControl;
-using System;
 
 public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 {
@@ -96,6 +95,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
         if(currentSmartPhoneController < maxSmartphoneConroller)
         {
             currentSmartPhoneController++;
+            virtualController.ConnectVirtualControllerToGame(this);
             smartphoneController = new SmartphoneController(virtualController);
             smartphoneControllers.Add(virtualController, smartphoneController);
         }

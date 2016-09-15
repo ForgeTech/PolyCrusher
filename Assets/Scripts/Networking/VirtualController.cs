@@ -22,6 +22,8 @@ public interface VirtualControllerHandler
     void VirtualControllerQuitsTheGame(VirtualController virtualController);
 
     void VirtualControllerIsNotResponsing(VirtualController virtualController);
+
+    bool AddNewVirtualController(VirtualController virtualController);
 }
 
 public class VirtualController

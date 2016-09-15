@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.IO;
 
 public class VirtualControllerManager : MonoBehaviour {
+
+    // CONTROLLER MANAGER REFERENCE
+    [SerializeField]
+    private ControllerManager controllerManager;
 
     // CONNECTION PORTS
     private enum PORTS : int {
@@ -28,6 +30,7 @@ public class VirtualControllerManager : MonoBehaviour {
     // CONNECTION COMMANDS
     private enum COMMAND : byte {
         REGISTER_SUCCESS = 1,
+
         INVALID_VERSION = 255,
         NO_PORT_AVALAIBLE = 254,
         GAME_CLOSED = 0
@@ -108,7 +111,7 @@ public class VirtualControllerManager : MonoBehaviour {
         virtualControllers.Add(virtualController);
 
         // Connect to Andi
-        if (AddNewVirtualController(virtualController))
+        if (controllerManager.AddNewVirtualController(virtualController))
         {
             byte[] portData = BitConverter.GetBytes(Convert.ToUInt16(UDP_PORT));
 
@@ -153,13 +156,4 @@ public class VirtualControllerManager : MonoBehaviour {
             virtualControllerEndPoints.Add(controller);
         }
     }
-
-    // TODO: Only sample code remove this later!
-    private bool AddNewVirtualController(VirtualController virtualController)
-    {
-        virtualController.ConnectVirtualControllerToGame(null);
-
-        return true;
-    }
-
 }
