@@ -54,13 +54,9 @@ public class TimeSphereScript : MonoBehaviour
 
 		if(collider.GetComponent<MonoBehaviour>() is Rocket && collider.tag == "EnemyBullet"){
 			Rocket enemyBullet = collider.GetComponent<Rocket>();
-			enemyBullet.BulletSpeed /= slowFactor;
-			enemyBullet.Sensitivity /= slowFactor;
+			enemyBullet.TimeScale = slowFactor;
 		}
 	}
-
-
-
 
 	void OnTriggerExit(Collider collider){
 		if(collider.tag == "Enemy"){
@@ -80,8 +76,7 @@ public class TimeSphereScript : MonoBehaviour
 
 		if(collider.GetComponent<MonoBehaviour>() is Rocket && collider.tag == "EnemyBullet"){
 			Rocket enemyBullet = collider.GetComponent<Rocket>();
-			enemyBullet.BulletSpeed *= slowFactor;
-			enemyBullet.Sensitivity *= slowFactor;
+			enemyBullet.TimeScale = 1f;
 		}
 	}
 

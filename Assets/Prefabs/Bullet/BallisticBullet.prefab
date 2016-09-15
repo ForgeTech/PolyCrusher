@@ -28,7 +28,6 @@ GameObject:
   - 4: {fileID: 461954}
   - 33: {fileID: 3350748}
   - 23: {fileID: 2309080}
-  - 95: {fileID: 9585970}
   m_Layer: 0
   m_Name: BallisticBullet
   m_TagString: Untagged
@@ -105,26 +104,9 @@ Rigidbody:
   m_AngularDrag: .0500000007
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!95 &9585970
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195186}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 95a155c9c851f34448a87b859530932f, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_CollisionDetection: 1
 --- !u!114 &11442192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,17 +120,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   deathParticlePrefab: {fileID: 158560, guid: 061d74eca5b781d449fcf7ec08244ba2, type: 2}
-  damageRadius: 2
-  sensitivity: 15
+  damageRadius: 2.5
+  animCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: -.000214934349
+      inSlope: 2.96949291
+      outSlope: 2.96949291
+      tangentMode: 0
+    - time: .498734564
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: .889282167
+      value: .26958701
+      inSlope: -5.60253859
+      outSlope: -5.60253859
+      tangentMode: 0
+    - time: .996340632
+      value: -1.50539041
+      inSlope: -12.2045536
+      outSlope: -12.2045536
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  maxTime: .800000012
+  curveHeightMultiplier: 3
+  linearHeight: 1
   drawDamageRadiusGizmo: 0
-  drawMidpointGizmo: 0
-  bulletSpeed: 12.5
-  height: 2
+  timeScale: 1
   lifeTime: 5
-  midAirExplosionParticlePrefab: {fileID: 158560, guid: 0c4eb52e90a81884195f986f684f05aa,
-    type: 2}
   explosionSound: {fileID: 8300000, guid: 5aed2e3ab53b66a4c92d272975be1d18, type: 3}
   attackVisualization: {fileID: 163292, guid: 5cd9e216ee9b68e4caa07e4d0ef6b545, type: 2}
+  terrainRaycastLength: .300000012
 --- !u!135 &13556380
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -169,6 +175,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_Radius
       value: .209999993
       objectReference: {fileID: 0}
@@ -178,12 +188,76 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: damageRadius
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVisualization
       value: 
       objectReference: {fileID: 163292, guid: 5cd9e216ee9b68e4caa07e4d0ef6b545, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bulletSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[1].time
+      value: .498734564
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[0].value
+      value: -.000214934349
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[2].time
+      value: .889282167
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[2].value
+      value: .26958701
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[2].inSlope
+      value: -5.60253859
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[2].outSlope
+      value: -5.60253859
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[0].inSlope
+      value: 2.96949291
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animCurve.m_Curve.Array.data[0].outSlope
+      value: 2.96949291
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: curveHeightMultiplier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxTime
+      value: .800000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: terrainRaycastLength
+      value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: linearHeight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146494}

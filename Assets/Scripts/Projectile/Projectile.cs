@@ -88,6 +88,7 @@ public abstract class Projectile : MonoBehaviour
     protected IEnumerator DestroyProjectileAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
+        LeanTween.cancel(gameObject);
         DestroyProjectile();
     }
 
