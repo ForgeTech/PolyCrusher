@@ -58,5 +58,10 @@ public class Trigger : MonoBehaviour {
 
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
     #endregion
 }
