@@ -77,8 +77,10 @@ public class CreditMenuHelper : MonoBehaviour
             () => { // Right input
                 DeactivateSlideshow();
 
-                if(!IsMaximumPositionReached())
+                if (!IsMaximumPositionReached())
                     TransformCreditContainer(Direction.Right);
+                else
+                    BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_CREDITS_VIEWED);
             });
     }
 

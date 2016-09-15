@@ -601,7 +601,7 @@ MonoBehaviour:
   enemyName: RangedBallistic
   movementSpeed: 5
   movementAnimationSpeed: 1
-  meleeAttackDamage: 25
+  meleeAttackDamage: 10
   pushAwayForce: 2.5
   attackInterval: 1.20000005
   attackRange: 10
@@ -1771,6 +1771,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: meleeAttackDamage
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
