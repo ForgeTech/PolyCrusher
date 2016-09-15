@@ -53,9 +53,13 @@ public class GameManager : MonoBehaviour
 
         // The actual health. This value will be used to increase the health per wave.
         protected int actualHealth;
+        [HideInInspector]
+        public float preciseHealth;
 
         // The actual health. This value will be used to increase the health per wave.
         protected int actualDamage;
+        [HideInInspector]
+        public float preciseDamage;
 
 
         /// <summary>
@@ -103,6 +107,8 @@ public class GameManager : MonoBehaviour
 
         // The actual health. This value will be used to increase the health per wave.
         protected int actualHealth;
+        [HideInInspector]
+        public float preciseHealth;
 
 
         /// <summary>
@@ -420,12 +426,16 @@ public class GameManager : MonoBehaviour
         // Increase enemy damage and health.
         for (int i = 0; i < spawnInfo.Length; i++)
         {
-            spawnInfo[i].ActualHealth += (int) (spawnInfo[i].ActualHealth * enemyHealthIncreaseFactor);
-            spawnInfo[i].ActualDamage += (int) (spawnInfo[i].ActualDamage * enemyDamageIncreaseFactor);
+            spawnInfo[i].preciseHealth += spawnInfo[i].preciseHealth * enemyHealthIncreaseFactor;
+            spawnInfo[i].ActualHealth = (int) spawnInfo[i].preciseHealth;
+
+            spawnInfo[i].preciseDamage += spawnInfo[i].preciseDamage * enemyDamageIncreaseFactor;
+            spawnInfo[i].ActualDamage = (int) spawnInfo[i].preciseDamage;
         }
 
         // Increase boss and health.
-        bossSpawnInfo.ActualHealth += (int) (bossSpawnInfo.ActualHealth * enemyHealthIncreaseFactor);
+        bossSpawnInfo.preciseHealth += bossSpawnInfo.ActualHealth * enemyHealthIncreaseFactor;
+        bossSpawnInfo.ActualHealth = (int) bossSpawnInfo.preciseHealth;
 
         // Set the accumulated ressource value back to 0.
         accumulatedRessourceValue = 0;
@@ -441,8 +451,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ModifyEnemyHealthBasedOnPlayerCount(SpawnInformation spawnInfo)
     {
-        if(PlayerManager.PlayerCountInGameSession > 0)
-            spawnInfo.ActualHealth = (int)(spawnInfo.ActualHealth * playerCountHealthMultiplier[PlayerManager.PlayerCountInGameSession - 1]);
+        if (PlayerManager.PlayerCountInGameSession > 0)
+        {
+            spawnInfo.preciseHealth = spawnInfo.preciseHealth * playerCountHealthMultiplier[PlayerManager.PlayerCountInGameSession - 1];
+            spawnInfo.ActualHealth = (int) spawnInfo.preciseHealth;
+        }
     }
 
     /// <summary>
@@ -452,11 +465,16 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < spawnInfo.Length; i++)
         {
+            // Health
             spawnInfo[i].ActualHealth = spawnInfo[i].enemy.GetComponent<BaseEnemy>().Health;
-            ModifyEnemyHealthBasedOnPlayerCount(spawnInfo[i]);
-            spawnInfo[i].ActualDamage = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MeleeAttackDamage;
-        }
+            spawnInfo[i].preciseHealth = spawnInfo[i].ActualHealth;
 
+            ModifyEnemyHealthBasedOnPlayerCount(spawnInfo[i]);
+
+            // Damage
+            spawnInfo[i].ActualDamage = spawnInfo[i].enemy.GetComponent<BaseEnemy>().MeleeAttackDamage;
+            spawnInfo[i].preciseDamage = spawnInfo[i].ActualDamage;
+        }
         BossSpawnInfo.ActualHealth = BossSpawnInfo.boss.GetComponent<BaseEnemy>().MaxHealth;
     }
 
