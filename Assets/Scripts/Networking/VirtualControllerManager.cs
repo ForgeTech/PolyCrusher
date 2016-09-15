@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.IO;
 
 public class VirtualControllerManager : MonoBehaviour {
+
+    // CONTROLLER MANAGER REFERENCE
+    [SerializeField]
+    private ControllerManager controllerManager = null;
 
     // CONNECTION PORTS
     private enum PORTS : int {
         PING = 11001,
         PING_SEND = 11002,
-        REGISTER = 11000
+        REGISTER = 11000,
+        CLOSE_GAME = 11003
     }
     private int UDP_PORT = 11100;
 
@@ -27,8 +30,10 @@ public class VirtualControllerManager : MonoBehaviour {
     // CONNECTION COMMANDS
     private enum COMMAND : byte {
         REGISTER_SUCCESS = 1,
+
         INVALID_VERSION = 255,
-        NO_PORT_AVALAIBLE = 254
+        NO_PORT_AVALAIBLE = 254,
+        GAME_CLOSED = 0
     }
 
     // LIST OF VIRTUAL CONTROLLERS 
@@ -37,6 +42,9 @@ public class VirtualControllerManager : MonoBehaviour {
     // CONNECTION PROPERTIES
     private Socket registerSocket;
     private UdpClient pingSocket;
+
+    private Socket connectionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+    private List<IPEndPoint> virtualControllerEndPoints = new List<IPEndPoint>();
 
     // MARK: UNITY-MONOBEHAVIOUR STANDARD METHODS
 
@@ -53,12 +61,15 @@ public class VirtualControllerManager : MonoBehaviour {
             if (SocketHelper.CheckVersion(ref receivedBytes, (int)VERSION.SUPPORTED_PING))
             {
                 HandlePingConnection(endPoint);
+                AddVirtualControllerIP(endPoint);
             }
         });
     }
 
     void OnApplicationQuit()
     {
+        Send((byte)COMMAND.GAME_CLOSED);
+
         Debug.Log("Application is Quitting, all Sockets will be closed");
         for (int i = 0; i < virtualControllers.Count; i++)
         {
@@ -67,6 +78,8 @@ public class VirtualControllerManager : MonoBehaviour {
         } 
         registerSocket.Close();
         pingSocket.Close();
+        connectionSocket.Close();
+        virtualControllerEndPoints.Clear();
     }
 
     // MARK: PUBLIC METHODS
@@ -98,7 +111,7 @@ public class VirtualControllerManager : MonoBehaviour {
         virtualControllers.Add(virtualController);
 
         // Connect to Andi
-        if (AddNewVirtualController(virtualController))
+        if (controllerManager!= null && controllerManager.AddNewVirtualController(virtualController))
         {
             byte[] portData = BitConverter.GetBytes(Convert.ToUInt16(UDP_PORT));
 
@@ -126,12 +139,21 @@ public class VirtualControllerManager : MonoBehaviour {
         return (versionBuffer[0] == version);
     }
 
-    // TODO: Only sample code remove this later!
-    private bool AddNewVirtualController(VirtualController virtualController)
-    {
-        virtualController.ConnectVirtualControllerToGame(null);
+    private void Send(byte command) {
+        Send(new byte[] { command });
+    } 
 
-        return true;
+    private void Send(byte[] data) {
+        foreach (IPEndPoint endPoint in virtualControllerEndPoints)
+        {
+            connectionSocket.SendTo(data, endPoint);
+        }    
     }
 
+    private void AddVirtualControllerIP(IPEndPoint endPoint){
+        IPEndPoint controller = new IPEndPoint(endPoint.Address, (int)PORTS.CLOSE_GAME);
+        if(!virtualControllerEndPoints.Contains(controller)){
+            virtualControllerEndPoints.Add(controller);
+        }
+    }
 }

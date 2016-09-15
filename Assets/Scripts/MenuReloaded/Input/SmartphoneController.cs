@@ -4,25 +4,63 @@ using InControl;
 
 public class SmartphoneController : InputDevice {
 
-    private int smartphoneID;
 
-    //private Vector2 leftVector;
-    //private Vector2 rightVector;
-    
-    public int SmartphoneIndex
+    #region variables
+    private VirtualController virtualController;
+
+    private Vector2 leftAnalogStick;
+    private Vector2 rightAnalogStick;
+
+    private bool abilityPressed;
+    private bool joinPressed;
+    private bool pausePressed;
+    private bool backPressed;
+    #endregion
+
+    #region properties
+    public VirtualController SetVirtualController
     {
-        get
-        {
-            return smartphoneID;
-        }
+        get { return virtualController; }
+        set { virtualController = value; }
     }
 
-    public SmartphoneController(int smartphoneIndex) : base( "Smartphone Controller" )
-	{
-        this.smartphoneID = smartphoneIndex;
+    public Vector2 SetLeftAnalogStick
+    {
+        set { leftAnalogStick.Set(value.x, value.y); }
+    }
 
-        //leftVector = new Vector2();
-        //rightVector = new Vector2();
+    public Vector2 SetRightAnalogStick
+    {
+        set { rightAnalogStick.Set(value.x, value.y); }
+    }
+
+    public bool SetAbilityPressed
+    {
+        set { abilityPressed = value; }
+    }
+
+    public bool SetJoinPressed
+    {
+        set { joinPressed = value; }
+    }
+
+    public bool SetPausePressed
+    {
+        set { pausePressed = value; }
+    }
+
+    public bool SetBackPressed
+    {
+        set { backPressed = value; }
+    }
+    #endregion
+
+    #region methods
+
+    #region le constructeur de malheur
+    public SmartphoneController(VirtualController virtualController) : base( "Smartphone Controller" )
+	{
+        this.virtualController = virtualController;
 
         //left analog stick 
         AddControl(InputControlType.LeftStickLeft, "Left Stick Left");
@@ -48,40 +86,41 @@ public class SmartphoneController : InputDevice {
         //pause button
         AddControl(InputControlType.Action8, "Pause Button"); 
     }
+    #endregion
 
-
+    #region controller states update
     public override void Update(ulong updateTick, float deltaTime)
     {
-        //if (networkController != null)
-        //{
-        //    //updating left analog stick
-        //    leftVector.Set(networkController.GetLeftAnalogStickHorizontal(smartphoneID), networkController.GetLeftAnalogStickVertical(smartphoneID));
-        //    UpdateLeftStickWithValue(leftVector, updateTick, deltaTime);
+        //updating left analog stick
+        UpdateLeftStickWithValue(leftAnalogStick, updateTick, deltaTime);
 
-        //    //updating right analog stick
-        //    rightVector.Set(networkController.GetRightAnalogStickHorizontal(smartphoneID), networkController.GetRightAnalogStickVertical(smartphoneID));
-        //    UpdateRightStickWithValue(rightVector, updateTick, deltaTime);
+        //updating right analog stick
+        UpdateRightStickWithValue(rightAnalogStick, updateTick, deltaTime);
 
-        //    //updating ability button
-        //    UpdateWithState(InputControlType.LeftBumper, networkController.GetAbilityButton(smartphoneID), updateTick, deltaTime);
+        //updating ability button
+        UpdateWithState(InputControlType.LeftBumper, abilityPressed, updateTick, deltaTime);
 
-        //    //updating join button
-        //    UpdateWithState(InputControlType.Action1, networkController.GetJoinButton(smartphoneID), updateTick, deltaTime);
+        //updating join button
+        UpdateWithState(InputControlType.Action1, joinPressed, updateTick, deltaTime);
 
-        //    //updating back button
-        //    //UpdateWithState(InputControlType.Button1, networkController.GetBackButton(smartphoneID), updateTick, deltaTime);
+        //updating pause button
+        UpdateWithState(InputControlType.Button6, pausePressed, updateTick, deltaTime);
 
-        //    //updating pause button
-        //    //UpdateWithState(InputControlType.Button6, networkController.GetPauseButton(smartphoneID), updateTick, deltaTime);
+        //updating back button
+        UpdateWithState(InputControlType.Button1, backPressed, updateTick, deltaTime);
 
-        //    //apply changes
-        //    Commit(updateTick, deltaTime);
-        //}
+        //apply changes
+        Commit(updateTick, deltaTime);
     }
+    #endregion
 
+    #region overriden rumble method for seperate smartphone handling
     public override void Vibrate(float leftMotor, float rightMotor)
     {
         base.Vibrate(leftMotor, rightMotor);
         Debug.Log("Smartphone Controller rumble");
     }
+    #endregion
+
+    #endregion
 }

@@ -2014,52 +2014,71 @@ MonoBehaviour:
     enemyRessourceValue: 3
     minWave: 8
     enemyName: Roadrunner
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 129478, guid: 2fcd9f9fe2a0e5548b4396d079ebaec8, type: 2}
     spawnProbability: .200000003
     enemyRessourceValue: 4
     minWave: 12
     enemyName: RangedBallistic
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 129774, guid: ca4b898c19db8ee42bf48e5faa889e4c, type: 2}
     spawnProbability: .400000006
     enemyRessourceValue: 2
     minWave: 6
     enemyName: EyeEnemy
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 179986, guid: 2d0d300a4a53f784fb1610f356c8e59a, type: 2}
     spawnProbability: .400000006
     enemyRessourceValue: 1
     minWave: 1
     enemyName: VeryWeak
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 131390, guid: 3d89df00a0dadae4a94d26c796677871, type: 2}
     spawnProbability: .600000024
     enemyRessourceValue: 2
     minWave: 2
     enemyName: WeakEnemy
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 157580, guid: f049b966ef6b04d4199cd168ba7dbfea, type: 2}
     spawnProbability: .300000012
     enemyRessourceValue: 3
     minWave: 4
     enemyName: StrongEnemy
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 199272, guid: a845c8571d7c60645831af9d2055ebbe, type: 2}
     spawnProbability: .400000006
     enemyRessourceValue: 1
     minWave: 3
     enemyName: IceOfDeath
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 146790, guid: de361068adf8ffe41b52aed9e5e1b90c, type: 2}
     spawnProbability: .300000012
     enemyRessourceValue: 2
     minWave: 7
     enemyName: Trashcan
+    preciseHealth: 0
+    preciseDamage: 0
   - enemy: {fileID: 182470, guid: 4bf714200ac807944a00150906568389, type: 2}
     spawnProbability: .300000012
     enemyRessourceValue: 5
     minWave: 14
     enemyName: Minion
+    preciseHealth: 0
+    preciseDamage: 0
   bossSpawnInfo:
     boss: {fileID: 141898, guid: 5bd4ed5448a5b7f488c8aed92d5cc3a9, type: 2}
     enemyRessourceValue: 1
     enemyName: B055
     spawnEveryXWave: 7
     waveSpawnVariation: 2
+    preciseHealth: 0
   specialWaveModeEnabled: 1
   specialWaveProbablity: .0500000007
   enemyRessourcePool: 18
@@ -2071,7 +2090,7 @@ MonoBehaviour:
   ressourceIncreaseFactorMultiplier: 1.01
   enemyCountIncreaseFactor: .200000003
   timeBetweeenWaveDecreaseFactor: 0
-  enemyHealthIncreaseFactor: 0
+  enemyHealthIncreaseFactor: .0199999996
   enemyDamageIncreaseFactor: .100000001
   playerCountHealthMultiplier:
   - .850000024
@@ -3319,6 +3338,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: playerCountHealthMultiplier.Array.data[0]
       value: .850000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[16].foldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: enemyHealthIncreaseFactor
+      value: .0199999996
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

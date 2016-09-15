@@ -22,6 +22,8 @@ public interface VirtualControllerHandler
     void VirtualControllerQuitsTheGame(VirtualController virtualController);
 
     void VirtualControllerIsNotResponsing(VirtualController virtualController);
+
+    bool AddNewVirtualController(VirtualController virtualController);
 }
 
 public class VirtualController
@@ -63,7 +65,7 @@ public class VirtualController
 
         UnityThreadHelper.Dispatcher.Dispatch(() =>
         {
-            listener = SocketHelper.CreateUDPServer(port, (endPonit, receivedBytes) =>
+            listener = SocketHelper.CreateUDPServer(port, (endPoint, receivedBytes) =>
             {
                 HandleGameCommand(receivedBytes);
             });
@@ -120,7 +122,6 @@ public class VirtualController
             }
 
             isAlive = true;
-            Debug.Log("Controller received Data!");
         }
         else
         {

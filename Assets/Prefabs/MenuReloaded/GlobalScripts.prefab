@@ -19,6 +19,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &133460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 409634}
+  - 114: {fileID: 11408350}
+  - 114: {fileID: 11444422}
+  m_Layer: 0
+  m_Name: SmartphoneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409634
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.0458536, y: -3.35663319, z: 24.0796986}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419358}
+  m_RootOrder: 0
 --- !u!4 &419358
 Transform:
   m_ObjectHideFlags: 1
@@ -28,7 +57,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 409634}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!82 &8228130
@@ -39,7 +69,8 @@ AudioSource:
   m_GameObject: {fileID: 129766}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24376558, guid: c8007a0becb1a3744a17cf0203dd7232,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 35bee6f1b13efba4a8fbb7717f5a70e9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -112,6 +143,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8244636fd752e1647bfc8f7f0461aada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11408350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1de1e31c7364a6d8fe7e535d6ad95a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerManager: {fileID: 11444422}
 --- !u!114 &11424184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,6 +175,17 @@ MonoBehaviour:
   - {fileID: 152540, guid: 5657b80ac32b922459b52cbd46b8ff52, type: 2}
   - {fileID: 193704, guid: d085396c808d2564f814bb21714b323c, type: 2}
   - {fileID: 168986, guid: 83cdb1ccb98f9f94498f17ca660951d6, type: 2}
+--- !u!114 &11444422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8244636fd752e1647bfc8f7f0461aada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11468718
 MonoBehaviour:
   m_ObjectHideFlags: 1
