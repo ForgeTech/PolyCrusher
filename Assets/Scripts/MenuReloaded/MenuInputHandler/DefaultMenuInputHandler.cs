@@ -3,6 +3,8 @@
 public class DefaultMenuInputHandler : MenuInputHandler
 {
     private readonly PlayerControlActions playerControlActions;
+    public PlayerControlActions ControlAction { get { return playerControlActions; } }
+
     private float stickDeadZone = 0.4f;
 
     public DefaultMenuInputHandler(PlayerControlActions playerControlActions)

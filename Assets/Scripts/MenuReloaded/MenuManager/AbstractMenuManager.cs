@@ -240,7 +240,9 @@ public abstract class AbstractMenuManager : MonoBehaviour
         if (menuInputHandler != null)
             menuInputHandler.DestroyPlayerAction();
 
-        menuInputHandler = new DefaultMenuInputHandler(action);
+        if(action != null)
+            menuInputHandler = new DefaultMenuInputHandler(action);
+
         OnPlayerActionChanged(action);
     }
 
@@ -265,13 +267,16 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected virtual void HandleBackSelection()
     {
-        menuInputHandler.HandleBackInput(() => {
-            StartCoroutine(WaitBeforeTriggerBackAction(() => {
-                if(backSound != null)
-                    SoundManager.SoundManagerInstance.Play(backSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
-                backAction.PerformAction<MonoBehaviour>(this);
-            }));
-        });
+        menuInputHandler.HandleBackInput(PerfomBackAction);
+    }
+
+    protected virtual void PerfomBackAction()
+    {
+        StartCoroutine(WaitBeforeTriggerBackAction(() => {
+            if (backSound != null)
+                SoundManager.SoundManagerInstance.Play(backSound, SoundManager.SoundManagerInstance.transform, 1f, 1f, AudioGroup.MenuSounds);
+            backAction.PerformAction<MonoBehaviour>(this);
+        }));
     }
 
     private void PerformActionOnSelectedElement(GameObject selectedElement)
@@ -292,6 +297,12 @@ public abstract class AbstractMenuManager : MonoBehaviour
             menuInputHandler.HandleHorizontalInput(navigationPreviousAction, navigationNextAction);
         else if (menuSelection == MenuSelection.VerticalSelection)
             menuInputHandler.HandleVerticalInput(navigationPreviousAction, navigationNextAction);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (menuInputHandler != null)
+            menuInputHandler.DestroyPlayerAction();
     }
 
     #region IEnumerator methods

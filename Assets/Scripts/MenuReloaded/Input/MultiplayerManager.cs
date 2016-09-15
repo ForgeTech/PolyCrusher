@@ -212,7 +212,8 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-    void OnDisable()
+    //void OnDisable()
+    private void OnDestroy()
     {
         InputManager.OnDeviceDetached -= OnDeviceDetached;
         characterSelectionHelper.OnCharacterSelected -= IncreasePlayerReadyCount;

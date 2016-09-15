@@ -31,7 +31,7 @@ public class CharacterMenuManager : MenuManager
 
     private void HandlePlayerActionChanged(PlayerControlActions playerAction)
     {
-        if (playerAction.IsNullAction())
+        if (playerAction == null)
         {
             foreach (var pair in MenuComponents)
             {
@@ -67,7 +67,7 @@ public class CharacterMenuManager : MenuManager
 
     protected override void InitializePlayerControlActions()
     {
-        SetPlayerControlActions(PlayerControlActions.CreateNullBinding());
+        SetPlayerControlActions(null);
     }
 
     protected override void InitializeSelector()
@@ -76,6 +76,13 @@ public class CharacterMenuManager : MenuManager
         ElementPressedHandler[] pickedPressedHandler = MenuReloadedUtil.MapElementPressedEnumToHandler(pressedHandlerEnum);
 
         selector = new CharacterSelector(startIndex, components, pickedTransitions, pickedPressedHandler, selectionHelper, this, false);
+    }
+
+    protected override void PerfomBackAction()
+    {
+        base.PerfomBackAction();
+        if (menuInputHandler != null)
+            menuInputHandler.DestroyPlayerAction();
     }
 
     /// <summary>
@@ -91,5 +98,11 @@ public class CharacterMenuManager : MenuManager
     {
         if (PlayerRegistered != null)
             PlayerRegistered();
+    }
+
+    protected override void OnDestroy()
+    {
+        if (menuInputHandler != null)
+            menuInputHandler.DestroyPlayerAction();
     }
 }
