@@ -41,8 +41,7 @@ public class DataCollector : MonoBehaviour
     //private List<Event> localEvents;
 
     // for tracking
-    private IDictionary<string, int> kills; 
-    private IDictionary<string, int> deathtime;
+   // private IDictionary<string, int> deathtime;
 
     // leaderboard score
     /// <summary>
@@ -90,48 +89,12 @@ public class DataCollector : MonoBehaviour
 
     public static DataCollectorSettings settings;
     
-    /// <summary>
-    /// Return character name of player with the most kills
-    /// </summary>
-    public string playerWithMostKills()
-    {
-        string character = ReturnStandardValueInCurrentLanguage();
-        int topKills = 0;
-        foreach(KeyValuePair<string,int> kv in kills)
-        {
-            if (kv.Value > topKills)
-            {
-                character = kv.Key;
-                topKills = kv.Value;
-            }
-        }
-        return character;
-    }
-
-    /// <summary>
-    /// Return character name of player with least deaths
-    /// </summary>
-    public string playerWithLeastDeathtime()
-    {
-        string character = ReturnStandardValueInCurrentLanguage();
-        int bottomDeathtime = -1;
-        foreach (KeyValuePair<string, int> kv in deathtime)
-        {
-            if (kv.Value < bottomDeathtime || bottomDeathtime == -1)
-            {
-                character = kv.Key;
-                bottomDeathtime = kv.Value;
-            }
-        }
-        return character;
-    }
+   
 
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
         eventQueue = new Queue();
-        kills = new Dictionary<string, int>();
-        deathtime = new Dictionary<string, int>();
         scoreContainer = new ScoreContainer();
 
         Debug.Log("<color=purple>P</color><color=blue>O</color><color=cyan>L</color><color=green>Y</color><color=yellow>C</color><color=orange>R</color><color=red>U</color><color=purple>S</color><color=blue>H</color><color=cyan>E</color><color=yellow>R</color>");
@@ -261,8 +224,6 @@ public class DataCollector : MonoBehaviour
 
         // is the hound burried here?
         eventQueue.Clear();
-        kills.Clear();
-        deathtime.Clear();
     }
 
     public void Reset()
@@ -270,8 +231,6 @@ public class DataCollector : MonoBehaviour
         Debug.Log("[DataCollector] Session interrupted.");
         sessionRunning = false;
         eventQueue.Clear();
-        kills.Clear();
-        deathtime.Clear();
     }
 
     /// <summary>
@@ -300,48 +259,6 @@ public class DataCollector : MonoBehaviour
             }
             
 
-            /*
-            // track kills locally
-            if (e.type == Event.TYPE.kill)
-            {
-                if (kills.ContainsKey(e.character))
-                {
-                    kills[e.character] = kills[e.character] + 1;
-                }
-                else
-                {
-                    kills.Add(e.character, 1);
-                }
-            }
-
-            // track death time
-            // TODO
-            if (e.type == Event.TYPE.death)
-            {
-                if (deathtime.ContainsKey(e.character))
-                {
-                    deathtime[e.character] = deathtime[e.character] + 1;
-                }
-                else
-                {
-                    deathtime.Add(e.character, 1);
-                }
-            }
-
-            // track deaths locally
-            if (e.type == Event.TYPE.death)
-            {
-                if (kills.ContainsKey(e.character))
-                {
-                    kills[e.character] = kills[e.character] + 1;
-                }
-                else
-                {
-                    kills.Add(e.character, 1);
-                }
-            }
-            */
-
             OnEventRegistered(e);
 
             // event log
@@ -363,16 +280,6 @@ public class DataCollector : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Add event to send queue and upload when big enough
-    /// </summary>
-    private void addToSendQueue(Event e)
-    {
-
-    }
-
-
 
     /// <summary>
     /// sends events via HTTP
@@ -523,8 +430,7 @@ public class DataCollector : MonoBehaviour
             EventRegistered(e);
         }
     }
-
-
+    
     /// <summary>
     /// Resets all delegates
     /// </summary>
@@ -539,47 +445,7 @@ public class DataCollector : MonoBehaviour
         var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
         return System.Convert.ToBase64String(plainTextBytes);
     }
-
-    /*
-    /// <summary>
-    /// Loads all locally saved events (main purpose: local highscore)
-    /// </summary>
-    public void LoadEvents()
-    {
-        // mark events as saved!
-        // TODO
-    }
-
-    /// <summary>
-    /// Saves all new events locally
-    /// </summary>
-    public void SaveEvents()
-    {
-       // iterate through all not saved events
-       
-       foreach (Event e in localEvents.Where(e => (e.isSaved == false)))
-       {
-       }
-       // TODO
-    }
-    */
-
-    /// <summary>
-    /// returns a "no one" string in the current active language
-    /// </summary>
-    private string ReturnStandardValueInCurrentLanguage()
-    {
-        string currentLanguage = PlayerPrefs.GetString("SelectedLanguage");
-        if (currentLanguage != null)
-        {
-            switch (currentLanguage)
-            {
-                case "German": return "KEINER"; 
-                case "English": return "NO ONE";
-            }
-        }
-        return "NO ONE";
-    }
+    
     int resourceValueBefore = 0;
     private void calculateDisplayScore(Event e)
     {
@@ -792,40 +658,6 @@ public class DataCollector : MonoBehaviour
     }
 
 }
-
-
-/*
-public static string GetRandomName()
-{
-    String[] names = {"FUN", "FANCY", "UGLY", "RED", "BETTER", "EASY",
-        "ODD", "WRONG", "GRUMPY", "IMPORTANT", "HILARIOUS", "DEEP",
-        "DEADLY", "GREAT", "HUGE", "SEXY", "CRAZY", "DUMB", "BORING",
-        "CRAP", "DERP", "PANTS", "FURIOUS", "FLUFFY", "YUMMY", "ROYAL",
-        "DECENT", "CAT", "SCARY", "FAT", "BUGGY", "MOON", "NEW", "SAVE",
-        "RANDOM", "FUNKY", "HUMID", "FLIRT", "GLOBAL", "FRIED", "LETHAL",
-        "QUICK", "CUTE", "BLOODY", "BOARD", "WEIRD", "JUICY", "ARCADE",
-        "SAD", "BORING", "BOLD", "FRESH", "GROOVY", "PAIN", "END", "GRAND",
-        "GUN", "POLY", "WAR", "BRUTAL", "GROSS", "NUDE", "GAY", "FLOWER",
-        "FALSE", "SWEET", "PUBLIC", "SPEED", "SOUP", "TOTAL", "POETIC",
-        "SLEEP", "TRAP", "HONEST", "STRANGE", "BELLY", "GRIND", "HOLY",
-        "ZOO", "FARMER", "CANDY", "FILTHY", "TRAGIC", "FIRST",
-        "BAD", "HORSE", "HAND", "FOOT", "EYE", "FLOPPY", "FRUITY", "DOG", "CAGE",
-        "PAST", "FUTURISTIC", "BANANA", "HAWAII", "PLAY", "BABY", "ANT", "HAVY",
-        "WAFFLE", "ANCIENT", "GRAND", "APPLE", "VESSEL", "LINZ", "REST" ,"TRICK",
-        "TRICK", "FREAKAZOID", "PINKY", "NICE" , "NEAT", "GOO", "HAPPY", "EXTRA", "SALTY",
-        "MONDAY" , "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY","SATURDAY", "SUNDAY",
-        "MANGO", "MANGOE", "MENGO", "MAYNGO", "MEHNGO", "MANGOH", "MANKO" , "MANGOO",
-        "SPACE", "TIME", "WHIMPY", "GOOD", "WHOLE","WACKY", "SOUND", "MENTAL","LUNATIC","BESERK","ODDBALL" };
-
-
-
-    System.Random rnd = new System.Random();
-    int location = rnd.Next(names.Length - 1);
-    Debug.Log("[DataCollector]" + names.Length);
-
-    return names[location];
-}
-*/
 
 /*
   ////// EXAMPLE EVENT ////////
