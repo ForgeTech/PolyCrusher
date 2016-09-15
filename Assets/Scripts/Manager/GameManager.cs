@@ -476,6 +476,7 @@ public class GameManager : MonoBehaviour
             spawnInfo[i].preciseDamage = spawnInfo[i].ActualDamage;
         }
         BossSpawnInfo.ActualHealth = BossSpawnInfo.boss.GetComponent<BaseEnemy>().MaxHealth;
+        BossSpawnInfo.preciseHealth = BossSpawnInfo.ActualHealth;
     }
 
     /// <summary>

@@ -1422,6 +1422,7 @@ MonoBehaviour:
   maxHealth: 7000
   enemyName: B055
   movementSpeed: 15
+  movementAnimationSpeed: 1
   meleeAttackDamage: 15
   pushAwayForce: 17
   attackInterval: .150000006
@@ -1433,9 +1434,9 @@ MonoBehaviour:
   hitBlinkTime: .150000006
   deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
   lifeSetting:
-    onePlayer: .400000006
-    twoPlayers: .5
-    threePlayers: .699999988
+    onePlayer: .649999976
+    twoPlayers: .75
+    threePlayers: .850000024
   additionHealthPerWave: 1000
   rangedAttackDamage: 5
   rangedAttackInterval: .150000006
@@ -3848,15 +3849,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: lifeSetting.onePlayer
-      value: .400000006
+      value: .649999976
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: lifeSetting.twoPlayers
-      value: .5
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: lifeSetting.threePlayers
-      value: .699999988
+      value: .850000024
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: health
