@@ -10,7 +10,7 @@ public class VirtualControllerManager : MonoBehaviour {
 
     // CONTROLLER MANAGER REFERENCE
     [SerializeField]
-    private ControllerManager controllerManager;
+    private ControllerManager controllerManager = null;
 
     // CONNECTION PORTS
     private enum PORTS : int {
@@ -111,7 +111,7 @@ public class VirtualControllerManager : MonoBehaviour {
         virtualControllers.Add(virtualController);
 
         // Connect to Andi
-        if (controllerManager.AddNewVirtualController(virtualController))
+        if (controllerManager!= null && controllerManager.AddNewVirtualController(virtualController))
         {
             byte[] portData = BitConverter.GetBytes(Convert.ToUInt16(UDP_PORT));
 
