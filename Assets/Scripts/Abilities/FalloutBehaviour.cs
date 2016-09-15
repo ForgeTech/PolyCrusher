@@ -14,6 +14,8 @@ public class FalloutBehaviour : MonoBehaviour {
     private MeshRenderer meshRenderer;
     private bool playAbilitySmoke = true;
 
+    private WaitForSeconds waitForDestructions;
+
 
     [SerializeField]
     private float sphereRadius = 2.0f;
@@ -74,6 +76,8 @@ public class FalloutBehaviour : MonoBehaviour {
         {
             Debug.Log("Meshrenderer is null!");
         }
+
+        waitForDestructions = new WaitForSeconds(enemyIdleTime);
 
         currentScale = new Vector3(0,0,0);
 
@@ -146,12 +150,22 @@ public class FalloutBehaviour : MonoBehaviour {
             {
                 originalEnemyMovement.Add(enemy.MovementSpeed);
                 detectedEnemies.Add(enemy);
-                Destroy(Instantiate(smokePrefab, enemy.transform.position, smokePrefab.transform.rotation), enemyIdleTime);
+                GameObject smoke = Instantiate(smokePrefab, enemy.transform.position, smokePrefab.transform.rotation) as GameObject;
+                smoke.transform.SetParent(enemy.transform);
+
+                StartCoroutine(WaitForDestruction(smoke));
                 enemy.MovementSpeed = 0.0f;
             }
         }
     }
     #endregion
+
+    private IEnumerator WaitForDestruction(GameObject gameObject)
+    {
+        yield return waitForDestructions;
+        if(gameObject != null)
+            Destroy(gameObject);
+    }
 
     #region rumble
     private void Rumble()
