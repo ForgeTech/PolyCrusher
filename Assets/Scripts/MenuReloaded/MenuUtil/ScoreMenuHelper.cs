@@ -67,6 +67,7 @@ public class ScoreMenuHelper : MonoBehaviour
     #endregion
 
     #region Internal members
+    AbstractMenuManager menuManager;
     private readonly Dictionary<HighscoreType, ScoreData> highscoreEntries = new Dictionary<HighscoreType, ScoreData>();
     private string originalScoreText;
 
@@ -259,8 +260,31 @@ public class ScoreMenuHelper : MonoBehaviour
             Debug.LogError("PlayerCountLevelName is not set!");
     }
 
+    /// <summary>
+    /// Skips the whole animation and shows all the final values.
+    /// </summary>
+    private void SkipScoreAnimation(AbstractMenuManager triggerManager, GameObject selectedComponent)
+    {
+        StopAllCoroutines();
+
+        waitForPhase01 = new WaitForSeconds(0);
+        waitForTextAdd = new WaitForSeconds(0);
+        waitForNextLine = new WaitForSeconds(0);
+        waitForNextPhase = new WaitForSeconds(0);
+
+        countClickSound.volume = 0;
+        countFinishedSound.volume = 0;
+        scoreSound.volume = 0;
+
+        // Initiate the phases with no wait time
+        StartCoroutine(StartAnimationPhase01());
+    }
+
     private void Initialize()
     {
+        menuManager = GetComponent<AbstractMenuManager>();
+        menuManager.ComponentSelected += SkipScoreAnimation;
+
         // Resize to 0
         scoreContainer.localScale = Vector3.zero;
         scoreText.rectTransform.localScale = Vector3.zero;
