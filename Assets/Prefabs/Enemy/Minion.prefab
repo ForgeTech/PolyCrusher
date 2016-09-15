@@ -722,7 +722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 120
   minHealth: 0
-  maxHealth: 120
+  maxHealth: 180
   enemyName: Minion
   movementSpeed: 9
   movementAnimationSpeed: 1
@@ -845,6 +845,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

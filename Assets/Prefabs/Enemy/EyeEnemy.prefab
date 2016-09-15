@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 60
   minHealth: 0
-  maxHealth: 100
+  maxHealth: 90
   enemyName: RangedWeak
   movementSpeed: 10
   movementAnimationSpeed: 1
@@ -575,6 +575,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

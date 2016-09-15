@@ -455,7 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 75
   minHealth: 0
-  maxHealth: 100
+  maxHealth: 113
   enemyName: TrashCan
   movementSpeed: 7
   movementAnimationSpeed: 1
@@ -594,6 +594,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 113
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

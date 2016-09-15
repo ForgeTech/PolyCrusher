@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   minHealth: 0
-  maxHealth: 100
+  maxHealth: 75
   enemyName: MeleeVeryWeak
   movementSpeed: 7
   movementAnimationSpeed: 1
@@ -425,6 +425,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

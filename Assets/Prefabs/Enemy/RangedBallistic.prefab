@@ -597,7 +597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   minHealth: 0
-  maxHealth: 100
+  maxHealth: 150
   enemyName: RangedBallistic
   movementSpeed: 5
   movementAnimationSpeed: 1
@@ -1775,6 +1775,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: meleeAttackDamage
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
