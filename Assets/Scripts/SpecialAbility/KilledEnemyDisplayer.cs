@@ -13,7 +13,6 @@ public class KilledEnemyDisplayer : MonoBehaviour {
     private float textAnimationSpeed =1.0f;
 
     private PolygonProperties polygonProperties;
-    private AudioSource audioPlayer;
     #endregion
 
     #region properties
@@ -25,6 +24,7 @@ public class KilledEnemyDisplayer : MonoBehaviour {
     }
     #endregion
 
+    #region methods
     // Use this for initialization
     void Start () {
         PolygonEnemyDetection.PolygonEnemyDeaths += DisplayEnemyCount;
@@ -35,11 +35,7 @@ public class KilledEnemyDisplayer : MonoBehaviour {
     {
         GameObject g = Instantiate(polygonProperties.killedEnemiesGameObject) as GameObject;
         g.transform.SetParent(transform, false);
-        audioPlayer = g.AddComponent<AudioSource>();
-        audioPlayer.clip = polygonProperties.polyChashRegister;
-        audioPlayer.loop = false;
-        audioPlayer.pitch = 1.5f;
-        audioPlayer.Stop();
+     
         allTextElements = g.GetComponentsInChildren<Text>();
         for(int i = 0; i < allTextElements.Length; i++)
         {
@@ -74,8 +70,7 @@ public class KilledEnemyDisplayer : MonoBehaviour {
   
     private void NumberCountUp(int bodyCount)
     {
-        audioPlayer.time = 0.0f;
-        audioPlayer.Play();
+        SoundManager.SoundManagerInstance.Play(polygonProperties.polyChashRegister, Vector3.zero, 1.0f, 1.5f, AudioGroup.Announcer);
         LeanTween.value(gameObject, 0, bodyCount, textAnimationSpeed/3.0f)
         .setOnUpdate((float count) => {
             enemyCount.text = ((int)count).ToString();
@@ -135,14 +130,6 @@ public class KilledEnemyDisplayer : MonoBehaviour {
           ActivateTexts(false);
       });
     }
+    #endregion
 
-
-
-    //tween
-//    LeanTween.moveY(rectTrans, rectTrans.position.y + 120, 3.5f).setEase(LeanTweenType.easeOutQuad);
-//    LeanTween.alphaText(rectTrans, 0, 3.5f).setEase(LeanTweenType.easeOutQuart).setOnComplete(() => { Destroy(popup);
-//});
-
-//            LeanTween.scale(rectTrans, Vector3.one* multiplikator, 0.05f).setEase(LeanTweenType.easeInQuad).setOnComplete(() => { LeanTween.scale(rectTrans, Vector3.one* multiplikatorScale, 0.1f).setEase(LeanTweenType.easeInQuad); });
-        
 }
