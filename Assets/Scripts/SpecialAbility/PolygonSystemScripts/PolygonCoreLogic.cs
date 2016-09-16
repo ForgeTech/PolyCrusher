@@ -29,8 +29,6 @@ public class PolygonCoreLogic : MonoBehaviour {
     private PolygonUtil polygonUtil;
     private PolygonMeshBuilder polygonMeshBuilder;
 
-    private AudioSource audioPlayer;
-
     private int donkey = -1;
 
     private float polyLerpDistance = 0.0f;
@@ -113,11 +111,6 @@ public class PolygonCoreLogic : MonoBehaviour {
         CuttingLineLogic.CuttingInactive += OnCuttingDeactivated;
 
         polygonMeshBuilder = gameObject.AddComponent<PolygonMeshBuilder>();
-
-
-        audioPlayer = gameObject.AddComponent<AudioSource>();
-        audioPlayer.loop = false;
-        audioPlayer.Stop();
     }
 
     private void InitializePolygonPartMeshes()
@@ -240,9 +233,7 @@ public class PolygonCoreLogic : MonoBehaviour {
                     {
                         if(currentPolyTriggerTime == 0)
                         {
-                            audioPlayer.Stop();
-                            audioPlayer.clip = polygonProperties.polyLoading;
-                            audioPlayer.Play();
+                            SoundManager.SoundManagerInstance.Play(polygonProperties.polyLoading, Vector3.zero, AudioGroup.Effects);
                         }
 
                         currentPolyTriggerTime += Time.deltaTime;
@@ -423,10 +414,6 @@ public class PolygonCoreLogic : MonoBehaviour {
         currentPolyTriggerTime = 0.0f;
         polygonIsActive = false;
         AdjustPlayerValues();
-
-        audioPlayer.Stop();
-        audioPlayer.clip = polygonProperties.polyExplosion;
-        audioPlayer.Play();
 
         LeanTween.value(gameObject, currentAlpha, 1.0f, 0.5f)
                               .setOnUpdate((float value) => { currentAlpha = value; })

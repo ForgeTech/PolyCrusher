@@ -103,7 +103,7 @@ MonoBehaviour:
   explosionDamage: 150
   damageRadius: 8
   waitForTriggerTime: .600000024
-  explosionParticle: {fileID: 122468, guid: c66c8084a6ebbf846aa168a5d2390ba7, type: 2}
+  explosionParticle: {fileID: 133362, guid: 0e0f80a74f05f8949a968098f758450f, type: 2}
   explosionSound: {fileID: 8300000, guid: ed623b43a10b165438ae8e9265e9620d, type: 3}
 --- !u!1001 &100100000
 Prefab:
@@ -124,6 +124,10 @@ Prefab:
       propertyPath: damageRadius
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: explosionParticle
+      value: 
+      objectReference: {fileID: 133362, guid: 0e0f80a74f05f8949a968098f758450f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 191376}
