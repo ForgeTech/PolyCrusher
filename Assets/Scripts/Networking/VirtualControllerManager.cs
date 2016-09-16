@@ -86,8 +86,7 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        // TODO: Get Game Name -> 
-        string gameName = "Windows";
+        string gameName = BaseSteamManager.Instance.GetSteamName();
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
         // TODO: Think about handling what if length is longer than a UInt16?
@@ -110,7 +109,6 @@ public class VirtualControllerManager : MonoBehaviour {
         VirtualController virtualController = new VirtualController(UDP_PORT);
         virtualControllers.Add(virtualController);
 
-        // Connect to Andi
         if (controllerManager!= null && controllerManager.AddNewVirtualController(virtualController))
         {
             byte[] portData = BitConverter.GetBytes(Convert.ToUInt16(UDP_PORT));
