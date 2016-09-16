@@ -91,6 +91,8 @@ public class PowerUpItem : BaseItem
     {
         if (collider.tag == "Player")
         {
+            GetComponent<AudioSource>().Play();
+
             // Get the BasePlayer of the Game Object
             BasePlayer player = collider.GetComponent<BasePlayer>();
             player.PowerUpPickUpRumble();

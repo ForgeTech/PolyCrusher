@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11426820}
   - 135: {fileID: 13525100}
   - 114: {fileID: 11424722}
+  - 82: {fileID: 8262172}
   m_Layer: 0
   m_Name: AddEnergy
   m_TagString: Untagged
@@ -93,6 +94,77 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143556}
   m_Mesh: {fileID: 4300000, guid: 987db0c32b972bf4aaa4fbd9cff1fbf9, type: 3}
+--- !u!82 &8262172
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143556}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24394264, guid: c8007a0becb1a3744a17cf0203dd7232,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 5c347180914a52948a512a127323f7f0, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11424722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,6 +198,11 @@ MonoBehaviour:
   type: 1
   singlePowerUp: 0
   pickUpParticles: {fileID: 160590, guid: 6cb5d80d273d9df48b89b407d82abaf4, type: 2}
+  explosionParticles: {fileID: 0}
+  range: 5
+  clip: {fileID: 0}
+  laserSound: {fileID: 0}
+  volume: 0
 --- !u!135 &13525100
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -1213,7 +1290,20 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5c347180914a52948a512a127323f7f0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24394264, guid: c8007a0becb1a3744a17cf0203dd7232,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 143556}
