@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using InControl;
+using System.Collections.Generic;
 
 public class PauseMenuManager : MonoBehaviour
 {
     private PlayerControlActions playerActions;
+    private List<PlayerControlActions> playerActionList;
+    private PlayerSelectionContainer playerSelectionContainer;
 
     [SerializeField]
     private GameObject menuElements;
@@ -35,8 +38,10 @@ public class PauseMenuManager : MonoBehaviour
 
     private bool gameEnded = false;
 
-    private void OnEnable()
+    private void Start()
     {
+
+
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
         gameObject.transform.position = startPosition;
 
@@ -47,6 +52,22 @@ public class PauseMenuManager : MonoBehaviour
         menuManager.SetMenuInputActive(false);
 
         LevelEndManager.levelExitEvent += DeRegister;
+
+
+        playerSelectionContainer = GameObject.FindGameObjectWithTag("GlobalScripts").GetComponent<PlayerSelectionContainer>();
+        playerActionList = new List<PlayerControlActions>();
+        if (playerSelectionContainer != null)
+        {
+            for(int i =0; i < playerSelectionContainer.playerInputDevices.Length; i++)
+            {
+                if(playerSelectionContainer.playerInputDevices[i] != null)
+                {
+                    PlayerControlActions p = PlayerControlActions.CreateWithGamePadBindings();
+                    p.Device = playerSelectionContainer.playerInputDevices[i];
+                    playerActionList.Add(p);
+                }
+            }
+        }
 
         steamManager = SteamManager.Instance;
         if (steamManager != null)
@@ -63,6 +84,11 @@ public class PauseMenuManager : MonoBehaviour
     {
         playerActions.Destroy();
 
+        for(int i = 0; i < playerActionList.Count; i++)
+        {
+            playerActionList[i].Destroy();        
+        }
+
         if (steamManager!=null)
         {
             steamManager.OnOverlayActivated -= OnOverlayActivated;
@@ -71,18 +97,57 @@ public class PauseMenuManager : MonoBehaviour
 
 	private void Update ()
     {
-        if (playerActions.Pause.WasPressed && !gameEnded)
+        if (playerSelectionContainer == null)
         {
-            if (!pauseScreenActivated)
-                 PauseGame();
-        }
+            if (playerActions.Pause.WasPressed && !gameEnded)
+            {
+                if (!pauseScreenActivated)
+                    PauseGame();
+            }
 
-        if (playerActions.Pause.WasPressed || playerActions.Back.WasPressed)
+            if (playerActions.Pause.WasPressed || playerActions.Back.WasPressed)
+            {
+                if (pauseScreenActivated)
+                    ResumeGame();
+            }
+        }
+        else
         {
-            if (pauseScreenActivated)
+            if(PauseWasPressed() && !gameEnded && !pauseScreenActivated)
+            {
+                PauseGame();
+            }
+
+            if((PauseWasPressed() || BackWasPressed()) && pauseScreenActivated)
+            {
                 ResumeGame();
+            }
         }
 	}
+
+    private bool PauseWasPressed()
+    {
+        for(int i = 0; i < playerActionList.Count;  i++)
+        {
+            if (playerActionList[i].Pause)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool BackWasPressed()
+    {
+        for (int i = 0; i < playerActionList.Count; i++)
+        {
+            if (playerActionList[i].Back)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void SetMenuActive(bool setActive)
     {
