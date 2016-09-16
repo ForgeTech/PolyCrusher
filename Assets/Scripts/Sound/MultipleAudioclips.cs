@@ -66,7 +66,6 @@ public class MultipleAudioclips : MonoBehaviour
             // Set new clip and play it.
             aSource.clip = clip;
             if(SoundManager.SoundManagerInstance != null)
-                aSource.outputAudioMixerGroup = SoundManager.SoundManagerInstance.SoundManagerMainMixer.FindMatchingGroups(AudioGroup.Announcer.ToString())[0];
             aSource.Play();
             return true;
         }
