@@ -41,7 +41,6 @@ public class Deactivator : MonoBehaviour
 
         if (gameObject != null)
         {
-            Debug.Log("part deactivated");
             ObjectsPool.Despawn(gameObject);
         }
     }
