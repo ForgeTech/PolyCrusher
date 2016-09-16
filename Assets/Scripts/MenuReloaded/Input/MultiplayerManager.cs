@@ -68,6 +68,8 @@ public class MultiplayerManager : MonoBehaviour
     private PlayerSelectionContainer playerSelectionContainer;
     private CharacterSelectionHelper characterSelectionHelper;
 
+    private string previousLevelName = "MenuReloadedLevelSelection";
+
     #endregion
 
     #region SlotContainer class
@@ -238,13 +240,21 @@ public class MultiplayerManager : MonoBehaviour
 
     void Update()
     {
-        if (singleControls && playerCount < MAX_PLAYER_COUNT && JoinButtonWasPressedOnListener(gamepadListener))
+        if (singleControls && playerCount < MAX_PLAYER_COUNT)
         {
-            InputDevice inputDevice = InputManager.ActiveDevice;
-
-            if (ThereIsNoPlayerUsingThisGamePad(inputDevice))
+            if (JoinButtonWasPressedOnListener(gamepadListener))
             {
-                AssignInputDevice(inputDevice);
+                InputDevice inputDevice = InputManager.ActiveDevice;
+                gamepadListener.ExcludeDevices.Add(inputDevice);
+                if (ThereIsNoPlayerUsingThisGamePad(inputDevice))
+                {
+                    AssignInputDevice(inputDevice);
+                }
+            }
+
+            if (BackButtonWasPressedOnListener(gamepadListener)){
+
+                Application.LoadLevel(previousLevelName);
             }
         }
 
@@ -328,6 +338,11 @@ public class MultiplayerManager : MonoBehaviour
     private bool JoinButtonWasPressedOnListener(PlayerControlActions actions)
     {
         return actions.Join;
+    }
+
+    private bool BackButtonWasPressedOnListener(PlayerControlActions actions)
+    {
+        return actions.Back;
     }
 
     private SlotContainer FindPlayersUsingGamePad(InputDevice inputDevice)
