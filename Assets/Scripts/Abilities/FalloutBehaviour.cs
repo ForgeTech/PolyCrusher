@@ -16,7 +16,7 @@ public class FalloutBehaviour : MonoBehaviour {
 
     private WaitForSeconds waitForDestructions;
 
-
+    [Header("Numeric settings")]
     [SerializeField]
     private float sphereRadius = 2.0f;
 
@@ -28,7 +28,8 @@ public class FalloutBehaviour : MonoBehaviour {
 
     [SerializeField]
     private float enemyIdleTime = 4.0f;
-   
+
+    [Header("Prefabs")]
     [SerializeField]
     private GameObject smokePrefab;
 
@@ -37,7 +38,13 @@ public class FalloutBehaviour : MonoBehaviour {
 
     [SerializeField]
     private GameObject abilitySmokePrefab;
+
+    [SerializeField]
+    private GameObject falloutRing;
     #endregion
+
+    // Instantiated ring
+    private GameObject ring;
 
     #region properties
     /// <summary>
@@ -62,9 +69,11 @@ public class FalloutBehaviour : MonoBehaviour {
     #region methods
 
     #region initialization
-    void Start () {
+    private void Start ()
+    {
         sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.isTrigger = true;
+        sphereCollider.radius = sphereRadius;
         sphereCollider.enabled = true;
 
         detectedEnemies = new List<BaseEnemy>();
@@ -79,7 +88,7 @@ public class FalloutBehaviour : MonoBehaviour {
 
         waitForDestructions = new WaitForSeconds(enemyIdleTime);
 
-        currentScale = new Vector3(0,0,0);
+        currentScale = new Vector3(0, 0, 0);
 
         Instantiate(abilitySmokeStartPrefab, transform.position, abilitySmokeStartPrefab.transform.rotation);
 
@@ -92,7 +101,7 @@ public class FalloutBehaviour : MonoBehaviour {
     {
         LeanTween.value(gameObject, 0.0f, sphereRadius, expandTime)
            .setOnUpdate((float radius) => {
-               sphereCollider.radius = radius;
+               //sphereCollider.radius = radius;
                currentScale = Vector3.one * radius;
                transform.localScale = currentScale;
                if (radius > sphereRadiusBorder && playAbilitySmoke)
@@ -105,6 +114,13 @@ public class FalloutBehaviour : MonoBehaviour {
            .setOnComplete(() => {
                CleanUp();
            });
+
+        // Tween ring
+        Vector3 spawnPosition = new Vector3(transform.position.x, -1f, transform.position.z);
+        ring = Instantiate(falloutRing, spawnPosition, Quaternion.identity) as GameObject;
+        ring.transform.localScale = new Vector3(sphereRadius * 2f, falloutRing.transform.localScale.y, sphereRadius * 2f);
+
+        LeanTween.moveY(ring, 0f, expandTime).setEase(LeanTweenType.easeOutSine);
     }
     #endregion
 
@@ -112,17 +128,17 @@ public class FalloutBehaviour : MonoBehaviour {
     private void CleanUp()
     {
         transform.localScale = Vector3.zero;
-        sphereCollider.radius = 0.0f;
         sphereCollider.enabled = false;
-
         StartCoroutine(Reset());
     }
 
     private IEnumerator Reset()
     {
         yield return new WaitForSeconds(enemyIdleTime);
+        LeanTween.moveY(ring, -1f, 0.4f).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
+            Destroy(ring);
+        });
         ResetEnemyMovementSpeed();
-
         detectedEnemies.Clear();
         originalEnemyMovement.Clear();
     }

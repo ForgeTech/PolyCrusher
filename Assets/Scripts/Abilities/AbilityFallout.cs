@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class AbilityFallout : Ability {
-
+public class AbilityFallout : Ability
+{
     #region variable
     [SerializeField]
     private GameObject falloutCloud;
     #endregion
 
-    #region properties
-    
-
-    #endregion
     #region methods
     protected override void Start()
     {

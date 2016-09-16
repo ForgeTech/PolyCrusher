@@ -106,12 +106,12 @@ MonoBehaviour:
   sphereRadius: 2
   sphereRadiusBorder: 1.5
   expandTime: .600000024
-  fadeTime: 1.5
   enemyIdleTime: 4
   smokePrefab: {fileID: 100032, guid: 3c9a7425f85a4424ebef986872f42b5b, type: 2}
   abilitySmokeStartPrefab: {fileID: 115452, guid: beb95b998eee2c34493436be008dbe6a,
     type: 2}
   abilitySmokePrefab: {fileID: 116772, guid: ef5a9958177b1c04392ca9398b287c88, type: 2}
+  falloutRing: {fileID: 162540, guid: 61e688d18effc304ba6ebce0872bad3d, type: 2}
 --- !u!135 &13566536
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -191,6 +191,10 @@ Prefab:
       propertyPath: Loop
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: falloutRing
+      value: 
+      objectReference: {fileID: 162540, guid: 61e688d18effc304ba6ebce0872bad3d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 104106}
