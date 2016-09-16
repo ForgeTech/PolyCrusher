@@ -14,7 +14,7 @@ public class PowerUpCut : PowerUp
     {
         lineSystem = GameObject.FindObjectOfType<LineSystem>();
         if (lineSystem != null)
-            lineSystem.ActivateCutting();
+            lineSystem.ActivateCutting(powerUpActiveTime);
 
         StartCoroutine("WaitUntilReset");
         go = new GameObject();
