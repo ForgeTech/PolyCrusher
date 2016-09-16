@@ -58,6 +58,11 @@ public abstract class Weapon : MonoBehaviour, IUsable
     protected MonoBehaviour ownerScript;
     #endregion
 
+    #region Delegates and Events
+    public delegate void DamageIncreasedHandler();
+    public event DamageIncreasedHandler DamageIncreased;
+    #endregion
+
     #region Properties
     /// <summary>
     /// Gets or sets the weapons name.
@@ -79,8 +84,14 @@ public abstract class Weapon : MonoBehaviour, IUsable
     /// </summary>
     public int WeaponDamage
     {
-        get { return this.weaponDamage; }
-        set { this.weaponDamage = value; }
+        get { return weaponDamage; }
+        set
+        {
+            if (value > weaponDamage)
+                OnDamageIncreased();
+
+            weaponDamage = value;
+        }
     }
 
     /// <summary>
@@ -146,6 +157,12 @@ public abstract class Weapon : MonoBehaviour, IUsable
         l.enabled = true;
         yield return new WaitForSeconds(muzzleFlashTime);
         l.enabled = false;
+    }
+
+    private void OnDamageIncreased()
+    {
+        if (DamageIncreased != null)
+            DamageIncreased();
     }
     #endregion
 

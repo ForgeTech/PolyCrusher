@@ -1718,7 +1718,7 @@ Transform:
   m_GameObject: {fileID: 112606}
   m_LocalRotation: {x: 0, y: .0521621779, z: 0, w: -.99863863}
   m_LocalPosition: {x: 0, y: 2.3900001, z: -.0900000036}
-  m_LocalScale: {x: .200000063, y: .200000003, z: .200000003}
+  m_LocalScale: {x: .180000007, y: .180000007, z: .180000007}
   m_Children: []
   m_Father: {fileID: 457550}
   m_RootOrder: 5
@@ -2821,6 +2821,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
+  powerUpDamageRotationSpeedIncrease: 60
+  shakeAmount: .400000006
+  shakeTime: .200000003
 --- !u!114 &11447024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4358,6 +4361,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
       value: -.0900000036
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: .180000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: .180000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: .180000007
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

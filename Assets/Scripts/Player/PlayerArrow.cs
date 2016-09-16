@@ -6,6 +6,9 @@ public class PlayerArrow : MonoBehaviour
     private float rotationSpeed = 30f;
 
     [SerializeField]
+    private float powerUpDamageRotationSpeedIncrease = 60f;
+
+    [SerializeField]
     private float shakeAmount = 0.4f;
 
     [SerializeField]
@@ -18,18 +21,34 @@ public class PlayerArrow : MonoBehaviour
     private Material arrowMaterial;
     private Color originalEmissionColor;
     private Color originalColor;
+    private MeshRenderer meshRenderer;
 
     private void Start ()
     {
         originalRotation = transform.rotation;
-        arrowRotation = originalRotation;
+        arrowRotation = originalRotation * Quaternion.Euler(Vector3.up * Random.Range(0, 360));
 
         arrowMaterial = GetComponent<Renderer>().material;
+        meshRenderer = GetComponent<MeshRenderer>();
         originalEmissionColor = arrowMaterial.GetColor("_EmissionColor");
         originalColor = arrowMaterial.GetColor("_Color");
 
         player = transform.root.GetComponent<BasePlayer>();
+
         player.DamageTaken += DoHealthDamageTween;
+        player.PlayerWeapon.DamageIncreased += IncreaseRotationSpeed;
+    }
+
+    private void OnDisable()
+    {
+        if (meshRenderer != null)
+            meshRenderer.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        if(meshRenderer != null)
+            meshRenderer.enabled = true;
     }
 
 	private void Update ()
@@ -37,6 +56,11 @@ public class PlayerArrow : MonoBehaviour
         ResetParentRotation();
         RotateYAxis();
 	}
+
+    private void IncreaseRotationSpeed()
+    {
+        rotationSpeed += powerUpDamageRotationSpeedIncrease;
+    }
 
     private void DoHealthDamageTween(int damage)
     {
