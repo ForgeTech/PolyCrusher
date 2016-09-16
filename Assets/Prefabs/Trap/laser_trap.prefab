@@ -145,6 +145,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 451790}
   - 114: {fileID: 11461862}
+  - 82: {fileID: 8223926}
   m_Layer: 0
   m_Name: laser_trap
   m_TagString: Untagged
@@ -258,8 +259,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188408}
-  m_LocalRotation: {x: 0, y: .784164846, z: 0, w: -.620552599}
-  m_LocalPosition: {x: 9.00049686, y: 0, z: 3.08259606}
+  m_LocalRotation: {x: 0, y: .994049013, z: 0, w: -.108934209}
+  m_LocalPosition: {x: -.670000017, y: 1.49011612e-08, z: 10.1999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 495396}
@@ -335,8 +336,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113770}
-  m_LocalRotation: {x: 0, y: .552878439, z: 0, w: .833261967}
-  m_LocalPosition: {x: -2.21801782, y: 0, z: .607612193}
+  m_LocalRotation: {x: 0, y: .121082976, z: 0, w: .992642462}
+  m_LocalPosition: {x: -2.60580826, y: 1.49011612e-08, z: 1.59863663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 436416}
@@ -351,8 +352,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155042}
-  m_LocalRotation: {x: 0, y: -.2290667, z: 0, w: .973410785}
-  m_LocalPosition: {x: 77.8442688, y: -.502264142, z: -50.7460861}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.65053701, y: .175654277, z: 21.8795986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 448416}
@@ -524,6 +525,77 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162112}
   m_Mesh: {fileID: 4300000, guid: 460d80a95432c52409abcc3f43429020, type: 3}
+--- !u!82 &8223926
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155042}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24394264, guid: c8007a0becb1a3744a17cf0203dd7232,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: fb70579ce62b84d47815e853b568e2c1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9571404
 Animator:
   serializedVersion: 3
@@ -700,6 +772,8 @@ MonoBehaviour:
   startPos: {fileID: 438306}
   endPos: {fileID: 459742}
   lineShader: {fileID: 11416624, guid: e25e8bd50dda82a41b528fb4b7bf7afe, type: 2}
+  laserSound: {fileID: 8300000, guid: dfadd834bc0ef624ca924d5f5c26e8ce, type: 3}
+  volume: .300000012
 --- !u!114 &11467884
 MonoBehaviour:
   m_ObjectHideFlags: 1

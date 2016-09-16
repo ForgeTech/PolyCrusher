@@ -83,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191898}
   m_LocalRotation: {x: 0, y: -.347590029, z: 0, w: .937646627}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.78518724, y: .171834141, z: 20.7607479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452818}
@@ -150,12 +150,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: LineCut
   addPermanently: 0
-  outlastTime: 7
+  outlastTime: 12
   pendingTime: 4
   powerUpValue: 0
   type: 6
   singlePowerUp: 1
   pickUpParticles: {fileID: 160590, guid: 6cb5d80d273d9df48b89b407d82abaf4, type: 2}
+  explosionParticles: {fileID: 0}
+  range: 5
+  clip: {fileID: 0}
+  laserSound: {fileID: 8300000, guid: dfadd834bc0ef624ca924d5f5c26e8ce, type: 3}
+  volume: .300000012
 --- !u!135 &13515714
 SphereCollider:
   m_ObjectHideFlags: 1
