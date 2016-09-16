@@ -63,6 +63,14 @@ public class PowerUpItem : BaseItem
     [SerializeField]
     protected AudioClip clip;
 
+    [Space(5)]
+    [Header("Line Cut Powerup")]
+    [SerializeField]
+    protected AudioClip laserSound;
+
+    [SerializeField]
+    protected float volume;
+
     // Event handler for the collectible collected.
     public static event PowerUpCollectedHandler PowerUpCollected;
     #endregion
@@ -83,6 +91,8 @@ public class PowerUpItem : BaseItem
     {
         if (collider.tag == "Player")
         {
+            GetComponent<AudioSource>().Play();
+
             // Get the BasePlayer of the Game Object
             BasePlayer player = collider.GetComponent<BasePlayer>();
             player.PowerUpPickUpRumble();
@@ -155,6 +165,8 @@ public class PowerUpItem : BaseItem
                 if (lineCut == null)
                 {
                     lineCut = player.gameObject.AddComponent<PowerUpCut>();
+                    lineCut.laserSound = laserSound;
+                    lineCut.volume = volume;
                     lineCut.powerUpActiveTime = outlastTime;
                     lineCut.Use();
                 }

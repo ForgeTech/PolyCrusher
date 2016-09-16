@@ -39,6 +39,11 @@ public class LightSabreScript : MonoBehaviour {
     private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
     private bool bossTakesDamage = true;
 
+    public float PowerUpDuration
+    {
+        set { powerUpDuration = value; }
+    }
+
     // Use this for initialization
     void Start () {
         offsetVector.y = heightOffset;

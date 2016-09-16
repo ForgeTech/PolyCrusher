@@ -12,6 +12,8 @@ public class Laser : MonoBehaviour
     private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
     private bool bossTakesDamage = true;
 
+    //audio object
+    private GameObject go;
 
     //when instantiated, destroy the laser script after trapActiveTime
     void Awake()
@@ -21,6 +23,12 @@ public class Laser : MonoBehaviour
         lineShader = lineShaderGameObject.GetComponent<LineShaderUtility>();
 
         StartCoroutine(DestroyAfterTime());
+        go = new GameObject();
+        AudioSource source = go.AddComponent<AudioSource>();
+        source.clip = GetComponent<LaserTrap>().laserSound;
+        source.loop = true;
+        source.volume = GetComponent<LaserTrap>().volume;
+        go = Instantiate(go);
     }
 
     //laser update
@@ -113,6 +121,7 @@ public class Laser : MonoBehaviour
                     {
                         enemy.InstantKill(this);
                         enemy.gameObject.AddComponent<CutUpMesh>();
+                        gameObject.GetComponent<AudioSource>().Play(0);
                     }
                 }
             }
@@ -134,6 +143,7 @@ public class Laser : MonoBehaviour
         {
             yield return new WaitForSeconds(trap.trapActiveTime);
             Destroy(lineShaderGameObject);
+            Destroy(go);
             Destroy(this, 0);
         }
     }

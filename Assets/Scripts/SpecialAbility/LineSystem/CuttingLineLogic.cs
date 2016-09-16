@@ -202,6 +202,7 @@ public class CuttingLineLogic : MonoBehaviour
             lightSabreGameObject = Instantiate(lightSabrePrefab, Vector3.zero, Quaternion.identity) as GameObject;
             lightSabreGameObject.transform.parent = lineSystem.Players[0].transform;
             lightSabreGameObject.transform.position = Vector3.zero;
+            lightSabreGameObject.GetComponent<LightSabreScript>().PowerUpDuration = timeActive;
         }
     }
 }

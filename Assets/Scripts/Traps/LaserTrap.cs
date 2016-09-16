@@ -14,6 +14,9 @@ public class LaserTrap : Trap, ITriggerable
     //the line renderer in use
     [SerializeField]
     public LineShaderUtility lineShader;
+
+    public AudioClip laserSound;
+    public float volume;
     
     public override void Trigger(Collider other)
     {

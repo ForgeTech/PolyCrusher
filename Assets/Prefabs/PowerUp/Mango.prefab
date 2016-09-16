@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11441702}
   - 135: {fileID: 13517778}
   - 114: {fileID: 11467618}
+  - 82: {fileID: 8210254}
   m_Layer: 0
   m_Name: Mango
   m_TagString: Untagged
@@ -121,6 +122,77 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199540}
   m_Mesh: {fileID: 4300002, guid: f0a193f477a90a34db353f4ab36d80f1, type: 3}
+--- !u!82 &8210254
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137420}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24394264, guid: c8007a0becb1a3744a17cf0203dd7232,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 5c347180914a52948a512a127323f7f0, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11441702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,6 +215,8 @@ MonoBehaviour:
   explosionParticles: {fileID: 138118, guid: cd96e9630f114e549b94f4ca69ba6430, type: 2}
   range: 5
   clip: {fileID: 8300000, guid: 3591232703a9d2e40847cea1f8c5d58a, type: 3}
+  laserSound: {fileID: 0}
+  volume: 0
 --- !u!114 &11467618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1251,6 +1325,19 @@ Prefab:
       objectReference: {fileID: 138118, guid: cd96e9630f114e549b94f4ca69ba6430, type: 2}
     - target: {fileID: 0}
       propertyPath: pendingTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5c347180914a52948a512a127323f7f0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24394264, guid: c8007a0becb1a3744a17cf0203dd7232,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

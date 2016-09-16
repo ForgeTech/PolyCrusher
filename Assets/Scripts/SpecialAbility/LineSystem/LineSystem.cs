@@ -19,9 +19,6 @@ public class LineSystem : MonoBehaviour {
     public float healDistancePadding;
     public float polyDistance;
 
-    [Header("Set the active time for the cutting lines Power-Up")]
-    public int powerUpTime = 12;
-
     public Color[] colors;
 
     [SerializeField]
@@ -268,7 +265,7 @@ public class LineSystem : MonoBehaviour {
     }
 
 
-    public void ActivateCutting()
+    public void ActivateCutting(float powerUpTime)
     {
        cuttingLineLogic.TimeActive = powerUpTime;
     }
