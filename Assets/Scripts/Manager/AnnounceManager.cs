@@ -35,8 +35,7 @@ public class AnnounceManager : MonoBehaviour
         Trap.TrapTriggered += AnnounceTrap;
         GameManager.WaveStarted += AnnounceNextWave;
         BossEnemy.BossSpawned += AnnounceBossWave;
-        //PolygonCoreLogic.PolyExecuted += AnnouncePolyExecute;
-        //PolygonCoreLogic.PolyFailed += AnnouncePolyFail;
+        PolygonEnemyDetection.PolygonEnemyDeaths += AnnouncePolyFail;
 	}
 
     /// <summary>
@@ -104,9 +103,9 @@ public class AnnounceManager : MonoBehaviour
     /// <summary>
     /// Announces the poly fail.
     /// </summary>
-    protected void AnnouncePolyFail()
+    protected void AnnouncePolyFail(int count)
     {
-        if (polyFail != null)
+        if (polyFail != null && count == 0)
             polyFail.PlayRandomClip();
     }
 
