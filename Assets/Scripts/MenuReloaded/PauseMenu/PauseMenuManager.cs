@@ -40,8 +40,6 @@ public class PauseMenuManager : MonoBehaviour
 
     private void Start()
     {
-
-
         playerActions = PlayerControlActions.CreateWithGamePadBindings();
         gameObject.transform.position = startPosition;
 
@@ -53,21 +51,25 @@ public class PauseMenuManager : MonoBehaviour
 
         LevelEndManager.levelExitEvent += DeRegister;
 
-
-        playerSelectionContainer = GameObject.FindGameObjectWithTag("GlobalScripts").GetComponent<PlayerSelectionContainer>();
         playerActionList = new List<PlayerControlActions>();
-        if (playerSelectionContainer != null)
+        GameObject g = GameObject.FindGameObjectWithTag("GlobalScripts");
+        if (g != null)
         {
-            for(int i =0; i < playerSelectionContainer.playerInputDevices.Length; i++)
+            playerSelectionContainer = g.GetComponent<PlayerSelectionContainer>();
+            if (playerSelectionContainer != null)
             {
-                if(playerSelectionContainer.playerInputDevices[i] != null)
+                for (int i = 0; i < playerSelectionContainer.playerInputDevices.Length; i++)
                 {
-                    PlayerControlActions p = PlayerControlActions.CreateWithGamePadBindings();
-                    p.Device = playerSelectionContainer.playerInputDevices[i];
-                    playerActionList.Add(p);
+                    if (playerSelectionContainer.playerInputDevices[i] != null)
+                    {
+                        PlayerControlActions p = PlayerControlActions.CreateWithGamePadBindings();
+                        p.Device = playerSelectionContainer.playerInputDevices[i];
+                        playerActionList.Add(p);
+                    }
                 }
             }
         }
+       
 
         steamManager = SteamManager.Instance;
         if (steamManager != null)
