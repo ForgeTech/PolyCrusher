@@ -118,8 +118,12 @@ public class FalloutBehaviour : MonoBehaviour {
         // Tween ring
         Vector3 spawnPosition = new Vector3(transform.position.x, -1f, transform.position.z);
         ring = Instantiate(falloutRing, spawnPosition, Quaternion.identity) as GameObject;
-        ring.transform.localScale = new Vector3(sphereRadius * 2f, falloutRing.transform.localScale.y, sphereRadius * 2f);
+        ring.transform.localScale = new Vector3(0f, falloutRing.transform.localScale.y, 0f);
 
+        LeanTween.value(ring, 0f, sphereRadius * 2f, expandTime).setEase(LeanTweenType.easeOutSine)
+            .setOnUpdate((float val) => {
+                ring.transform.localScale = new Vector3(val, falloutRing.transform.localScale.y, val);
+            });
         LeanTween.moveY(ring, 0f, expandTime).setEase(LeanTweenType.easeOutSine);
     }
     #endregion
