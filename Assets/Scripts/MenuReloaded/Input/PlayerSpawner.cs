@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using InControl;
+using System;
 
 #if UNITY_EDITOR
 //this class is pure nonsense, it will only be used for easy testing and stuff
@@ -14,7 +15,7 @@ public class PlayerSpawner : MonoBehaviour {
 
     private enum Controllers
     {
-        Keyboard, Controller_1, Controller_2, Controller_3, Controller_4
+         Controller_1, Controller_2, Controller_3, Controller_4, Keyboard, None
     }
 
 
@@ -28,29 +29,14 @@ public class PlayerSpawner : MonoBehaviour {
     [SerializeField]
     private Controllers[] controllerNumber;
 
-    //[HideInInspector]
-
-    [Header("Keep of the grass!")]
     [SerializeField]
-    private GameObject[] playerPrefabs;
+    private GameObject editorSpawner;
 
+    private PlayerSelectionContainer playerSelectionContainer;
 
-    private bool[] controllerAssigned;
+    private List<InputDevice> gamePadDevices;
+    private InputDevice keyboardDevice;
 
-    private bool isActive = false;
-
-    private BasePlayer[] basePlayers;
-
-    private int assignedControls;
-
-
-    private Transform spawnPosition;
-
-    //private PlayerControlActions playerAction;
-
-    private int maxPlayers = 4;
-
-    private InputDevice current;
 
     private PlayerControlActions currentPlayerActions;
 
@@ -60,161 +46,84 @@ public class PlayerSpawner : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 
+        LevelEndManager.levelExitEvent += Reset;
+
         if (FindObjectOfType<PlayerSelectionContainer>() == null)
         {
-            isActive = true;
+            editorSpawner.SetActive(true);
+            gamePadDevices = new List<InputDevice>();
+            GetGamePadDevices();
+            playerSelectionContainer = editorSpawner.GetComponent<PlayerSelectionContainer>();
+            if (playerSelectionContainer != null)
+            {
+                usedInputDevices = new List<InputDevice>();
+
+                if (chosenPlayerIndices.Length > 0 && chosenPlayerIndices.Length != controllerNumber.Length)
+                {
+                    Debug.Log("Much to learn you still have padawan!");
+                }
+                else
+                {
+                    for (int i = 0; i < chosenPlayerIndices.Length; i++)
+                    {
+                        if (controllerNumber[i] == Controllers.Keyboard)
+                        {
+                            playerSelectionContainer.playerInputDevices[i] = keyboardDevice;
+                        }
+                        else if(controllerNumber[i] == Controllers.None)
+                        {
+                            playerSelectionContainer.playerInputDevices[i] = InputDevice.Null;
+                        }
+                        else
+                        {
+                            if((int)controllerNumber[i] < gamePadDevices.Count)
+                            {
+                                playerSelectionContainer.playerInputDevices[i] = gamePadDevices[(int)controllerNumber[i]];
+                            }
+                            else
+                            {
+                                playerSelectionContainer.playerInputDevices[i] = gamePadDevices[gamePadDevices.Count-1];
+                            }
+                        }
+
+                        playerSelectionContainer.playerActive[i] = true;
+                        playerSelectionContainer.playerPrefabIndices[i] = (int)chosenPlayerIndices[i];
+                    }
+                    editorSpawner.tag = "GlobalScripts";
+                }
+            }
         }
         else
         {
             Destroy(this.gameObject);
         }
-
-        if (isActive)
-        {
-            assignedControls = 0;
-            controllerAssigned = new bool[chosenPlayerIndices.Length];
-            usedInputDevices = new List<InputDevice>();
-
-            if (spawnPosition == null && GameObject.FindGameObjectsWithTag("PlayerSpawn").Length > 0)
-                spawnPosition = GameObject.FindGameObjectsWithTag("PlayerSpawn")[0].transform;
-
-            if (chosenPlayerIndices.Length>0 && chosenPlayerIndices.Length!=controllerNumber.Length)
-            {
-                Debug.Log("Much to learn you still have padawan!");
-                isActive = false;
-            }
-            else
-            {
-                GameObject prefab;
-
-                int amount = chosenPlayerIndices.Length;
-                if (chosenPlayerIndices.Length > maxPlayers)
-                {
-                    amount = maxPlayers;
-                }
-
-
-                RumbleManager rumbleManager = RumbleManager.Instance;
-                basePlayers = new BasePlayer[amount];
-                for (int i = 0; i < amount; i++)
-                {
-                    prefab = Instantiate(playerPrefabs[(int)chosenPlayerIndices[i]]) as GameObject;
-                    prefab.GetComponent<NavMeshAgent>().enabled = false;
-                    prefab.transform.position = spawnPosition.position;
-                    basePlayers[i] = prefab.GetComponent<BasePlayer>();
-                    basePlayers[i].RumbleManager = rumbleManager;
-                    prefab.GetComponent<NavMeshAgent>().enabled = true;
-                 
-                }
-            }
-        }
-	}
-	
-
-	// Update is called once per frame
-	void Update () {
-        if (isActive)
-        {
-            if (!AllPlayersAssigned())
-            {
-                if (assignedControls == 0 && KeyboardNeeded() )
-                {
-                    if (KeyboardNeeded())
-                    {
-                        foreach(InputDevice inputDevice in InputManager.Devices)
-                        {                        
-                            if (inputDevice != null && inputDevice.Name == "Keyboard Controller")
-                            {
-                                current = inputDevice;
-                            }
-                        }
-                        if (AssignDevices(current))
-                        {
-                            usedInputDevices.Add(current);
-                        }
-                        assignedControls++;
-                    }
-                }else
-                {
-                    current = InputManager.ActiveDevice;
-
-                    if (current.Name!="None" && DeviceAvailable())
-                    {
-                        if (AssignDevices(current))
-                        {
-                            usedInputDevices.Add(current);
-                        }
-                        assignedControls++;
-                    }             
-                }
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
-        }
 	}
 
-
-    private bool AllPlayersAssigned()
+    private void GetGamePadDevices()
     {
-        int count = 0;
-
-        for(int i = 0; i < controllerAssigned.Length; i++) {
-            if (controllerAssigned[i])
-            {
-                count++;
-            }
-        }
-
-        return (count == controllerAssigned.Length) ? true : false;
-    }
-
-    private bool KeyboardNeeded()
-    {
-        foreach(Controllers c in controllerNumber)
+        for(int i = 0; i < InputManager.Devices.Count; i++)
         {
-            if(c == Controllers.Keyboard)
+            if(InputManager.Devices[i].Name!= "Smartphone Controller" )
             {
-                return true;
+                if(InputManager.Devices[i].Name == "Keyboard Controller")
+                {
+                    keyboardDevice = InputManager.Devices[i];
+                }
+                else
+                {
+                    gamePadDevices.Add(InputManager.Devices[i]);
+                }
             }
         }
-
-        return false;
     }
 
-    private bool AssignDevices(InputDevice inputDevice)
+
+    private void Reset()
     {
-        bool assigned = false;
-
-        for(int i = 0; i < chosenPlayerIndices.Length; i++)
-        {
-            if(controllerNumber[i] == (Controllers)assignedControls)
-            {
-                basePlayers[i].InputDevice = inputDevice;
-                basePlayers[i].PlayerActions = PlayerControlActions.CreateWithGamePadBindings();
-                basePlayers[i].PlayerActions.Device = inputDevice;
-
-                controllerAssigned[i] = true;
-                assigned = true;
-            }
-        }
-
-        return assigned;
+        Destroy(editorSpawner);
     }
 
-    private bool DeviceAvailable()
-    {
-        foreach(InputDevice i in usedInputDevices)
-        {
-            if(i == current)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    
 
 }
 #endif
