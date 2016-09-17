@@ -2,15 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: blue
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: IceRiver
+  m_Shader: {fileID: 4800000, guid: 19dfa0b7f49618c42a6514de5e5ebce0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -80,10 +81,6 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
           name: _SrcBlend
         second: 1
       data:
@@ -92,16 +89,24 @@ Material:
         second: 0
       data:
         first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Glossiness
+        second: .474000007
+      data:
+        first:
+          name: _Metallic
+        second: .0810000002
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
         first:
           name: _ZWrite
         second: 1
-      data:
-        first:
-          name: _Glossiness
-        second: .5
       data:
         first:
           name: _BumpScale
@@ -120,16 +125,20 @@ Material:
         second: 0
       data:
         first:
-          name: _EmissionScaleUI
-        second: 0
-      data:
-        first:
           name: _Mode
         second: 0
       data:
         first:
-          name: _Metallic
+          name: _EmissionScaleUI
         second: 0
+      data:
+        first:
+          name: _Frequency
+        second: 55
+      data:
+        first:
+          name: _Amplitude
+        second: .180000007
     m_Colors:
       data:
         first:
@@ -138,7 +147,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .365326077, g: .557776868, b: .721518993, a: 1}
+        second: {r: 1, g: .79411763, b: .960243344, a: 1}
       data:
         first:
           name: _EmissionColorUI
