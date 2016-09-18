@@ -82,7 +82,14 @@ public class PlayerSpawner : MonoBehaviour {
                             }
                             else
                             {
-                                playerSelectionContainer.playerInputDevices[i] = gamePadDevices[gamePadDevices.Count-1];
+                                if (gamePadDevices.Count > 0)
+                                {
+                                    playerSelectionContainer.playerInputDevices[i] = gamePadDevices[gamePadDevices.Count-1];
+                                }
+                                else
+                                {
+                                    playerSelectionContainer.playerInputDevices[i] = keyboardDevice;
+                                }
                             }
                         }
 
