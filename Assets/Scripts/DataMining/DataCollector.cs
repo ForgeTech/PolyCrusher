@@ -239,25 +239,27 @@ public class DataCollector : MonoBehaviour
     /// </summary>
     public void addEvent(Event e)
     {
-        if (!sessionRunning || currentSession == null)
+        if (e.type != Event.TYPE.join && (!sessionRunning || currentSession == null))
         {
             Debug.LogError("[DataCollector] No session running. Event not logged." + e.ToString());
         }
         else
         {
-            // reference current session
-            e.session_id = currentSession._id;
+            if(e.type != Event.TYPE.join)
+            {
+                // reference current session
+                e.session_id = currentSession._id;
 
-            // set event time (if session end take official time)
-            if (e.type == Event.TYPE.sessionEnd)
-            {
-                e.time = PlayerManager.PlayTime.TotalTime;
+                // set event time (if session end take official time)
+                if (e.type == Event.TYPE.sessionEnd)
+                {
+                    e.time = PlayerManager.PlayTime.TotalTime;
+                }
+                else
+                {
+                    e.time = (int)(Time.time * 1000) - currentSession.time;
+                }
             }
-            else
-            {
-                e.time = (int)(Time.time * 1000) - currentSession.time;
-            }
-            
 
             OnEventRegistered(e);
 
