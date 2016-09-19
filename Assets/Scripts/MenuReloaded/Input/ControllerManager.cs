@@ -9,7 +9,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     private SmartphoneController smartphoneController;
     private KeyboardController keyboardController;
 
-    private Dictionary<VirtualController, SmartphoneController> smartphoneControllers;
+    private Dictionary<int, SmartphoneController> smartphoneControllers;
 
     private int currentSmartPhoneController = 0;
     private int maxSmartphoneConroller = 4;
@@ -18,7 +18,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     #region methods
     void Start()
     {
-        smartphoneControllers = new Dictionary<VirtualController, SmartphoneController>(4);
+        smartphoneControllers = new Dictionary<int, SmartphoneController>(4);
         keyboardController = new KeyboardController();
         InputManager.AttachDevice(keyboardController);
     }
@@ -26,7 +26,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     void OnDestroy()
     {
         InputManager.DetachDevice(keyboardController);
-        foreach (KeyValuePair<VirtualController, SmartphoneController> entry in smartphoneControllers)
+        foreach (KeyValuePair<int, SmartphoneController> entry in smartphoneControllers)
         {
             InputManager.DetachDevice(entry.Value);
         }
@@ -35,7 +35,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     #region controller updates
     public void VirtualControllerMoves(VirtualController virtualController, Vector2 movement)
     {
-        smartphoneControllers.TryGetValue(virtualController, out smartphoneController);
+        smartphoneControllers.TryGetValue(virtualController.controllerID, out smartphoneController);
         if (smartphoneController != null)
         {
             smartphoneController.SetLeftAnalogStick = movement; 
@@ -44,7 +44,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
     public void VirtualControllerShoots(VirtualController virtualController, Vector2 shoot)
     {
-        smartphoneControllers.TryGetValue(virtualController, out smartphoneController);
+        smartphoneControllers.TryGetValue(virtualController.controllerID, out smartphoneController);
         if (smartphoneController != null)
         {
             smartphoneController.SetRightAnalogStick = shoot;
@@ -53,7 +53,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
     public void VirtualControllerSendsSpecialAttack(VirtualController virtualController)
     {
-        smartphoneControllers.TryGetValue(virtualController, out smartphoneController);
+        smartphoneControllers.TryGetValue(virtualController.controllerID, out smartphoneController);
         if (smartphoneController != null)
         {
             smartphoneController.SetAbilityPressed = true;
@@ -62,7 +62,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
     public void VirtualControllerSendsBackButton(VirtualController virtualController)
     {
-        smartphoneControllers.TryGetValue(virtualController, out smartphoneController);
+        smartphoneControllers.TryGetValue(virtualController.controllerID, out smartphoneController);
         if (smartphoneController != null)
         {
             smartphoneController.SetBackPressed = true;
@@ -71,7 +71,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
     public void VirtualControllerSendsPauseButton(VirtualController virtualController)
     {
-        smartphoneControllers.TryGetValue(virtualController, out smartphoneController);
+        smartphoneControllers.TryGetValue(virtualController.controllerID, out smartphoneController);
         if (smartphoneController != null)
         {
             smartphoneController.SetPausePressed = true;
@@ -97,7 +97,10 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             currentSmartPhoneController++;
             virtualController.ConnectVirtualControllerToGame(this);
             smartphoneController = new SmartphoneController(virtualController);
-            smartphoneControllers.Add(virtualController, smartphoneController);
+            smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
+
+            new Event(Event.TYPE.join).addMobilePlayers(currentSmartPhoneController).send();
+
             return true;
         }
         return false;
@@ -105,7 +108,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
     private void RemoveVirtualController(VirtualController virtualController)
     {
-        smartphoneControllers.TryGetValue(virtualController, out smartphoneController);
+        smartphoneControllers.TryGetValue(virtualController.controllerID, out smartphoneController);
         if (smartphoneController != null)
         {
             InputManager.DetachDevice(smartphoneController);
