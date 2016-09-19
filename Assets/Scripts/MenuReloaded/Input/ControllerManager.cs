@@ -98,6 +98,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             virtualController.ConnectVirtualControllerToGame(this);
             smartphoneController = new SmartphoneController(virtualController);
             smartphoneControllers.Add(virtualController, smartphoneController);
+            return true;
         }
         return false;
     }
