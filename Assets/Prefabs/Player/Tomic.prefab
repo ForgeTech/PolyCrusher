@@ -1589,10 +1589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8e7fbc317227d4caf2f6d2cd7c6c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 50
+  weaponDamage: 30
   weaponFireRate: .300000012
   bulletLifeTime: 2
-  weaponAccuracy: 0
+  weaponAccuracy: 3
   weaponName: NuclearBlaster
   bulletPrefab: {fileID: 137868, guid: efbd5c527a810444e9141fc9087dd3b8, type: 2}
   muzzleFlashLight: {fileID: 125636}
@@ -3153,6 +3153,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: frequency
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponAccuracy
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponDamage
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

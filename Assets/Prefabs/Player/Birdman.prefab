@@ -2284,7 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa69c3a64ff20d478d2dc3b7ccf184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 15
+  weaponDamage: 13
   weaponFireRate: .0399999991
   bulletLifeTime: 1
   weaponAccuracy: 6
@@ -3769,6 +3769,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: frequency
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponDamage
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
