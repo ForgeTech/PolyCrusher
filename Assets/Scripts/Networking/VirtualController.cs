@@ -28,6 +28,9 @@ public interface VirtualControllerHandler
 
 public class VirtualController
 {
+    // ID FOR SMARTPHONE MANAGER
+    public int controllerID;
+
     // MARK: PRIVATE PROPERTIES
 
     // GAME COMMANDS
@@ -53,12 +56,13 @@ public class VirtualController
     private const float ONE_PERCENT = 0.07f;
 
     // CONSTRUCTOR
-    public VirtualController(int port)
+    public VirtualController(int port, int id)
     {
         this.port = port;
+        this.controllerID = id;
     }
 
-    // MARK: PUBLIC METHODS
+    // PUBLIC METHODS
 
     public void ConnectVirtualControllerToGame(VirtualControllerHandler virtualControllerHandler) {
         this.virtualControllerHandler = virtualControllerHandler;
@@ -81,7 +85,7 @@ public class VirtualController
         listener.Close();
     }
 
-    // MARK: PRIVATE METHODS
+    // PRIVATE METHODS
 
     private void HandleGameCommand(byte[] receivedBytes)
     {
@@ -94,28 +98,28 @@ public class VirtualController
                 case (byte)COMMANDS.MOVE:
                     Debug.Log("Movement Data received!");
                     Vector2 move = CalculateVectorValues(new byte[]{receivedBytes[1], receivedBytes[2]});
-                    //virtualControllerHandler.VirtualControllerMoves(this, move);
+                    virtualControllerHandler.VirtualControllerMoves(this, move);
                     break;
                 case (byte)COMMANDS.SHOOT:
                     Debug.Log("Shoot Data received!");
                     Vector2 shoot = CalculateVectorValues(new byte[]{receivedBytes[1], receivedBytes[2]});
-                    //virtualControllerHandler.VirtualControllerShoots(this, shoot);
+                    virtualControllerHandler.VirtualControllerShoots(this, shoot);
                     break;
                 case (byte)COMMANDS.SPECIAL_ATTACK:
                     Debug.Log("SpecialAttack-Command received!");
-                    //virtualControllerHandler.VirtualControllerSendsPauseButton(this);
+                    virtualControllerHandler.VirtualControllerSendsPauseButton(this);
                     break;
                 case (byte)COMMANDS.BACK_BUTTON:
                     Debug.Log("BackButton-Command received!");
-                    //virtualControllerHandler.VirtualControllerSendsBackButton(this);
+                    virtualControllerHandler.VirtualControllerSendsBackButton(this);
                     break;
                 case (byte)COMMANDS.PAUSE_BUTTON:
                      Debug.Log("Pause-Command received!");
-                    //virtualControllerHandler.VirtualControllerSendsSpecialAttack(this);
+                    virtualControllerHandler.VirtualControllerSendsSpecialAttack(this);
                     break;
                 case (byte)COMMANDS.QUITTED_GAME:
                     Debug.Log("Controller quitted game!");
-                    //virtualControllerHandler.VirtualControllerQuitsTheGame(this);
+                    virtualControllerHandler.VirtualControllerQuitsTheGame(this);
                     break;
                 default:
                     break;
@@ -130,16 +134,16 @@ public class VirtualController
     }
 
 
-    private void IsVirtualControllerAlive()
-    {
-        Thread.Sleep(ALIVE_INTERVAL);
-
-        if (!isAlive)
-        {
-            virtualControllerHandler.VirtualControllerIsNotResponsing(this);
+    private void IsVirtualControllerAlive(){
+        try {
+            Thread.Sleep(ALIVE_INTERVAL);
+        } catch(ThreadAbortException e) {
+            Thread.ResetAbort();
         }
-        else
-        {
+
+        if(!isAlive){
+            virtualControllerHandler.VirtualControllerIsNotResponsing(this);
+        } else {
             isAlive = false;
         }
     }

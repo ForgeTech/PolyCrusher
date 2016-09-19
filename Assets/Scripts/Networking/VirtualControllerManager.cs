@@ -20,6 +20,7 @@ public class VirtualControllerManager : MonoBehaviour {
         CLOSE_GAME = 11003
     }
     private int UDP_PORT = 11100;
+    private int CONTROLLER_ID = 100;
 
     // VERSIONS
     private enum VERSION : int {
@@ -46,7 +47,7 @@ public class VirtualControllerManager : MonoBehaviour {
     private Socket connectionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
     private List<IPEndPoint> virtualControllerEndPoints = new List<IPEndPoint>();
 
-    // MARK: UNITY-MONOBEHAVIOUR STANDARD METHODS
+    // UNITY-MONOBEHAVIOUR STANDARD METHODS
 
 	void Start ()
     {
@@ -82,11 +83,12 @@ public class VirtualControllerManager : MonoBehaviour {
         virtualControllerEndPoints.Clear();
     }
 
-    // MARK: PUBLIC METHODS
+    // PUBLIC METHODS
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        string gameName = BaseSteamManager.Instance.GetSteamName();
+        string gameName = "Windows";
+        gameName = gameName.ToUpper(); //BaseSteamManager.Instance.GetSteamName();
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
         // TODO: Think about handling what if length is longer than a UInt16?
@@ -106,12 +108,15 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandleRegisterConnection(Socket handler)
     {
-        VirtualController virtualController = new VirtualController(UDP_PORT);
+        VirtualController virtualController = new VirtualController(UDP_PORT, CONTROLLER_ID);
         virtualControllers.Add(virtualController);
+
+        Debug.Log("TRY CONNECTION");
 
         if (controllerManager!= null && controllerManager.AddNewVirtualController(virtualController))
         {
             byte[] portData = BitConverter.GetBytes(Convert.ToUInt16(UDP_PORT));
+            Debug.Log("CONNECTION SUCCESS");
 
             MemoryStream memoryStream = new MemoryStream();
             memoryStream.WriteByte((byte)COMMAND.REGISTER_SUCCESS);
@@ -121,6 +126,7 @@ public class VirtualControllerManager : MonoBehaviour {
 
             memoryStream.Close();
             UDP_PORT++;
+            CONTROLLER_ID++;
         }
         else
         {
@@ -128,7 +134,7 @@ public class VirtualControllerManager : MonoBehaviour {
         }
     }
 
-    // MARK: PRIVATE METHODS
+    // PRIVATE METHODS
 
     private bool CheckVersion(Socket handler, int version)
     {
