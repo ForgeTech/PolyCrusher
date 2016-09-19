@@ -50,9 +50,7 @@ public class WeaponNuclearBlaster : Weapon {
                     ray.Shoot(CalculateAim(ray, i));
                 }
             }
-
             bulletRounds.Emit(1);
-
 
             shootIsAllowed = false;
             StartCoroutine(WaitForNextShot());

@@ -2522,7 +2522,7 @@ MonoBehaviour:
   energy: 50
   minEnergy: 0
   maxEnergy: 100
-  energyRefillRate: .100000001
+  energyRefillRate: .129999995
   energyIncrement: 1
   playerIdentifier: 1
   playerColor: {r: 1, g: .878431439, b: .200000018, a: 1}
@@ -4034,6 +4034,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: frequency
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: energyRefillRate
+      value: .129999995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

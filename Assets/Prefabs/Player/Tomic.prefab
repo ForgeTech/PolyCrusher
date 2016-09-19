@@ -1559,7 +1559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd2ec6fa5978094487ea6e76273f52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 65
+  energyCost: 50
   abilityCoolDown: 4.0999999
   falloutCloud: {fileID: 104106, guid: 9c0576b79640c954989158e29f2ffc40, type: 2}
 --- !u!114 &11423872
@@ -1692,7 +1692,7 @@ MonoBehaviour:
   energy: 50
   minEnergy: 0
   maxEnergy: 100
-  energyRefillRate: .189999998
+  energyRefillRate: .170000002
   energyIncrement: 1
   playerIdentifier: 6
   playerColor: {r: .243137255, g: 1, b: .113725491, a: 1}
@@ -3103,7 +3103,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: energyCost
-      value: 65
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: abilityCoolDown
@@ -3161,6 +3161,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: weaponDamage
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: energyRefillRate
+      value: .170000002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

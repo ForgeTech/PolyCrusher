@@ -2787,7 +2787,7 @@ MonoBehaviour:
   energy: 50
   minEnergy: 0
   maxEnergy: 100
-  energyRefillRate: .189999998
+  energyRefillRate: .150000006
   energyIncrement: 1
   playerIdentifier: 2
   playerColor: {r: .447058856, g: 1, b: 1, a: 1}
@@ -4391,6 +4391,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: weaponFireRate
       value: .159999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: energyRefillRate
+      value: .150000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

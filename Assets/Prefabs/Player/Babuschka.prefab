@@ -1487,7 +1487,7 @@ MonoBehaviour:
   energy: 50
   minEnergy: 0
   maxEnergy: 100
-  energyRefillRate: .170000002
+  energyRefillRate: .219999999
   energyIncrement: 1
   playerIdentifier: 5
   playerColor: {r: .615686297, g: .274509817, b: .917647064, a: 1}
@@ -1604,7 +1604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31a51a1bc73eda44ba4a88908aa8780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 40
+  energyCost: 50
   abilityCoolDown: 0
   piePrefab: {fileID: 191376, guid: 17db7065ae049eb49899117a0517a089, type: 2}
 --- !u!114 &11445482
@@ -3061,7 +3061,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: energyRefillRate
-      value: .170000002
+      value: .219999999
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0]
@@ -3171,6 +3171,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: frequency
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: energyCost
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
