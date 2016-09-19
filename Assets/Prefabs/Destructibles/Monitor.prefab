@@ -44,7 +44,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 2100000, guid: 0dd45ab68578e4d4ba04f00d00353883, type: 2}
-  - {fileID: 2100000, guid: 47626981919f00446846ea8670bb9dec, type: 2}
+  - {fileID: 2100000, guid: cc5f584716cb3cd4dae108c93e3f25f1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -106,13 +106,15 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explode: 0
   extrudeFactor: .100000001
-  hitsTillExplosion: 4
+  healthValue: 60
   explodeable: 1
   respawn: 1
   timeTillRespawn: 10
   deactivators: []
-  powerUpPrefab: {fileID: 0}
-  powerUpProbability: .0500000007
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
 --- !u!208 &20808486
 NavMeshObstacle:
   m_ObjectHideFlags: 1
@@ -134,7 +136,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: cc5f584716cb3cd4dae108c93e3f25f1, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198166}

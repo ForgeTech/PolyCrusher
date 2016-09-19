@@ -55,6 +55,9 @@ public class ScoreMenuHelper : MonoBehaviour
     [SerializeField]
     private float scoreTextUpScale = 1.1f;
 
+    [SerializeField]
+    private ParticleSystem confetti;
+
     [Header("Audio")]
     [SerializeField]
     private AudioSource countClickSound;
@@ -202,6 +205,8 @@ public class ScoreMenuHelper : MonoBehaviour
             onlineRankString = string.Format(rankString, BaseSteamManager.Instance.GetRank());
 
         RegisterAnimationQueue(animationWorkQueue, score);
+
+        confetti.Play();
 
         // Set each score values to the calculated score
         foreach (var highscoreEntry in highscoreEntries)

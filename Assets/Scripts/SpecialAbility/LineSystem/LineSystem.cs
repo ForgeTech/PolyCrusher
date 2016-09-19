@@ -9,6 +9,7 @@ using System.Collections;
 public class LineSystem : MonoBehaviour {
 
     #region variables
+    [Header("Line Properties")]
     public float lineStartOffset;
     public float healAmount;
     public float energyHealAmount;
@@ -18,9 +19,17 @@ public class LineSystem : MonoBehaviour {
     public float lerpSpeed;
     public float healDistancePadding;
     public float polyDistance;
-
     public Color[] colors;
 
+    [Header("Cutting Sound and volume")]
+    [SerializeField]
+    private AudioClip cuttingSound;
+
+    [SerializeField]
+    private float volume = 1.0f;
+
+
+    [Header("Line Shader")]
     [SerializeField]
     private Material lineShaderMaterial;
     public GameObject health;
@@ -120,7 +129,6 @@ public class LineSystem : MonoBehaviour {
         set { isChangingAmplitude = value; }
     }
 
-
     public int[] ActiveColor
     {
         get { return activeColor; }
@@ -136,6 +144,16 @@ public class LineSystem : MonoBehaviour {
     {
         get { return lineStatus; }
         set { lineStatus = value; }
+    }
+
+    public AudioClip CuttingSound
+    {
+        get { return cuttingSound; }
+    }
+
+    public float Volume
+    {
+        get { return volume; }
     }
 
     #endregion
@@ -168,6 +186,8 @@ public class LineSystem : MonoBehaviour {
      
         currentHeightOffset = lineStartOffset;
 
+
+
     }
 
 	// Use this for initialization
@@ -191,7 +211,7 @@ public class LineSystem : MonoBehaviour {
         cuttingLineLogic.LineStartOffset = lineStartOffset;
         cuttingLineLogic.LineTweens = lineTweens;
         cuttingLineLogic.LineSystem = this;
-        
+      
         UpdatePlayerStatus();
         InitializeLineObjects();
     }

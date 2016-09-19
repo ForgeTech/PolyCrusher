@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834483bd4b67789428315b8ec7cc0d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 40
+  weaponDamage: 42
   weaponFireRate: .129999995
   bulletLifeTime: 0
   weaponAccuracy: 10
@@ -1770,6 +1770,8 @@ MonoBehaviour:
   powerUpDamageRotationSpeedIncrease: 60
   shakeAmount: .400000006
   shakeTime: .200000003
+  frequency: 4
+  amplitude: .00700000022
 --- !u!114 &11496922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3055,7 +3057,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: weaponDamage
-      value: 40
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: energyRefillRate
@@ -3161,6 +3163,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
       value: .180000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: amplitude
+      value: .00700000022
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: frequency
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

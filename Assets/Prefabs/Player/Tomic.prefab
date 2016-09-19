@@ -1589,10 +1589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8e7fbc317227d4caf2f6d2cd7c6c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 50
+  weaponDamage: 30
   weaponFireRate: .300000012
   bulletLifeTime: 2
-  weaponAccuracy: 0
+  weaponAccuracy: 3
   weaponName: NuclearBlaster
   bulletPrefab: {fileID: 137868, guid: efbd5c527a810444e9141fc9087dd3b8, type: 2}
   muzzleFlashLight: {fileID: 125636}
@@ -1797,6 +1797,8 @@ MonoBehaviour:
   powerUpDamageRotationSpeedIncrease: 60
   shakeAmount: .400000006
   shakeTime: .200000003
+  frequency: 4
+  amplitude: .00700000022
 --- !u!114 &11489016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3144,6 +3146,22 @@ Prefab:
       propertyPath: falloutRing
       value: 
       objectReference: {fileID: 162540, guid: 61e688d18effc304ba6ebce0872bad3d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: amplitude
+      value: .00700000022
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: frequency
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponAccuracy
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponDamage
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 168986}

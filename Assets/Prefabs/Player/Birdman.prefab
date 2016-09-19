@@ -2284,7 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa69c3a64ff20d478d2dc3b7ccf184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 15
+  weaponDamage: 13
   weaponFireRate: .0399999991
   bulletLifeTime: 1
   weaponAccuracy: 6
@@ -2362,6 +2362,8 @@ MonoBehaviour:
   powerUpDamageRotationSpeedIncrease: 60
   shakeAmount: .400000006
   shakeTime: .200000003
+  frequency: 4
+  amplitude: .00700000022
 --- !u!114 &11493052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3751,6 +3753,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: shakeAmount
       value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxOffset
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: upDownSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: amplitude
+      value: .00700000022
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: frequency
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponDamage
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
