@@ -11,10 +11,8 @@ public class CuttingLineLogic : MonoBehaviour
     public static event CuttingActivatedHandler CuttingActive;
     public static event CuttingDeactivateHandler CuttingInactive;
 
-    [SerializeField]
     private bool activateCutting;
 
-    [SerializeField]
     private int bossCuttingDamage = 100;
 
     private Vector3 bufferVectorA = new Vector3();
@@ -28,11 +26,15 @@ public class CuttingLineLogic : MonoBehaviour
 
     private LineSystem lineSystem;
 
+    private float volume = 1.0f;
+
     private float lineStartOffset = 0.0f;
     private GameObject laserParticles;
     private GameObject lightSabrePrefab;
     private GameObject lightSabreGameObject;
     private LineTweens lineTweens;
+
+    private AudioClip cuttingSound;
 
     private int[] firstVertex = new int[] { 0, 1, 2, 0, 1, 2 };
     private int[] secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
@@ -109,7 +111,7 @@ public class CuttingLineLogic : MonoBehaviour
         if (timeActive >= 0.0f)
         {
             if (!activateCutting)
-            {
+            {               
                 activateCutting = true;
                 OnCuttingActivated();
             }
@@ -118,7 +120,7 @@ public class CuttingLineLogic : MonoBehaviour
 
             if (timeActive <= 0.0f)
             {
-                activateCutting = false;
+                activateCutting = false;              
                 OnCuttingDeactivated();
                 for (int i = 0; i < lineSystem.LineShaderUtilities.Length; i++)
                 {
@@ -180,6 +182,7 @@ public class CuttingLineLogic : MonoBehaviour
                         {
                             enemy.InstantKill(this);
                             enemy.gameObject.AddComponent<CutUpMesh>();
+                            SoundManager.SoundManagerInstance.Play(lineSystem.CuttingSound, Vector2.zero, lineSystem.Volume, 1.0f, false, AudioGroup.Effects);
                             Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
                             new Event(Event.TYPE.kill).addCharacter("LineSystem").addEnemy(enemy.name).send();
                         }
@@ -202,7 +205,10 @@ public class CuttingLineLogic : MonoBehaviour
             lightSabreGameObject = Instantiate(lightSabrePrefab, Vector3.zero, Quaternion.identity) as GameObject;
             lightSabreGameObject.transform.parent = lineSystem.Players[0].transform;
             lightSabreGameObject.transform.position = Vector3.zero;
-            lightSabreGameObject.GetComponent<LightSabreScript>().PowerUpDuration = timeActive;
+            LightSabreScript lightSabreScript = lightSabreGameObject.GetComponent<LightSabreScript>();
+            lightSabreScript.PowerUpDuration = timeActive;
+            lightSabreScript.CuttingSound = lineSystem.CuttingSound;
+            lightSabreScript.Volume = lineSystem.Volume;
         }
     }
 }

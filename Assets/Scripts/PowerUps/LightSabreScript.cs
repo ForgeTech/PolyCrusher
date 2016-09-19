@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LightSabreScript : MonoBehaviour {
 
-
+    #region variables
     [SerializeField]
     private float sabreRadius;
 
@@ -25,6 +25,8 @@ public class LightSabreScript : MonoBehaviour {
     [SerializeField]
     private GameObject laserParticles;
 
+    private AudioClip cuttingSound;
+    private float volume = 1.0f;
 
     private Vector3 sabreStartPosition = new Vector3();
     private Vector3 sabreEndPosition = new Vector3();
@@ -38,12 +40,24 @@ public class LightSabreScript : MonoBehaviour {
 
     private WaitForSeconds bossDamageCoolDown = new WaitForSeconds(0.5f);
     private bool bossTakesDamage = true;
+    #endregion
 
+    #region properties
     public float PowerUpDuration
     {
         set { powerUpDuration = value; }
     }
 
+    public AudioClip CuttingSound
+    {
+        set { cuttingSound = value; }
+    }
+
+    public float Volume
+    {
+        set { volume = value; }
+    }
+    #endregion
     // Use this for initialization
     void Start () {
         offsetVector.y = heightOffset;
@@ -83,6 +97,7 @@ public class LightSabreScript : MonoBehaviour {
                     {
                         enemy.InstantKill(this);
                         enemy.gameObject.AddComponent<CutUpMesh>();
+                        SoundManager.SoundManagerInstance.Play(cuttingSound, Vector2.zero, volume, 1.0f, false, AudioGroup.Effects);
                         Destroy(Instantiate(laserParticles, hit.point, hit.transform.rotation), 2);
                     }
                 }
