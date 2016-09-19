@@ -2263,6 +2263,8 @@ MonoBehaviour:
   powerUpDamageRotationSpeedIncrease: 60
   shakeAmount: .400000006
   shakeTime: .200000003
+  frequency: 4
+  amplitude: .00700000022
 --- !u!114 &11490794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4709,6 +4711,14 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d137f18364b8caa4c81d54d6d43e7442, type: 2}
+    - target: {fileID: 0}
+      propertyPath: amplitude
+      value: .00700000022
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: frequency
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193704}

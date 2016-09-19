@@ -2,18 +2,29 @@
 
 public class PlayerArrow : MonoBehaviour
 {
+    [Header("Rotation")]
     [SerializeField]
     private float rotationSpeed = 30f;
 
     [SerializeField]
     private float powerUpDamageRotationSpeedIncrease = 60f;
 
+    [Header("Shake")]
     [SerializeField]
     private float shakeAmount = 0.4f;
 
     [SerializeField]
     private float shakeTime = 0.2f;
 
+    [Header("Up and Down movement")]
+    [SerializeField]
+    private float frequency = 2f;
+
+    [SerializeField]
+    private float amplitude = 1.2f;
+
+    private float originalY;
+    private float currentAngle = 0;
     private float currentYRotation = 0f;
     private Quaternion arrowRotation;
     private Quaternion originalRotation;
@@ -27,6 +38,7 @@ public class PlayerArrow : MonoBehaviour
     {
         originalRotation = transform.rotation;
         arrowRotation = originalRotation * Quaternion.Euler(Vector3.up * Random.Range(0, 360));
+        originalY = transform.position.y;
 
         arrowMaterial = GetComponent<Renderer>().material;
         meshRenderer = GetComponent<MeshRenderer>();
@@ -43,6 +55,8 @@ public class PlayerArrow : MonoBehaviour
     {
         if (meshRenderer != null)
             meshRenderer.enabled = false;
+
+        currentAngle = 0;
     }
 
     private void OnEnable()
@@ -55,11 +69,21 @@ public class PlayerArrow : MonoBehaviour
     {
         ResetParentRotation();
         RotateYAxis();
+        DoUpAndDownMovement();
 	}
 
     private void IncreaseRotationSpeed()
     {
         rotationSpeed += powerUpDamageRotationSpeedIncrease;
+    }
+
+    private void DoUpAndDownMovement()
+    {
+        currentAngle += frequency * Time.deltaTime;
+        if (currentAngle > Mathf.PI * 2f)
+            currentAngle = -Mathf.PI * 2f;
+
+        transform.localPosition += Vector3.up * Mathf.Sin(currentAngle) * amplitude ;
     }
 
     private void DoHealthDamageTween(int damage)
