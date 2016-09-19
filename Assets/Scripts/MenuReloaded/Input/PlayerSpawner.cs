@@ -40,9 +40,6 @@ public class PlayerSpawner : MonoBehaviour {
 
     private PlayerControlActions currentPlayerActions;
 
-    private List<InputDevice> usedInputDevices;
-    
-
 	// Use this for initialization
 	void Awake () {
 
@@ -56,8 +53,6 @@ public class PlayerSpawner : MonoBehaviour {
             playerSelectionContainer = editorSpawner.GetComponent<PlayerSelectionContainer>();
             if (playerSelectionContainer != null)
             {
-                usedInputDevices = new List<InputDevice>();
-
                 if (chosenPlayerIndices.Length > 0 && chosenPlayerIndices.Length != controllerNumber.Length)
                 {
                     Debug.Log("Much to learn you still have padawan!");

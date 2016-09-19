@@ -26,8 +26,6 @@ public class CuttingLineLogic : MonoBehaviour
 
     private LineSystem lineSystem;
 
-    private float volume = 1.0f;
-
     private float lineStartOffset = 0.0f;
     private GameObject laserParticles;
     private GameObject lightSabrePrefab;
