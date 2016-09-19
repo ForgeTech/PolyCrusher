@@ -588,6 +588,9 @@ class SteamManager : BaseSteamManager
                     if (e.kills >= 40)
                         UnlockAchievement(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY);
                     break;
+                case Event.TYPE.join:
+                    UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
+                    break;
                 case Event.TYPE.sessionEnd:
                     PerformGameEndActions(e);
                     break;
@@ -599,7 +602,7 @@ class SteamManager : BaseSteamManager
     {
         switch (id)
         {
-            case AchievementID.ACH_CREDITS_VIEWED: //TODO
+            case AchievementID.ACH_CREDITS_VIEWED:
                 UnlockAchievement(AchievementID.ACH_CREDITS_VIEWED);
                 break;
             case AchievementID.ACH_PICK_SPACETIME_MANGO:
