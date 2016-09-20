@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using MongoDB.Bson;
 using System;
 
@@ -21,7 +20,7 @@ public class DataCollector : MonoBehaviour
 
     [Header("Settings")]
         [Tooltip("Determines how many events should be uploaded at once.")]
-        public int bundleSize = 10;
+        public int bundleSize = 10000;
         public bool log = false;
         [Tooltip("Check if all registered events shall be logged in the console.")]
         public bool logEvents = false;
@@ -315,18 +314,22 @@ public class DataCollector : MonoBehaviour
                 else
                 {
                     if (log) { Debug.Log("[DataCollector] unexpected response: " + response); }
+                    /*
                     for (int i = 0; i < e.Length; i++)
                     {
                         eventQueue.Enqueue(e[i]);  // reinsert
                     }
+                    */
                 }
             }
             else
             {
+                /*
                 for (int i = 0; i < e.Length; i++)
                 {
                     eventQueue.Enqueue(e[i]);  // reinsert
                 }
+                */
                 //if (log) 
                 Debug.Log("[DataCollector] WWW Error: " + www.error);
             }

@@ -10,7 +10,7 @@ public class DataCollectorSettings : ScriptableObject {
 
     [Header("Settings")]
     [Tooltip("Determines how many events should be uploaded at once.")]
-    public int bundleSize = 1000;
+    public int bundleSize = 10000;
     public bool log = false;
     [Tooltip("Check if all registered events shall be logged in the console.")]
     public bool logEvents = false;
