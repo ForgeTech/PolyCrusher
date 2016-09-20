@@ -87,6 +87,9 @@ public static class SocketHelper
             }
             finally
             {
+                 UnityThreadHelper.Dispatcher.Dispatch(() => {
+                        Debug.Log("Listener closed.");
+                });
                 listener.Close();
             }
         });

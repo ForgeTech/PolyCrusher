@@ -111,12 +111,9 @@ public class VirtualControllerManager : MonoBehaviour {
         VirtualController virtualController = new VirtualController(UDP_PORT, CONTROLLER_ID);
         virtualControllers.Add(virtualController);
 
-        Debug.Log("TRY CONNECTION");
-
         if (controllerManager!= null && controllerManager.AddNewVirtualController(virtualController))
         {
             byte[] portData = BitConverter.GetBytes(Convert.ToUInt16(UDP_PORT));
-            Debug.Log("CONNECTION SUCCESS");
 
             MemoryStream memoryStream = new MemoryStream();
             memoryStream.WriteByte((byte)COMMAND.REGISTER_SUCCESS);
