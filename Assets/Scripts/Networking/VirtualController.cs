@@ -67,16 +67,17 @@ public class VirtualController
     public void ConnectVirtualControllerToGame(VirtualControllerHandler virtualControllerHandler) {
         this.virtualControllerHandler = virtualControllerHandler;
 
-        //UnityThreadHelper.Dispatcher.Dispatch(() => {
+        UnityThreadHelper.Dispatcher.Dispatch(() => {
             listener = SocketHelper.CreateUDPServer(port, (endPoint, receivedBytes) =>
             {
+                Debug.Log("UDP Socket listens!!");
                 HandleGameCommand(receivedBytes);
             });
             UnityThreadHelper.CreateThread(() =>
             {
                 IsVirtualControllerAlive();
             });
-        //});
+        });
     }
 
     public void Disconnect()
@@ -142,7 +143,9 @@ public class VirtualController
 
         if(!isAlive){
             virtualControllerHandler.VirtualControllerIsNotResponsing(this);
+            Debug.Log("VC is not alive!");
         } else {
+            Debug.Log("Is Alive");
             isAlive = false;
         }
     }
