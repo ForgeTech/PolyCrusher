@@ -75,6 +75,8 @@ public class ScoreMenuHelper : MonoBehaviour
     private string originalScoreText;
 
     private string rankString = "° <color=#FF1B26FF>NEW RANK {0:000}</color>";
+    [HideInInspector]
+    public bool endOfAnimationReached = false;
 
     private WaitForSeconds waitForPhase01;
     private WaitForSeconds waitForTextAdd;
@@ -236,6 +238,7 @@ public class ScoreMenuHelper : MonoBehaviour
 
         DoScaleTween(scoreText.rectTransform, scaleTime, scoreTextUpScale);
         yield return new WaitForSeconds(totalScoreTime);
+        endOfAnimationReached = true;
 
         // Set online rank
         scoreSound.Play();
@@ -270,19 +273,22 @@ public class ScoreMenuHelper : MonoBehaviour
     /// </summary>
     private void SkipScoreAnimation(AbstractMenuManager triggerManager, GameObject selectedComponent)
     {
-        StopAllCoroutines();
+        if (!endOfAnimationReached)
+        {
+            StopAllCoroutines();
 
-        waitForPhase01 = new WaitForSeconds(0);
-        waitForTextAdd = new WaitForSeconds(0);
-        waitForNextLine = new WaitForSeconds(0);
-        waitForNextPhase = new WaitForSeconds(0);
+            waitForPhase01 = new WaitForSeconds(0);
+            waitForTextAdd = new WaitForSeconds(0);
+            waitForNextLine = new WaitForSeconds(0);
+            waitForNextPhase = new WaitForSeconds(0);
 
-        countClickSound.volume = 0;
-        countFinishedSound.volume = 0;
-        scoreSound.volume = 0;
+            countClickSound.volume = 0;
+            countFinishedSound.volume = 0;
+            scoreSound.volume = 0;
 
-        // Initiate the phases with no wait time
-        StartCoroutine(StartAnimationPhase01());
+            // Initiate the phases with no wait time
+            StartCoroutine(StartAnimationPhase01());
+        }
     }
 
     private void Initialize()
