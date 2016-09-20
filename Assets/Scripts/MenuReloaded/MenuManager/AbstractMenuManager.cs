@@ -120,7 +120,7 @@ public abstract class AbstractMenuManager : MonoBehaviour
 
     protected virtual void Update ()
     {
-        if (isInputActive)
+        if (isInputActive && menuInputHandler != null)
         {
             if (acceptStickInputInternal && acceptStickInputExternal)
             {
