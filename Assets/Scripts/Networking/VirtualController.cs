@@ -70,7 +70,6 @@ public class VirtualController
         UnityThreadHelper.Dispatcher.Dispatch(() => {
             listener = SocketHelper.CreateUDPServer(port, (endPoint, receivedBytes) =>
             {
-                Debug.Log("UDP Socket listens!!");
                 HandleGameCommand(receivedBytes);
             });
             UnityThreadHelper.CreateThread(() =>
@@ -96,29 +95,23 @@ public class VirtualController
             switch (gameCommand)
             {
                 case (byte)COMMANDS.MOVE:
-                    Debug.Log("Movement Data received!");
                     Vector2 move = CalculateVectorValues(new byte[]{receivedBytes[1], receivedBytes[2]});
                     virtualControllerHandler.VirtualControllerMoves(this, move);
                     break;
                 case (byte)COMMANDS.SHOOT:
-                    Debug.Log("Shoot Data received!");
                     Vector2 shoot = CalculateVectorValues(new byte[]{receivedBytes[1], receivedBytes[2]});
                     virtualControllerHandler.VirtualControllerShoots(this, shoot);
                     break;
                 case (byte)COMMANDS.SPECIAL_ATTACK:
-                    Debug.Log("SpecialAttack-Command received!");
                     virtualControllerHandler.VirtualControllerSendsSpecialAttack(this);
                     break;
                 case (byte)COMMANDS.BACK_BUTTON:
-                    Debug.Log("BackButton-Command received!");
                     virtualControllerHandler.VirtualControllerSendsBackButton(this);
                     break;
                 case (byte)COMMANDS.PAUSE_BUTTON:
-                     Debug.Log("Pause-Command received!");
                     virtualControllerHandler.VirtualControllerSendsPauseButton(this);
                     break;
                 case (byte)COMMANDS.QUITTED_GAME:
-                    Debug.Log("Controller quitted game!");
                     virtualControllerHandler.VirtualControllerQuitsTheGame(this);
                     break;
                 default:
@@ -129,7 +122,7 @@ public class VirtualController
         }
         else
         {
-            Debug.Log("Controller on Port: " + port + " sended invalid data");
+            
         }
     }
 
@@ -143,9 +136,7 @@ public class VirtualController
 
         if(!isAlive){
             virtualControllerHandler.VirtualControllerIsNotResponsing(this);
-            Debug.Log("VC is not alive!");
         } else {
-            Debug.Log("Is Alive");
             isAlive = false;
         }
     }

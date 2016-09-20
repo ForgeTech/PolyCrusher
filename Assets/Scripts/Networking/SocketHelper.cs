@@ -20,14 +20,8 @@ public static class SocketHelper
                 // Start listening for connections.
                 while (true)
                 {
-                    UnityThreadHelper.Dispatcher.Dispatch(() => {
-                        Debug.Log("Waiting for a TCP connection...");
-                    });
                     // Thread sleeps while waiting for an incoming connection
                     Socket handler = listener.Accept();
-                    UnityThreadHelper.Dispatcher.Dispatch(() => {
-                        Debug.Log("TCP data received");
-                    });
                     // Handle data in Closure      
                     connected(handler);
 
@@ -38,15 +32,12 @@ public static class SocketHelper
             catch (Exception e)
             {
                 // TODO: Error Handling
-                UnityThreadHelper.Dispatcher.Dispatch(() => {
+                /*UnityThreadHelper.Dispatcher.Dispatch(() => {
 					Debug.Log(e);
-				});
+				}); */
             }
             finally
             {
-                UnityThreadHelper.Dispatcher.Dispatch(() => {
-					Debug.Log("Socket closed!");
-				});
                 listener.Close();
             }
         });
@@ -67,29 +58,21 @@ public static class SocketHelper
             {
                 while (true)
                 {
-                    UnityThreadHelper.Dispatcher.Dispatch(() => {
-                        Debug.Log("Waiting for a UDP connection...");
-                    });
                     byte[] receivedBytes = listener.Receive(ref groupEndPoint);
-                    UnityThreadHelper.Dispatcher.Dispatch(() => {
-                        Debug.Log("UDP data received");
-                    });
                     // TODO Add validation on ip with groupEndPoint. Optional
                     messageReceived(groupEndPoint, receivedBytes);
                 }
             }
             catch (Exception e)
             {
+                
                 UnityThreadHelper.Dispatcher.Dispatch(() => {
 					Debug.Log(e);
-				});
+				}); 
                 // TODO: Error Handling
             }
             finally
             {
-                 UnityThreadHelper.Dispatcher.Dispatch(() => {
-                        Debug.Log("Listener closed.");
-                });
                 listener.Close();
             }
         });
@@ -104,9 +87,6 @@ public static class SocketHelper
         UnityThreadHelper.CreateThread(() =>
         {
             // TODO Exception handling
-            UnityThreadHelper.Dispatcher.Dispatch(() => {
-                Debug.Log("lets send: " + address + " PORT: " + port);
-            });
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(new IPEndPoint(address, port));
