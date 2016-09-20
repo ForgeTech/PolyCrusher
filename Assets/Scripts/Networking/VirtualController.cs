@@ -67,8 +67,7 @@ public class VirtualController
     public void ConnectVirtualControllerToGame(VirtualControllerHandler virtualControllerHandler) {
         this.virtualControllerHandler = virtualControllerHandler;
 
-        UnityThreadHelper.Dispatcher.Dispatch(() =>
-        {
+        //UnityThreadHelper.Dispatcher.Dispatch(() => {
             listener = SocketHelper.CreateUDPServer(port, (endPoint, receivedBytes) =>
             {
                 HandleGameCommand(receivedBytes);
@@ -77,7 +76,7 @@ public class VirtualController
             {
                 IsVirtualControllerAlive();
             });
-        });
+        //});
     }
 
     public void Disconnect()
