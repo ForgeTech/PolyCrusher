@@ -63,7 +63,6 @@ public class PolyExplosion : MonoBehaviour {
 
         if (explode)
         { 
-
             explode = false;
             ExplodePartial(0);
             part2 = true;
@@ -74,7 +73,6 @@ public class PolyExplosion : MonoBehaviour {
                 part2 = false;
                 ExplodePartial(step);
                 part3 = true;
-
             }else
             {
                 if (part3)
@@ -104,8 +102,6 @@ public class PolyExplosion : MonoBehaviour {
                                 part6 = false;
                                 ExplodePartial(step * 5);
                                 part7 = true;
-
-
                             }
                             else
                             {
@@ -117,7 +113,6 @@ public class PolyExplosion : MonoBehaviour {
 
                                 }else
                                 {
-
                                     if (part8)
                                     {
                                         part8 = false;
@@ -191,12 +186,9 @@ public class PolyExplosion : MonoBehaviour {
                     GO.transform.position = transform.position;
                     GO.transform.rotation = transform.rotation;
                     GO.transform.localScale = new Vector3(MR.transform.localScale.x*scaleFactor, MR.transform.localScale.y, MR.transform.localScale.z*scaleFactor);
-
                     
                     deactivator.attachedRenderer.material = MR.materials[submesh];                   
                     deactivator.attachedFilter.mesh = mesh;
-
-                    
 
                     GO.AddComponent<BoxCollider>();
 

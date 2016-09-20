@@ -28,7 +28,9 @@ public class SmartphoneController : InputDevice {
 
     public bool SetAbilityPressed
     {
-        set { abilityPressed = value; }
+        set { abilityPressed = value;
+            Debug.Log("Ability was pressed");
+        }
     }
 
     public bool SetJoinPressed
@@ -83,25 +85,30 @@ public class SmartphoneController : InputDevice {
 
     #region controller states update
     public override void Update(ulong updateTick, float deltaTime)
-    {
+    { 
         //updating left analog stick
         UpdateLeftStickWithValue(leftAnalogStick, updateTick, deltaTime);
+        leftAnalogStick.Set(0, 0);
 
         //updating right analog stick
         UpdateRightStickWithValue(rightAnalogStick, updateTick, deltaTime);
+        rightAnalogStick.Set(0, 0);
 
         //updating ability button
         UpdateWithState(InputControlType.LeftBumper, abilityPressed, updateTick, deltaTime);
-
+        
         //updating join button
-        UpdateWithState(InputControlType.Action1, joinPressed, updateTick, deltaTime);
-
-        //updating pause button
-        UpdateWithState(InputControlType.Button6, pausePressed, updateTick, deltaTime);
+        UpdateWithState(InputControlType.Action1, abilityPressed, updateTick, deltaTime);
+        abilityPressed = false;
 
         //updating back button
-        UpdateWithState(InputControlType.Button1, backPressed, updateTick, deltaTime);
+        UpdateWithState(InputControlType.Action2, backPressed, updateTick, deltaTime);
+        backPressed = false;
 
+        //updating pause button
+        UpdateWithState(InputControlType.Action8, pausePressed, updateTick, deltaTime);
+        pausePressed = false;
+        
         //apply changes
         Commit(updateTick, deltaTime);
     }

@@ -107,7 +107,7 @@ public class VirtualController
                     break;
                 case (byte)COMMANDS.SPECIAL_ATTACK:
                     Debug.Log("SpecialAttack-Command received!");
-                    virtualControllerHandler.VirtualControllerSendsPauseButton(this);
+                    virtualControllerHandler.VirtualControllerSendsSpecialAttack(this);
                     break;
                 case (byte)COMMANDS.BACK_BUTTON:
                     Debug.Log("BackButton-Command received!");
@@ -115,7 +115,7 @@ public class VirtualController
                     break;
                 case (byte)COMMANDS.PAUSE_BUTTON:
                      Debug.Log("Pause-Command received!");
-                    virtualControllerHandler.VirtualControllerSendsSpecialAttack(this);
+                    virtualControllerHandler.VirtualControllerSendsPauseButton(this);
                     break;
                 case (byte)COMMANDS.QUITTED_GAME:
                     Debug.Log("Controller quitted game!");
