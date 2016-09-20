@@ -10,7 +10,6 @@ public class SmartphoneController : InputDevice {
     private Vector2 rightAnalogStick;
 
     private bool abilityPressed;
-    private bool joinPressed;
     private bool pausePressed;
     private bool backPressed;
     #endregion
@@ -28,14 +27,7 @@ public class SmartphoneController : InputDevice {
 
     public bool SetAbilityPressed
     {
-        set { abilityPressed = value;
-            Debug.Log("Ability was pressed");
-        }
-    }
-
-    public bool SetJoinPressed
-    {
-        set { joinPressed = value; }
+        set { abilityPressed = value; }
     }
 
     public bool SetPausePressed
