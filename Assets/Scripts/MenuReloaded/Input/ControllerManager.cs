@@ -4,7 +4,6 @@ using InControl;
 
 public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 {
-
     #region variables
     private SmartphoneController smartphoneController;
     private KeyboardController keyboardController;
@@ -16,13 +15,18 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     #endregion
 
     #region methods
+
+    #region initialization
     void Start()
     {
         smartphoneControllers = new Dictionary<int, SmartphoneController>(4);
         keyboardController = new KeyboardController();
+
         InputManager.AttachDevice(keyboardController);
     }
+    #endregion
 
+    #region reset
     void OnDestroy()
     {
         InputManager.DetachDevice(keyboardController);
@@ -31,6 +35,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             InputManager.DetachDevice(entry.Value);
         }
     }
+    #endregion
 
     #region controller updates
     public void VirtualControllerMoves(VirtualController virtualController, Vector2 movement)
@@ -97,9 +102,12 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             currentSmartPhoneController++;
             virtualController.ConnectVirtualControllerToGame(this);
             smartphoneController = new SmartphoneController(virtualController);
+            InputManager.AttachDevice(smartphoneController);
             smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
-
-            new Event(Event.TYPE.join).addMobilePlayers(currentSmartPhoneController).send();
+            //UnityThreadHelper.Dispatcher.Dispatch(() =>
+            //{
+            //    new Event(Event.TYPE.join).addMobilePlayers(currentSmartPhoneController).send();
+            //});
 
             return true;
         }

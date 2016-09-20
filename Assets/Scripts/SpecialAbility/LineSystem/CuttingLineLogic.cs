@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public delegate void CuttingActivatedHandler();
 public delegate void CuttingDeactivateHandler();
 
 public class CuttingLineLogic : MonoBehaviour
 {
-
+    #region variables
     public static event CuttingActivatedHandler CuttingActive;
     public static event CuttingDeactivateHandler CuttingInactive;
 
@@ -37,6 +36,7 @@ public class CuttingLineLogic : MonoBehaviour
     private int[] firstVertex = new int[] { 0, 1, 2, 0, 1, 2 };
     private int[] secondVertex = new int[] { 1, 2, 0, 3, 3, 3 };
     private int[] linesNeeded = new int[] { 0, 1, 3, 6 };
+    #endregion
 
     #region properties
     public float TimeActive
@@ -72,6 +72,7 @@ public class CuttingLineLogic : MonoBehaviour
 
     #endregion
 
+    #region methods
     private void Awake()
     {
         LevelEndManager.levelExitEvent += ResetValues;
@@ -209,4 +210,5 @@ public class CuttingLineLogic : MonoBehaviour
             lightSabreScript.Volume = lineSystem.Volume;
         }
     }
+    #endregion
 }

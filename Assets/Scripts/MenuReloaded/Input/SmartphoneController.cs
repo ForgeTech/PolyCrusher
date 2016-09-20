@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using InControl;
 
 public class SmartphoneController : InputDevice {
-
 
     #region variables
     private VirtualController virtualController;
@@ -18,12 +16,6 @@ public class SmartphoneController : InputDevice {
     #endregion
 
     #region properties
-    public VirtualController SetVirtualController
-    {
-        get { return virtualController; }
-        set { virtualController = value; }
-    }
-
     public Vector2 SetLeftAnalogStick
     {
         set { leftAnalogStick.Set(value.x, value.y); }
@@ -60,6 +52,7 @@ public class SmartphoneController : InputDevice {
     #region le constructeur de malheur
     public SmartphoneController(VirtualController virtualController) : base( "Smartphone Controller" )
 	{
+        //the reference to the virtual controller
         this.virtualController = virtualController;
 
         //left analog stick 
