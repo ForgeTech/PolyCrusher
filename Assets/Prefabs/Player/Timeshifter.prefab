@@ -1432,7 +1432,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149956}
-  m_LocalRotation: {x: .673879206, y: -.652568281, z: -.0719790235, w: -.338910729}
+  m_LocalRotation: {x: .673879266, y: -.65256834, z: -.071979031, w: -.338910758}
   m_LocalPosition: {x: .0117888842, y: 1.67970443, z: -.105552927}
   m_LocalScale: {x: .999999523, y: 1, z: .99999994}
   m_Children:
@@ -2778,9 +2778,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be971dbc8281a2a4093ae0340cdded22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 150
   minHealth: 0
-  maxHealth: 100
+  maxHealth: 150
   lowHealth: 25
   healthRefillRate: .899999976
   healthRefillIncrement: 1
@@ -2979,7 +2979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c98026df6300a8469a91b16c93fe40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 48
+  weaponDamage: 68
   weaponFireRate: .159999996
   bulletLifeTime: 1
   weaponAccuracy: 1
@@ -4386,7 +4386,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: weaponDamage
-      value: 48
+      value: 68
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: weaponFireRate
@@ -4395,6 +4395,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: energyRefillRate
       value: .150000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

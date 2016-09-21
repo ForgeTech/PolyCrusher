@@ -2284,7 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa69c3a64ff20d478d2dc3b7ccf184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 13
+  weaponDamage: 18
   weaponFireRate: .0399999991
   bulletLifeTime: 1
   weaponAccuracy: 6
@@ -2316,9 +2316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be971dbc8281a2a4093ae0340cdded22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 150
   minHealth: 0
-  maxHealth: 100
+  maxHealth: 150
   lowHealth: 25
   healthRefillRate: .899999976
   healthRefillIncrement: 1
@@ -3772,11 +3772,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: weaponDamage
-      value: 13
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: energyRefillRate
       value: .209999993
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
