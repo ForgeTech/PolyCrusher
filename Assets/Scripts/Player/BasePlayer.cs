@@ -531,9 +531,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
                 CancelInvoke();
 
                 string enemyName = "undefined";
-                if (damageDealer is BaseEnemy)
+                if (damageDealer != null && damageDealer is BaseEnemy)
                     enemyName = ((BaseEnemy)damageDealer).EnemyName;
-                else
+                else if(damageDealer != null && !(damageDealer is BaseEnemy))
                     enemyName = damageDealer.GetType().Name;
 
                 // Instantiate particles if the prefab reference isn't null.
