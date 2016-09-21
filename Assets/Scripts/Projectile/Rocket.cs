@@ -35,10 +35,6 @@ public class Rocket : Projectile
 	// Height which the projectile shoud achieve.
 	[SerializeField]
 	private float lifeTime = 5.0f; 
-
-	// Audiofile of the explosion
-	[SerializeField]
-	private AudioClip explosionSound;
 	
 	// only play once
 	private bool playExplode = true;
@@ -54,10 +50,15 @@ public class Rocket : Projectile
     LTDescr mainTween = null;
     LTDescr heightTween = null;
 
-    /// <summary>
-    /// Gets or sets the speed of the projectile.
-    /// </summary>
-    public float TimeScale
+	[SerializeField]
+	private AudioClip[] potCrashSounds;
+	[SerializeField]
+	private AudioClip[] potExplosionSounds;
+
+	/// <summary>
+	/// Gets or sets the speed of the projectile.
+	/// </summary>
+	public float TimeScale
 	{
 		get { return timeScale; }
 		set
@@ -142,12 +143,16 @@ public class Rocket : Projectile
         // only calling the explosionsound method once
         if (playExplode)
         {
-            if (explosionSound != null)
+            if (potCrashSounds[0] != null && potExplosionSounds[0] != null)
             {
-                SoundManager.SoundManagerInstance.Play(explosionSound, transform.position, AudioGroup.Effects);
-                playExplode = false;
-            }
+				SoundManager.SoundManagerInstance.Play(potCrashSounds[Random.Range(0, potCrashSounds.Length)], transform, AudioGroup.Effects);
+				SoundManager.SoundManagerInstance.Play(potExplosionSounds[Random.Range(0, potExplosionSounds.Length)], transform, 0.25f, 1f, AudioGroup.Effects);
 
+				playExplode = false;
+            } else {
+				Debug.Log("Rocket.cs: No potcrashsounds or -explosionsounds detected!");
+			}
+			
             Collider[] collidingObjects = Physics.OverlapSphere(transform.position, damageRadius, 1 << 8);
 
             // Handles the damage taking of the players.
@@ -167,7 +172,7 @@ public class Rocket : Projectile
             CameraManager.CameraReference.ShakeOnce();
         }
         //Destroy(this.gameObject, 0.1f);
-        StartCoroutine(DestroyProjectileAfterTime(0.1f));
+        StartCoroutine(DestroyProjectileAfterTime(1f));
     }
 
     /// <summary>
