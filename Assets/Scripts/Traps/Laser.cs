@@ -92,6 +92,7 @@ public class Laser : MonoBehaviour
                             toDestroy.gameObject.AddComponent<CutUpMesh>();
                         }
                     }
+                    gameObject.GetComponent<AudioSource>().Play(0);
                 }
 
                 if (gotHit is BaseEnemy)
