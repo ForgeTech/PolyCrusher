@@ -67,9 +67,12 @@ public class PlayerArrow : MonoBehaviour
 
 	private void Update ()
     {
-        ResetParentRotation();
-        RotateYAxis();
-        DoUpAndDownMovement();
+        if (Time.timeScale >= 1)
+        {
+            ResetParentRotation();
+            RotateYAxis();
+            DoUpAndDownMovement();
+        }
 	}
 
     private void IncreaseRotationSpeed()
@@ -88,7 +91,7 @@ public class PlayerArrow : MonoBehaviour
 
     private void DoHealthDamageTween(int damage)
     {
-        if (!LeanTween.isTweening(gameObject))
+        if (!LeanTween.isTweening(gameObject) && Time.timeScale >= 1)
         {
             LeanTween.moveLocalZ(gameObject, shakeAmount, shakeTime).setEase(LeanTweenType.easeShake);
             LeanTween.value(gameObject, originalEmissionColor, Color.black, shakeTime).setEase(LeanTweenType.easeShake)
