@@ -98,6 +98,14 @@ public class HintArrowSystem : MonoBehaviour {
                 hints[i].transform.LookAt(polygonCoreLogic.MiddlePoint);
             }
         }
+
+        for(int i = MAX_PLAYERS-1; i > polygonCoreLogic.PlayerGameObjects.Length-1; i--)
+        {
+            if(hints[i] != null && hints[i].activeInHierarchy)
+            {
+                hints[i].SetActive(false);
+            }
+        }
     }
     #endregion
 
