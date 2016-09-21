@@ -97,16 +97,20 @@ public class VirtualController
                 case (byte)COMMANDS.MOVE:
                     Vector2 move = CalculateVectorValues(new byte[]{receivedBytes[1], receivedBytes[2]});
                     virtualControllerHandler.VirtualControllerMoves(this, move);
+                    Debug.Log("Received move");
                     break;
                 case (byte)COMMANDS.SHOOT:
                     Vector2 shoot = CalculateVectorValues(new byte[]{receivedBytes[1], receivedBytes[2]});
                     virtualControllerHandler.VirtualControllerShoots(this, shoot);
+                    Debug.Log("Received shoot");
                     break;
                 case (byte)COMMANDS.SPECIAL_ATTACK:
                     virtualControllerHandler.VirtualControllerSendsSpecialAttack(this);
+                    Debug.Log("Received special attack");
                     break;
                 case (byte)COMMANDS.BACK_BUTTON:
                     virtualControllerHandler.VirtualControllerSendsBackButton(this);
+                    Debug.Log("Received back");
                     break;
                 case (byte)COMMANDS.PAUSE_BUTTON:
                     virtualControllerHandler.VirtualControllerSendsPauseButton(this);
