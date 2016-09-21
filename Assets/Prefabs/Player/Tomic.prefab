@@ -1687,8 +1687,8 @@ MonoBehaviour:
   minHealth: 0
   maxHealth: 150
   lowHealth: 25
-  healthRefillRate: .300000012
-  healthRefillIncrement: 2
+  healthRefillRate: .0700000003
+  healthRefillIncrement: 1
   energy: 50
   minEnergy: 0
   maxEnergy: 100
@@ -3173,6 +3173,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxHealth
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: healthRefillRate
+      value: .0700000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: healthRefillIncrement
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
