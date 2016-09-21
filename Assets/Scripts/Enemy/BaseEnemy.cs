@@ -447,14 +447,14 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             anim.SetBool("Death", true);
 
             // Normal Scale Fade out.
-            LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart);
+            LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true);
         }
 
         //Event.
         OnEnemyDeath();
 
         //Destroy
-        Destroy(this.gameObject, lifeTimeAfterDeath);
+        Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
     }
 
     /// <summary>

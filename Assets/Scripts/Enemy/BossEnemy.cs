@@ -525,7 +525,7 @@ public class BossEnemy : BaseEnemy
         StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
 
         //Destroy
-        Destroy(this.gameObject, lifeTimeAfterDeath);
+        Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
     }
 
     /// <summary>

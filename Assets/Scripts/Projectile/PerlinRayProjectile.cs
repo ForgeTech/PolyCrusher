@@ -199,7 +199,14 @@ public class PerlinRayProjectile : Projectile
         // Check if the hit-object can take damage
         if (hitInfo.transform != null && hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() is IDamageable)
         {
-            (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() as IDamageable).TakeDamage(Damage, this.OwnerScript);
+            try
+            {
+                (hitInfo.transform.gameObject.GetComponent<MonoBehaviour>() as IDamageable).TakeDamage(Damage, this.OwnerScript);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("<color='ff0000'>[PerlinRay]: Hit info IDamageable error.</color>\n" + e.ToString());
+            }
             SpawnDeathParticle(hitInfo.transform.position);
         }
     }

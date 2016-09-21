@@ -559,23 +559,32 @@ public class GameManager : MonoBehaviour
     protected void BossDied(BossEnemy e)
     {
         this.CurrentEnemyCount--;
-        
-        MonoBehaviour m = bossSpawnInfo.boss.GetComponent<MonoBehaviour>();
 
-        if (m != null && m is BossEnemy && e != null)
+        try
         {
-            BossEnemy b = m as BossEnemy;
+            MonoBehaviour m = bossSpawnInfo.boss.GetComponent<MonoBehaviour>();
 
-            // Add the ressource value if the name is equal.
-            if (b.EnemyName == e.EnemyName)
+            if (m != null && m is BossEnemy && e != null)
             {
-                this.accumulatedRessourceValue += BossSpawnInfo.enemyRessourceValue;
+                BossEnemy b = m as BossEnemy;
+
+                // Add the ressource value if the name is equal.
+                if (b.EnemyName == e.EnemyName)
+                {
+                    this.accumulatedRessourceValue += BossSpawnInfo.enemyRessourceValue;
+                }
+            }
+            else if (e == null)
+            {
+                // Add the ressource also if the incoming boss is null -> the boss may be destroyed in a bad constellation
+                this.accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
             }
         }
-        else if (e == null)
+        catch (Exception exception)
         {
             // Add the ressource also if the incoming boss is null -> the boss may be destroyed in a bad constellation
             this.accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
+            Debug.Log("<color='ff0000'>Boss exception: </color>" + exception.ToString());
         }
     }
 
