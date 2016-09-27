@@ -147,7 +147,7 @@ public class PlayerInputHandler
                     player.abilityCharacterSound.PlayRandomClip();
 
                 // save ability event
-                new Event(Event.TYPE.ability).addPos(player.transform).addCharacter(player.PlayerIdentifier.ToString("g")).addWave().send();
+                new Event(Event.TYPE.ability).addPos(player.transform).addCharacter(player.PlayerIdentifier.ToString("g")).addPlayerCount().addWave().send();
             }
         }
     }
