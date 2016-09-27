@@ -48,6 +48,8 @@ public class PolygonCoreLogic : MonoBehaviour {
 
     private float currentAlpha = 0.0f;
 
+    private AudioSource loadingSound;
+
     #endregion
 
     #region properties
@@ -231,14 +233,16 @@ public class PolygonCoreLogic : MonoBehaviour {
                 {
                     if(polygonUtil.CheckPlayerDistances(playerGameObjects, polygonProperties.requiredPolyDistance))
                     {
-                        if(currentPolyTriggerTime == 0)
+                        if(currentPolyTriggerTime <= 0)
                         {
-                            SoundManager.SoundManagerInstance.Play(polygonProperties.polyLoading, Vector3.zero, AudioGroup.Effects);
+                            loadingSound = SoundManager.SoundManagerInstance.Play(polygonProperties.polyLoading, Vector3.zero, AudioGroup.Effects);
                         }
 
                         currentPolyTriggerTime += Time.deltaTime;
                         if (currentPolyTriggerTime >= polygonProperties.requiredTriggerTime)
                         {
+                            loadingSound.volume = 0.0f;
+                            
                             OnPolyExecuted();
                         }
                     }

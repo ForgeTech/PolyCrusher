@@ -1,22 +1,9 @@
 ﻿using UnityEngine;
-
+using System.Collections;
 
 public class PolyExplosion : MonoBehaviour {
 
-
-    
-    public GameObject explosion;
-    public bool explode = false;
-    private bool part2 = false;
-    private bool part3 = false;
-    private bool part4 = false;
-    private bool part5 = false;
-    private bool part6 = false;
-    private bool part7 = false;
-    private bool part8 = false;
-    private bool part9 = false;
-    private bool part10 = false;
-
+    #region variables
     private int vertexCount;
     private int step;
     private int grandStep;
@@ -29,17 +16,21 @@ public class PolyExplosion : MonoBehaviour {
     Vector3[] normals;
     Vector2[] uvs;
 
-
-
     GameObject GO;
     Mesh mesh;
     Vector3[] newVerts;
     Vector3[] newNormals;
     Vector2[] newUvs;
+    #endregion
 
+    #region methods
     // Use this for initialization
-    void Start () {
-        explode = true;
+    void Start ()
+    {
+        newVerts = new Vector3[3];
+        newNormals = new Vector3[3];
+        newUvs = new Vector2[3];
+
         MR = GetComponentInChildren<SkinnedMeshRenderer>();
         M = MR.sharedMesh;
         verts = M.vertices;
@@ -52,98 +43,21 @@ public class PolyExplosion : MonoBehaviour {
         {
             step++;
         }
-
         grandStep = step * 20;
-
         scaleFactor = 3+((step/3)* 0.28f);
+
+        StartCoroutine(ExplodeOverTime());
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
 
-        if (explode)
-        { 
-            explode = false;
-            ExplodePartial(0);
-            part2 = true;
-        }else
+
+    private IEnumerator ExplodeOverTime()
+    {
+        for(int i = 0; i < 11; i++)
         {
-            if (part2)
-            {
-                part2 = false;
-                ExplodePartial(step);
-                part3 = true;
-            }else
-            {
-                if (part3)
-                {
-                    part3 = false;
-                    ExplodePartial(step*2);
-                    part4 = true;
-                }else
-                {
-                    if (part4)
-                    {
-                        part4 = false;
-                        ExplodePartial(step*3);
-                        part5 = true;
-                    }else
-                    {
-                        if (part5)
-                        {
-                            part5 = false;
-                            ExplodePartial(step*4);
-                            part6 = true;
-
-                        }else
-                        {
-                            if (part6)
-                            {
-                                part6 = false;
-                                ExplodePartial(step * 5);
-                                part7 = true;
-                            }
-                            else
-                            {
-                                if (part7)
-                                {
-                                    part7 = false;
-                                    ExplodePartial(step * 6);
-                                    part8 = true;
-
-                                }else
-                                {
-                                    if (part8)
-                                    {
-                                        part8 = false;
-                                        ExplodePartial(step * 7);
-                                        part9 = true;
-
-                                    }else
-                                    {
-                                        if (part9)
-                                        {
-                                            part9 = false;
-                                            ExplodePartial(step * 8);
-                                            part10 = true;
-                                        }else
-                                        {
-                                            if (part10)
-                                            {
-                                                part10 = false;
-                                                ExplodePartial(step * 9);
-                                                Destroy(gameObject);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            ExplodePartial(i);
+            yield return null;
         }
-	}
+    }
 
 
     private void ExplodePartial(int start)
@@ -154,9 +68,6 @@ public class PolyExplosion : MonoBehaviour {
 
             for (int i = start; i < indices.Length; i += grandStep)
             {
-                newVerts = new Vector3[3];
-                newNormals = new Vector3[3];
-                newUvs = new Vector2[3];
                 for (int n = 0; n < 3; n++)
                 {
                     int index = indices[i + n];
@@ -172,7 +83,6 @@ public class PolyExplosion : MonoBehaviour {
                 mesh.triangles = new int[] { 0, 1, 2, 2, 1, 0 };
 
                 GO = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
-               
                
 
                 if(GO != null)
@@ -198,4 +108,6 @@ public class PolyExplosion : MonoBehaviour {
             }
         }
     }
+
+    #endregion
 }
