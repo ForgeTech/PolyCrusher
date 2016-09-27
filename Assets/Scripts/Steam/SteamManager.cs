@@ -164,7 +164,7 @@ class SteamManager : BaseSteamManager
         // add achievements
         achievements.Add(AchievementID.ACH_PLAY_21_GAMES, new Achievement("Half the truth", "Play 21 games."));
         achievements.Add(AchievementID.ACH_PLAY_42_GAMES, new Achievement("The truth - but what was the question?", "Play 42 games."));
-        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore derrière", "Kill 1000 asses."));
+        achievements.Add(AchievementID.ACH_KILL_1000_ASSES, new Achievement("J'adore les derrières", "Kill 1000 asses."));
         achievements.Add(AchievementID.ACH_CURRENT_HIGHSCORE, new Achievement("15 minutes of fame", "Rank one on any leaderboard!"));
         achievements.Add(AchievementID.ACH_PLAY_ALL_CHARACTERS, new Achievement("Schizophrenia", "Play with all characters."));
         achievements.Add(AchievementID.ACH_PLAY_WITH_FOUR, new Achievement("Polyparty", "Play a game with three friends."));
@@ -185,7 +185,7 @@ class SteamManager : BaseSteamManager
         achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CHICKEN, new Achievement("Parricide", "Kill B055 with a chicken."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CUTTING, new Achievement("Chicken Chop Suey", "Kill B055 with the cutting powerup."));
-        achievements.Add(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 40 enemies with one poly."));
+        achievements.Add(AchievementID.ACH_KILL_20_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 20 enemies with one poly."));
         achievements.Add(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU, new Achievement("Menu Whizz Kid", "Smart enough for the menu!"));
         achievements.Add(AchievementID.ACH_SURVIVE_YOLO_5_MINUTES, new Achievement("Survival Camp", "Survive yolo-mode for longer than 5 minutes."));
         achievements.Add(AchievementID.ACH_LAST_MAN_STANDING, new Achievement("Last Man Standing", "In a 4-player game just one survives the wave with less than 10% health."));
@@ -585,8 +585,8 @@ class SteamManager : BaseSteamManager
                     break;
                 case Event.TYPE.superAbility:
                     COUNTER += (1000 + 100 * (int)e.kills);
-                    if (e.kills >= 40)
-                        UnlockAchievement(AchievementID.ACH_KILL_40_ENEMIES_WITH_POLY);
+                    if (e.kills >= 20)
+                        UnlockAchievement(AchievementID.ACH_KILL_20_ENEMIES_WITH_POLY);
                     break;
                 case Event.TYPE.join:
                     UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
