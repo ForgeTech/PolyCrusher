@@ -124,7 +124,12 @@ public class FalloutBehaviour : MonoBehaviour {
             .setOnUpdate((float val) => {
                 ring.transform.localScale = new Vector3(val, falloutRing.transform.localScale.y, val);
             });
-        LeanTween.moveY(ring, 0f, expandTime).setEase(LeanTweenType.easeOutSine);
+        LeanTween.moveY(ring, 0f, expandTime).setEase(LeanTweenType.easeOutSine)
+            .setOnComplete(() => {
+                LeanTween.moveY(ring, -1f, 0.4f).setEase(LeanTweenType.easeOutSine).setDelay(0.5f).setOnComplete(() => {
+                    Destroy(ring);
+                });
+            });
     }
     #endregion
 
@@ -139,9 +144,6 @@ public class FalloutBehaviour : MonoBehaviour {
     private IEnumerator Reset()
     {
         yield return new WaitForSeconds(enemyIdleTime);
-        LeanTween.moveY(ring, -1f, 0.4f).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
-            Destroy(ring);
-        });
         ResetEnemyMovementSpeed();
         detectedEnemies.Clear();
         originalEnemyMovement.Clear();
