@@ -208,7 +208,7 @@ public class PolygonCoreLogic : MonoBehaviour {
         if (playerGameObjects.Length > 1)
         {
             //updating information
-            polyLerpDistance = polygonUtil.CalculatePolygonLerpDistance(playerGameObjects, polygonProperties.requiredPolyDistance);
+            polyLerpDistance = polygonUtil.CalculatePolygonLerpDistance(playerGameObjects, polygonProperties.requiredPolyDistance[playerGameObjects.Length-1]);
             donkey = DonkeyInTheMiddle();
             middlePoint = CalculateNewMiddlePoint();
             playerGameObjects = polygonUtil.AllignPlayers(playerGameObjects, donkey);
@@ -231,7 +231,7 @@ public class PolygonCoreLogic : MonoBehaviour {
                 }
                 else
                 {
-                    if(polygonUtil.CheckPlayerDistances(playerGameObjects, polygonProperties.requiredPolyDistance))
+                    if(polygonUtil.CheckPlayerDistances(playerGameObjects, polygonProperties.requiredPolyDistance[playerGameObjects.Length-1]))
                     {
                         if(currentPolyTriggerTime <= 0)
                         {

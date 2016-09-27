@@ -32,7 +32,7 @@ public class PolygonProperties : ScriptableObject {
     public Vector3 polygonThickness;
 
     [Header("The distance the players have to reach to execute the polygon ability")]
-    public float requiredPolyDistance;
+    public float[] requiredPolyDistance;
 
     [Header("Damage the boss takes when the polygon hits")]
     public int[] bossDamage;
