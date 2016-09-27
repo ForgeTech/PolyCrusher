@@ -18,29 +18,36 @@ public class BossMob : BaseEnemy
     /// <summary>
     /// Destroys the enemy.
     /// </summary>
-    protected override void DestroyEnemy()
+    protected override void DestroyEnemy(bool destroyWithEffects)
     {
         //Disable
         targetPlayer = null;
-        GetComponent<NavMeshAgent>().Stop();
-        GetComponent<NavMeshAgent>().updateRotation = false;
-        GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.Stop();
+        agent.updateRotation = false;
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
         GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
 
-        //Animation
-        if (anim != null)
-            anim.SetBool("Death", true);
+        if (destroyWithEffects)
+        {
+            //Animation
+            if (anim != null)
+                anim.SetBool("Death", true);
 
+            //Scale Fade out
+            LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart);
+        }
+        
         //Event.
         OnBossMobKilled();
 
-        //Scale Fade out
-        LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart);
-
         //Destroy
-        Destroy(this.gameObject, lifeTimeAfterDeath);
+        if (destroyWithEffects)
+            Destroy(gameObject, lifeTimeAfterDeath);
+        else
+            Destroy(gameObject);
     }
 
     /// <summary>

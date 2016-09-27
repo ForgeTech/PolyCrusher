@@ -496,7 +496,7 @@ public class BossEnemy : BaseEnemy
         StartCoroutine(transform.ScaleTo(originalScale, 0.7f, AnimCurveContainer.AnimCurve.pingPong.Evaluate));
     }
 
-    protected override void DestroyEnemy()
+    protected override void DestroyEnemy(bool destroyWithEffects)
     {
         //Disable
         targetPlayer = null;
@@ -522,7 +522,8 @@ public class BossEnemy : BaseEnemy
         OnBossKilled();
 
         //Scale Fade out
-        StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+        //StartCoroutine(transform.ScaleFrom(Vector3.zero, lifeTimeAfterDeath, AnimCurveContainer.AnimCurve.downscale.Evaluate));
+        LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutSine);
 
         //Destroy
         Destroy(gameObject, lifeTimeAfterDeath + 0.2f);

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Event handler for an enemy death.
@@ -157,7 +156,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 this.health = value;
                 enemyIsDead = true;
-                DestroyEnemy();
+                DestroyEnemy(true);
             }
 
             if (value >= minHealth && value <= maxHealth)
@@ -360,26 +359,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// /// <param name="damageDealer">The damage dealer.</param>
     public virtual void TakeDamage(int damage, MonoBehaviour damageDealer)
     {
-        // send event if enemy will be dead
-        if(Health - damage <= 0 && !enemyIsDead){
-            string character = "undefined";
-
-            if (damageDealer != null)
-            {
-                if (damageDealer is BasePlayer)
-                {
-                    character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
-                    Instantiate(((BasePlayer)damageDealer).killParticles, transform.position, transform.rotation);
-                }
-                else
-                {
-                    character = damageDealer.GetType().Name;
-                    Instantiate(deathBurst, transform.position, transform.rotation);
-                }
-            }
-
-            new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
-        }
+        DoDeathRoutine(damage, damageDealer, true);
 
         // Blood particle
         if (bloodParticle != null && damageDealer != null)
@@ -392,6 +372,35 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         // Material emmission blink
         if (enemyMaterial != null)
             BlinkMaterial(damageDealer);
+    }
+
+    /// <summary>
+    /// Event, death particles, etc.
+    /// </summary>
+    private void DoDeathRoutine(int damage, MonoBehaviour damageDealer, bool animation)
+    {
+        // Send event if enemy will be dead
+        if (Health - damage <= 0 && !enemyIsDead)
+        {
+            string character = "undefined";
+
+            if (damageDealer != null)
+            {
+                if (damageDealer is BasePlayer)
+                {
+                    character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
+                    if(animation)
+                        Instantiate(((BasePlayer)damageDealer).killParticles, transform.position, transform.rotation);
+                }
+                else
+                {
+                    character = damageDealer.GetType().Name;
+                    if(animation)
+                        Instantiate(deathBurst, transform.position, transform.rotation);
+                }
+            }
+            new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
+        }
     }
 
     /// <summary>
@@ -419,6 +428,18 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     }
 
     /// <summary>
+    /// Kill without animation and extra effects.
+    /// </summary>
+    /// <param name="trigger"></param>
+    public virtual void PolyKill(MonoBehaviour trigger)
+    {
+        DoDeathRoutine(MaxHealth, trigger, false);
+        health = 0;
+        enemyIsDead = true;
+        DestroyEnemy(false);
+    }
+
+    /// <summary>
     /// Tries to set the desired transition.
     /// </summary>
     /// <param name="transition">Transition</param>
@@ -430,18 +451,19 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <summary>
     /// Implements the destruction logic of the enemy.
     /// </summary>
-    protected virtual void DestroyEnemy()
+    protected virtual void DestroyEnemy(bool destroyWithEffects)
     {
         //Disable
         targetPlayer = null;
-        GetComponent<NavMeshAgent>().Stop();
-        GetComponent<NavMeshAgent>().updateRotation = false;
-        GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.Stop();
+        agent.updateRotation = false;
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
         GetComponent<Collider>().enabled = false;
 
         //Animation
-        if (anim != null)
+        if (destroyWithEffects && anim != null)
         {
             anim.speed = 1f;
             anim.SetBool("Death", true);
@@ -453,8 +475,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         //Event.
         OnEnemyDeath();
 
-        //Destroy
-        Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
+        // Destroy
+        if (destroyWithEffects)
+            Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
+        else
+            Destroy(gameObject);
     }
 
     /// <summary>
