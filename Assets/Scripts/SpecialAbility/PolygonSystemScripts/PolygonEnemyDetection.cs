@@ -112,8 +112,6 @@ public class PolygonEnemyDetection : MonoBehaviour {
     /// </summary>
     private void ChainExplosion()
     {
-        Debug.Log(System.DateTime.Now.ToString() + " Polygon explosion executed!");
-
         CameraManager.CameraReference.ShakeOnce();
 
         SoundManager.SoundManagerInstance.Play(polygonProperties.polyExplosion, Vector3.zero, AudioGroup.Effects);
@@ -122,13 +120,14 @@ public class PolygonEnemyDetection : MonoBehaviour {
         for (int i = 0; i < detectedEnemies.Count; i++)
         {
             
-            detectedEnemies[i].GetComponent<BaseEnemy>().InstantKill(this);
+            detectedEnemies[i].GetComponent<BaseEnemy>().PolyKill(this);
             detectedEnemies[i].AddComponent<PolyExplosion>();
         }
 
         if (bossDetected[0] != null)
         {
             bossDetected[0].TakeDamage(polygonProperties.bossDamage[playerGameObjects.Length-1], this);
+            bossDetected[0].gameObject.AddComponent<PolyExplosion>();
         }
       
         detectedEnemies.Clear();
@@ -140,8 +139,15 @@ public class PolygonEnemyDetection : MonoBehaviour {
     private void OnPolygonEnemyDeaths()
     {       
         if (PolygonEnemyDeaths != null)
-        { 
-            PolygonEnemyDeaths(detectedEnemies.Count);
+        {
+            if (bossDetected[0] != null)
+            {
+                PolygonEnemyDeaths(detectedEnemies.Count + 1);
+            }   
+            else
+            {
+                PolygonEnemyDeaths(detectedEnemies.Count);
+            }
         }      
     }
     #endregion

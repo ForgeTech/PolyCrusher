@@ -21,6 +21,7 @@ public class PolyExplosion : MonoBehaviour {
     Vector3[] newVerts;
     Vector3[] newNormals;
     Vector2[] newUvs;
+    int[] triangles = new int[] { 0, 1, 2, 2, 1, 0 };
     #endregion
 
     #region methods
@@ -57,6 +58,7 @@ public class PolyExplosion : MonoBehaviour {
             ExplodePartial(i);
             yield return null;
         }
+        Destroy(this);
     }
 
 
@@ -80,7 +82,7 @@ public class PolyExplosion : MonoBehaviour {
                 mesh.normals = newNormals;
                 mesh.uv = newUvs;
 
-                mesh.triangles = new int[] { 0, 1, 2, 2, 1, 0 };
+                mesh.triangles = triangles;
 
                 GO = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
                
