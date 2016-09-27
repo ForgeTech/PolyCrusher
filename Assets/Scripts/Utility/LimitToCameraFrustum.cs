@@ -9,10 +9,11 @@ using System.Collections;
 public class LimitToCameraFrustum 
 {
     // Determines if the gameobject is in the camera view when the script starts.
-    protected bool isInsideCameraOnStart;
+    protected bool isInsideCamera = false;
 
     // Reference to the main camera.
     protected Camera cam;
+    protected CameraSystem cameraSystem;
 
     // Reference to the base player.
     BasePlayer player;
@@ -22,6 +23,7 @@ public class LimitToCameraFrustum
 
     public LimitToCameraFrustum(BasePlayer player, float detectionOffset)
     {
+        cameraSystem = CameraManager.CameraReference;
         this.player = player;
         this.detectionOffset = detectionOffset;
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -37,18 +39,27 @@ public class LimitToCameraFrustum
 
         // Left
         if (viewPos.x < 0f - detectionOffset)
-            player.ManipulateMovement(player.MovementSpeed * 2, Vector3.right);
+            MovePlayer(player.MovementSpeed * 2, Vector3.right);
         
         // Bottom
         if (viewPos.y < 0f - detectionOffset)
-            player.ManipulateMovement(player.MovementSpeed * 2, Vector3.forward);
+            MovePlayer(player.MovementSpeed * 2, Vector3.forward);
 
         // Right
         if (viewPos.x > 1f + detectionOffset)
-            player.ManipulateMovement(player.MovementSpeed * 2, Vector3.left);
+            MovePlayer(player.MovementSpeed * 2, Vector3.left);
 
         // Top
         if (viewPos.y > 1f + detectionOffset)
-            player.ManipulateMovement(player.MovementSpeed * 2, Vector3.back);
+            MovePlayer(player.MovementSpeed * 2, Vector3.back);
+    }
+
+    private void MovePlayer(float speed, Vector3 direction)
+    {
+        if(isInsideCamera)
+            player.ManipulateMovement(speed, direction);
+
+        if (!isInsideCamera && Vector3.Distance(CameraSystem.playerBounds.center, cameraSystem.transform.position) <= 1.6f)
+            isInsideCamera = true;
     }
 }
