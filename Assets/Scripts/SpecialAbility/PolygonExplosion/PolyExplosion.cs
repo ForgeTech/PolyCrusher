@@ -5,10 +5,13 @@ public class PolyExplosion : MonoBehaviour {
 
     #region variables
     private int vertexCount;
-    private int step;
-    private int grandStep;
-    private float scaleFactor;
+    protected int step;
+    protected int grandStep;
+    protected float scaleFactor;
+    protected float upwardsModifier = 10.0f;
+    protected float explosionForce = 50.0f;
     private string pooledObjectName = "FragmentObject";
+    private string layerName = "Fragments";
 
     SkinnedMeshRenderer MR;
     Mesh M;
@@ -26,7 +29,7 @@ public class PolyExplosion : MonoBehaviour {
 
     #region methods
     // Use this for initialization
-    void Start ()
+    public virtual void Start ()
     {
         newVerts = new Vector3[3];
         newNormals = new Vector3[3];
@@ -40,29 +43,17 @@ public class PolyExplosion : MonoBehaviour {
         vertexCount = M.vertexCount;
        
         step = vertexCount / 90;
-        while(step % 3 != 0)
+        scaleFactor = 12*step/ (step* step);
+        while (step % 3 != 0)
         {
             step++;
         }
-        grandStep = step * 20;
-        scaleFactor = 3+((step/3)* 0.28f);
-
-        StartCoroutine(ExplodeOverTime());
+        grandStep = step * 12;
+       
+        //ExplodePartial(Random.Range(0,6));
     }
-
-
-    private IEnumerator ExplodeOverTime()
-    {
-        for(int i = 0; i < 11; i++)
-        {
-            ExplodePartial(i);
-            yield return null;
-        }
-        Destroy(this);
-    }
-
-
-    private void ExplodePartial(int start)
+       
+    public virtual void ExplodePartial(int start)
     {
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
         {
@@ -93,7 +84,7 @@ public class PolyExplosion : MonoBehaviour {
 
                     Deactivator deactivator = GO.GetComponent<Deactivator>();
                                        
-                    GO.layer = LayerMask.NameToLayer("Fragments");
+                    GO.layer = LayerMask.NameToLayer(layerName);
 
                     GO.transform.position = transform.position;
                     GO.transform.rotation = transform.rotation;
@@ -104,11 +95,13 @@ public class PolyExplosion : MonoBehaviour {
 
                     GO.AddComponent<BoxCollider>();
 
-                    deactivator.attachedRigid.AddExplosionForce(50, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, 0.0f);                   
+                    deactivator.attachedRigid.AddExplosionForce(explosionForce, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, upwardsModifier);                   
                     deactivator.TriggerDeactivation(Random.Range(5.5f, 10.0f));
                 }
             }
         }
+
+        Destroy(this);
     }
 
     #endregion

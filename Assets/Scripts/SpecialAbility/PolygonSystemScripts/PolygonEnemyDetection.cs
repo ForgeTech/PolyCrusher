@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public delegate void PolygonEnemyDeathHandler(int bodyCount);
 
@@ -117,21 +118,29 @@ public class PolygonEnemyDetection : MonoBehaviour {
         SoundManager.SoundManagerInstance.Play(polygonProperties.polyExplosion, Vector3.zero, AudioGroup.Effects);
         new Event(Event.TYPE.superAbility).addPlayerCount().addWave().addLevel().addPos(polygonCoreLogic.MiddlePoint.x, polygonCoreLogic.MiddlePoint.z).addKills(detectedEnemies.Count).send();
 
-        for (int i = 0; i < detectedEnemies.Count; i++)
-        {
-            
-            detectedEnemies[i].GetComponent<BaseEnemy>().PolyKill(this);
-            detectedEnemies[i].AddComponent<PolyExplosion>();
-        }
-
         if (bossDetected[0] != null)
         {
             bossDetected[0].TakeDamage(polygonProperties.bossDamage[playerGameObjects.Length-1], this);
-            bossDetected[0].gameObject.AddComponent<PolyExplosion>();
+            bossDetected[0].gameObject.AddComponent<NormalPolyExplosion>();
+
         }
-      
-        detectedEnemies.Clear();
         bossDetected[0] = null;
+
+        StartCoroutine(ExplodeOverTime());
+    }
+    #endregion
+
+    #region explosionOverTime
+    private IEnumerator ExplodeOverTime()
+    {
+        for (int i = 0; i < detectedEnemies.Count; i++)
+        {
+            detectedEnemies[i].GetComponent<BaseEnemy>().PolyKill(this);
+            detectedEnemies[i].AddComponent<NormalPolyExplosion>();
+            yield return null;
+        }
+
+        detectedEnemies.Clear();
     }
     #endregion
 

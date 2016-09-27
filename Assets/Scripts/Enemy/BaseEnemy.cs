@@ -156,7 +156,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 this.health = value;
                 enemyIsDead = true;
-                DestroyEnemy(true);
+                DestroyEnemy(false);
             }
 
             if (value >= minHealth && value <= maxHealth)
@@ -472,6 +472,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true);
         }
 
+        if (!destroyWithEffects)
+        {
+            gameObject.AddComponent<SmallPolyExplosion>();
+        }
+
         //Event.
         OnEnemyDeath();
 
@@ -479,7 +484,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         if (destroyWithEffects)
             Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
         else
-            Destroy(gameObject);
+            Destroy(gameObject, 0.05f);
     }
 
     /// <summary>
