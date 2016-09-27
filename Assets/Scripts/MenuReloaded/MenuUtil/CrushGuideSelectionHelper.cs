@@ -121,6 +121,18 @@ public class CrushGuideSelectionHelper : MonoBehaviour
         return ((a % n) + n) % n;
     }
 
+    private Text GetTextFrom(int index)
+    {
+        Text description = tutorialIslands[index].GetChild(0).GetChild(0).GetComponent<Text>();
+        return description;
+    }
+
+    private void TweenDescriptionText(Text current, Text last)
+    {
+        LeanTween.alpha(current.rectTransform, 1f, tweenTime).setEase(easeType);
+        LeanTween.alpha(last.rectTransform, 0f, tweenTime).setEase(easeType);
+    }
+
     /// <summary>
     /// Callback which is registered at the AbstractMenuManager.
     /// </summary>
@@ -131,6 +143,10 @@ public class CrushGuideSelectionHelper : MonoBehaviour
 
         TweenArrow(rightArrow);
         RepositionElements();
+
+        Text currentDescription = GetTextFrom(selector.Current);
+        Text lastDescription = GetTextFrom(CalculateIndex(selector.Current - 1));
+        TweenDescriptionText(currentDescription, lastDescription);
 
         info = tutorialIslands[selector.Current].GetComponent<NavigationInformation>();
         DoTextShadowTween(GetLevelIslandText(tutorialIslands[selector.Current].gameObject), 0f, info.ShadowAlphaSelected);
@@ -146,6 +162,10 @@ public class CrushGuideSelectionHelper : MonoBehaviour
 
         TweenArrow(leftArrow);
         RepositionElements();
+
+        Text currentDescription = GetTextFrom(selector.Current);
+        Text lastDescription = GetTextFrom(CalculateIndex(selector.Current + 1));
+        TweenDescriptionText(currentDescription, lastDescription);
 
         info = tutorialIslands[selector.Current].GetComponent<NavigationInformation>();
         DoTextShadowTween(GetLevelIslandText(tutorialIslands[selector.Current].gameObject), 0f, info.ShadowAlphaSelected);
