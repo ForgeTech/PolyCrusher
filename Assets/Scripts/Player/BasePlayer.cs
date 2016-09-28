@@ -874,5 +874,10 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         if (inputDevice != null)
             inputDevice.StopVibration();
     }
+
+    public void TakeDamage(int damage, MonoBehaviour damageDealer, Vector3 damageDealerPosition, bool ragdollKill)
+    {
+        TakeDamage(damage, damageDealer);
+    }
     #endregion
 }

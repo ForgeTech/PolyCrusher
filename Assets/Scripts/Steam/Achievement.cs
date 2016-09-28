@@ -39,7 +39,7 @@ public enum AchievementID : int
         ACH_SMARTPHONE_JOIN,
         ACH_REACH_W10,
         ACH_REACH_W20,
-        ACH_REACH_W30,
+        ACH_REACH_W25,
         ACH_KILL_B055_WITH_CHICKEN,
         ACH_KILL_B055_WITH_CUTTING,
         ACH_KILL_20_ENEMIES_WITH_POLY,

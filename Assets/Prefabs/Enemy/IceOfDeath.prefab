@@ -422,6 +422,7 @@ MonoBehaviour:
   pushAwayForce: 2
   attackInterval: .400000006
   attackRange: 2
+  enemyIdentifier: 2
   lifeTimeAfterDeath: 3
   bloodParticle: {fileID: 157414, guid: 4927ea95f2ba8c74eaa91f8b3ed5d9b8, type: 2}
   hitLightTime: .200000003
@@ -533,6 +534,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxHealth
       value: 83
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: enemyIdentifier
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

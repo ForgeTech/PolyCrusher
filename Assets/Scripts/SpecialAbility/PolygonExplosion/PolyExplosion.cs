@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PolyExplosion : MonoBehaviour {
 
@@ -10,6 +9,11 @@ public class PolyExplosion : MonoBehaviour {
     protected float scaleFactor;
     protected float upwardsModifier = 10.0f;
     protected float explosionForce = 50.0f;
+    protected float minimumAliveTime = 5.5f;
+    protected float maximumAliveTime = 10.0f;
+    protected bool changeForwardVector = false;
+    protected bool bulletKill = false;
+    protected Vector3 explosionOrigin;
     private string pooledObjectName = "FragmentObject";
     private string layerName = "Fragments";
 
@@ -34,6 +38,7 @@ public class PolyExplosion : MonoBehaviour {
         newVerts = new Vector3[3];
         newNormals = new Vector3[3];
         newUvs = new Vector2[3];
+        explosionOrigin = transform.position;
 
         MR = GetComponentInChildren<SkinnedMeshRenderer>();
         M = MR.sharedMesh;
@@ -43,14 +48,12 @@ public class PolyExplosion : MonoBehaviour {
         vertexCount = M.vertexCount;
        
         step = vertexCount / 90;
-        scaleFactor = 12*step/ (step* step);
+        scaleFactor = 8;
         while (step % 3 != 0)
         {
             step++;
         }
-        grandStep = step * 12;
-       
-        //ExplodePartial(Random.Range(0,6));
+        grandStep = step * 12;       
     }
        
     public virtual void ExplodePartial(int start)
@@ -76,7 +79,6 @@ public class PolyExplosion : MonoBehaviour {
                 mesh.triangles = triangles;
 
                 GO = ObjectsPool.Spawn(pooledObjectName, Vector3.zero, Quaternion.identity);
-               
 
                 if(GO != null)
                 {
@@ -86,21 +88,27 @@ public class PolyExplosion : MonoBehaviour {
                                        
                     GO.layer = LayerMask.NameToLayer(layerName);
 
-                    GO.transform.position = transform.position;
-                    GO.transform.rotation = transform.rotation;
-                    GO.transform.localScale = new Vector3(MR.transform.localScale.x*scaleFactor, MR.transform.localScale.y, MR.transform.localScale.z*scaleFactor);
+                    
                     
                     deactivator.attachedRenderer.material = MR.materials[submesh];                   
                     deactivator.attachedFilter.mesh = mesh;
 
+                    GO.transform.position = transform.position;
+                    GO.transform.rotation = transform.rotation;
+                    GO.transform.localScale = new Vector3(MR.transform.localScale.x * scaleFactor, MR.transform.localScale.y, MR.transform.localScale.z * scaleFactor);
+
+                    if (changeForwardVector)
+                    {
+                        GO.transform.forward = transform.up;
+                    }
+
                     GO.AddComponent<BoxCollider>();
 
-                    deactivator.attachedRigid.AddExplosionForce(explosionForce, new Vector3(transform.position.x, transform.position.y, transform.position.z), 50, upwardsModifier);                   
-                    deactivator.TriggerDeactivation(Random.Range(5.5f, 10.0f));
+                    deactivator.attachedRigid.AddExplosionForce(explosionForce, explosionOrigin, 50, upwardsModifier);
+                    deactivator.TriggerDeactivation(Random.Range(minimumAliveTime, maximumAliveTime));
                 }
             }
         }
-
         Destroy(this);
     }
 

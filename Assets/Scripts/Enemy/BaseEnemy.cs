@@ -88,6 +88,12 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     // Specifies if enemy is dead.
     protected bool enemyIsDead = false;
 
+    [Space(10)]
+    [Header("Misc")]
+    [SerializeField]
+    protected EnemyEnum enemyIdentifier = EnemyEnum.Bistrobot;
+    public EnemyEnum EnemyIdentifier { get { return this.enemyIdentifier; } }
+
     [Space(5)]
     [Header("After death values")]
     // The lifetime after death in seconds.
@@ -136,7 +142,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     private bool killedWithRagdoll = false;
 
     // Defines the position of the damagedealer (player, rocket, etc.).
-    private Vector3 originRagdollForcePosition;
+    private Vector3 originalForcePosition;
 
     #endregion
 
@@ -156,7 +162,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             {
                 this.health = value;
                 enemyIsDead = true;
-                DestroyEnemy(false);
+                DestroyEnemy(true);
             }
 
             if (value >= minHealth && value <= maxHealth)
@@ -250,8 +256,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
     public Vector3 OriginRagdollForcePosition
     {
-        get { return this.originRagdollForcePosition; }
-        set { this.originRagdollForcePosition = value; }
+        get { return this.originalForcePosition; }
+        set { this.originalForcePosition = value; }
     }
 
     public bool KilledWithRagdoll
@@ -409,12 +415,15 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// <param name="damage">Damage</param>
     /// <param name="damageDealer">The damage dealer</param>
     /// <param name="noDeathAnimation">If true: Animator object will be set to null if the damage would kill the enemy.</param>
-    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, Vector3 damageDealerPosition)
+    public virtual void TakeDamage(int damage, MonoBehaviour damageDealer, Vector3 damageDealerPosition, bool ragdollKill)
     {
         if(Health - damage <= 0)
         {
-            originRagdollForcePosition = damageDealerPosition;
-            killedWithRagdoll = true;
+            if (ragdollKill)
+            {
+                killedWithRagdoll = true;
+            }
+            originalForcePosition = damageDealerPosition;
         }
         TakeDamage(damage, damageDealer);
     }
@@ -474,7 +483,14 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
         if (!destroyWithEffects)
         {
-            gameObject.AddComponent<SmallPolyExplosion>();
+            if(enemyIdentifier == EnemyEnum.Coyote) {
+
+                AlternativeKillBurstPolyExplosion akbp = gameObject.AddComponent<AlternativeKillBurstPolyExplosion>();
+            }
+            else
+            {
+                SmallPolyExplosion smallPolyExplosion = gameObject.AddComponent<SmallPolyExplosion>();
+            }
         }
 
         //Event.
@@ -484,7 +500,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         if (destroyWithEffects)
             Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
         else
-            Destroy(gameObject, 0.05f);
+            Destroy(gameObject);
     }
 
     /// <summary>
