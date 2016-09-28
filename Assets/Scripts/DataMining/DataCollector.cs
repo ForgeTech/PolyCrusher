@@ -198,16 +198,11 @@ public class DataCollector : MonoBehaviour
         {
             Event endEvent = new Event(Event.TYPE.sessionEnd);
             endEvent.addPlayerCount().addWave().addLevel();
-            if(currentSession.steamName != null)
+            if(!eventBuild && currentSession.steamName != null && !currentSession.steamName.Equals(""))
             {
                 endEvent.addGameName(currentSession.steamName);
             }
             else
-            {
-                endEvent.addGameName(RandomNameGenerator.Generate());
-            }
-
-            if (eventBuild)
             {
                 endEvent.addGameName(RandomNameGenerator.Generate());
             }
