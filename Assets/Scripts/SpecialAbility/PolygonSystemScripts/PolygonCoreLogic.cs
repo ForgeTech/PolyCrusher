@@ -419,6 +419,8 @@ public class PolygonCoreLogic : MonoBehaviour {
         polygonIsActive = false;
         AdjustPlayerValues();
 
+        SoundManager.SoundManagerInstance.Play(polygonProperties.polyExplosion, Vector3.zero, AudioGroup.Effects);
+
         LeanTween.value(gameObject, currentAlpha, 1.0f, 0.5f)
                               .setOnUpdate((float value) => { currentAlpha = value; })
                               .setEase(LeanTweenType.easeInOutSine)
