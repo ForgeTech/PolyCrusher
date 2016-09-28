@@ -132,7 +132,7 @@ public class Bullet : Projectile
 
             if (m != null && m is IDamageable)
             {
-                ((IDamageable)m).TakeDamage(Damage, this.OwnerScript);
+                ((IDamageable)m).TakeDamage(Damage, this.OwnerScript,  transform.transform.forward, false);
                 //Debug.Log("Bullet: " + other.name + " was hit!");
 
                 SpawnDeathParticle(transform.position);
