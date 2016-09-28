@@ -8,5 +8,10 @@ public class NormalPolyExplosion : PolyExplosion {
         base.Start();
         base.ExplodePartial(Random.Range(0,6));
 	}
+
+    private void OnDestroy()
+    {
+        Destroy(gameObject);
+    }
 	
 }
