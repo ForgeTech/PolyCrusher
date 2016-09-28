@@ -486,15 +486,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             if(enemyIdentifier == EnemyEnum.Coyote) {
 
                 AlternativeKillBurstPolyExplosion akbp = gameObject.AddComponent<AlternativeKillBurstPolyExplosion>();
-               // akbp.f
-
             }
             else
             {
                 SmallPolyExplosion smallPolyExplosion = gameObject.AddComponent<SmallPolyExplosion>();
-                //smallPolyExplosion.ForceDirection = originalForcePosition;
             }
-            
         }
 
         //Event.
@@ -503,8 +499,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         // Destroy
         if (destroyWithEffects)
             Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
-        //else
-        //    Destroy(gameObject, 0.03f);
+        else
+            Destroy(gameObject);
     }
 
     /// <summary>

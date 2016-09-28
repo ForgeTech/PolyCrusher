@@ -24,9 +24,5 @@ public class SmallPolyExplosion : PolyExplosion {
         maximumAliveTime = 3.0f;
     }
 
-    private void OnDestroy()
-    {
-        Destroy(gameObject);
-    }
-	
+  
 }
