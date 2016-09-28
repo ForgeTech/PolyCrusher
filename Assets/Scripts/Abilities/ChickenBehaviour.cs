@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 /// <summary>
 /// The chicken searches attracts enemies onto itself and lures them to a random position.
@@ -144,7 +145,7 @@ public class ChickenBehaviour : MonoBehaviour
         NavMeshHit hit;
 
         // Save random direction.
-        Vector3 direction = Random.insideUnitSphere;
+        Vector3 direction = UnityEngine.Random.insideUnitSphere;
 
         // Calc random direction only on the normalized XZ-Plane.
         Vector3 randomDir = new Vector3(direction.x, 0, direction.z).normalized * targetPositionRadius;
@@ -222,9 +223,18 @@ public class ChickenBehaviour : MonoBehaviour
             if (enemy.GetComponent<MonoBehaviour>() is BaseEnemy)
             {
                 BaseEnemy e = (enemy.GetComponent<MonoBehaviour>() as BaseEnemy);
-
-                // Deal damage to the enemy
-                e.TakeDamage(damage, this, transform.position, true);
+                if (e != null)
+                {
+                    try
+                    {
+                        // Deal damage to the enemy
+                        e.TakeDamage(damage, this, transform.position, true);
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.Log("[ChickenBehaviour]: Error! Chicken behaviour had problems to damage enemy.\n" + ex.ToString());
+                    }
+                }
             }
         }
 
