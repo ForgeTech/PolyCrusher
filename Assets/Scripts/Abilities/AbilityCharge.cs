@@ -241,7 +241,7 @@ public class AbilityCharge : Ability {
             if (c.gameObject.GetComponent<MonoBehaviour>() is BaseEnemy)
             {
                 BaseEnemy e = c.gameObject.GetComponent<MonoBehaviour>() as BaseEnemy;
-                e.TakeDamage(explosionDamage, this, transform.position);
+                e.TakeDamage(explosionDamage, this, transform.position, true);
             }
         }
 
@@ -327,7 +327,7 @@ public class AbilityCharge : Ability {
                 if (coll.GetComponent<BaseEnemy>() != null)
                 {
                     // deal 0 damage for more blood particles (whos idea was that?!)
-                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this, transform.position);
+                    coll.GetComponent<BaseEnemy>().TakeDamage(0, this, transform.position, true);
                 }
             }
         }

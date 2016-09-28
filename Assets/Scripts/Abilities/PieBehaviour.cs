@@ -111,7 +111,7 @@ public class PieBehaviour : MonoBehaviour
                 BaseEnemy e = (enemy.GetComponent<MonoBehaviour>() as BaseEnemy);
 
                 // Deal damage to the enemy
-                e.TakeDamage(explosionDamage, this, transform.position);
+                e.TakeDamage(explosionDamage, this, transform.position, true);
             }
 
         }

@@ -12,6 +12,8 @@ public class PolygonEnemyDetection : MonoBehaviour {
     private GameObject[] polygonParts;
     private GameObject[] playerGameObjects;
     private Mesh[] polygonMeshes;
+    private BaseEnemy toDestroy;
+    private EnemyEnum enemyIdentifier;
 
     public static event PolygonEnemyDeathHandler PolygonEnemyDeaths;
 
@@ -121,7 +123,7 @@ public class PolygonEnemyDetection : MonoBehaviour {
         if (bossDetected[0] != null)
         {
             bossDetected[0].TakeDamage(polygonProperties.bossDamage[playerGameObjects.Length-1], this);
-            bossDetected[0].gameObject.AddComponent<NormalPolyExplosion>();
+            bossDetected[0].gameObject.AddComponent<BossPolyHitExplosion>();
 
         }
         bossDetected[0] = null;
@@ -135,8 +137,22 @@ public class PolygonEnemyDetection : MonoBehaviour {
     {
         for (int i = 0; i < detectedEnemies.Count; i++)
         {
-            detectedEnemies[i].GetComponent<BaseEnemy>().PolyKill(this);
-            detectedEnemies[i].AddComponent<NormalPolyExplosion>();
+
+            toDestroy = detectedEnemies[i].GetComponent<BaseEnemy>();
+            enemyIdentifier = toDestroy.EnemyIdentifier;
+            toDestroy.PolyKill(this);
+            if(enemyIdentifier == EnemyEnum.Coyote)
+            {
+                detectedEnemies[i].AddComponent<BigScalePolyExplosion>();
+            }
+            else if(enemyIdentifier == EnemyEnum.ChewingGum)
+            {
+                detectedEnemies[i].AddComponent<SmallPolyExplosion>();
+            }
+            else
+            {
+                detectedEnemies[i].AddComponent<NormalPolyExplosion>();
+            }
             yield return null;
         }
 
