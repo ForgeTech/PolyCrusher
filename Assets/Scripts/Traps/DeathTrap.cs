@@ -68,7 +68,7 @@ public class DeathTrap : Trap, ITriggerable
             if (destroyMesh != null)
             {
                 GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
-                toDestroy.gameObject.AddComponent<PolyExplosion>();
+                toDestroy.gameObject.AddComponent<NormalPolyExplosion>();
             }
         }
 
@@ -88,7 +88,14 @@ public class DeathTrap : Trap, ITriggerable
             else
             {
                 enemy.InstantKill(this);
-                enemy.gameObject.AddComponent<PolyExplosion>();
+                if(enemy.EnemyIdentifier == EnemyEnum.Coyote)
+                {
+                    enemy.gameObject.AddComponent<BigScalePolyExplosion>();    
+                }
+                else
+                {
+                    enemy.gameObject.AddComponent<NormalPolyExplosion>();
+                }
             }
         }
     }
