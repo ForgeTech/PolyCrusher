@@ -87,7 +87,7 @@ public class DeathTrap : Trap, ITriggerable
             }
             else
             {
-                enemy.InstantKill(this);
+                enemy.PolyKill(this);
                 if(enemy.EnemyIdentifier == EnemyEnum.Coyote)
                 {
                     enemy.gameObject.AddComponent<BigScalePolyExplosion>();    
