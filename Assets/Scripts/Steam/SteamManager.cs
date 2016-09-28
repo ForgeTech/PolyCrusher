@@ -182,7 +182,7 @@ class SteamManager : BaseSteamManager
         achievements.Add(AchievementID.ACH_SMARTPHONE_JOIN, new Achievement("Wireless Killer", "Play the game with your smartphone as gamepad."));
         achievements.Add(AchievementID.ACH_REACH_W10, new Achievement("Newbie", "Reach wave 10."));
         achievements.Add(AchievementID.ACH_REACH_W20, new Achievement("Professional Polycrusher", "Reach wave 20."));
-        achievements.Add(AchievementID.ACH_REACH_W30, new Achievement("Ultimate Game Master", "Reach wave 30."));
+        achievements.Add(AchievementID.ACH_REACH_W25, new Achievement("Ultimate Game Master", "Reach wave 25."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CHICKEN, new Achievement("Parricide", "Kill B055 with a chicken."));
         achievements.Add(AchievementID.ACH_KILL_B055_WITH_CUTTING, new Achievement("Chicken Chop Suey", "Kill B055 with the cutting powerup."));
         achievements.Add(AchievementID.ACH_KILL_20_ENEMIES_WITH_POLY, new Achievement("Sentenced to death", "Kill 20 enemies with one poly."));
@@ -708,8 +708,8 @@ class SteamManager : BaseSteamManager
             UnlockAchievement(AchievementID.ACH_REACH_W10);
         if (e.wave >= 20 && currentMode.Equals("normal"))
             UnlockAchievement(AchievementID.ACH_REACH_W20);
-        if (e.wave >= 30 && currentMode.Equals("normal"))
-            UnlockAchievement(AchievementID.ACH_REACH_W30);
+        if (e.wave >= 25 && currentMode.Equals("normal"))
+            UnlockAchievement(AchievementID.ACH_REACH_W25);
 
         rank = 0;
         COUNTER += (int)(10000f * (float)e.wave) - 10000;
