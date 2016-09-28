@@ -135,6 +135,9 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     [SerializeField]
     private GameObject deathBurst;
 
+    [SerializeField]
+    private GameObject polyBurst;
+
     // The Finite state machine.
     protected FSMSystem fsm;
 
@@ -395,14 +398,23 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
                 if (damageDealer is BasePlayer)
                 {
                     character = ((BasePlayer)damageDealer).PlayerIdentifier.ToString("g");
-                    if(animation)
+                    if (animation)
+                    {
                         Instantiate(((BasePlayer)damageDealer).killParticles, transform.position, transform.rotation);
+                        if (polyBurst != null)
+                            Instantiate(polyBurst, transform.position, transform.rotation);
+                    }
+
                 }
                 else
                 {
                     character = damageDealer.GetType().Name;
-                    if(animation)
+                    if (animation)
+                    {
                         Instantiate(deathBurst, transform.position, transform.rotation);
+                        if (polyBurst != null)
+                            Instantiate(polyBurst, transform.position, transform.rotation);
+                    }
                 }
             }
             new Event(Event.TYPE.kill).addPos(this.transform).addCharacter(character).addWave().addEnemy(this.enemyName).addLevel().addPlayerCount().send();
