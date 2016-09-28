@@ -21,7 +21,7 @@ public class PowerUpMango : PowerUp
             if (enemy is BossEnemy)
                 enemy.TakeDamage(2000, this);
             else
-                enemy.TakeDamage(enemy.Health, this, transform.position);
+                enemy.TakeDamage(enemy.Health, this, transform.position, true);
         }
 
         Destroy(this);

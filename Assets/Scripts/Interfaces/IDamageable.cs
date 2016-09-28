@@ -14,6 +14,15 @@ public interface IDamageable
     void TakeDamage(int damage, MonoBehaviour damageDealer);
 
     /// <summary>
+    /// overload method
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="damageDealer"></param>
+    /// <param name="damageDealerPosition"></param>
+    /// <param name="ragdollKill"></param>
+    void TakeDamage(int damage, MonoBehaviour damageDealer, Vector3 damageDealerPosition, bool ragdollKill);
+
+    /// <summary>
     /// Lowers the health to zero.
     /// </summary>
     void InstantKill(MonoBehaviour trigger);
