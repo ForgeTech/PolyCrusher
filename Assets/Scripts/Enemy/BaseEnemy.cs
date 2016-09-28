@@ -499,8 +499,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         // Destroy
         if (destroyWithEffects)
             Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
-        else
-            Destroy(gameObject);
+        //else
+        //    Destroy(gameObject);
     }
 
     /// <summary>

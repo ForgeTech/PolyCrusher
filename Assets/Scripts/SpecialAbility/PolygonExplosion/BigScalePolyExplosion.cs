@@ -17,4 +17,9 @@ public class BigScalePolyExplosion : PolyExplosion {
         upwardsModifier = -3.0f;
         changeForwardVector = true;
     }
+
+    private void OnDestroy()
+    {
+        Destroy(gameObject);
+    }
 }
