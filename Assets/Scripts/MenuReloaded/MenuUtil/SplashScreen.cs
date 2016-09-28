@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Prime31.TransitionKit;
 
@@ -8,16 +9,22 @@ public class SplashScreen : MonoBehaviour {
 	private string nextLevelName;
 
     [SerializeField]
-    private float displayTime;
-
-    [SerializeField]
     private Shader transitionShader;
 
-    void Start () {
-        StartCoroutine(ChangeScene());
-	}
+    [SerializeField]
+    private RawImage image;
 
-    IEnumerator ChangeScene()
+    private MovieTexture movie;
+
+    void Start () {
+        movie = (MovieTexture)image.texture;
+        movie.Play();
+        SoundManager.SoundManagerInstance.Play(movie.audioClip, Vector2.zero, AudioGroup.MenuSounds);
+
+        StartCoroutine(ChangeScene(movie.duration));
+    }
+
+    IEnumerator ChangeScene(float waitTime)
     {
         FishEyeTransition fishEye = new FishEyeTransition()
         {
@@ -28,9 +35,9 @@ public class SplashScreen : MonoBehaviour {
             colorSeparation = 5.0f,
             fishEyeShader = transitionShader
         };
-
-        yield return new WaitForSeconds(displayTime);
-
+        
+        yield return new WaitForSeconds(waitTime);
+        image.color = Color.black;
         TransitionKit.instance.transitionWithDelegate(fishEye);
     }
 }
