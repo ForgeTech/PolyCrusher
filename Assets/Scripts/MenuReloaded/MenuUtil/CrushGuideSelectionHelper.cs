@@ -133,6 +133,15 @@ public class CrushGuideSelectionHelper : MonoBehaviour
         LeanTween.alpha(last.rectTransform, 0f, tweenTime).setEase(easeType);
     }
 
+    private void HandleMoviePlay(int currentIndex, int lastIndex)
+    {
+        MoviePlay current = tutorialIslands[currentIndex].GetComponent<MoviePlay>();
+        MoviePlay last = tutorialIslands[lastIndex].GetComponent<MoviePlay>();
+
+        current.ContinueMovie();
+        last.PauseMovie();
+    }
+
     /// <summary>
     /// Callback which is registered at the AbstractMenuManager.
     /// </summary>
@@ -147,6 +156,8 @@ public class CrushGuideSelectionHelper : MonoBehaviour
         Text currentDescription = GetTextFrom(selector.Current);
         Text lastDescription = GetTextFrom(CalculateIndex(selector.Current - 1));
         TweenDescriptionText(currentDescription, lastDescription);
+
+        HandleMoviePlay(selector.Current, CalculateIndex(selector.Current - 1));
 
         info = tutorialIslands[selector.Current].GetComponent<NavigationInformation>();
         DoTextShadowTween(GetLevelIslandText(tutorialIslands[selector.Current].gameObject), 0f, info.ShadowAlphaSelected);
@@ -166,6 +177,8 @@ public class CrushGuideSelectionHelper : MonoBehaviour
         Text currentDescription = GetTextFrom(selector.Current);
         Text lastDescription = GetTextFrom(CalculateIndex(selector.Current + 1));
         TweenDescriptionText(currentDescription, lastDescription);
+
+        HandleMoviePlay(selector.Current, CalculateIndex(selector.Current + 1));
 
         info = tutorialIslands[selector.Current].GetComponent<NavigationInformation>();
         DoTextShadowTween(GetLevelIslandText(tutorialIslands[selector.Current].gameObject), 0f, info.ShadowAlphaSelected);
