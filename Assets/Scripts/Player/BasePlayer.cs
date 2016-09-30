@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using InControl;
-using System;
 
 /// <summary>
 /// Eventhandler for player deaths.
@@ -212,6 +211,9 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
 
     public delegate void TakeDamageEventHandler(int damageDealed);
     public event TakeDamageEventHandler DamageTaken;
+
+    public delegate void AbilityEnergyChangedHandler(int currentEnergyValue);
+    public event AbilityEnergyChangedHandler AbilityEnergyChanged;
     #endregion
     #endregion
 
@@ -336,14 +338,16 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     /// </summary>
     public int Energy
     {
-        get { return this.energy; }
+        get { return energy; }
         set
         {
             if (value >= minEnergy && value <= maxEnergy)
-                this.energy = value;
+                energy = value;
 
             if (value > maxEnergy)
-                this.energy = maxEnergy;
+                energy = maxEnergy;
+
+            OnAbilityEnergyChanged(Energy);
         }
     }
 
@@ -859,6 +863,12 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
     {
         if (DamageTaken != null)
             DamageTaken(damageTaken);
+    }
+
+    protected void OnAbilityEnergyChanged(int currentEnergy)
+    {
+        if (AbilityEnergyChanged != null)
+            AbilityEnergyChanged(currentEnergy);
     }
 
     /// <summary>

@@ -23,6 +23,10 @@ public class PlayerArrow : MonoBehaviour
     [SerializeField]
     private float amplitude = 1.2f;
 
+    [Header("Ability Bar")]
+    [SerializeField]
+    private float tweenTime = 0.7f;
+
     private float originalY;
     private float currentAngle = 0;
     private float currentYRotation = 0f;
@@ -34,21 +38,24 @@ public class PlayerArrow : MonoBehaviour
     private Color originalColor;
     private MeshRenderer meshRenderer;
 
+    private GameObject abilityBar;
+
     private void Start ()
     {
         originalRotation = transform.rotation;
         arrowRotation = originalRotation * Quaternion.Euler(Vector3.up * Random.Range(0, 360));
         originalY = transform.position.y;
 
-        arrowMaterial = GetComponent<Renderer>().material;
-        meshRenderer = GetComponent<MeshRenderer>();
-        originalEmissionColor = arrowMaterial.GetColor("_EmissionColor");
-        originalColor = arrowMaterial.GetColor("_Color");
+        InitializeAbilityBar();
+        InitializeMaterialProperties();
 
         player = transform.root.GetComponent<BasePlayer>();
 
         player.DamageTaken += DoHealthDamageTween;
         player.PlayerWeapon.DamageIncreased += IncreaseRotationSpeed;
+
+        player.AbilityEnergyChanged += HandleAbilityBar;
+        HandleAbilityBar(player.Energy);
     }
 
     private void OnDisable()
@@ -63,6 +70,9 @@ public class PlayerArrow : MonoBehaviour
     {
         if(meshRenderer != null)
             meshRenderer.enabled = true;
+
+        if (player != null)
+            HandleAbilityBar(player.Energy);
     }
 
 	private void Update ()
@@ -74,6 +84,20 @@ public class PlayerArrow : MonoBehaviour
             DoUpAndDownMovement();
         }
 	}
+
+    private void InitializeAbilityBar()
+    {
+        if (transform.childCount > 0)
+            abilityBar = transform.GetChild(0).gameObject;
+    }
+
+    private void InitializeMaterialProperties()
+    {
+        arrowMaterial = GetComponent<Renderer>().material;
+        meshRenderer = GetComponent<MeshRenderer>();
+        originalEmissionColor = arrowMaterial.GetColor("_EmissionColor");
+        originalColor = arrowMaterial.GetColor("_Color");
+    }
 
     private void IncreaseRotationSpeed()
     {
@@ -102,6 +126,17 @@ public class PlayerArrow : MonoBehaviour
                 .setOnUpdate((Color val) => {
                     arrowMaterial.SetColor("_Color", val);
                 });
+        }
+    }
+
+    private void HandleAbilityBar(int currentEnergy)
+    {
+        if (abilityBar != null)
+        {
+            if (currentEnergy >= player.ability.EnergyCost)
+                abilityBar.SetActive(true);
+            else
+                abilityBar.SetActive(false);
         }
     }
 
