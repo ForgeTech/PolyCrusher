@@ -11,7 +11,7 @@ GameObject:
   - 198: {fileID: 19842148}
   - 199: {fileID: 19964006}
   m_Layer: 0
-  m_Name: JackassTriangleExplosion
+  m_Name: RoadrunnerTriangleExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +193,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4291288811
+        rgba: 4283122746
       minMaxState: 0
     startSize:
       scalar: .600000024
@@ -1042,7 +1042,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45d1d7c7871b9b2408a66e4845e69716, type: 2}
+  - {fileID: 2100000, guid: fe967197708e62240a486f3372bbfa79, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -1141,16 +1141,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startColor.maxColor.rgba
-      value: 4291288811
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_CastShadows
-      value: 0
+      value: 4283122746
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 45d1d7c7871b9b2408a66e4845e69716, type: 2}
+      objectReference: {fileID: 2100000, guid: fe967197708e62240a486f3372bbfa79, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 181178}

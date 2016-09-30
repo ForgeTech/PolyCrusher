@@ -36,6 +36,7 @@ public class LimitToCameraFrustum
     public void CheckCameraBounding(Vector3 checkPosition)
     {
         Vector3 viewPos = cam.WorldToViewportPoint(checkPosition);
+        CheckPlayerInsideCamera();
 
         // Left
         if (viewPos.x < 0f - detectionOffset)
@@ -58,7 +59,10 @@ public class LimitToCameraFrustum
     {
         if(isInsideCamera)
             player.ManipulateMovement(speed, direction);
+    }
 
+    private void CheckPlayerInsideCamera()
+    {
         if (!isInsideCamera && Vector3.Distance(CameraSystem.playerBounds.center, cameraSystem.transform.position) <= 1.6f)
             isInsideCamera = true;
     }

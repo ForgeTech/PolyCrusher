@@ -470,6 +470,7 @@ MonoBehaviour:
   maxEnemyLifeTime: 300
   hitBlinkTime: .200000003
   deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+  polyBurst: {fileID: 103920, guid: 558825cd1a14d354096dcca982427147, type: 2}
   bulletPrefab: {fileID: 140958, guid: 55e20ccbf7ad6f0458c2892e46a100a8, type: 2}
 --- !u!114 &11480144
 MonoBehaviour:
@@ -604,6 +605,10 @@ Prefab:
       propertyPath: enemyIdentifier
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: polyBurst
+      value: 
+      objectReference: {fileID: 103920, guid: 558825cd1a14d354096dcca982427147, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146790}

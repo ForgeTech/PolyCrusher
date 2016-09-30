@@ -737,6 +737,7 @@ MonoBehaviour:
   maxEnemyLifeTime: 300
   hitBlinkTime: .150000006
   deathBurst: {fileID: 123890, guid: 93e4464f1149ffa47bff0505fdce6688, type: 2}
+  polyBurst: {fileID: 103920, guid: 04fdda532ab769240859a8e98afad4ca, type: 2}
 --- !u!137 &13718832
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -863,6 +864,10 @@ Prefab:
       propertyPath: enemyIdentifier
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: polyBurst
+      value: 
+      objectReference: {fileID: 103920, guid: 04fdda532ab769240859a8e98afad4ca, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 149272}

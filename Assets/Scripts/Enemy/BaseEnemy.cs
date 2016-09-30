@@ -87,6 +87,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
 
     // Specifies if enemy is dead.
     protected bool enemyIsDead = false;
+    protected bool instantKilled = false;
 
     [Space(10)]
     [Header("Misc")]
@@ -155,22 +156,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public int Health
     {
-        get
-        {
-            return this.health;
-        }
-        set
-        {
-            if (this.health >= 0 && value <= 0 && !enemyIsDead)
-            {
-                this.health = value;
-                enemyIsDead = true;
-                DestroyEnemy(true);
-            }
-
-            if (value >= minHealth && value <= maxHealth)
-                this.health = value;
-        }
+        get { return health; }
+        set { SetHealth(value, true); }
     }
 
     /// <summary>
@@ -178,8 +165,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public int MaxHealth
     {
-        get { return this.maxHealth; }
-        set { this.maxHealth = value; }
+        get { return maxHealth; }
+        set { maxHealth = value; }
     }
 
     /// <summary>
@@ -187,8 +174,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public int MeleeAttackDamage
     {
-        get { return this.meleeAttackDamage; }
-        set { this.meleeAttackDamage = value; }
+        get { return meleeAttackDamage; }
+        set { meleeAttackDamage = value; }
     }
 
     /// <summary>
@@ -196,7 +183,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public float AttackRange
     {
-        get { return this.attackRange; }
+        get { return attackRange; }
     }
 
     /// <summary>
@@ -204,7 +191,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public float AttackInterval
     {
-        get { return this.attackInterval; }
+        get { return attackInterval; }
     }
 
     /// <summary>
@@ -212,18 +199,18 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public float PushAwayForce
     {
-        get { return this.pushAwayForce; }
+        get { return pushAwayForce; }
     }
 
-    public float MovementAnimationSpeed { get { return this.movementAnimationSpeed; } }
+    public float MovementAnimationSpeed { get { return movementAnimationSpeed; } }
 
     /// <summary>
     /// Gets or sets the canShoot value.
     /// </summary>
     public bool CanShoot
     {
-        get { return this.canShoot; }
-        set { this.canShoot = value; }
+        get { return canShoot; }
+        set { canShoot = value; }
     }
 
     /// <summary>
@@ -231,13 +218,13 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public float MovementSpeed
     {
-        get { return this.movementSpeed; }
+        get { return movementSpeed; }
         set
         {
-            this.movementSpeed = value;
+            movementSpeed = value;
 
             if (navMeshAgent != null)
-                navMeshAgent.speed = this.movementSpeed;
+                navMeshAgent.speed = movementSpeed;
         }
     }
 
@@ -246,7 +233,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public float InitialMovementSpeed
     {
-        get { return this.initialMovementSpeed; }
+        get { return initialMovementSpeed; }
     }
 
     /// <summary>
@@ -445,6 +432,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public virtual void InstantKill(MonoBehaviour trigger)
     {
+        instantKilled = true;
         TakeDamage(MaxHealth, trigger);
     }
 
@@ -458,6 +446,19 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
         health = 0;
         enemyIsDead = true;
         DestroyEnemy(false);
+    }
+
+    public void SetHealth(int value, bool destroyWithEffects)
+    {
+        if (health >= 0 && value <= 0 && !enemyIsDead)
+        {
+            health = value;
+            enemyIsDead = true;
+            DestroyEnemy(destroyWithEffects);
+        }
+
+        if (value >= minHealth && value <= maxHealth)
+            health = value;
     }
 
     /// <summary>
@@ -493,26 +494,29 @@ public class BaseEnemy : MonoBehaviour, IDamageable, IAttackable
             LeanTween.scale(gameObject, Vector3.zero, lifeTimeAfterDeath).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true);
         }
 
-        if (!destroyWithEffects)
-        {
-            if(enemyIdentifier == EnemyEnum.Coyote) {
-
-                AlternativeKillBurstPolyExplosion akbp = gameObject.AddComponent<AlternativeKillBurstPolyExplosion>();
-            }
-            else
-            {
-                SmallPolyExplosion smallPolyExplosion = gameObject.AddComponent<SmallPolyExplosion>();
-            }
-        }
+        //if (!destroyWithEffects)
+        //{
+            //if(enemyIdentifier == EnemyEnum.Coyote) {
+            //    AlternativeKillBurstPolyExplosion akbp = gameObject.AddComponent<AlternativeKillBurstPolyExplosion>();
+            //}
+            //else
+            //{
+            //    SmallPolyExplosion smallPolyExplosion = gameObject.AddComponent<SmallPolyExplosion>();
+            //}
+        //}
 
         //Event.
         OnEnemyDeath();
 
+        // Scale to zero to 'skip' the death animation
+        if(!instantKilled)
+            transform.localScale = Vector3.zero;
+
         // Destroy
         if (destroyWithEffects)
             Destroy(gameObject, lifeTimeAfterDeath + 0.2f);
-        //else
-        //    Destroy(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     /// <summary>
