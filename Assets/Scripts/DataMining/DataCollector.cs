@@ -26,6 +26,10 @@ public class DataCollector : MonoBehaviour
         public bool logEvents = false;
 
     private bool online = true;
+    public bool Online
+    {
+        get { return online; }
+    }
 
     // VERSION NUMBER
     internal string buildVersion = "0.4";
@@ -136,6 +140,11 @@ public class DataCollector : MonoBehaviour
         EventRegistered += InvokeDisplayScoreCalcDelayed;
         DataCollector.EventRegistered += BaseSteamManager.Instance.LogAchievementEvent;
         StartCoroutine(TestConnection());
+
+        if (ErrorLogger.Instance.isActiveAndEnabled)
+        {
+            // error logger enabled
+        }
     }
 
 
@@ -225,6 +234,18 @@ public class DataCollector : MonoBehaviour
         Debug.Log("[DataCollector] Session interrupted.");
         sessionRunning = false;
         eventQueue.Clear();
+    }
+
+    public string GetSessionId()
+    {
+        if(currentSession != null && currentSession._id != null)
+        {
+            return currentSession._id;
+        }
+        else
+        {
+            return "";
+        }
     }
 
     /// <summary>
