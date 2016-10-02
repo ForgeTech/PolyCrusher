@@ -11,7 +11,7 @@ public class DataCollectorStarter : MonoBehaviour
 
 	private void Start ()
     {
-        if(GameObject.FindObjectOfType<DataCollector>() == null)
+        if(FindObjectOfType<DataCollector>() == null)
             DataCollector.Initialize(settings);
 	}
 }
