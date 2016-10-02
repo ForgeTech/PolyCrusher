@@ -133,9 +133,9 @@ public class PlayerArrow : MonoBehaviour
     {
         if (abilityBar != null)
         {
-            if (currentEnergy >= player.ability.EnergyCost)
+            if (currentEnergy >= player.ability.EnergyCost && player.ability.UseIsAllowed)
                 abilityBar.SetActive(true);
-            else
+            else if(currentEnergy < player.ability.EnergyCost || !player.ability.UseIsAllowed)
                 abilityBar.SetActive(false);
         }
     }
