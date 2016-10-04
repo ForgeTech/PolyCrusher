@@ -69,7 +69,7 @@ public class AnnounceManager : MonoBehaviour
     /// </summary>
     protected void AnnounceTrap(Trap t)
     {
-        if (trap != null)
+        if (trap != null && t is DeathTrap)
             trap.PlayRandomClip();
     }
 
