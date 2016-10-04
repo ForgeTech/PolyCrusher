@@ -137,25 +137,26 @@ public class PolygonEnemyDetection : MonoBehaviour {
     {
         for (int i = 0; i < detectedEnemies.Count; i++)
         {
-
-            toDestroy = detectedEnemies[i].GetComponent<BaseEnemy>();
-            enemyIdentifier = toDestroy.EnemyIdentifier;
-            toDestroy.PolyKill(this);
-            if(enemyIdentifier == EnemyEnum.Coyote)
+            if (detectedEnemies[i] != null)
             {
-                detectedEnemies[i].AddComponent<BigScalePolyExplosion>();
+                toDestroy = detectedEnemies[i].GetComponent<BaseEnemy>();
+                enemyIdentifier = toDestroy.EnemyIdentifier;
+                toDestroy.PolyKill(this);
+                if (enemyIdentifier == EnemyEnum.Coyote)
+                {
+                    detectedEnemies[i].AddComponent<BigScalePolyExplosion>();
+                }
+                else if (enemyIdentifier == EnemyEnum.ChewingGum)
+                {
+                    detectedEnemies[i].AddComponent<SmallPolyExplosion>();
+                }
+                else
+                {
+                    detectedEnemies[i].AddComponent<NormalPolyExplosion>();
+                }
+                yield return null;
             }
-            else if(enemyIdentifier == EnemyEnum.ChewingGum)
-            {
-                detectedEnemies[i].AddComponent<SmallPolyExplosion>();
-            }
-            else
-            {
-                detectedEnemies[i].AddComponent<NormalPolyExplosion>();
-            }
-            yield return null;
         }
-
         detectedEnemies.Clear();
     }
     #endregion
