@@ -232,6 +232,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     protected float[] playerCountHealthMultiplier;
+
+    private WaitForSeconds waitForNextWave;
     #endregion
 
     #endregion
@@ -328,6 +330,7 @@ public class GameManager : MonoBehaviour
     #region Methods
     private void Awake()
     {
+        waitForNextWave = new WaitForSeconds(timeBetweenWave);
         LevelEndManager.levelExitEvent += ResetValues;
 
         // Increase one time before actual wave starts
@@ -364,7 +367,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     protected void StartNextWave()
     {
-        this.wave++;
+        wave++;
 
         if (wave == 1)
         {
@@ -382,7 +385,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Calculate boss wave
-        if (this.wave % bossSpawnWaves == 0)
+        if (wave % bossSpawnWaves == 0)
             isBossWave = true;
 
         // If the wave is beyond 1, increase the settings to make the game harder.
@@ -484,9 +487,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     protected void EndWave()
     {
+        bool originalBossWaveState = isBossWave;
         WaveActive = false;
         isBossWave = false;
-        StartCoroutine(WaitForNextWave());
+        try
+        {
+            StartCoroutine(WaitForNextWave());
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Exception occurred during coroutine start for the Next Wave (Boss: " + originalBossWaveState + ")\n" + e.ToString());
+            Debug.Log("<b>Next Wave routine starts without wait time!</b>");
+            StartNextWave();
+        }
         CheckSteamAchievement();
 
         OnWaveEnded();
@@ -555,11 +568,8 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Decreases the enemy count.
     /// </summary>
-    /// <param name="e"></param>
     protected void BossDied(BossEnemy e)
     {
-        this.CurrentEnemyCount--;
-
         try
         {
             MonoBehaviour m = bossSpawnInfo.boss.GetComponent<MonoBehaviour>();
@@ -570,22 +580,22 @@ public class GameManager : MonoBehaviour
 
                 // Add the ressource value if the name is equal.
                 if (b.EnemyName == e.EnemyName)
-                {
-                    this.accumulatedRessourceValue += BossSpawnInfo.enemyRessourceValue;
-                }
+                    accumulatedRessourceValue += BossSpawnInfo.enemyRessourceValue;
             }
             else if (e == null)
             {
                 // Add the ressource also if the incoming boss is null -> the boss may be destroyed in a bad constellation
-                this.accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
+                accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
             }
         }
         catch (Exception exception)
         {
             // Add the ressource also if the incoming boss is null -> the boss may be destroyed in a bad constellation
-            this.accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
+            accumulatedRessourceValue += bossSpawnInfo.enemyRessourceValue;
             Debug.Log("<color='ff0000'>Boss exception: </color>" + exception.ToString());
         }
+
+        CurrentEnemyCount--;
     }
 
     /// <summary>
@@ -598,7 +608,7 @@ public class GameManager : MonoBehaviour
 
     protected IEnumerator WaitForNextWave()
     {
-        yield return new WaitForSeconds(timeBetweenWave);
+        yield return waitForNextWave;
         StartNextWave();
     }
 
