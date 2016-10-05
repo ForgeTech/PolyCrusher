@@ -17,6 +17,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     private KeyboardController keyboardController;
 
     private Dictionary<int, SmartphoneController> smartphoneControllers;
+    private List<int> pendingSmartPhoneControllers;
 
     private int currentSmartPhoneController = 0;
     private int maxSmartphoneConroller = 4;
@@ -30,6 +31,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     void Start()
     {
         smartphoneControllers = new Dictionary<int, SmartphoneController>(4);
+        pendingSmartPhoneControllers = new List<int>();
         keyboardController = new KeyboardController();
 
         InputManager.AttachDevice(keyboardController);
@@ -97,11 +99,11 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     {
         RemoveVirtualController(virtualController);
         OnControllerStateChanged(ControllerStateChange.Quit);
-
     }
 
     public void VirtualControllerIsNotResponsing(VirtualController virtualController)
     {
+        pendingSmartPhoneControllers.Add(virtualController.controllerID);
         OnControllerStateChanged(ControllerStateChange.Disconnected);
     }
     #endregion
@@ -119,7 +121,19 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     #region managing smartphone controllers
     public bool AddNewVirtualController(VirtualController virtualController)
     {
-        if(currentSmartPhoneController < maxSmartphoneConroller)
+        if (pendingSmartPhoneControllers.Count > 0)
+        {
+            virtualController.ConnectVirtualControllerToGame(this);
+            smartphoneController = smartphoneControllers[pendingSmartPhoneControllers[0]];
+
+            smartphoneControllers.Remove(pendingSmartPhoneControllers[0]);
+            pendingSmartPhoneControllers.RemoveAt(0);
+
+            smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
+            OnControllerStateChanged(ControllerStateChange.Connected);
+            return true;
+        }
+        else if(currentSmartPhoneController < maxSmartphoneConroller)
         {
             currentSmartPhoneController++;
             virtualController.ConnectVirtualControllerToGame(this);
