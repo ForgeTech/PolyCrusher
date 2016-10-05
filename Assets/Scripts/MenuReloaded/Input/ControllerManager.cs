@@ -131,6 +131,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
             smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
             OnControllerStateChanged(ControllerStateChange.Connected);
+            
             return true;
         }
         else if(currentSmartPhoneController < maxSmartphoneConroller)
