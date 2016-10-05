@@ -103,11 +103,7 @@ class SteamManager : BaseSteamManager
         try
         {
             // If Steam is not running or the game wasn't started through Steam, SteamAPI_RestartAppIfNecessary starts the 
-            // Steam client and also launches this game again if the User owns it. This can act as a rudimentary form of DRM.
-
-            // Once you get a Steam AppID assigned by Valve, you need to replace AppId_t.Invalid with it and
-            // remove steam_appid.txt from the game depot. eg: "(AppId_t)480" or "new AppId_t(480)".
-            // See the Valve documentation for more information: https://partner.steamgames.com/documentation/drm#FAQ
+            // Steam client and also launches this game again if the User owns it.
             if (SteamAPI.RestartAppIfNecessary((AppId_t)517140))
             {
                 Application.Quit();
@@ -127,13 +123,6 @@ class SteamManager : BaseSteamManager
         // Steam Client is not running.
         // Launching from outside of steam without a steam_appid.txt file in place.
         // Running under a different OS User or Access level (for example running "as administrator")
-        // Valve's documentation for this is located here:
-        // https://partner.steamgames.com/documentation/getting_started
-        // https://partner.steamgames.com/documentation/example // Under: Common Build Problems
-        // https://partner.steamgames.com/documentation/bootstrap_stats // At the very bottom
-
-        // If you're running into Init issues try running DbgView prior to launching to get the internal output from Steam.
-        // http://technet.microsoft.com/en-us/sysinternals/bb896647.aspx
         initialized = SteamAPI.Init();
         if (!initialized)
         {
@@ -312,7 +301,7 @@ class SteamManager : BaseSteamManager
             storeStats = !success;
         }
 
-        //TODO: REMOVE THIS IN BUILDS + SET STAT VALIDATIONS @ STEAMWORKS
+        /*TODO: REMOVE THIS IN BUILDS + SET STAT VALIDATIONS @ STEAMWORKS
 
         if (Input.GetKeyDown(KeyCode.F1))
             resetStats = SteamUserStats.ResetAllStats(true);
@@ -322,7 +311,7 @@ class SteamManager : BaseSteamManager
             resetStats = false;
         }
 
-        //ENDTODO
+        //ENDTODO*/
     }
 
     /// <summary>
