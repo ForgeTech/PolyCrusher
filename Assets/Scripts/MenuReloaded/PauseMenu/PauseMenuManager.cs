@@ -62,7 +62,6 @@ public class PauseMenuManager : MonoBehaviour
                 {
                     if (playerSelectionContainer.playerInputDevices[i] != null)
                     {
-                        Debug.Log("Player Action " + i + " is: " + playerSelectionContainer.playerInputDevices[i].Name);
                         PlayerControlActions p = PlayerControlActions.CreateWithGamePadBindings();
                         p.Device = playerSelectionContainer.playerInputDevices[i];
                         playerActionList.Add(p);

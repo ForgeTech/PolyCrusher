@@ -9,6 +9,7 @@ public enum ControllerStateChange
 }
 
 public delegate void ControllerStateChangetHandler(ControllerStateChange stateChange);
+public delegate void MidSessionControllerConnectHandler(VirtualController virtualController);
 
 public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 {
@@ -23,6 +24,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     private int maxSmartphoneConroller = 4;
 
     public static event ControllerStateChangetHandler ControllerStateChanged;
+    public static event MidSessionControllerConnectHandler MidSessionControllerConnect;
     #endregion
 
     #region methods
@@ -108,12 +110,20 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     }
     #endregion
 
-    #region event method
+    #region event methods
     private void OnControllerStateChanged(ControllerStateChange stateChange)
     {
         if (ControllerStateChanged != null)
         {
             ControllerStateChanged(stateChange);
+        }
+    }
+
+    private void OnMidSessionControllerConnect(VirtualController virtualController)
+    {
+        if (MidSessionControllerConnect != null)
+        {
+            MidSessionControllerConnect(virtualController);
         }
     }
     #endregion
@@ -138,10 +148,15 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
         {
             currentSmartPhoneController++;
             virtualController.ConnectVirtualControllerToGame(this);
-            smartphoneController = new SmartphoneController(virtualController);
+            smartphoneController = new SmartphoneController();
             InputManager.AttachDevice(smartphoneController);
             smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
             OnControllerStateChanged(ControllerStateChange.Connected);
+            if(PlayerManager.PlayTime.TotalTime >= 0.0f)
+            {
+                OnMidSessionControllerConnect(virtualController);
+            }
+
             return true;
         }
         return false;

@@ -18,11 +18,8 @@ public class Metrics : MonoBehaviour {
     float timeSpan;
     int frameCount;
 
-    //average FPS
-    private float FPSSum;
-    private int FPSCount;
+    //average FPS  
     private float averageFPS;
-
     private WaitForSeconds frequency;
     private string fpsText;
     private string avgText;
@@ -31,9 +28,7 @@ public class Metrics : MonoBehaviour {
    
 
 	// Use this for initialization
-	void Start () {        
-        FPSSum = 0.0f;
-        FPSCount = 0;
+	void Start () {              
         lastFpsCounts = new List<float>(10);
 
         frameRateEnabled = false;

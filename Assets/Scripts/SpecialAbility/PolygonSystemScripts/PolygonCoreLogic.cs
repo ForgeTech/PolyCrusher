@@ -123,7 +123,6 @@ public class PolygonCoreLogic : MonoBehaviour {
         if (polygonProperties != null)
         {
             polyTriggerFactor = 0.5f / (float) polygonProperties.requiredTriggerTime;
-            Debug.Log("poly trigger factor: " + polyTriggerFactor);
             polyParts = new GameObject[4];
             polys = new Mesh[4];
             filters = new MeshFilter[4];

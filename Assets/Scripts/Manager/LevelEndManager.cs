@@ -89,7 +89,7 @@ public class LevelEndManager : MonoBehaviour
         SoundManager.SoundManagerInstance.Play(wooshSound, Vector3.zero, 10f, 1f, false, AudioGroup.Effects);
         img.rectTransform.localScale = Vector3.zero;
         LeanTween.scale(img.rectTransform, Vector3.one, tweenTime).setEase(LeanTweenType.easeOutElastic)
-            .setOnComplete(TweenText);
+            .setOnComplete( TweenText);
     }
 
     private void TweenText()
@@ -100,7 +100,7 @@ public class LevelEndManager : MonoBehaviour
 
         SoundManager.SoundManagerInstance.Play(punchSound, Vector3.zero, 15f, 1f, false, AudioGroup.Effects);
         txt.rectTransform.localScale = Vector3.one * 8f;
-        LeanTween.scale(txt.rectTransform, Vector3.one, crushedTextTweenTime).setEase(LeanTweenType.easeOutCubic);
+        LeanTween.scale(txt.rectTransform, Vector3.one, crushedTextTweenTime).setEase(LeanTweenType.easeOutCubic).setOnComplete(()=> { CameraManager.CameraReference.ShakeOnce(); } );
     }
 
     protected void DisableCanvasChildObjects()

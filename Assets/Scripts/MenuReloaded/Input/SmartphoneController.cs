@@ -3,9 +3,7 @@ using InControl;
 
 public class SmartphoneController : InputDevice {
 
-    #region variables
-    private VirtualController virtualController;
-
+    #region variables   
     private Vector2 leftAnalogStick;
     private Vector2 rightAnalogStick;
 
@@ -44,11 +42,8 @@ public class SmartphoneController : InputDevice {
     #region methods
 
     #region le constructeur de malheur
-    public SmartphoneController(VirtualController virtualController) : base( "Smartphone Controller" )
+    public SmartphoneController() : base( "Smartphone Controller" )
 	{
-        //the reference to the virtual controller
-        this.virtualController = virtualController;
-
         //left analog stick 
         AddControl(InputControlType.LeftStickLeft, "Left Stick Left");
         AddControl(InputControlType.LeftStickRight, "Left Stick Right");
