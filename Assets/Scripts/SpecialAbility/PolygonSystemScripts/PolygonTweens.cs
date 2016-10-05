@@ -24,8 +24,8 @@ public class PolygonTweens : MonoBehaviour {
     private int executedAnimationCount = 0;
 
     private float screenFlashInTime = 0.2f;
-    private float screenFlashOutTime = 1.0f;
-    private float screenFlashAmount = 0.7f;
+    private float screenFlashOutTime = 0.9f;
+    private float screenFlashAmount = 0.6f;
     private Color screenFlashColor = new Color(1,1,1,0);
     private Image screenFlashImage;
     #endregion
@@ -122,15 +122,6 @@ public class PolygonTweens : MonoBehaviour {
 
     }
 
-
-    #endregion
-
-    #region updatePolygonDistanceColor
-    public void UpdatePolygonDistanceColor()
-    {
-
-
-    }
 
     #endregion
 

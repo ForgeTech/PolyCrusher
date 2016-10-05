@@ -45,6 +45,7 @@ public class PolygonCoreLogic : MonoBehaviour {
     private bool cuttingIsActive = false;
 
     private float currentPolyTriggerTime = 0.0f;
+    private float polyTriggerFactor = 0.0f;
 
     private float currentAlpha = 0.0f;
 
@@ -113,12 +114,16 @@ public class PolygonCoreLogic : MonoBehaviour {
         CuttingLineLogic.CuttingInactive += OnCuttingDeactivated;
 
         polygonMeshBuilder = gameObject.AddComponent<PolygonMeshBuilder>();
+
+       
     }
 
     private void InitializePolygonPartMeshes()
     {
         if (polygonProperties != null)
         {
+            polyTriggerFactor = 0.5f / (float) polygonProperties.requiredTriggerTime;
+            Debug.Log("poly trigger factor: " + polyTriggerFactor);
             polyParts = new GameObject[4];
             polys = new Mesh[4];
             filters = new MeshFilter[4];
@@ -239,10 +244,11 @@ public class PolygonCoreLogic : MonoBehaviour {
                         }
 
                         currentPolyTriggerTime += Time.deltaTime;
+                        loadingSound.volume = 1- (currentPolyTriggerTime* 2* polyTriggerFactor);
+                        Debug.Log("sound volume: " + loadingSound.volume);
                         if (currentPolyTriggerTime >= polygonProperties.requiredTriggerTime)
                         {
                             loadingSound.volume = 0.0f;
-                            
                             OnPolyExecuted();
                         }
                     }
@@ -329,7 +335,7 @@ public class PolygonCoreLogic : MonoBehaviour {
     {
         for (int i = 0; i < renderers.Length; i++)
         {
-            renderers[i].material.Lerp(renderers[i].material, polygonProperties.polygonMaterials[3], currentPolyTriggerTime);
+            renderers[i].material.Lerp(renderers[i].material, polygonProperties.polygonMaterials[3], currentPolyTriggerTime*polyTriggerFactor);
         }
     }
 

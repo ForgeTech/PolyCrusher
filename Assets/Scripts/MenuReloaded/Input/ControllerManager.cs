@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using InControl;
 
+
+public enum ControllerStateChange
+{
+    Connected, Disconnected, Quit
+}
+
+public delegate void ControllerStateChangetHandler(ControllerStateChange stateChange);
+
 public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 {
     #region variables
@@ -12,6 +20,8 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
 
     private int currentSmartPhoneController = 0;
     private int maxSmartphoneConroller = 4;
+
+    public static event ControllerStateChangetHandler ControllerStateChanged;
     #endregion
 
     #region methods
@@ -86,11 +96,23 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     public void VirtualControllerQuitsTheGame(VirtualController virtualController)
     {
         RemoveVirtualController(virtualController);
+        OnControllerStateChanged(ControllerStateChange.Quit);
+
     }
 
     public void VirtualControllerIsNotResponsing(VirtualController virtualController)
     {
-        Debug.Log("Controller is not responding!");
+        OnControllerStateChanged(ControllerStateChange.Disconnected);
+    }
+    #endregion
+
+    #region event method
+    private void OnControllerStateChanged(ControllerStateChange stateChange)
+    {
+        if (ControllerStateChanged != null)
+        {
+            ControllerStateChanged(stateChange);
+        }
     }
     #endregion
 
@@ -104,11 +126,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             smartphoneController = new SmartphoneController(virtualController);
             InputManager.AttachDevice(smartphoneController);
             smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
-            //UnityThreadHelper.Dispatcher.Dispatch(() =>
-            //{
-            //    new Event(Event.TYPE.join).addMobilePlayers(currentSmartPhoneController).send();
-            //});
-
+            OnControllerStateChanged(ControllerStateChange.Connected);
             return true;
         }
         return false;

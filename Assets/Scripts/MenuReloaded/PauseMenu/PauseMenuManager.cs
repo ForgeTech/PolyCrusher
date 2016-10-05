@@ -62,6 +62,7 @@ public class PauseMenuManager : MonoBehaviour
                 {
                     if (playerSelectionContainer.playerInputDevices[i] != null)
                     {
+                        Debug.Log("Player Action " + i + " is: " + playerSelectionContainer.playerInputDevices[i].Name);
                         PlayerControlActions p = PlayerControlActions.CreateWithGamePadBindings();
                         p.Device = playerSelectionContainer.playerInputDevices[i];
                         playerActionList.Add(p);
@@ -130,8 +131,8 @@ public class PauseMenuManager : MonoBehaviour
     private bool PauseWasPressed()
     {
         for(int i = 0; i < playerActionList.Count;  i++)
-        {
-            if (playerActionList[i].Pause)
+        {            
+            if (playerActionList[i].Pause.WasPressed)
             {
                 return true;
             }
@@ -143,7 +144,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         for (int i = 0; i < playerActionList.Count; i++)
         {
-            if (playerActionList[i].Back)
+            if (playerActionList[i].Back.WasPressed)
             {
                 return true;
             }

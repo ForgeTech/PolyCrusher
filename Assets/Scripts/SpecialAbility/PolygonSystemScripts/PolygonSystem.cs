@@ -82,7 +82,7 @@ public class PolygonSystem : MonoBehaviour
     /// </summary>
     protected void OnPolyExecuted()
     {
-      
+        polygonTweens.InitiateScreenFlash();
         hintArrowSystem.HideHintArrows();
     }
 

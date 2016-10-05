@@ -7,7 +7,7 @@ public class PolyExplosion : MonoBehaviour {
     protected int step;
     protected int grandStep;
     protected float scaleFactor;
-    protected float upwardsModifier = 10.0f;
+    protected float upwardsModifier = 6.0f;
     protected float explosionForce = 50.0f;
     protected float minimumAliveTime = 5.5f;
     protected float maximumAliveTime = 10.0f;

@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using InControl;
-
 
 public class KeyboardController : InputDevice {
 
+    #region variables
     private Vector2 leftVector;
     private Vector2 rightVector;
+    #endregion
 
+    #region methods
+
+    #region constructor
     public KeyboardController() : base( "Keyboard Controller" )
 	{      
         leftVector = new Vector2();
@@ -37,8 +40,9 @@ public class KeyboardController : InputDevice {
         //pause button
         AddControl(InputControlType.Action8, "Pause Button");
     }
+    #endregion
 
-
+    #region updating the controls for the virtual controller
     public override void Update(ulong updateTick, float deltaTime)
     {
         //updating left analog stick
@@ -59,12 +63,14 @@ public class KeyboardController : InputDevice {
         UpdateWithState(InputControlType.Action2, Input.GetKeyDown(KeyCode.Backspace), updateTick, deltaTime);
 
         //updating pause button
-        UpdateWithState(InputControlType.Action8, Input.GetKeyDown(KeyCode.P), updateTick, deltaTime);
+        UpdateWithState(InputControlType.Action8, Input.GetKeyDown(KeyCode.Escape), updateTick, deltaTime);
 
         //apply changes
         Commit(updateTick, deltaTime);
     }
+    #endregion
 
+    #region calculate movement vector
     private float CalculateInputValue(bool inputOne, bool inputTwo)
     {
         float value = 0.0f;
@@ -79,10 +85,7 @@ public class KeyboardController : InputDevice {
         }
         return value;
     }
+    #endregion
 
-
-    public override void Vibrate(float leftMotor, float rightMotor)
-    {
-        base.Vibrate(leftMotor, rightMotor);        
-    }
+    #endregion
 }

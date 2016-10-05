@@ -65,7 +65,8 @@ public class PlayerControlActions : PlayerActionSet
         //xbox one specific
         p.Pause.AddDefaultBinding(InputControlType.Menu);
         //xbox 360 specific
-        p.Pause.AddDefaultBinding(InputControlType.Start);       
+        p.Pause.AddDefaultBinding(InputControlType.Start);
+        p.Pause.AddDefaultBinding(InputControlType.Action8);  
         p.Ability.AddDefaultBinding(InputControlType.LeftBumper);       
         p.LeftLeft.AddDefaultBinding(InputControlType.LeftStickLeft);
         p.LeftRight.AddDefaultBinding(InputControlType.LeftStickRight);
