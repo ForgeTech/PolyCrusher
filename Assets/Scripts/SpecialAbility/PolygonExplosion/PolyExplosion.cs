@@ -13,6 +13,9 @@ public class PolyExplosion : MonoBehaviour {
     protected float maximumAliveTime = 10.0f;
     protected bool changeForwardVector = false;
     protected bool bulletKill = false;
+    protected bool useGravity = true;
+    protected float drag = 0.0f;
+    protected float angularDrag = 0.0f;
     protected Vector3 explosionOrigin;
     private string pooledObjectName = "FragmentObject";
     private string layerName = "Fragments";
@@ -105,6 +108,10 @@ public class PolyExplosion : MonoBehaviour {
                     GO.AddComponent<BoxCollider>();
 
                     deactivator.attachedRigid.AddExplosionForce(explosionForce, explosionOrigin, 50, upwardsModifier);
+                    deactivator.attachedRigid.useGravity = useGravity;
+                    deactivator.attachedRigid.drag = drag;
+                    deactivator.attachedRigid.angularDrag = angularDrag;
+
                     deactivator.TriggerDeactivation(Random.Range(minimumAliveTime, maximumAliveTime));
                 }
             }

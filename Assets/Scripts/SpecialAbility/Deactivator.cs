@@ -39,6 +39,13 @@ public class Deactivator : MonoBehaviour
             attachedFilter = gameObject.AddComponent<MeshFilter>();
         }
 
+        if (attachedRigid != null)
+        {
+            attachedRigid.angularDrag = 0.0f;
+            attachedRigid.drag = 0.0f;
+            attachedRigid.useGravity = true;
+        }
+
         if (gameObject != null)
         {
             ObjectsPool.Despawn(gameObject);

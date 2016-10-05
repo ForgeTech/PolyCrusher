@@ -245,7 +245,6 @@ public class PolygonCoreLogic : MonoBehaviour {
 
                         currentPolyTriggerTime += Time.deltaTime;
                         loadingSound.volume = 1- (currentPolyTriggerTime* 2* polyTriggerFactor);
-                        Debug.Log("sound volume: " + loadingSound.volume);
                         if (currentPolyTriggerTime >= polygonProperties.requiredTriggerTime)
                         {
                             loadingSound.volume = 0.0f;

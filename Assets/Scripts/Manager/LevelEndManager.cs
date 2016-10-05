@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Reflection;
-using System;
 using UnityEngine.UI;
 
 /// <summary>
@@ -47,6 +45,8 @@ public class LevelEndManager : MonoBehaviour
 
     [SerializeField]
     private AudioClip punchSound;
+
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
     #endregion
 
     #region Internal members
@@ -73,6 +73,7 @@ public class LevelEndManager : MonoBehaviour
 
     protected void TweenEndScreenImage()
     {
+        StartCoroutine(CrushEmAll());
         DisableCanvasChildObjects();
         TweenCircleAndText();
         TweenCameraEffect();
@@ -137,4 +138,17 @@ public class LevelEndManager : MonoBehaviour
 		if (levelExitEvent != null)
 			levelExitEvent();
 	}
+
+    private IEnumerator CrushEmAll()
+    {
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for(int i = 0; i < allEnemies.Length; i++)
+        {
+            if(allEnemies[i] != null)
+            {
+                allEnemies[i].AddComponent<FinalEnemyPolyExplosion>();
+                yield return waitForEndOfFrame;
+            }
+        }
+    }
 }
