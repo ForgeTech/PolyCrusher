@@ -61,6 +61,7 @@ public class PolyExplosion : MonoBehaviour {
        
     public virtual void ExplodePartial(int start)
     {
+        
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
         {
             int[] indices = M.GetTriangles(submesh);

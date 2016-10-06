@@ -68,7 +68,7 @@ public class DeathTrap : Trap, ITriggerable
             if (destroyMesh != null)
             {
                 GameObject toDestroy = Instantiate(destroyMesh, tmpPosition, tmpRotation) as GameObject;
-                toDestroy.gameObject.AddComponent<IntensePolyExplosion>();
+                toDestroy.gameObject.AddComponent<NormalPolyExplosion>();
             }
         }
 

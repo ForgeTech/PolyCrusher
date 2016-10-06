@@ -12,7 +12,7 @@ public class IntensePolyExplosion : PolyExplosion {
 
     private void SetAttributes()
     {
-        grandStep = step * 3;
+        grandStep = step * 4;
         scaleFactor = 12.0f;      
     }
 
