@@ -45,6 +45,9 @@ public class Rocket : Projectile
     [SerializeField]
     protected float terrainRaycastLength = 0.3f;
 
+    [SerializeField]
+    protected float pushAwayForce = 100f;
+
     private bool alreadyTriggered = false;
 
     LTDescr mainTween = null;
@@ -163,6 +166,16 @@ public class Rocket : Projectile
                     MonoBehaviour m = objects.gameObject.GetComponent<MonoBehaviour>();
                     if (m != null && m is IDamageable)
                         ((IDamageable)m).TakeDamage(damage, this);
+
+                    if (m != null && m is BasePlayer)
+                    {
+                        Rigidbody r = m.GetComponent<Rigidbody>();
+                        if (r != null)
+                        {
+                            Vector3 pushDirection = (m.transform.position - Vector3.right * 0.05f - target).normalized;
+                            r.AddForce(pushDirection * pushAwayForce, ForceMode.Impulse);
+                        }
+                    }
                 }
             }
 
