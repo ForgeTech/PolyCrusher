@@ -1218,7 +1218,7 @@ MonoBehaviour:
   enemyName: Roadrunner
   movementSpeed: 5
   movementAnimationSpeed: 1
-  meleeAttackDamage: 25
+  meleeAttackDamage: 10
   pushAwayForce: 2
   attackInterval: .300000012
   attackRange: 2
@@ -2427,6 +2427,10 @@ Prefab:
       propertyPath: polyBurst
       value: 
       objectReference: {fileID: 103920, guid: e7d358a0d87f3f246bb2022ff4606de5, type: 2}
+    - target: {fileID: 0}
+      propertyPath: meleeAttackDamage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 161998}
