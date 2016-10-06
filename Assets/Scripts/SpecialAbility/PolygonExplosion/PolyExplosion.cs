@@ -66,7 +66,7 @@ public class PolyExplosion : MonoBehaviour {
         {
             int[] indices = M.GetTriangles(submesh);
 
-            for (int i = start; i < indices.Length; i += grandStep)
+            for (int i = start; i < indices.Length-grandStep-2; i += grandStep)
             {
                 for (int n = 0; n < 3; n++)
                 {
