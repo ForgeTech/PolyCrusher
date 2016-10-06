@@ -474,7 +474,7 @@ MonoBehaviour:
   enemyName: RangedWeak
   movementSpeed: 10
   movementAnimationSpeed: 1
-  meleeAttackDamage: 5
+  meleeAttackDamage: 4
   pushAwayForce: 2
   attackInterval: .400000006
   attackRange: 10
@@ -590,6 +590,10 @@ Prefab:
       propertyPath: polyBurst
       value: 
       objectReference: {fileID: 103920, guid: 9e0b4fdc559abcd4f8e81e4d44bcd987, type: 2}
+    - target: {fileID: 0}
+      propertyPath: meleeAttackDamage
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 129774}

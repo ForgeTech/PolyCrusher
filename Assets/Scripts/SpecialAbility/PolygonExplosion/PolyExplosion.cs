@@ -65,7 +65,7 @@ public class PolyExplosion : MonoBehaviour {
         for (int submesh = 0; submesh < M.subMeshCount; submesh++)
         {
             int[] indices = M.GetTriangles(submesh);
-
+           
             for (int i = start; i < indices.Length-grandStep-2; i += grandStep)
             {
                 for (int n = 0; n < 3; n++)
@@ -91,8 +91,6 @@ public class PolyExplosion : MonoBehaviour {
                     Deactivator deactivator = GO.GetComponent<Deactivator>();
                                        
                     GO.layer = LayerMask.NameToLayer(layerName);
-
-                    
                     
                     deactivator.attachedRenderer.material = MR.materials[submesh];                   
                     deactivator.attachedFilter.mesh = mesh;
