@@ -154,6 +154,7 @@ MonoBehaviour:
   lifeTime: 5
   attackVisualization: {fileID: 163292, guid: 5cd9e216ee9b68e4caa07e4d0ef6b545, type: 2}
   terrainRaycastLength: .300000012
+  pushAwayForce: 15
   potCrashSounds:
   - {fileID: 8300000, guid: 5aed2e3ab53b66a4c92d272975be1d18, type: 3}
   - {fileID: 8300000, guid: a5c54e020caadef409b7523e54dec556, type: 3}
@@ -316,6 +317,10 @@ Prefab:
       propertyPath: potExplosionSounds.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 3591232703a9d2e40847cea1f8c5d58a, type: 3}
+    - target: {fileID: 0}
+      propertyPath: pushAwayForce
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146494}
