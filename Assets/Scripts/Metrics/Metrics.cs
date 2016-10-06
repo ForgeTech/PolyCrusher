@@ -49,7 +49,7 @@ public class Metrics : MonoBehaviour {
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
             frameRateEnabled = !frameRateEnabled;       
         }       
@@ -90,7 +90,8 @@ public class Metrics : MonoBehaviour {
             }
             metricsDisplay.CurFPS = "FPS: " + fpsText + " \nAVG: " + avgText;
         }
-        isFPSRunning = false;    
+        isFPSRunning = false;
+        metricsDisplay.CurFPS = "";
     }
 
     private float SmoothFPS()
