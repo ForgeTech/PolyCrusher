@@ -425,7 +425,7 @@ public class BasePlayer : MonoBehaviour, IAttackable, IMoveable, IDamageable
         this.CurrentDeathTime = deathTime;
         this.allowEnergyRefill = true;
         this.invincible = false;
-        this.energy = maxHealth/2;
+        this.energy = maxEnergy/2;
 
         Rigidbody rigid = GetComponent<Rigidbody>();
         if (rigid != null)
