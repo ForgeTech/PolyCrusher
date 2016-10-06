@@ -1118,7 +1118,7 @@ MonoBehaviour:
   enemyName: MeleeStrong
   movementSpeed: 9
   movementAnimationSpeed: 1.79999995
-  meleeAttackDamage: 15
+  meleeAttackDamage: 10
   pushAwayForce: 2
   attackInterval: .600000024
   attackRange: 2
@@ -1265,6 +1265,10 @@ Prefab:
       propertyPath: polyBurst
       value: 
       objectReference: {fileID: 103920, guid: 1717942ac53162f4d998bc166089b6f6, type: 2}
+    - target: {fileID: 0}
+      propertyPath: meleeAttackDamage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157580}
