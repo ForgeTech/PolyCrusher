@@ -139,9 +139,17 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             smartphoneControllers.Remove(pendingSmartPhoneControllers[0]);
             pendingSmartPhoneControllers.RemoveAt(0);
 
-            smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
+            if (!smartphoneControllers.ContainsKey(virtualController.controllerID))
+            {
+                smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
+            }
+
+            //if (PlayerManager.PlayTime != null)
+            //{
+            //    OnMidSessionControllerConnect(virtualController);
+            //}
+
             OnControllerStateChanged(ControllerStateChange.Connected);
-            
             return true;
         }
         else if(currentSmartPhoneController < maxSmartphoneConroller)
@@ -150,16 +158,16 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             virtualController.ConnectVirtualControllerToGame(this);
             smartphoneController = new SmartphoneController();
             InputManager.AttachDevice(smartphoneController);
-            smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
-            OnControllerStateChanged(ControllerStateChange.Connected);
-            if(PlayerManager.PlayTime.TotalTime >= 0.0f)
+            if (!smartphoneControllers.ContainsKey(virtualController.controllerID))
             {
-                OnMidSessionControllerConnect(virtualController);
+                smartphoneControllers.Add(virtualController.controllerID, smartphoneController);
             }
-
+           
+            OnControllerStateChanged(ControllerStateChange.Connected);
             return true;
         }
         return false;
+        
     }
 
     private void RemoveVirtualController(VirtualController virtualController)
