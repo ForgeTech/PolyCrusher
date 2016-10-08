@@ -75,11 +75,9 @@ public class SmartphoneController : InputDevice {
     { 
         //updating left analog stick
         UpdateLeftStickWithValue(leftAnalogStick, updateTick, deltaTime);
-        leftAnalogStick.Set(0, 0);
 
         //updating right analog stick
         UpdateRightStickWithValue(rightAnalogStick, updateTick, deltaTime);
-        rightAnalogStick.Set(0, 0);
 
         //updating ability button
         UpdateWithState(InputControlType.LeftBumper, abilityPressed, updateTick, deltaTime);
