@@ -94,12 +94,14 @@ public class VirtualControllerManager : MonoBehaviour {
         gameName = gameName.ToUpper(); 
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
-        try{
-            byte[] gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
+        byte[] gameNameLengthData;
+        try
+        {
+            gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
         } catch(OverflowException e) {
             gameName = gameName.Substring(0,8);
             gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
-            byte[] gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
+            gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
         }
 
         MemoryStream memoryStream = new MemoryStream();
