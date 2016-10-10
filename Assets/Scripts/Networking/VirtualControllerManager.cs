@@ -87,7 +87,8 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        string gameName = BaseSteamManager.Instance.GetSteamName();
+        //TODO remove string and comments
+        string gameName = "TESTNAME";//BaseSteamManager.Instance.GetSteamName();
         if(gameName == null){
             gameName = "Noisy";
         }
