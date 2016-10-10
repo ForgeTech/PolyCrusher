@@ -17,6 +17,8 @@ public class ControllerTextTween : MonoBehaviour {
     [SerializeField]
     private RectTransform connectedText;
 
+    public GameObject shit;
+
     [SerializeField]
     private float startHeight = -800.0f;
 
@@ -31,13 +33,16 @@ public class ControllerTextTween : MonoBehaviour {
 
     private WaitForSeconds timeTillDisappearance;
     private bool tweenActive = false;
-    private Vector2 currentPosition = new Vector2();
+    private Vector2 currentPosition = new Vector2(0,0);
     #endregion
 
     #region methods
-    private void Start()
+    private void Awake()
     {
-        timeTillDisappearance = new WaitForSeconds(displayTime);       
+        timeTillDisappearance = new WaitForSeconds(displayTime);
+        connectedText.gameObject.SetActive(false);
+        disconnectedText.gameObject.SetActive(false);
+        quitText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -45,7 +50,7 @@ public class ControllerTextTween : MonoBehaviour {
         if (now)
         {
             now = false;
-            InitiateTweenIn(ControllerStateChange.Connected);
+            InitiateTweenIn(ControllerStateChange.Disconnected);
         }
     }
 
@@ -56,43 +61,49 @@ public class ControllerTextTween : MonoBehaviour {
             tweenActive = true;
             if (controllerStateChange == ControllerStateChange.Disconnected)
             {
-                TweenIn(disconnectedText);
+                //TweenIn(disconnectedText);
             }
             else if( controllerStateChange == ControllerStateChange.Quit)
             {
-                TweenIn(quitText);
+                //TweenIn(quitText);
             }
             else
             {
-                TweenIn(connectedText);
+                TweenIn(shit);
+                shit.SetActive(true);
             }
         }
     }
 
-    private void TweenIn(RectTransform toTween)
+    private void TweenIn(GameObject toShow)
     {
-        LeanTween.value(gameObject, startHeight, endHeight, tweenTime)
-           .setOnUpdate((float amount) =>
-           {
-               currentPosition.x = toTween.position.x;
-              currentPosition.y = amount;
-              toTween.position = currentPosition;
-           })
-           .setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => { StartCoroutine(TimeTillDisappearance(toTween)); });
+        toShow.SetActive(true);
+        //currentPosition.x = toTween.position.x;
+        //currentPosition.y = endHeight;
+        //toTween.position = currentPosition;
+        //Vector2 newPosition = new Vector2(toTween.position.x, startHeight);
+        //LeanTween.value(toTween.gameObject, startHeight, endHeight, tweenTime)
+        //   .setOnUpdate((float amount) =>
+        //   {
+        //       currentPosition.y = amount;
+        //       toTween.position = newPosition;
+        //   })
+        //   .setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => { StartCoroutine(TimeTillDisappearance(toTween)); });
     }
 
     private IEnumerator TimeTillDisappearance(RectTransform toTween)
     {
+        Debug.Log("wait");
         yield return timeTillDisappearance;
         TweenOut(toTween);
     }
 
     private void TweenOut(RectTransform toTween)
     {
-        LeanTween.value(gameObject, endHeight, startHeight, tweenTime)
+        currentPosition.x = toTween.position.x;
+        LeanTween.value(toTween.gameObject, endHeight, startHeight, tweenTime)
           .setOnUpdate((float amount) =>
           {
-              currentPosition.x = toTween.position.x;
               currentPosition.y = amount;
               toTween.position = currentPosition;
           })

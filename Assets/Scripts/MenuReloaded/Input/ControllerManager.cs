@@ -16,6 +16,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     #region variables
     private SmartphoneController smartphoneController;
     private KeyboardController keyboardController;
+    //private ControllerTextTween controllerTextTween;
 
     private Dictionary<int, SmartphoneController> smartphoneControllers;
     private List<int> pendingSmartPhoneControllers;
@@ -35,7 +36,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
         smartphoneControllers = new Dictionary<int, SmartphoneController>(4);
         pendingSmartPhoneControllers = new List<int>();
         keyboardController = new KeyboardController();
-
+        //controllerTextTween = GetComponentInChildren<ControllerTextTween>();
         InputManager.AttachDevice(keyboardController);
     }
     #endregion
@@ -101,12 +102,14 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
     {
         RemoveVirtualController(virtualController);
         OnControllerStateChanged(ControllerStateChange.Quit);
+        //controllerTextTween.InitiateTweenIn(ControllerStateChange.Quit);
     }
 
     public void VirtualControllerIsNotResponsing(VirtualController virtualController)
     {
         pendingSmartPhoneControllers.Add(virtualController.controllerID);
         OnControllerStateChanged(ControllerStateChange.Disconnected);
+        //controllerTextTween.InitiateTweenIn(ControllerStateChange.Disconnected);
     }
     #endregion
 
@@ -150,6 +153,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             //}
 
             OnControllerStateChanged(ControllerStateChange.Connected);
+            //controllerTextTween.InitiateTweenIn(ControllerStateChange.Connected);
             return true;
         }
         else if(currentSmartPhoneController < maxSmartphoneConroller)
@@ -164,6 +168,7 @@ public class ControllerManager : MonoBehaviour, VirtualControllerHandler
             }
            
             OnControllerStateChanged(ControllerStateChange.Connected);
+            //controllerTextTween.InitiateTweenIn(ControllerStateChange.Connected);
             return true;
         }
         return false;
