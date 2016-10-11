@@ -32,7 +32,7 @@ public class DataCollector : MonoBehaviour
     }
 
     // VERSION NUMBER
-    internal string buildVersion = "0.4";
+    internal string buildVersion = "1.0";
     internal bool eventBuild = true;
 
     // general fields
@@ -676,11 +676,13 @@ public class DataCollector : MonoBehaviour
     public void InvokeDisplayScoreCalcDelayed(Event e)
     {
         StartCoroutine(DisplayScoreCalcCoroutine(e));
+        
     }
 
 }
 
 /*
   ////// EXAMPLE EVENT ////////
-  new Event(Event.TYPE.ability).addPos(this.transform).addWave().addLevel().addCharacter(this.playerName).addPlayerCount().send();
+new Event(Event.TYPE.join).addPlayerCount().addDevice("mobile").send();
+
 */
