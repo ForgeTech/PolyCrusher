@@ -87,12 +87,23 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        string gameName = "Windows";
-        gameName = gameName.ToUpper(); //BaseSteamManager.Instance.GetSteamName();
+        //TODO remove string and comments
+        string gameName = "TESTNAME";//BaseSteamManager.Instance.GetSteamName();
+        if(gameName == null){
+            gameName = "Noisy";
+        }
+        gameName = gameName.ToUpper(); 
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
-        // TODO: Think about handling what if length is longer than a UInt16?
-        byte[] gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
+        byte[] gameNameLengthData;
+        try
+        {
+            gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
+        } catch(OverflowException e) {
+            gameName = gameName.Substring(0,8);
+            gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
+            gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
+        }
 
         MemoryStream memoryStream = new MemoryStream();
         memoryStream.Write(gameNameLengthData, 0, gameNameLengthData.Length);

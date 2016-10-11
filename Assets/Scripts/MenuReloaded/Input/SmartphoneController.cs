@@ -103,7 +103,6 @@ public class SmartphoneController : InputDevice {
     public override void Vibrate(float leftMotor, float rightMotor)
     {
         base.Vibrate(leftMotor, rightMotor);
-        Debug.Log("Smartphone Controller rumble");
     }
     #endregion
 

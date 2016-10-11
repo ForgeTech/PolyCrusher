@@ -577,9 +577,6 @@ class SteamManager : BaseSteamManager
                     if (e.kills >= 20)
                         UnlockAchievement(AchievementID.ACH_KILL_20_ENEMIES_WITH_POLY);
                     break;
-                case Event.TYPE.join:
-                    UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
-                    break;
                 case Event.TYPE.sessionEnd:
                     PerformGameEndActions(e);
                     break;
@@ -610,6 +607,9 @@ class SteamManager : BaseSteamManager
                 break;
             case AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU:
                 UnlockAchievement(AchievementID.ACH_SMART_ENOUGH_FOR_THE_MENU);
+                break;
+            case AchievementID.ACH_SMARTPHONE_JOIN:
+                UnlockAchievement(AchievementID.ACH_SMARTPHONE_JOIN);
                 break;
         }
     }

@@ -71,7 +71,7 @@ namespace InControl
 			Actions = new ReadOnlyCollection<PlayerAction>( actions );
 			InputManager.AttachPlayerActionSet( this );
             //can be deleted after checking the number of playeractions
-            Debug.Log("currently active PlayerActions: " + InputManager.playerActionSets.Count);
+            //Debug.Log("currently active PlayerActions: " + InputManager.playerActionSets.Count);
            
 		}
 
