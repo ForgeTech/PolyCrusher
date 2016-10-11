@@ -229,12 +229,46 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("No Global Scripts GameObject found");
         }
 
+
+        
+
         playTime = new TimeUtil();
         startTime = 0f;
         measureTime = true;
 
         // start session
         DataCollector.instance.startSession();
+        TrackControllerTypes();
+    }
+
+    private void TrackControllerTypes()
+    {
+        bool smartPhoneControllerInUse = false;
+
+        for(int i = 0; i < playerSelectionInformation.playerInputDevices.Length; i++)
+        {
+            if (playerSelectionInformation.playerInputDevices[i] != null)
+            {
+                if(playerSelectionInformation.playerInputDevices[i].Name == "Smartphone Controller")
+                {
+                    smartPhoneControllerInUse = true;
+                    new Event(Event.TYPE.join).addPlayerCount().addDevice("mobile").send();
+                }
+                else if(playerSelectionInformation.playerInputDevices[i].Name == "Keyboard Controller")
+                {
+                    new Event(Event.TYPE.join).addPlayerCount().addDevice("keyboard").send();
+                }
+                else
+                {
+                    new Event(Event.TYPE.join).addPlayerCount().addDevice("gamepad").send();
+                }
+            }
+        }
+
+        if (smartPhoneControllerInUse)
+        {
+            BaseSteamManager.Instance.LogAchievementData(AchievementID.ACH_SMARTPHONE_JOIN);
+        }
     }
 
 
