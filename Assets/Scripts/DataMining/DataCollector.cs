@@ -96,7 +96,7 @@ public class DataCollector : MonoBehaviour
 
     void Awake()
     {
-        string args = System.Environment.GetCommandLineArgs();
+       // string[] args = System.Environment.GetCommandLineArgs();
 
         DontDestroyOnLoad(gameObject);
         eventQueue = new Queue();
