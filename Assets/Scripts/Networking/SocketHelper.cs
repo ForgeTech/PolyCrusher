@@ -31,10 +31,6 @@ public static class SocketHelper
             }
             catch (Exception e)
             {
-                // TODO: Error Handling
-                /*UnityThreadHelper.Dispatcher.Dispatch(() => {
-					Debug.Log(e);
-				}); */
             }
             finally
             {
@@ -47,8 +43,6 @@ public static class SocketHelper
 
     public static UdpClient CreateUDPServer(int port, Action<IPEndPoint, byte[]> messageReceived)
     {
-        // TODO Exception handling
-
         UdpClient listener = new UdpClient(port);
         IPEndPoint groupEndPoint = new IPEndPoint(IPAddress.Any, port);
 
@@ -59,17 +53,12 @@ public static class SocketHelper
                 while (true)
                 {
                     byte[] receivedBytes = listener.Receive(ref groupEndPoint);
-                    // TODO Add validation on ip with groupEndPoint. Optional
                     messageReceived(groupEndPoint, receivedBytes);
                 }
             }
             catch (Exception e)
             {
                 
-                UnityThreadHelper.Dispatcher.Dispatch(() => {
-					Debug.Log(e);
-				}); 
-                // TODO: Error Handling
             }
             finally
             {
@@ -80,14 +69,12 @@ public static class SocketHelper
         return listener;
     }
 
-    // TODO: Error handling socket will not be closed if he waites for a command
+
     public static void SendTCPCommand(IPAddress address, int port, byte[] data, Action<Socket> response)
     {
-        // TODO: Use Async Task maybe
+
         UnityThreadHelper.CreateThread(() =>
         {
-            // TODO Exception handling
-
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(new IPEndPoint(address, port));
 
