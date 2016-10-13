@@ -96,6 +96,8 @@ public class DataCollector : MonoBehaviour
 
     void Awake()
     {
+       // string[] args = System.Environment.GetCommandLineArgs();
+
         DontDestroyOnLoad(gameObject);
         eventQueue = new Queue();
         scoreContainer = new ScoreContainer();
@@ -263,7 +265,10 @@ public class DataCollector : MonoBehaviour
             if(e.type != Event.TYPE.join)
             {
                 // reference current session
-                e.session_id = currentSession._id;
+                if(currentSession._id != null)
+                {
+                    e.session_id = currentSession._id;
+                }
 
                 // set event time (if session end take official time)
                 if (e.type == Event.TYPE.sessionEnd)
@@ -369,6 +374,14 @@ public class DataCollector : MonoBehaviour
             if (response.Length == 24)  // check if response is 24 characters long == id
             {
                 currentSession._id = response;
+                foreach(Event e in eventQueue)
+                {
+                    if(e.session_id == null)
+                    {
+                        e.session_id = currentSession._id;
+                    }
+                }
+
                 if (log) { Debug.Log("[DataCollector] WWW Ok: " + response); }
             }
             else
