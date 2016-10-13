@@ -71,7 +71,6 @@ public class VirtualControllerManager : MonoBehaviour {
     {
         Send((byte)COMMAND.GAME_CLOSED);
 
-        Debug.Log("Application is Quitting, all Sockets will be closed");
         for (int i = 0; i < virtualControllers.Count; i++)
         {
             virtualControllers[i].Disconnect();
@@ -87,8 +86,7 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        //TODO remove string and comments
-        string gameName = "TESTNAME";//BaseSteamManager.Instance.GetSteamName();
+        string gameName = BaseSteamManager.Instance.GetSteamName();
         if(gameName == null){
             gameName = "Noisy";
         }
@@ -96,8 +94,7 @@ public class VirtualControllerManager : MonoBehaviour {
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
         byte[] gameNameLengthData;
-        try
-        {
+        try {
             gameNameLengthData = BitConverter.GetBytes(Convert.ToUInt16(gameNameData.Length));
         } catch(OverflowException e) {
             gameName = gameName.Substring(0,8);

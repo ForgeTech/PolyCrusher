@@ -113,7 +113,6 @@ public class VirtualController
                     break;
                 case (byte)COMMANDS.QUITTED_GAME:
                     virtualControllerHandler.VirtualControllerQuitsTheGame(this);
-                    this.Disconnect();
                     break;
                 default:
                     break;
@@ -136,7 +135,6 @@ public class VirtualController
 
         if(!isAlive){
             virtualControllerHandler.VirtualControllerIsNotResponsing(this);
-            this.Disconnect();
         } else {
             isAlive = false;
         }
