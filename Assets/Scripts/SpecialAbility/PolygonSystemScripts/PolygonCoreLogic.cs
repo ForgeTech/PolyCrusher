@@ -243,10 +243,17 @@ public class PolygonCoreLogic : MonoBehaviour {
                         }
 
                         currentPolyTriggerTime += Time.deltaTime;
-                        loadingSound.volume = 1- (currentPolyTriggerTime* 2* polyTriggerFactor);
+                        if (loadingSound != null)
+                        {
+                            loadingSound.volume = 1 - (currentPolyTriggerTime * 2 * polyTriggerFactor);
+                        }
+                        
                         if (currentPolyTriggerTime >= polygonProperties.requiredTriggerTime)
                         {
-                            loadingSound.volume = 0.0f;
+                            if (loadingSound != null)
+                            {
+                                loadingSound.volume = 0.0f;
+                            }
                             OnPolyExecuted();
                         }
                     }
