@@ -86,14 +86,10 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        string gameName;
+        string gameName = "Noisy";
         UnityThreadHelper.Dispatcher.Dispatch(() => {
              gameName = BaseSteamManager.Instance.GetSteamName();
         });
-       
-        if(gameName == null){
-            gameName = "Noisy";
-        }
         gameName = gameName.ToUpper(); 
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
