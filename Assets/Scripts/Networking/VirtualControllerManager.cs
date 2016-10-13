@@ -87,9 +87,13 @@ public class VirtualControllerManager : MonoBehaviour {
     void HandlePingConnection(IPEndPoint endPoint)
     {
         string gameName = "Noisy";
-        UnityThreadHelper.Dispatcher.Dispatch(() => {
-             gameName = BaseSteamManager.Instance.GetSteamName();
+        UnityThreading.Task future = UnityThreadHelper.Dispatcher.Dispatch(() =>
+        {
+            gameName = BaseSteamManager.Instance.GetSteamName();
         });
+
+        // Wait max. 3 seconds for the task to end
+        future.WaitForSeconds(3f);
         gameName = gameName.ToUpper(); 
 
         byte[] gameNameData = UTF8Encoding.UTF8.GetBytes(gameName);
