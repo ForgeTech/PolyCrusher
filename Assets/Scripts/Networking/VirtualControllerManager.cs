@@ -86,7 +86,11 @@ public class VirtualControllerManager : MonoBehaviour {
 
     void HandlePingConnection(IPEndPoint endPoint)
     {
-        string gameName = BaseSteamManager.Instance.GetSteamName();
+        string gameName;
+        UnityThreadHelper.Dispatcher.Dispatch(() => {
+             gameName = BaseSteamManager.Instance.GetSteamName();
+        });
+       
         if(gameName == null){
             gameName = "Noisy";
         }
