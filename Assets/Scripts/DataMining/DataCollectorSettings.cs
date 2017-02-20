@@ -6,7 +6,7 @@ public class DataCollectorSettings : ScriptableObject {
     [Header("HTTP")]
     [Tooltip("Address where postEvents.php and postSessions.php are located.")]
     public string scriptsAddress = "http://hal9000.schedar.uberspace.de/scripts/";
-    internal string buildVersion = "0.3";
+    internal string buildVersion = "1.1";
 
     [Header("Settings")]
     [Tooltip("Determines how many events should be uploaded at once.")]

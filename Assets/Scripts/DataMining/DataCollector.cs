@@ -32,7 +32,7 @@ public class DataCollector : MonoBehaviour
     }
 
     // VERSION NUMBER
-    internal string buildVersion = "1.0";
+    internal string buildVersion = "x.x";
     internal bool eventBuild = true;
 
     // general fields
