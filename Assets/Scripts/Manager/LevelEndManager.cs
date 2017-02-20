@@ -86,9 +86,13 @@ public class LevelEndManager : MonoBehaviour
         g.transform.SetParent(ingameCanvas.gameObject.transform, false);
         Image img = g.GetComponent<Image>();
 
-        SoundManager.SoundManagerInstance.Play(wooshSound, Vector3.zero, 10f, 1f, false, AudioGroup.Effects);
         img.rectTransform.localScale = Vector3.zero;
-        LeanTween.scale(img.rectTransform, Vector3.one, tweenTime).setEase(LeanTweenType.easeOutElastic)
+
+        // Disabled red circle animation to see the destruction of the enemies at the end of a round
+        //SoundManager.SoundManagerInstance.Play(wooshSound, Vector3.zero, 10f, 1f, false, AudioGroup.Effects);
+
+        // Set back to Vector3.one to enable red circle.
+        LeanTween.scale(img.rectTransform, Vector3.zero, tweenTime).setEase(LeanTweenType.easeOutElastic)
             .setOnComplete( TweenText);
     }
 
