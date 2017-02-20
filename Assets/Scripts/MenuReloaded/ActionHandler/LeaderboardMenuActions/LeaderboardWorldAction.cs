@@ -8,7 +8,8 @@ public enum LeaderboardWorld
     TrickOrTreat = 4,
     IceAndSpice = 5,
     SandMan = 6,
-    AtomicPond = 7
+    AtomicPond = 7,
+    NuclearBar = 8
 }
 
 public class LeaderboardWorldAction : AbstractActionHandler
