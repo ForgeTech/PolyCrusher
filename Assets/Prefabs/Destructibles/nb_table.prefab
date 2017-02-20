@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 184770}
   m_LocalRotation: {x: -.481385857, y: .517945945, z: .517945647, w: .481385618}
   m_LocalPosition: {x: 23.4300003, y: 6.96000004, z: 21.6599998}
-  m_LocalScale: {x: 8.51310539, y: 8.51310444, z: 8.51310349}
+  m_LocalScale: {x: 8.51310825, y: 8.51310635, z: 8.5131073}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -104,10 +104,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 0}
   explode: 0
+  lowFiExplosion: 0
   extrudeFactor: .00999999978
   healthValue: 60
   explodeable: 1
-  respawn: 0
+  respawn: 1
   timeTillRespawn: 10
   deactivators: []
   powerUpPrefabLineCut: {fileID: 0}
@@ -123,7 +124,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: .0790000036, y: .0910000056, z: .0850000009}
+  m_Extents: {x: .0450000018, y: .0549999997, z: .0850000009}
   m_MoveThreshold: .100000001
   m_Carve: 1
   m_CarveOnlyStationary: 1
