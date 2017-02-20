@@ -6,6 +6,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     public GameObject explosion;
 
     public bool explode = false;
+    public bool lowFiExplosion = false;
     public float extrudeFactor;
     public int healthValue = 60;
     
@@ -56,10 +57,8 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
         }
     }
 
+    private int grandStep = 3;
     private List<Tri> triList = new List<Tri>();
-   
-    
-
 
     MeshFilter MF;
     MeshRenderer MR;
@@ -67,10 +66,6 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
     Vector3[] verts;
     Vector3[] normals;
     Vector2[] uvs;
-
-
-
-
 
     GameObject GO;
     Mesh mesh;
@@ -95,8 +90,9 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
             step++;
         }
 
-      
-        //grandStep = 21;
+        if(lowFiExplosion){
+            grandStep *= 3;
+        }
 
         //scaleFactor = 0.03f * step * 2;
         scaleFactor = transform.localScale;
@@ -167,7 +163,7 @@ public class PolyExplosionThreeDimensional : MonoBehaviour
             int[] indices = M.GetTriangles(submesh);
             GetTriangles(indices);
 
-            for (int i = triList.Count - 1; i >= 0; i -= 3) //grandStep)
+            for (int i = triList.Count - 1; i >= 0; i -= grandStep)
             {
                 Tri tri = triList[i];
 
