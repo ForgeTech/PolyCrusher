@@ -46,10 +46,10 @@ GameObject:
   - 4: {fileID: 469202}
   - 33: {fileID: 3395370}
   - 23: {fileID: 2303292}
-  - 54: {fileID: 5441266}
   - 64: {fileID: 6459016}
   - 208: {fileID: 20860252}
   - 114: {fileID: 11427396}
+  - 54: {fileID: 5414016}
   m_Layer: 10
   m_Name: nb_dixiback
   m_TagString: Untagged
@@ -69,12 +69,14 @@ GameObject:
   - 23: {fileID: 2356370}
   - 65: {fileID: 6505020}
   - 54: {fileID: 5477988}
-  m_Layer: 11
+  - 208: {fileID: 20860356}
+  - 114: {fileID: 11433204}
+  m_Layer: 0
   m_Name: toilet
-  m_TagString: Terrain
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &468716
 Transform:
@@ -82,8 +84,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.3017616, y: 6.92412424, z: 26.4367561}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalPosition: {x: 54.1699982, y: 6.92412424, z: 22.6399994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 483032}
@@ -186,7 +188,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 2100000, guid: 973293d2cf9de40148afbb324bb468bb, type: 2}
-  - {fileID: 2100000, guid: 5a39b8cc237d14daf80431bdc7944693, type: 2}
+  - {fileID: 2100000, guid: 21eea4a18cd14a44383694ab8c92ea69, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -236,7 +238,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!54 &5441266
+--- !u!54 &5414016
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -247,7 +249,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -258,7 +260,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143964}
   serializedVersion: 2
-  m_Mass: 1.00000001e-07
+  m_Mass: .0399999991
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 0
@@ -315,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 0}
   explode: 0
-  extrudeFactor: 0
+  extrudeFactor: .00499999989
   healthValue: 60
   explodeable: 1
   respawn: 0
@@ -338,7 +340,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 0}
   explode: 0
-  extrudeFactor: 0
+  extrudeFactor: .00499999989
+  healthValue: 60
+  explodeable: 1
+  respawn: 0
+  timeTillRespawn: 10
+  deactivators: []
+  powerUpPrefabLineCut: {fileID: 0}
+  powerUpPrefabMango: {fileID: 0}
+  powerUpProbabilityLineCut: .0500000007
+  powerUpProbabilityMango: .0500000007
+--- !u!114 &11433204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5603f397545d29b4982006d2b5cdf75f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 0}
+  explode: 0
+  extrudeFactor: .200000003
   healthValue: 60
   explodeable: 1
   respawn: 0
@@ -377,6 +402,21 @@ NavMeshObstacle:
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: .248000011, y: 0, z: -.00400000019}
+  m_TimeToStationary: .0500000007
+--- !u!208 &20860356
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143964}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.73900008, y: 4.31599998, z: 2.7440002}
+  m_MoveThreshold: .100000001
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: .221000016, y: 4.35500002, z: .278000027}
   m_TimeToStationary: .0500000007
 --- !u!1001 &100100000
 Prefab:

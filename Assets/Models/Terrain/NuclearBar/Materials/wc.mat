@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RandomBrickFloor
+  m_Name: wc
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
-  m_LightmapFlags: 5
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
@@ -20,18 +20,11 @@ Material:
           name: _MainTex
         second:
           m_Texture: {fileID: 0}
-          m_Scale: {x: 9, y: 9}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 2800000, guid: 4587b1334422a2b4ba5c443df8056221, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _NormalMap
+          name: _BumpMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -45,23 +38,16 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _MetallicTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 1580420b498a4a3488751d778249c80a, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _ParallaxMap
         second:
-          m_Texture: {fileID: 2800000, guid: adfa5844edf69af499266ceca4821fcb, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _OcclusionMap
         second:
-          m_Texture: {fileID: 2800000, guid: 13de2d081c4955740b2ed7c894b344ed, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -69,7 +55,7 @@ Material:
           name: _EmissionMap
         second:
           m_Texture: {fileID: 0}
-          m_Scale: {x: 9, y: 9}
+          m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -88,13 +74,6 @@ Material:
       data:
         first:
           name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 2800000, guid: 1580420b498a4a3488751d778249c80a, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EmissionTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -115,7 +94,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: .0239000004
+        second: .0199999996
       data:
         first:
           name: _ZWrite
@@ -123,15 +102,15 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0
+        second: .5
       data:
         first:
           name: _BumpScale
-        second: .360000014
+        second: 1
       data:
         first:
           name: _OcclusionStrength
-        second: .606000006
+        second: 1
       data:
         first:
           name: _DetailNormalMapScale
@@ -148,64 +127,12 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _EmissionScaleUI
-        second: 0
-      data:
-        first:
-          name: _Emission
-        second: 0
-      data:
-        first:
-          name: _EmissionValue
-        second: 1
-      data:
-        first:
-          name: _InterscetionThreshold
-        second: 0
-      data:
-        first:
-          name: _InterscetionHighlight
-        second: 1
-      data:
-        first:
-          name: _EffectAmount
-        second: 0
-      data:
-        first:
-          name: _NormalIntensity
-        second: 1
-      data:
-        first:
-          name: _RimPower
-        second: 1
-      data:
-        first:
-          name: _GlowEmission
-        second: 1
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 0}
+        second: {r: .173999995, g: .173999995, b: .173999995, a: 1}
       data:
         first:
           name: _Color
-        second: {r: .257352948, g: .257352948, b: .257352948, a: 1}
-      data:
-        first:
-          name: _EmissionColorUI
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _IntersectionColor
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _RimColor
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _GlowEmissionColor
         second: {r: 1, g: 1, b: 1, a: 1}
