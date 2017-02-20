@@ -376,6 +376,10 @@ Prefab:
       propertyPath: m_Name
       value: nb_table (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -579,6 +583,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -641,6 +649,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 8.51310158
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -690,6 +702,10 @@ Prefab:
     - target: {fileID: 184770, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
       propertyPath: m_Name
       value: nb_table (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
@@ -805,6 +821,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
       propertyPath: lowFiExplosion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1039,6 +1059,190 @@ Transform:
   - {fileID: 677955118}
   m_Father: {fileID: 0}
   m_RootOrder: 27
+--- !u!21 &377097536
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShadowFontZeroAlpha
+  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Radius
+        second: .186000004
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Glossiness
+        second: .5
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _ShadowShiftX
+        second: -2.82999992
+      data:
+        first:
+          name: _ShadowShiftY
+        second: -3.30999994
+      data:
+        first:
+          name: _Quality
+        second: .00800000038
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ShadowColor
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _GlowColor
+        second: {r: 1, g: 0, b: 0, a: .200000003}
 --- !u!1001 &456010237
 Prefab:
   m_ObjectHideFlags: 0
@@ -1344,6 +1548,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -1562,6 +1770,10 @@ Prefab:
       propertyPath: lowFiExplosion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a12996305e851ba4abf60777d8295891, type: 2}
   m_IsPrefabParent: 0
@@ -1738,190 +1950,6 @@ MonoBehaviour:
   rotation: {x: -.200000003, y: .200000003, z: -.300000012}
   timeBasedRotation: 0
   rotateInterval: 0
---- !u!21 &702618290
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ShadowFontZeroAlpha
-  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _OcclusionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EmissionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailMask
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailAlbedoMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _SrcBlend
-        second: 1
-      data:
-        first:
-          name: _DstBlend
-        second: 0
-      data:
-        first:
-          name: _Radius
-        second: .186000004
-      data:
-        first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
-          name: _ZWrite
-        second: 1
-      data:
-        first:
-          name: _Glossiness
-        second: .5
-      data:
-        first:
-          name: _BumpScale
-        second: 1
-      data:
-        first:
-          name: _OcclusionStrength
-        second: 1
-      data:
-        first:
-          name: _DetailNormalMapScale
-        second: 1
-      data:
-        first:
-          name: _UVSec
-        second: 0
-      data:
-        first:
-          name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0
-      data:
-        first:
-          name: _Stencil
-        second: 0
-      data:
-        first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _ShadowShiftX
-        second: -2.82999992
-      data:
-        first:
-          name: _ShadowShiftY
-        second: -3.30999994
-      data:
-        first:
-          name: _Quality
-        second: .00800000038
-    m_Colors:
-      data:
-        first:
-          name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _ShadowColor
-        second: {r: 0, g: 0, b: 0, a: 0}
-      data:
-        first:
-          name: _GlowColor
-        second: {r: 1, g: 0, b: 0, a: .200000003}
 --- !u!1001 &714381512
 Prefab:
   m_ObjectHideFlags: 0
@@ -2069,6 +2097,10 @@ Prefab:
       propertyPath: lowFiExplosion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a12996305e851ba4abf60777d8295891, type: 2}
   m_IsPrefabParent: 0
@@ -2188,6 +2220,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 468716, guid: dd25c5162ab391d409a4f96226382948, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11420444, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427396, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433204, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2336,6 +2380,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
       propertyPath: lowFiExplosion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4042,6 +4090,14 @@ Prefab:
       propertyPath: chosenPlayerIndices.Array.data[1]
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11470804, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
+      propertyPath: pools.Array.data[14].foldout
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470804, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
+      propertyPath: pools.Array.data[16].foldout
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ec9d40cec13cc048a827d2f62f7b2b0, type: 2}
   m_IsPrefabParent: 0
@@ -4285,6 +4341,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -4406,6 +4466,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -4623,6 +4687,10 @@ Prefab:
       propertyPath: m_Drag
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -4684,6 +4752,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -4844,6 +4916,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -4893,6 +4969,10 @@ Prefab:
     - target: {fileID: 184770, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
       propertyPath: m_Name
       value: nb_table (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
@@ -4952,6 +5032,10 @@ Prefab:
       propertyPath: lowFiExplosion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a12996305e851ba4abf60777d8295891, type: 2}
   m_IsPrefabParent: 0
@@ -5001,6 +5085,10 @@ Prefab:
     - target: {fileID: 167046, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_Name
       value: nb_stool (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -5064,6 +5152,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -5125,6 +5217,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -5301,6 +5397,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -5764,6 +5864,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 8.51310539
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -5928,6 +6032,18 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11427396, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433204, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11420444, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd25c5162ab391d409a4f96226382948, type: 2}
   m_IsPrefabParent: 0
@@ -5989,6 +6105,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -6237,6 +6357,10 @@ Prefab:
       propertyPath: lowFiExplosion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a12996305e851ba4abf60777d8295891, type: 2}
   m_IsPrefabParent: 0
@@ -6413,6 +6537,18 @@ Prefab:
       propertyPath: m_Name
       value: dixi (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 11427396, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433204, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11420444, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd25c5162ab391d409a4f96226382948, type: 2}
   m_IsPrefabParent: 0
@@ -6474,6 +6610,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -6675,6 +6815,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 8.51310539
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -6753,6 +6897,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -6760,190 +6908,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_PrefabInternal: {fileID: 1828770745}
---- !u!21 &1834057995
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ShadowFont
-  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _OcclusionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EmissionMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailMask
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailAlbedoMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _SrcBlend
-        second: 1
-      data:
-        first:
-          name: _DstBlend
-        second: 0
-      data:
-        first:
-          name: _Radius
-        second: .186000004
-      data:
-        first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
-          name: _ZWrite
-        second: 1
-      data:
-        first:
-          name: _Glossiness
-        second: .5
-      data:
-        first:
-          name: _BumpScale
-        second: 1
-      data:
-        first:
-          name: _OcclusionStrength
-        second: 1
-      data:
-        first:
-          name: _DetailNormalMapScale
-        second: 1
-      data:
-        first:
-          name: _UVSec
-        second: 0
-      data:
-        first:
-          name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0
-      data:
-        first:
-          name: _Stencil
-        second: 0
-      data:
-        first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _ShadowShiftX
-        second: -2.82999992
-      data:
-        first:
-          name: _ShadowShiftY
-        second: -3.30999994
-      data:
-        first:
-          name: _Quality
-        second: .00800000038
-    m_Colors:
-      data:
-        first:
-          name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _ShadowColor
-        second: {r: 0, g: 0, b: 0, a: .200000003}
-      data:
-        first:
-          name: _GlowColor
-        second: {r: 1, g: 0, b: 0, a: .200000003}
 --- !u!1001 &1846714829
 Prefab:
   m_ObjectHideFlags: 0
@@ -6986,6 +6950,18 @@ Prefab:
     - target: {fileID: 120040, guid: dd25c5162ab391d409a4f96226382948, type: 2}
       propertyPath: m_Name
       value: dixi (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427396, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433204, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11420444, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd25c5162ab391d409a4f96226382948, type: 2}
@@ -7284,6 +7260,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 8.51310253
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -7336,6 +7316,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
       propertyPath: lowFiExplosion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7458,6 +7442,18 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11427396, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433204, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11420444, guid: dd25c5162ab391d409a4f96226382948, type: 2}
+      propertyPath: respawn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd25c5162ab391d409a4f96226382948, type: 2}
   m_IsPrefabParent: 0
@@ -7510,6 +7506,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
       propertyPath: lowFiExplosion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486918, guid: a12996305e851ba4abf60777d8295891, type: 2}
+      propertyPath: respawn
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7574,6 +7574,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 8.5131073
       objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
   m_IsPrefabParent: 0
@@ -7619,6 +7623,10 @@ Prefab:
     - target: {fileID: 468288, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491668, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4f0c6cff389dfa44abc918e78ddd15e, type: 2}
@@ -7702,6 +7710,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -7763,6 +7775,10 @@ Prefab:
     - target: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
@@ -7826,6 +7842,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -7888,6 +7908,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
+      propertyPath: respawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_IsPrefabParent: 0
@@ -7895,3 +7919,187 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 470188, guid: 17394a5ff3631a8488a43ec476976cd9, type: 2}
   m_PrefabInternal: {fileID: 2114625464}
+--- !u!21 &2142117627
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShadowFont
+  m_Shader: {fileID: 4800000, guid: 6bc210f8543fade47bad5d77ede205ba, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Radius
+        second: .186000004
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Glossiness
+        second: .5
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _ShadowShiftX
+        second: -2.82999992
+      data:
+        first:
+          name: _ShadowShiftY
+        second: -3.30999994
+      data:
+        first:
+          name: _Quality
+        second: .00800000038
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ShadowColor
+        second: {r: 0, g: 0, b: 0, a: .200000003}
+      data:
+        first:
+          name: _GlowColor
+        second: {r: 1, g: 0, b: 0, a: .200000003}
