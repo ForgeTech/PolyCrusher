@@ -46,7 +46,13 @@ public class DestructibleRespawn : MonoBehaviour {
             meshRenderer.enabled = true;
         }
 
-        attachedRigidBody.isKinematic = false;
+        
+        if(attachedCollider.GetType() == typeof(MeshCollider)){
+            attachedRigidBody.isKinematic = true;
+        }else{
+            attachedRigidBody.isKinematic = false;
+        }
+        
         attachedObstacle.enabled = true;
     }
 }
