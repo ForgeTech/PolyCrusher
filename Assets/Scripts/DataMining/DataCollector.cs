@@ -258,7 +258,7 @@ public class DataCollector : MonoBehaviour
     {
         if (e.type != Event.TYPE.join && (!sessionRunning || currentSession == null))
         {
-            Debug.LogError("[DataCollector] No session running. Event not logged." + e.ToString());
+            Debug.Log("[DataCollector] No session running. Event not logged." + e.ToString());
         }
         else
         {
