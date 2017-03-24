@@ -17,11 +17,11 @@ public class BaseSteamManager : MonoBehaviour {
         {
             //TODO: COMMENT LINES 20 AND 22-24 IN BUILDS
 
-            //#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
+            #if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
                 return instance ?? new GameObject("SteamManager").AddComponent<SteamManager>();
-            /*#else
+            #else
                 return instance ?? new GameObject("SteamManagerDummy").AddComponent<SteamManagerDummy>();
-            #endif*/
+            #endif
 
             //ENDTODO
         }

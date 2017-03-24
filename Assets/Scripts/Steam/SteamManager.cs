@@ -300,6 +300,18 @@ class SteamManager : BaseSteamManager
             // If this failed, we never sent anything to the server, try again later.
             storeStats = !success;
         }
+
+        /*TODO: REMOVE THIS IN BUILDS + SET STAT VALIDATIONS @ STEAMWORKS
+
+        if (Input.GetKeyDown(KeyCode.F1))
+            resetStats = SteamUserStats.ResetAllStats(true);
+        if (resetStats)
+        {
+            SteamUserStats.RequestCurrentStats();
+            resetStats = false;
+        }
+
+        //ENDTODO*/
     }
 
     /// <summary>
